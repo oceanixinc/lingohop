@@ -10,11 +10,39 @@ import FlatButton from 'material-ui/FlatButton';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+
+
+
+import AppBar from 'material-ui/AppBar';
+
+const styles1 = {
+  title: {
+    cursor: 'pointer',
+  },
+};
+
+const AppBarExampleIcon = () => (
+
+  <AppBar
+    title={<span style={styles1.title}>LingoHop</span>}
+    iconClassNameRight="muidocs-icon-navigation-expand-more"
+    iconElementRight={<FlatButton label="Save" />}
+  />
+);
+
+export default AppBarExampleIcon;
+
+
+
+
 const styles = {
   container: {
     textAlign: 'center',
     paddingTop: 200,
   },
+  body:{
+    margin:0
+  }
 };
 
 const muiTheme = getMuiTheme({
@@ -81,3 +109,4 @@ class Main extends Component {
 }
 
 export default Main;
+
