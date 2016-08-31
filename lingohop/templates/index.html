@@ -4,11 +4,23 @@
 <head>
 	<title> Sijan Admin</title>
 	<link href="{% static 'build/main.css' %}" rel="stylesheet">
-</head>
-<body style="margin:0px;">
-<div id="header"></div>
-<div id="app"></div>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body style="margin:0px;background-color: rgb(238, 238, 238);">
+<div id="app"></div>
+<div id="header"></div>
+<div id="discover"></div>
+<div id="experienceLabel"></div>
+<div id="experiencePanel"></div>
+<div id="footer"></div>
+
+<script>
+    var logo_url = "{% static 'photos' %}";
+    console.log(logo_url);
+</script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="{% static 'build/app.js' %}"></script>
 </body>
 </html>
