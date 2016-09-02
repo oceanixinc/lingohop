@@ -1,112 +1,70 @@
-/**
- * In this file, we create a React component
- * which incorporates components providedby material-ui.
- */
-import React, {Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
-import {deepOrange500} from 'material-ui/styles/colors';
-import FlatButton from 'material-ui/FlatButton';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+ /**
+  * Main.js
+  * This file is responsible for rendering our components in order
+  * We have component named App which will maintain default layout
+  * And in render() we have given the other components
+  */
+
+import Main from './Theme'; // Our custom react component
+
+import FooterPanel from './FooterPanel'; // Our custom react component
+
+
+
+import React from 'react';
+import * as Colors from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import TextField from 'material-ui/TextField';
+import SvgIcon from 'material-ui/SvgIcon';
+import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+
+import FrontVideoComponent from './Frontheader'; // Our custom react component
+import DiscoverPanel from './DiscoverPanel'; // Our custom react component
+import ExperiencePanel from './ExperiencePanel'; // Our custom react component
 
 
-
-
-import AppBar from 'material-ui/AppBar';
-
-const styles1 = {
-  title: {
-    cursor: 'pointer',
-  },
-};
-
-const AppBarExampleIcon = () => (
-
-  <AppBar
-    title={<span style={styles1.title}>LingoHop</span>}
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
-    iconElementRight={<FlatButton label="Save" />}
-  />
-);
-
-export default AppBarExampleIcon;
-
-
-
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    paddingTop: 200,
-  },
-  body:{
-    margin:0
-  }
-};
 
 const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
   palette: {
-    accent1Color: deepOrange500,
+    textColor: Colors.darkBlack,
+    primary1Color: Colors.white,
+    primary2Color: Colors.indigo700,
+    accent1Color: Colors.redA200,
+    pickerHeaderColor: Colors.darkBlack,
+  },
+  appBar: {
+    height: 60,
   },
 });
 
-class Main extends Component {
-  constructor(props, context) {
-    super(props, context);
+class App extends React.Component {
 
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-
-    this.state = {
-      open: false,
-    };
-  }
-
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  handleTouchTap() {
-    this.setState({
-      open: true,
-    });
-  }
-
+  // contextTypes: {
+  //   router: React.PropTypes.object.isRequired,
+  // };
   render() {
-    const standardActions = (
-      <FlatButton
-        label="Ok"
-        primary={true}
-        onTouchTap={this.handleRequestClose}
-      />
-    );
-
+   
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={styles.container}>
-          <Dialog
-            open={this.state.open}
-            title="Super Secret Password"
-            actions={standardActions}
-            onRequestClose={this.handleRequestClose}
-          >
-            1-2-3-4-5
-          </Dialog>
-          <h1>Material-UI</h1>
-          <h2>example project</h2>
-          <RaisedButton
-            label="Super Secret Password"
-            secondary={true}
-            onTouchTap={this.handleTouchTap}
-          />
+      // <MuiThemeProvider muiTheme={muiTheme}>
+      
+        <div>
+          <Main />
+          { this.props.children }
+          <FooterPanel />
         </div>
-      </MuiThemeProvider>
+
+
+
+      // </MuiThemeProvider>
     );
   }
 }
 
-export default Main;
+export default App;
+
+
+
 

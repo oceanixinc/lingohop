@@ -1,7 +1,15 @@
+ /**
+  * DiscoverPanel.js
+  * In the home page, we have a panel
+  */
+
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import * as Colors from 'material-ui/styles/colors';
+import { hashHistory, browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
 
 const style = {
   height: 270,
@@ -16,6 +24,8 @@ const buttonStyle = {
   margin: 12,
   marginTop: 60,
   marginLeft : 140,
+  // backgroundColor: Colors.cyan500,
+  // background: Colors.cyan500,
 };
 
 const mediaTitleStyles = {
@@ -34,6 +44,7 @@ const mediaTitleStyles = {
 };
 
 const DiscoverPanel = () => (
+   // <MuiThemeProvider>
   <div style={{textAlign: 'center', marginTop: 30}}>
     <Paper style={style} zDepth={1} >
       <img src='static/photos/paris.png' style={{width:'100%', height:'auto'}} />
@@ -43,9 +54,10 @@ const DiscoverPanel = () => (
       titleStyle = {mediaTitleStyles.title}
       subtitleStyle={mediaTitleStyles.subtitle} 
       title="Discover what learning a new language can do for you" subtitle="Open your trip to a new world of possibilities with lingohop" />
-      <RaisedButton label="GET STARTED" primary={true} style={buttonStyle} />
+      <RaisedButton containerElement={<Link to="/signup" />} label="GET STARTED" backgroundColor="#00BCD4" labelColor="#ffffff" style={buttonStyle} />
     </Paper>
   </div>
+  // </MuiThemeProvider>
 );
 
 export default DiscoverPanel;

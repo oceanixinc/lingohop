@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ReactPlayer from 'react-player';
 import TextField from 'material-ui/TextField';
 import SelectLangaugeCountry from './LanguageTripSelection';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // class Video extends React.Component {
 //   render () {
 //     return <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' playing />
@@ -67,7 +68,8 @@ const headerLowerStyles = {
   }
 };
 
-const CardExampleWithAvatar = () => (
+const FrontVideoComponent = () => (
+  // <MuiThemeProvider>
   <Card>
    
     <CardMedia style={{background: '#9E9E9E'}}
@@ -84,6 +86,7 @@ const CardExampleWithAvatar = () => (
     <SelectLangaugeCountry/>
    
   </Card>
+  // </MuiThemeProvider>
 );
 
-export default CardExampleWithAvatar;
+export default FrontVideoComponent;

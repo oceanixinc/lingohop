@@ -1,3 +1,9 @@
+ /**
+  * ExperiencePanel.js
+  * In the home page, we have a panel for sharing experience
+  * 
+  */
+
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -58,7 +64,7 @@ const mediaTitleStyles = {
 };
 
 const ExperiencePanel = () => (
-  <MuiThemeProvider>
+  // <MuiThemeProvider>
   <div style={{textAlign: 'center', marginTop: 0}}>
     <Paper style={style} zDepth={1} >
       <img src='static/photos/person1.png' style={imageStyle} />
@@ -120,7 +126,7 @@ const ExperiencePanel = () => (
     </Paper>
    
   </div>
-   </MuiThemeProvider>
+   // </MuiThemeProvider>
 );
 
 export default ExperiencePanel;

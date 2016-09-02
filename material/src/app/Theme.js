@@ -1,3 +1,8 @@
+ /**
+  * Theme.js
+  * In the home page, we have to render the page Appbar and integrate login component
+  */
+
 import React from 'react';
 import * as Colors from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

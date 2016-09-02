@@ -8,12 +8,15 @@ import * as Colors from 'material-ui/styles/colors';
 
 
 const iconStyles = {
-  marginRight: 24,
+  marginRight: 5,
   color: 'rgba(156, 150, 150, 0.32)',
+  width: '16px',
+  height: '16px',
 };
 
 const copyStyles = {
   color: 'rgba(156, 150, 150, 0.32)',
+  fontSize: '16px',
   // marginTop: 160,
 };
 

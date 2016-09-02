@@ -1,3 +1,10 @@
+ /**
+  * Login.js
+  * This file is responsible handling user login login
+  * The login is embed in our Appbar
+  * 
+  */
+
 import React from 'react';
 import * as Colors from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

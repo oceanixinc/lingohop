@@ -1,3 +1,9 @@
+ /**
+  * LanguageTripSelection.js
+  * In the home page, we have a div to render language - trip selection
+  */
+
+
 import React from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
