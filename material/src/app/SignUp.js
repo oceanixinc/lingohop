@@ -14,6 +14,7 @@ import SocialPerson from 'material-ui/svg-icons/social/person';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 
 
 const language_items = [
@@ -98,7 +99,18 @@ const textfieldStyles = {
      // position: 'relative',
      // display : '',
       width: 290,
-     height: 72,
+     height: 65,
+
+
+
+    },
+      datestyle: {
+     // position: 'relative',
+     // display : '',
+      width: 295,
+     height: 65,
+     marginLeft: 47,
+     marginTop: 15,
 
 
 
@@ -293,6 +305,8 @@ openFileDialog(){
     />
 
         </div>
+        <div>
+        <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} /></div>
       <div style={{marginTop: 20}}>
      
      <RaisedButton   onClick={this.signupForm} label="START" labelColor="#ffffff" backgroundColor='#294860' />

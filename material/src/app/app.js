@@ -74,7 +74,7 @@ const ExperienceLabel = () => (
 // render(<FooterPanel />, document.getElementById('footer'));
 
 render((
-   <Router history={hashHistory}>
+   <Router history={browserHistory}>
     <Route path="/" component={App}>
      <IndexRoute component={Home}/>
       <Route path="signup" component={SignUp} />

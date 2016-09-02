@@ -16,7 +16,6 @@ import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('lingohop')
-
 # print(ROOT_DIR)
 env_path = str(APPS_DIR.path('.env'))
 # env_path = str(APPS_DIR.path('.env'))
@@ -159,6 +158,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     str(ROOT_DIR.path('lingohop/lingohop/static')),
 )
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+MEDIA_ROOT = str(APPS_DIR('media'))
+
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
