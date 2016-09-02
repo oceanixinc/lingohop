@@ -12,6 +12,7 @@ class UserProfile(TimeStampedModel):
     Model to create user profile.
 
     :user: User, profile has one to one relation with user model.
+    :profile_picture: each user has a profile picture.
 
     """
     user = models.OneToOneField(
