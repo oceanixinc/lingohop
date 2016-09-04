@@ -140,7 +140,18 @@ class SignUp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.signupForm = this.signupForm.bind(this);
 
-    this.state = {file: '',imagePreviewUrl: ''};
+    this.state = {
+      profile_picture: '',
+      password: '',
+      confirm_password: '',
+      email: '',
+      first_name: '',
+      last_name: '',
+      language_country: null,
+      trip: null,
+      subscription_type: null,
+      departure_date: null,
+    };
     
   };
 
@@ -160,7 +171,7 @@ class SignUp extends React.Component {
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
+        profile_picture: profile_picture,
         imagePreviewUrl: reader.result
       });
 
@@ -255,7 +266,7 @@ openFileDialog(){
           style={textfieldStyles.selectstyle}
           // autoWidth={true}
           // floatingLabelStyle = {{}}
-          value={this.state.language}
+          value={this.state.language_country}
           onChange={this.handleChange.bind(this, 'language')}
           // floatingLabelText="Language-Country"
            hintText="Language-Country"
@@ -307,7 +318,12 @@ openFileDialog(){
         </div>
         <div>
         <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} /></div>
-      <div style={{marginTop: 20}}>
+      <div style={{marginTop: 20}}
+
+      value={this.state.departure_date}
+      onChange={e => this.setState({ departure_date: e.target.value })}
+
+      >
      
      <RaisedButton   onClick={this.signupForm} label="START" labelColor="#ffffff" backgroundColor='#294860' />
      </div>

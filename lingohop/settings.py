@@ -56,11 +56,13 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth'
+    'rest_auth',
+    'django_countries',
     # 'reversion',
 )
 
 LOCAL_APPS = (
+    'userprofile',  # user profile  Modules
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -69,6 +71,8 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 SITE_ID = 1
 REST_SESSION_LOGIN = False
 ACCOUNT_LOGOUT_ON_GET = True
+
+AUTH_USER_MODEL = 'userprofile.User'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

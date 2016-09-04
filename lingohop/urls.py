@@ -22,6 +22,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(
+        r'^(?i)api/profiles/',
+        include('userprofile.urls', namespace="profile")),
+    url(
         r'^[a-zA-Z0-9_.-]*$', TemplateView.as_view(template_name='index.html'),
         name="home"
     ),
