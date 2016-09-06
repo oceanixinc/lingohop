@@ -28,7 +28,7 @@ import NotFound from './NotFound'; // Our custom react component
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
-import { hashHistory, browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
+import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941

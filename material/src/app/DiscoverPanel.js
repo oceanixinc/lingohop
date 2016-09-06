@@ -9,7 +9,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as Colors from 'material-ui/styles/colors';
-import { hashHistory, browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
+import { Link } from 'react-router'
 
 const style = {
   height: 270,

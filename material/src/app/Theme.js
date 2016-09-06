@@ -12,6 +12,7 @@ import TextField from 'material-ui/TextField';
 import SvgIcon from 'material-ui/SvgIcon';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
+import { Link } from 'react-router'
 
 import Login from './Login';
 
@@ -44,6 +45,11 @@ const titleStyles = {
     cursor: 'pointer'
     
   },
+   link: {
+    textDecoration: 'none',
+    color: 'black',
+    
+  },
   color:{
     color: Colors.darkBlack
   },
@@ -67,9 +73,9 @@ class Main extends React.Component {
     // using React's context feature.
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <AppBar title={<span style={titleStyles.title}>Lingohop</span>} titleStyle={titleStyles}
+        <AppBar title={<Link to="/" style={titleStyles.link} ><span style={titleStyles.title}>Lingohop</span></Link>} titleStyle={titleStyles}
         iconStyleLeft = {{marginLeft:0}}
-        iconElementLeft={<Avatar src="static/photos/logo.svg" style={{ width: '40', height: '40', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}} />}
+        iconElementLeft={<Link to="/" ><Avatar src="static/photos/logo.svg" style={{ width: '40', height: '40', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}} /> </Link>}
         >
       
       <Login/>

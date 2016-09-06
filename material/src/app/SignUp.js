@@ -15,6 +15,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
+import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
 
 
 const language_items = [
@@ -100,6 +101,7 @@ const textfieldStyles = {
      // display : '',
       width: 290,
      height: 65,
+     textAlign: 'left'
 
 
 
@@ -138,6 +140,7 @@ class SignUp extends React.Component {
     super(props);
     this.openFileDialog = this.openFileDialog.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleLanguageChange = this.handleLanguageChange.bind(this);
     this.signupForm = this.signupForm.bind(this);
 
     this.state = {
@@ -159,8 +162,44 @@ class SignUp extends React.Component {
   e.preventDefault();
    console.log('new staetes', this.state);
 
+    $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            // enctype: 'multipart/form-data',
+            url: '/api/profiles/',
+            data: JSON.stringify({
+                // username: username,
+                profile_picture: this.state.profile_picture,
+                password: this.state.password,
+                email: this.state.email,
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                language_country: [parseInt(this.state.language_country)],
+                trip: parseInt(this.state.trip),
+                departure_date: null,
+            }),
+            success: function(res){
+                console.log('signup');
+                console.log(res);
+
+            },
+             error: function(xhr, status, err) {
+        console.log("error",err)
+      }
+
+        })
+
 
   };
+
+   handleLanguageChange(name, event, index, value) { 
+     var change = {};
+    change[name] = value;
+    console.log(change);
+      this.setState(change);
+
+    };
 
 
   handleChange(e){
@@ -168,10 +207,11 @@ class SignUp extends React.Component {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+    console.log('file is', file);
 
     reader.onloadend = () => {
       this.setState({
-        profile_picture: profile_picture,
+        profile_picture: reader.result,
         imagePreviewUrl: reader.result
       });
 
@@ -262,12 +302,12 @@ openFileDialog(){
     <div>
 
      <SelectField 
-          iconStyle={{top:40}}
+          iconStyle={{top:30}}
           style={textfieldStyles.selectstyle}
           // autoWidth={true}
           // floatingLabelStyle = {{}}
           value={this.state.language_country}
-          onChange={this.handleChange.bind(this, 'language')}
+          onChange={this.handleLanguageChange.bind(this, 'language_country')}
           // floatingLabelText="Language-Country"
            hintText="Language-Country"
         >
@@ -277,10 +317,10 @@ openFileDialog(){
 
       <div>
          <SelectField 
-         iconStyle={{top:40}}
+         iconStyle={{top:30}}
          style={textfieldStyles.selectstyle}
           value={this.state.trip}
-          onChange={this.handleChange.bind(this, 'trip')}
+          onChange={this.handleLanguageChange.bind(this, 'trip')}
           // floatingLabelText="Trip Type"
           hintText = "Trip Type"
         >
@@ -311,13 +351,10 @@ openFileDialog(){
       onChange={e => this.setState({ confirm_password: e.target.value })}
       style={textfieldStyles.style}
       type="password"
-       floatingLabelText="confirm password"
-      
-    />
+       floatingLabelText="confirm password"/>
 
         </div>
-        <div>
-        <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} /></div>
+       
       <div style={{marginTop: 20}}
 
       value={this.state.departure_date}
@@ -341,3 +378,6 @@ openFileDialog(){
 export default SignUp;
 
 
+ // <div>
+        // <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} />
+        // </div>

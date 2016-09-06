@@ -3,10 +3,17 @@ from userprofile.models import User
 
 from rest_framework import serializers
 
-from userprofile.models import UserTrip
+from userprofile.models import UserTrip, Trip
+
+
+class TripSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Trip
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
 
     class Meta:
         model = User
@@ -15,19 +22,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
             # 'username',
             'password', 'email',
             'first_name', 'last_name',
-            'profile_picture',
+            # 'profile_picture',
             'language_country', 'trip',
             'subscription_type',
         )
 
     def create(self, validated_data):
+        print ('called', validated_data)
         language_country = validated_data.get('language_country')
 
         trip = validated_data.get('trip')
-        departure_date = validated_data.get('departure_date')
-        user_trip = UserTrip.objects.create(
-            trip=trip,
-            departure_date=departure_date)
+        # print ('trip is', trip)
+        # departure_date = validated_data.get('departure_date')
+        # user_trip = UserTrip.objects.create(
+        #     trip=trip,
+        #     departure_date=departure_date)
         user_data = {
             'username': validated_data.get('email'),
             'password': validated_data.get('password'),
@@ -41,7 +50,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
         user.language_country.add(*language_country)
         user.save()
-        user.trip.add(*user_trip)
+        user.trip.add(*trip)
         user.save()
 
         return user

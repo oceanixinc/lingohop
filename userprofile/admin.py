@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from userprofile.models import (
-    SubscriptionType, Trip,
+    SubscriptionType, Trip, UserTrip,
     LanguageCountry,
     User,)
 # Register your models here.
@@ -14,6 +14,11 @@ class SubscriptionTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(UserTrip)
+class UserTripAdmin(admin.ModelAdmin):
     pass
 
 

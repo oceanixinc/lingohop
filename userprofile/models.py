@@ -13,7 +13,9 @@ class SubscriptionType(models.Model):
     """
     Model to create subscription types.
 
-    :name: Trip name to identify.
+    :name: Subscription name to identify. : 1 month
+    :duration: Subscription name to identify. : 30
+    :price: subscription . : $100
 
     """
     name = models.CharField(max_length=200)
@@ -70,6 +72,7 @@ class User(AbstractUser):
 
     :user: User, profile has one to one relation with user model.
     :profile_picture: each user has a profile picture.
+    :language_country: each user has a profile picture.
 
     """
     profile_picture = models.ImageField(
@@ -79,12 +82,12 @@ class User(AbstractUser):
         help_text='Maximum file size allowed is 2Mb'
     )
     language_country = models.ManyToManyField(
-        LanguageCountry, blank=True,
+        LanguageCountry,
         related_name='userprofile',
         verbose_name=_("Language Country Information")
     )
     trip = models.ManyToManyField(
-        UserTrip, blank=True,
+        UserTrip,
         related_name='userprofile',
         verbose_name=_("Trip Information")
     )
