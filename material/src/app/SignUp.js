@@ -136,6 +136,8 @@ const formheaderStyles = {
 
 class SignUp extends React.Component {
 
+  // mixins: [Router.Navigation],
+
   constructor(props) {
     super(props);
     this.openFileDialog = this.openFileDialog.bind(this);
@@ -182,6 +184,8 @@ class SignUp extends React.Component {
             success: function(res){
                 console.log('signup');
                 console.log(res);
+                window.location = "/";
+              // this.actions.addUserSuccess(data.message);
 
             },
              error: function(xhr, status, err) {
