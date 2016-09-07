@@ -12,6 +12,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FrontVideoComponent from './Frontheader'; // Our custom react component
 import DiscoverPanel from './DiscoverPanel'; // Our custom react component
 import ExperiencePanel from './ExperiencePanel'; // Our custom react component
+import CustomTheme from './CustomTheme';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // injectTapEventPlugin();
@@ -100,7 +101,7 @@ class Home extends React.Component {
   render() {
    
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={CustomTheme}>
       <div>
       <FrontVideoComponent />
       <DiscoverPanel />

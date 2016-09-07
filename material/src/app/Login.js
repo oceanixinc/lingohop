@@ -15,6 +15,7 @@ import SvgIcon from 'material-ui/SvgIcon';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
+import UserSettingPanel from './UserSettings';
 
 var auth = require('./auth')
 
@@ -164,11 +165,14 @@ submitForm(e) {
   render() {
     if (this.state.userlogin){
       return(
+        // <div>
+        //   <p>
+        //     Hi, You're logged in as <strong>{ this.state.user.username }</strong>
+        //     <FlatButton onClick={this.logoutHandler} style={{color: Colors.cyanA700}} label="Logout" primary={true} />
+        //   </p>
+        // </div>
         <div>
-          <p>
-            Hi, You're logged in as <strong>{ this.state.user.username }</strong>
-            <FlatButton onClick={this.logoutHandler} style={{color: Colors.cyanA700}} label="Logout" primary={true} />
-          </p>
+        <UserSettingPanel />
         </div>
 
       );

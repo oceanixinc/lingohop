@@ -16,7 +16,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
-
+import CustomTheme from './CustomTheme';
 
 const language_items = [
   <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
@@ -241,7 +241,7 @@ openFileDialog(){
   render() {
     
     return (
-<MuiThemeProvider>
+<MuiThemeProvider muiTheme={CustomTheme}>
 
     <div style={{textAlign: 'center', marginTop: 30}}>
 

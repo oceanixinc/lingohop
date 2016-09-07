@@ -15,6 +15,7 @@ import IconButton from 'material-ui/IconButton';
 import { Link } from 'react-router'
 
 import Login from './Login';
+import CustomTheme from './CustomTheme';
 
 // This replaces the textColor value on the palette
 // and then update the keys for each component that depends on it.
