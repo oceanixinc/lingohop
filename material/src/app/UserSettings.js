@@ -31,15 +31,41 @@ import {List, ListItem} from 'material-ui/List';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 
 
+var auth = require('./auth')
 
-const style = {
-  height: 270,
-  width: 423,
-  // margin: 20,
-  textAlign: 'left',
-  display: 'inline-block',
-  overflow:'hidden',
+
+const styles = {
+  smallIcon: {
+    width: 30,
+    height: 30,
+  },
+  mediumIcon: {
+    width: 48,
+    height: 48,
+  },
+  largeIcon: {
+    width: 60,
+    height: 60,
+  },
+  small: {
+    // width: 72,
+    // height: 72,
+    width: 27,
+    height: 27,
+    padding: 5,
+  },
+  medium: {
+    width: 96,
+    height: 96,
+    // padding: 24,
+  },
+  large: {
+    width: 120,
+    height: 120,
+    // padding: 30,
+  },
 };
+
 
 const buttonStyle = {
   margin: 12,
@@ -105,7 +131,7 @@ class  UserSettingPanel  extends React.Component {
 
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
-
+    this.logoutHandler = this.logoutHandler.bind(this);
     this.state = {
       profile: false,
       language: false,
@@ -151,6 +177,30 @@ class  UserSettingPanel  extends React.Component {
     // });
   };
 
+    logoutHandler() {
+      console.log('called logout handler');
+       delete localStorage.token
+        // auth.logout()
+        //  this.setState({
+        //   userlogin: false
+        // });
+    };
+
+    componentDidMount() {
+    console.log('mount setting');
+      
+    };
+
+
+    componentWillUnmount() {
+      console.log('unmount setting');
+};
+
+ componentDidUnmount() {
+    console.log('Did Unmount login');
+   };
+
+
   render() {
     return (
       <div>
@@ -174,11 +224,31 @@ class  UserSettingPanel  extends React.Component {
 
 
           style={flexContainer}>
-    <ListItem style={{width: 50, padding: 12}}
-      leftIcon={<ActionList />}
-      >
+    <ListItem  >
+     <IconButton
+      iconStyle={styles.smallIcon}
+      style={styles.small}
+    >
+      <ActionList />
+    </IconButton>
       </ListItem>
-      
+
+ <ListItem >
+     <IconButton
+      iconStyle={styles.smallIcon}
+      style={styles.small}
+    >
+      <SocialPerson />
+    </IconButton>
+      </ListItem>
+       <ListItem  >
+     <IconButton
+      iconStyle={styles.smallIcon}
+      style={styles.small}
+    >
+      <SocialGroup />
+    </IconButton>
+      </ListItem>      
     
   </List>
       
@@ -273,115 +343,16 @@ color: 'rgba(32, 27, 27, 0.27)',
            >Jessica Lee</span>
            </div>
       </MenuItem>
-     
-
-          
-            <MenuItem  style={{lineHeight: '20px', fontSize: 12, padding:12}} primaryText="SIGN OUT" />
+            <MenuItem  
+            // onTouchTap={this.logoutHandler} 
+            onTouchTap={this.props.handleLogout} 
+            style={{lineHeight: '20px', fontSize: 12, padding:12}} primaryText="SIGN OUT" />
           </Menu>
         </Popover>
       </div>
     );
   }
 }
-  // class UserSettingPanel extends React.Component {
-   // <MuiThemeProvider>
-
-
-
-
- //   <div>
- //    <IconMenu
- //        iconButtonElement={<NavigationApps style={{height:17,width: 17, float: 'left', paddingBottom: 5}}/>}
- //         anchorOrigin={{horizontal: 'bottom', vertical: 'bottom'}}
- //      targetOrigin={{horizontal: 'bottom', vertical: 'bottom'}}
-
-      
- //        >
- //        <Menu style={{top:60, marginTop:60}}>
- //       <MenuItem value="1" primaryText="Refresh" />
- //          <MenuItem value="2" primaryText="Send feedback" />
- //          <MenuItem value="3" primaryText="Settings" />
- //          <MenuItem value="4" primaryText="Help" />
- //          <MenuItem value="5" primaryText="Sign out" />
- //        </Menu>
- //      </IconMenu>
- //      <IconMenu style = {{ paddingBottom: 5}}
- //        iconButtonElement={
-
- //               <Avatar src="static/photos/flag_england.svg" style=
-    
- //      {{ 
- //       borderRadius: 32,
- // width: 17,
- // height: 17,
- // // backgroundImage:'url("static/photos/flag_england.svg")',
- // backgroundPosition: 'center',
- // overflowX: 'visible',
- // display: 'inline-block',
- // marginLeft: 10,
- // marginRight: 10,
- // float: 'left',
-
- // overflow: 'visible'
-
- //   }} /> 
- //        }
- //        >
- //        <MenuItem primaryText='Logout' />
- //      </IconMenu>
-
- //       <IconMenu
- //        iconButtonElement={
-
-     //               <Avatar src="static/photos/person1.png" style={{ width: '30',
-     //  float: 'left',
-     // height: '30', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}} /> 
- //        }
- //        >
- //        <MenuItem primaryText='Logout' />
- //      </IconMenu>
- //    </div>
- 
-  
-// );
 
 export default UserSettingPanel;
 
-
-//     <div style={{borderRadius: 32,
- // width: 17,
- // height: 17,
- // backgroundImage:'url("static/photos/flag_england.svg")',
- // backgroundPosition: 'center',
- // overflowX: 'visible',
- // display: 'inline-block',
- // marginLeft: 10,
- // marginRight: 10,
- // float: 'left',
- // overflow: 'visible'}}>
- // </div>
-
-
- //         <List 
-
-
-  //         style={flexContainer}>
-  //   <ListItem style={{width: 50, padding: 12}}
-  //     leftIcon={<ActionList />}
-  //     />
-  //      <ListItem  style={{width: 50, padding: 12}}
-  //     leftIcon={<SocialPerson />}
-  //     />
-  //      <ListItem  style={{width: 50, padding: 12}}
-  //     leftIcon={<SocialGroup />}
-  //     />
-    
-  // </List>
-  // <div style={flex1Container}>
-
-  // <span> new</span>
-  // <span> new</span>
-  // <span> new</span>
-    
-    
-  // </div>

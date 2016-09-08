@@ -74,6 +74,7 @@ class Login extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.loadUserData = this.loadUserData.bind(this);
     this.logoutHandler = this.logoutHandler.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.state = {
       username: '',
       password: '',
@@ -83,7 +84,7 @@ class Login extends React.Component {
   };
 
   componentDidMount() {
-    console.log('mount');
+    console.log('mount login');
        if (auth.loggedIn()) {
           this.setState({
           userlogin: true
@@ -97,6 +98,14 @@ class Login extends React.Component {
         });
     }
     };
+
+    componentWillUnmount() {
+      console.log('unmount login');
+};
+
+ componentDidUnmount() {
+    console.log('Did Unmount');
+   };
 
 
     componentWillReceiveProps(nextProps) {
@@ -172,7 +181,7 @@ submitForm(e) {
         //   </p>
         // </div>
         <div>
-        <UserSettingPanel />
+        <UserSettingPanel handleLogout={this.handleLogout} />
         </div>
 
       );
@@ -203,7 +212,17 @@ submitForm(e) {
   </form>
     );
     
-  }
+  };
+
+   handleLogout(e){
+    console.log('parent aclled');
+         this.setState({
+          userlogin: false
+        });
+        console.log(this.state);
+          auth.logout();
+        // window.location = "/";
+    };
 }
 
 export default Login;
