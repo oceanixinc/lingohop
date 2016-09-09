@@ -12,10 +12,13 @@ module.exports = {
             if (res.authenticated) {
 
                 localStorage.token = res.token
-                console.log(localStorage.token);
                 if (cb) cb(true)
             } else {
+                console.log('erorrrr');
+                console.log(res.error);
                 if (cb) cb(false)
+                console.log('test error');
+                console.log(cb);
             }
         })
     },        
@@ -48,6 +51,11 @@ module.exports = {
             },
              error: function(xhr, status, err) {
         console.log("error",err)
+
+         cb({
+                    authenticated: false,
+                    error: err
+                })
       }
 
         })

@@ -53,7 +53,7 @@ const DiscoverPanel = () => (
       <CardTitle 
       titleStyle = {mediaTitleStyles.title}
       subtitleStyle={mediaTitleStyles.subtitle} 
-      title="Discover what learning a new language can do for you" subtitle="Open your trip to a new world of possibilities with lingohop" />
+      title="Discover what learning a new language can do for you" subtitle="Open your trip to a new world of possibilities with Lingohop" />
       <RaisedButton containerElement={<Link to="/signup" />} label="GET STARTED" backgroundColor="#00BCD4" labelColor="#ffffff" style={buttonStyle} />
     </Paper>
   </div>

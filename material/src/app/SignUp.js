@@ -144,6 +144,8 @@ class SignUp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleLanguageChange = this.handleLanguageChange.bind(this);
     this.signupForm = this.signupForm.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
 
     this.state = {
       profile_picture: '',
@@ -156,9 +158,69 @@ class SignUp extends React.Component {
       trip: null,
       subscription_type: null,
       departure_date: null,
+
+      email_error_text: null,
+      password_error_text: null,
+      disabled: true,
+      form_error: false,
     };
     
   };
+
+   validateEmail(value) {
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(value);
+  };
+
+
+    isDisabled() {
+      console.log('validation called');
+
+        let emailIsValid = false;
+        let passwordIsValid = false;
+
+        if (this.state.email === "") {
+            this.setState({
+                email_error_text: null
+            });
+        } else {
+            if (this.validateEmail(this.state.email)) {
+                emailIsValid = true
+                this.setState({
+                    email_error_text: null
+                });
+            } else {
+                this.setState({
+                    email_error_text: "Sorry, this is not a valid email"
+                });
+            }
+        }
+
+        if (this.state.password === "" || !this.state.password) {
+            this.setState({
+                password_error_text: null
+            });
+        } else {
+            if (this.state.password.length >= 6) {
+                passwordIsValid = true;
+                this.setState({
+                    password_error_text: null
+                });
+            } else {
+                this.setState({
+                    password_error_text: "Password needs at least 6 characters"
+                });
+            }
+        }
+
+        if (emailIsValid && passwordIsValid) {
+            this.setState({
+                disabled: false
+            });
+        }
+    }
+
 
   signupForm(e) {
   e.preventDefault();
@@ -171,7 +233,7 @@ class SignUp extends React.Component {
             // enctype: 'multipart/form-data',
             url: '/api/profiles/',
             data: JSON.stringify({
-                // username: username,
+                // email: email,
                 profile_picture: this.state.profile_picture,
                 password: this.state.password,
                 email: this.state.email,
@@ -298,8 +360,10 @@ openFileDialog(){
       value={this.state.email}
       onChange={e => this.setState({ email: e.target.value })}
       style={textfieldStyles.style}
-
+        errorText={this.state.email_error_text}
        floatingLabelText="Email"
+       onBlur={this.isDisabled} 
+       errorStyle = {{float: 'left'}}
       
     />
     </div>
@@ -344,6 +408,10 @@ openFileDialog(){
       type="password"
 
        floatingLabelText="password"
+
+        onBlur={this.isDisabled} 
+        errorText={this.state.password_error_text}
+       errorStyle = {{float: 'left'}}
       
     />
 
@@ -355,7 +423,13 @@ openFileDialog(){
       onChange={e => this.setState({ confirm_password: e.target.value })}
       style={textfieldStyles.style}
       type="password"
-       floatingLabelText="confirm password"/>
+       floatingLabelText="confirm password"
+
+        onBlur={this.isDisabled} 
+        errorText={this.state.password_error_text}
+       errorStyle = {{float: 'left'}}
+      
+       />
 
         </div>
        

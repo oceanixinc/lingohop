@@ -89,34 +89,3 @@ class Main extends React.Component {
 
 export default Main;
 
-
-
-// class Main extends React.Component {
-//   render() {
-//     // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-//     // using React's context feature.
-//     return (
-//       <MuiThemeProvider muiTheme={muiTheme}>
-//         <AppBar title={<span style={titleStyles.title}>Lingohop</span>} titleStyle={titleStyles}
-
-//         iconElementLeft={<Avatar src="images/uxceo-128.jpg" style={{ width: '40', height: '40'}} />}
-//         >
-//        <div>
-//    < TextField hintText = "username" style={textfieldStyles.margin} />
-//     < TextField hintText = "password" type="password"  / >
-    
-
-//     </div>
-//     <div>
-//      <IconButton tooltip="Sing In">
-//     <ArrowIcon color={Colors.cyan500} style={{marginTop: 20}} />
-//     </IconButton>
-//     </div>
-    
-//         </AppBar>
-//       </MuiThemeProvider>
-//     );
-//   }
-// }
-
-// export default Main;

@@ -43,6 +43,20 @@ const muiTheme = getMuiTheme({
   },
 });
 
+const formError = {
+
+  error:{
+
+    position: 'relative',
+    
+    fontSize: 12,
+    
+    color: 'rgb(244, 67, 54)',
+    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+
+  }
+}
+
 const titleStyles = {
   title: {
     cursor: 'pointer'
@@ -65,6 +79,22 @@ const textfieldStyles = {
 };
 
 
+const styles = {
+  errorStyle: {
+    color: Colors.orange500,
+  },
+  underlineStyle: {
+    borderColor:Colors.cyan500,
+  },
+  floatingLabelStyle: {
+    color: Colors.cyan500,
+  },
+  floatingLabelFocusStyle: {
+    color: Colors.blue500,
+  },
+};
+
+
 const hoverColor = 'green';
 
 class Login extends React.Component {
@@ -75,16 +105,22 @@ class Login extends React.Component {
     this.loadUserData = this.loadUserData.bind(this);
     this.logoutHandler = this.logoutHandler.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
     this.state = {
       username: '',
       password: '',
       userlogin: false,
       user:[],
+      email_error_text: null,
+      password_error_text: null,
+      disabled: true,
+      form_error: false,
+      invalidData: true,
     };
   };
 
   componentDidMount() {
-    console.log('mount login');
        if (auth.loggedIn()) {
           this.setState({
           userlogin: true
@@ -97,36 +133,34 @@ class Login extends React.Component {
           userlogin: false
         });
     }
+     this.setState({
+          form_error: false
+        });
     };
 
     componentWillUnmount() {
-      console.log('unmount login');
+      console.log('login unmount');
+      this.setState({
+          form_error: false
+        });
+  
 };
 
+componentWillUpdate(nextProps, nextState) {
+    nextState.invalidData = !(nextState.username && nextState.password);
+  };
+
  componentDidUnmount() {
-    console.log('Did Unmount');
    };
 
 
     componentWillReceiveProps(nextProps) {
-      console.log('props');
-  // this.setState({
-  //   likesIncreasing: nextProps.likeCount > this.props.likeCount
-  // });
+  
     };
 
 
     loadUserData() {
-      console.log('userdaat');
-      console.log(localStorage.token);
-         // $.ajax({
-         //    url: "/rest-auth/user/",
-         //    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Token '+localStorage.token);},
-         //    type: "GET",
-         //    success: function(data) {
-         //      this.setState({user: res});
-         //    }
-         //  });
+     
         $.ajax({
             method: 'GET',
             url: '/rest-auth/user/',
@@ -140,24 +174,81 @@ class Login extends React.Component {
         })
     };
 
+    validateEmail(value) {
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(value);
+  };
+
+
+    isDisabled() {
+
+        let usernameIsValid = false;
+        let passwordIsValid = false;
+
+        if (this.state.username === "") {
+            this.setState({
+                email_error_text: null
+            });
+        } else {
+            if (this.validateEmail(this.state.username)) {
+                usernameIsValid = true
+                this.setState({
+                    email_error_text: null
+                });
+            } else {
+                this.setState({
+                    email_error_text: "Sorry, this is not a valid email"
+                });
+            }
+        }
+
+        if (this.state.password === "" || !this.state.password) {
+            this.setState({
+                password_error_text: null
+            });
+        } else {
+            if (this.state.password.length >= 6) {
+                passwordIsValid = true;
+                this.setState({
+                    password_error_text: null
+                });
+            } else {
+                this.setState({
+                    password_error_text: "Password needs at least 6 characters"
+                });
+            }
+        }
+
+        if (usernameIsValid && passwordIsValid) {
+            this.setState({
+                disabled: false
+            });
+        }
+    }
+
 
 
 
 submitForm(e) {
   e.preventDefault();
-   console.log(this.state.username.trim());
-   console.log(this.state.password.trim());
 
    var username = this.state.username.trim();
    var pass = this.state.password.trim();
 
     auth.login(username, pass, (loggedIn) => {
+      console.log('loggedIn');
       console.log(loggedIn);
         if (loggedIn) {
             this.setState({
           userlogin: loggedIn
         });
         this.loadUserData()
+        }
+        else{
+            this.setState({
+          form_error: true
+        });
         }
     })
 
@@ -186,20 +277,35 @@ submitForm(e) {
 
       );
     }
-    return (
-   
 
-     <form className="loginForm" onSubmit={this.submitForm}>
+
+
+    var form =  <form className="loginForm" onSubmit={this.submitForm}>
+
+    
     <TextField
       value={this.state.username}
       onChange={e => this.setState({ username: e.target.value })}
-      hintText = "username" style={textfieldStyles.margin}
+      style={textfieldStyles.margin}
+      underlineFocusStyle={styles.underlineStyle}
+      floatingLabelText="Email"
+      // floatingLabelStyle={styles.floatingLabelStyle}
+      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+      errorText={this.state.email_error_text}
+      onBlur={this.isDisabled} 
+     
       
     />
     <TextField
       value={this.state.password}
       onChange={e => this.setState({ password: e.target.value })}
-      hintText = "password" type="password"
+      type="password"
+      underlineFocusStyle={styles.underlineStyle}
+      floatingLabelText="Password"
+      // floatingLabelStyle={styles.floatingLabelStyle}
+      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+      errorText={this.state.password_error_text}
+      onBlur={this.isDisabled} 
      
     />
          <IconButton iconStyle={{iconHoverColor: '#55ff55'}}
@@ -209,18 +315,67 @@ submitForm(e) {
      >
     <ArrowIcon color={Colors.cyan500} style={{marginTop: 30}} hoverColor={hoverColor} />
     </IconButton>
+  </form> ;
+    return (
+    <span>
+      { this.state.form_error &&
+        <div id="form-error" style={formError.error}>Unable to log in with provided credentials. </div>
+      }
+   
+        <form className="loginForm" onSubmit={this.submitForm}>
+
+    
+    <TextField
+      value={this.state.username}
+      onChange={e => this.setState({ username: e.target.value })}
+      style={textfieldStyles.margin}
+      underlineFocusStyle={styles.underlineStyle}
+      floatingLabelText="Email"
+      // floatingLabelStyle={styles.floatingLabelStyle}
+      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+      errorText={this.state.email_error_text}
+      onBlur={this.isDisabled} 
+      // required={true}
+     
+      
+    />
+    <TextField
+      value={this.state.password}
+      onChange={e => this.setState({ password: e.target.value })}
+      type="password"
+      underlineFocusStyle={styles.underlineStyle}
+      floatingLabelText="Password"
+      // floatingLabelStyle={styles.floatingLabelStyle}
+      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+      errorText={this.state.password_error_text}
+      onBlur={this.isDisabled} 
+      // required={true}
+     
+    />
+         <IconButton iconStyle={{iconHoverColor: '#55ff55'}}
+     tooltip="Sing In" key='signin-button' 
+     // onTouchTap={this.handleTouchTap}
+     // disabled={!this.state.username && !this.state.password}
+     disabled={this.state.invalidData}
+     onClick={this.submitForm}
+     >
+    <ArrowIcon color={Colors.cyan500} style={{marginTop: 30}} hoverColor={hoverColor} />
+    </IconButton>
   </form>
+</span>
+    
     );
     
   };
 
    handleLogout(e){
-    console.log('parent aclled');
          this.setState({
           userlogin: false
         });
-        console.log(this.state);
           auth.logout();
+          this.setState({
+          form_error: false
+        });
         // window.location = "/";
     };
 }
