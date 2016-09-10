@@ -14,6 +14,7 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 
 import SubmitIcon from './SubmitButton'
+import { browserHistory} from 'react-router'
 
 
 const ArrowIcon = (props) => (
@@ -34,16 +35,21 @@ const trip_items = [
   <MenuItem key={2} value={2} primaryText="Vacation" />,
 ];
 
-
+const hoverColor = 'green';
 export default class SelectLangaugeCountry extends React.Component {
 
   constructor(props) {
     super(props);
     this.submitData = this.submitData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
     this.state = {
+      email: null,
       language: null,
-      trip: null
+      trip: null,
+      invalidData: true,
+      email_error_text: null,
     };
   }
 
@@ -51,6 +57,16 @@ export default class SelectLangaugeCountry extends React.Component {
     e.preventDefault();
   console.log(this.state) ;
 
+  // Session.set("email", this.state.email);
+  // Session.set("language", this.state.language);
+  // Session.set("trip", this.state.trip);
+  browserHistory.push('/signup');
+  // this.context.router.transitionTo('/signup');
+
+  };
+
+  componentWillUpdate(nextProps, nextState) {
+    nextState.invalidData = !(nextState.email && nextState.language && nextState.trip);
   };
 
   handleChange(name, event, index, value) { 
@@ -61,39 +77,80 @@ export default class SelectLangaugeCountry extends React.Component {
 
     };
 
+     validateEmail(value) {
+    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(value);
+  };
+
+
+    isDisabled() {
+
+        if (this.state.email === "") {
+            this.setState({
+                email_error_text: null
+            });
+        } else {
+            if (this.validateEmail(this.state.email)) {
+                // emailIsValid = true
+                this.setState({
+                    email_error_text: null
+                });
+            } else {
+                this.setState({
+                    email_error_text: "Sorry, this is not a valid email"
+                });
+            }
+        }
+
+       
+    };
+
+
+
   render() {
     return (
-      <div style={{ marginLeft : 100, marginRight: 100, marginTop:-20}}>
+      <div style={{ marginLeft : 100, marginRight: 100, display: 'inline-block'}}>
 
         <TextField
-        style={{width:320, height:20}}
+        value={this.state.email}
+        style={{width:320}}
+        onChange={e => this.setState({ email: e.target.value })}
       
-      hintText = "Email" 
+       floatingLabelText="Email"
+       errorText={this.state.email_error_text}
+        onBlur={this.isDisabled}
       
     />
+    <div style={{display: 'inline'}}>
 
-        <SelectField style={{marginLeft: 50, width:320}}
+        <SelectField style={{marginLeft: 50, width:320, verticalAlign: 'bottom'}}
           value={this.state.language}
           onChange={this.handleChange.bind(this, 'language')}
           floatingLabelText="Language-Country"
         >
           {language_items}
         </SelectField >
-         <SelectField style={{ marginLeft : 50, width:320}}
+        </div>
+        <div style={{display: 'inline'}}>
+         <SelectField style={{ marginLeft : 50, width:320, verticalAlign: 'bottom'}}
           value={this.state.trip}
           onChange={this.handleChange.bind(this, 'trip')}
           floatingLabelText="Trip Type"
         >
           {trip_items}
         </SelectField>
-
+          </div>
+          <div style={{display: 'inline'}}>
 
         <IconButton iconStyle={{iconHoverColor: '#55ff55'}}
      tooltip="Request" key='request-button' 
      onClick={this.submitData}
+     disabled={this.state.invalidData}
      >
-    <ArrowIcon color={Colors.cyan500} style={{marginTop: 30}} />
+    <ArrowIcon color={Colors.cyan500} style={{marginTop: 30}} hoverColor={hoverColor}  />
     </IconButton>
+    </div>
 
         </div>
     

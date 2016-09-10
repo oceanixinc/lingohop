@@ -3,6 +3,8 @@ from userprofile.models import User
 
 from rest_framework import serializers
 
+from django.db import IntegrityError
+
 from userprofile.models import UserTrip, Trip
 
 
@@ -45,6 +47,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'last_name': validated_data.get('last_name'),
         }
         user = User.objects.create_user(**user_data)
+        # user, created = User.objects.get_or_create(**user_data)
+
         user.profile_picture = validated_data.get('profile_picture')
         user.subscription_type = validated_data.get('subscription_type')
         user.save()

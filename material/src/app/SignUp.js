@@ -101,7 +101,8 @@ const textfieldStyles = {
      // display : '',
       width: 290,
      height: 65,
-     textAlign: 'left'
+     textAlign: 'left',
+     // top: 30,
 
 
 
@@ -134,6 +135,20 @@ const formheaderStyles = {
     }
 };
 
+
+const formError = {
+
+  error:{
+
+    position: 'relative',
+    
+    fontSize: 12,
+    
+    color: 'rgb(244, 67, 54)',
+    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+
+  }
+}
 class SignUp extends React.Component {
 
   // mixins: [Router.Navigation],
@@ -158,13 +173,28 @@ class SignUp extends React.Component {
       trip: null,
       subscription_type: null,
       departure_date: null,
-
+      first_name_error_text: null,
+      last_name_error_text: null,
       email_error_text: null,
       password_error_text: null,
+      confirm_password_error_text: null,
+      language_country_error_text: null,
+      trip_error_text: null,
       disabled: true,
+      form_error: false,
+      invalidData: true,
+      message: null,
       form_error: false,
     };
     
+  };
+
+  componentWillUpdate(nextProps, nextState) {
+    var check_length = ( nextState.password.length >=6 && nextState.confirm_password.length >=6);
+    var check_equal =  (nextState.password == nextState.confirm_password);
+    var total_check = (check_length && check_equal)
+    nextState.invalidData = !(nextState.first_name && nextState.last_name &&
+    this.validateEmail(nextState.email) && nextState.language_country && nextState.trip && total_check);
   };
 
    validateEmail(value) {
@@ -174,15 +204,59 @@ class SignUp extends React.Component {
   };
 
 
-    isDisabled() {
-      console.log('validation called');
+    isDisabled(name, event) {
+      // console.log(index);
 
         let emailIsValid = false;
         let passwordIsValid = false;
+        let firstNameIsValid = false;
+        let lastNameIsValid = false;
+
+        if (name === 'first_name') {
+         if (this.state.first_name === "" || !this.state.first_name) {
+            this.setState({
+                // first_name_error_text: null
+                first_name_error_text: "First Name is required"
+            });
+        }
+         else {
+            if (this.state.first_name.length > 0) {
+                // firstNameIsValid = true;
+                this.setState({
+                    first_name_error_text: null
+                });
+            } else {
+                this.setState({
+                    first_name_error_text: "First Name is required"
+                });
+            }
+        }
+        }
+        if (name === 'last_name') {
+         if (this.state.last_name === "" || !this.state.last_name) {
+            this.setState({
+                // last_name_error_text: null
+                last_name_error_text: "Last Name is required"
+            });
+        } else {
+            if (this.state.last_name.length > 0) {
+                // lastNameIsValid = true;
+                this.setState({
+                    last_name_error_text: null
+                });
+            } else {
+                this.setState({
+                    last_name_error_text: "Last Name is required"
+                });
+            }
+        }
+      }
+      if (name === 'email') {
 
         if (this.state.email === "") {
             this.setState({
-                email_error_text: null
+                // email_error_text: null
+                email_error_text: 'Email is required'
             });
         } else {
             if (this.validateEmail(this.state.email)) {
@@ -196,14 +270,18 @@ class SignUp extends React.Component {
                 });
             }
         }
+      }
+
+      if (name === 'password') {
 
         if (this.state.password === "" || !this.state.password) {
             this.setState({
-                password_error_text: null
+                // password_error_text: null
+                password_error_text: 'Password is required'
             });
         } else {
             if (this.state.password.length >= 6) {
-                passwordIsValid = true;
+                // passwordIsValid = true;
                 this.setState({
                     password_error_text: null
                 });
@@ -213,6 +291,80 @@ class SignUp extends React.Component {
                 });
             }
         }
+      }
+
+      if (name === 'confirm_password') {
+
+        if (this.state.confirm_password === "" || !this.state.confirm_password) {
+            this.setState({
+                confirm_password_error_text: 'Password confirmation is required'
+            });
+        } else {
+            if ( this.state.confirm_password.length >=6){
+            if ( this.state.password === this.state.confirm_password) {
+                // confirm_passwordIsValid = true;
+                this.setState({
+                    confirm_password_error_text: null
+                });
+            } else {
+                this.setState({
+                    confirm_password_error_text: "Password didn't match!"
+                });
+            }
+            }
+            else {
+                this.setState({
+                    confirm_password_error_text: "Password didn't match!"
+                });
+            }
+
+        }
+      }
+
+      if (name === 'language_country') {
+
+        if (this.state.language_country === "" || !this.state.language_country) {
+            this.setState({
+                // language_country_error_text: null
+                language_country_error_text: "First Name is required"
+            });
+        } else {
+            if (this.state.language_country.length > 0) {
+                firstNameIsValid = true;
+                this.setState({
+                    language_country_error_text: null
+                });
+            } else {
+                this.setState({
+                    language_country_error_text: "First Name is required"
+                });
+            }
+        }
+
+      }
+
+      if (name === 'trip') {
+
+          if (this.state.trip === "" || !this.state.trip) {
+            this.setState({
+                // trip_error_text: null
+                trip_error_text: "First Name is required"
+            });
+        } else {
+            if (this.state.trip.length > 0) {
+                // firstNameIsValid = true;
+                this.setState({
+                    trip_error_text: null
+                });
+            } else {
+                this.setState({
+                    trip_error_text: "Trip is required"
+                });
+            }
+        }
+
+      }
+
 
         if (emailIsValid && passwordIsValid) {
             this.setState({
@@ -251,8 +403,17 @@ class SignUp extends React.Component {
 
             },
              error: function(xhr, status, err) {
-        console.log("error",err)
-      }
+
+
+         this.setState({
+                    form_error: true,
+                    message: status + ' : ' + xhr.responseText,
+                });
+
+           console.log("error",err)
+        console.log("error",xhr.responseText.error)
+         console.log(this.state.message);
+      }.bind(this)
 
         })
 
@@ -307,6 +468,12 @@ openFileDialog(){
 
     <div style={{textAlign: 'center', marginTop: 30}}>
 
+    <div className="result" style={formError.error}>
+    { this.state.form_error &&
+        <div id="form-error">{ this.state.message }</div>
+      }
+      </div>
+
     <form className="loginForm" onSubmit={this.signupForm}>
    
     <Paper style={style} zDepth={2} > 
@@ -337,8 +504,12 @@ openFileDialog(){
       value={this.state.first_name}
       onChange={e => this.setState({ first_name: e.target.value })}
       style={textfieldStyles.style}
-
+      // required = {true}
+      tabIndex = '1'
        floatingLabelText="First Name"
+       onBlur={this.isDisabled.bind(this, 'first_name')} 
+        errorText={this.state.first_name_error_text}
+       errorStyle = {{float: 'left'}}
       
     />
     </div>
@@ -348,8 +519,11 @@ openFileDialog(){
       value={this.state.last_name}
       onChange={e => this.setState({ last_name: e.target.value })}
       style={textfieldStyles.style}
-
+      tabIndex = '2'
        floatingLabelText="Last Name"
+       onBlur={this.isDisabled.bind(this, 'last_name')} 
+        errorText={this.state.last_name_error_text}
+       errorStyle = {{float: 'left'}}
       
     />
     </div>
@@ -362,22 +536,28 @@ openFileDialog(){
       style={textfieldStyles.style}
         errorText={this.state.email_error_text}
        floatingLabelText="Email"
-       onBlur={this.isDisabled} 
+       onBlur={this.isDisabled.bind(this, 'email')} 
        errorStyle = {{float: 'left'}}
+       tabIndex = '3'
       
     />
     </div>
     <div>
 
      <SelectField 
-          iconStyle={{top:30}}
+          // iconStyle={{top:30}}
           style={textfieldStyles.selectstyle}
           // autoWidth={true}
           // floatingLabelStyle = {{}}
+          floatingLabelStyle = {{top: 30}}
           value={this.state.language_country}
           onChange={this.handleLanguageChange.bind(this, 'language_country')}
-          // floatingLabelText="Language-Country"
-           hintText="Language-Country"
+          floatingLabelText="Language-Country"
+           onBlur={this.isDisabled.bind(this, 'language_country')} 
+            errorStyle = {{float: 'left'}}
+            errorText={this.state.language_country_error_text}
+           // hintText="Language-Country"
+           tabIndex = '4'
         >
           {language_items}
         </SelectField >
@@ -385,12 +565,17 @@ openFileDialog(){
 
       <div>
          <SelectField 
-         iconStyle={{top:30}}
+         // iconStyle={{top:30}}
          style={textfieldStyles.selectstyle}
           value={this.state.trip}
+          floatingLabelStyle = {{top: 30}}
           onChange={this.handleLanguageChange.bind(this, 'trip')}
-          // floatingLabelText="Trip Type"
-          hintText = "Trip Type"
+          floatingLabelText="Trip Type"
+          // hintText = "Trip Type"
+          tabIndex = '5'
+          onBlur={this.isDisabled.bind(this, 'trip')} 
+            errorStyle = {{float: 'left'}}
+            errorText={this.state.trip_error_text}
         >
           {trip_items}
         </SelectField>
@@ -406,10 +591,11 @@ openFileDialog(){
       onChange={e => this.setState({ password: e.target.value })}
       style={textfieldStyles.style}
       type="password"
+      tabIndex = '6'
 
        floatingLabelText="password"
 
-        onBlur={this.isDisabled} 
+        onBlur={this.isDisabled.bind(this, 'password')} 
         errorText={this.state.password_error_text}
        errorStyle = {{float: 'left'}}
       
@@ -424,9 +610,10 @@ openFileDialog(){
       style={textfieldStyles.style}
       type="password"
        floatingLabelText="confirm password"
-
-        onBlur={this.isDisabled} 
-        errorText={this.state.password_error_text}
+       disabled = {this.state.password.length < 6}
+       tabIndex = '7'
+        onBlur={this.isDisabled.bind(this, 'confirm_password')} 
+        errorText={this.state.confirm_password_error_text}
        errorStyle = {{float: 'left'}}
       
        />
@@ -440,7 +627,7 @@ openFileDialog(){
 
       >
      
-     <RaisedButton   onClick={this.signupForm} label="START" labelColor="#ffffff" backgroundColor='#294860' />
+     <RaisedButton tabIndex = {8} disabled={this.state.invalidData}  onClick={this.signupForm} label="START" labelColor="#ffffff" backgroundColor='#294860' />
      </div>
     </Paper>
 

@@ -6,6 +6,8 @@ from django.conf.global_settings import LANGUAGES
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
 
+
+from .managers import UserProfileManager
 # Create your models here.
 
 
@@ -95,3 +97,4 @@ class User(AbstractUser):
         SubscriptionType,
         null=True, blank=True, related_name='userprofile',
     )
+    # objects = UserProfileManager()

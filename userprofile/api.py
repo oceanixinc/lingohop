@@ -50,7 +50,13 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
         user_trip = UserTrip.objects.create(
             trip_id=int(trip),
             departure_date=departure_date)
-
+        if (User.objects.get(email=request.data.get('email', None))):
+            print ('user exit')
+            error = {}
+            error['error'] = 'Email already exist!'
+            return Response(
+                'User with email already exist!',
+                status=status.HTTP_400_BAD_REQUEST)
         data = {
             # 'profile_picture': thumb_file,
             'password': request.data.get('password', None),
