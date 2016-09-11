@@ -17,6 +17,8 @@ import SubmitIcon from './SubmitButton'
 import { browserHistory} from 'react-router'
 
 
+var intermediate = require('./intermediate')
+
 const ArrowIcon = (props) => (
   <SvgIcon {...props}>
     <path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z" />
@@ -56,10 +58,10 @@ export default class SelectLangaugeCountry extends React.Component {
   submitData(e) {
     e.preventDefault();
   console.log(this.state) ;
-
-  // Session.set("email", this.state.email);
-  // Session.set("language", this.state.language);
-  // Session.set("trip", this.state.trip);
+  var int =  new intermediate('sijan', 'raj');
+  
+  console.log(int.return1());
+  
   browserHistory.push('/signup');
   // this.context.router.transitionTo('/signup');
 
@@ -110,11 +112,11 @@ export default class SelectLangaugeCountry extends React.Component {
 
   render() {
     return (
-      <div style={{ marginLeft : 100, marginRight: 100, display: 'inline-block'}}>
+      <div style={{ marginLeft : 100, marginRight: 100, marginBottom: 20, display: 'inline-block'}}>
 
         <TextField
         value={this.state.email}
-        style={{width:320}}
+        style={{width:320, verticalAlign: 'bottom'}}
         onChange={e => this.setState({ email: e.target.value })}
       
        floatingLabelText="Email"

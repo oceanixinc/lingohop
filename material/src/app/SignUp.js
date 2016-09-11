@@ -17,6 +17,7 @@ import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'react-router'
 import CustomTheme from './CustomTheme';
+import Avatar from 'material-ui/Avatar';
 
 const language_items = [
   <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
@@ -189,11 +190,16 @@ class SignUp extends React.Component {
     
   };
 
+  componentWillReceiveProps(newProps) {
+    console.log('receive props');
+    console.log(newProps);
+  }
+
   componentWillUpdate(nextProps, nextState) {
     var check_length = ( nextState.password.length >=6 && nextState.confirm_password.length >=6);
     var check_equal =  (nextState.password == nextState.confirm_password);
     var total_check = (check_length && check_equal)
-    nextState.invalidData = !(nextState.first_name && nextState.last_name &&
+    nextState.invalidData = !( nextState.profile_picture && nextState.first_name && nextState.last_name &&
     this.validateEmail(nextState.email) && nextState.language_country && nextState.trip && total_check);
   };
 
@@ -378,31 +384,30 @@ class SignUp extends React.Component {
   e.preventDefault();
    console.log('new staetes', this.state);
 
-   var fd = new FormData();  
-   console.log(fp);
-   // fd.append( 'file', input.files[0] );
+    let fd = new FormData();  
+   // console.log(fp);
+   fd.append( 'profile_picture', this.state.profile_picture );
+   fd.append( 'password', this.state.password );
+   fd.append( 'email', this.state.email );
+   fd.append( 'first_name', this.state.first_name );
+   fd.append( 'last_name', this.state.last_name );
+   fd.append( 'language_country', [parseInt(this.state.language_country)] );
+   fd.append( 'trip', [parseInt(this.state.trip)] );
 
     $.ajax({
-            contentType: 'application/json',
-            dataType: 'json',
+            // contentType: 'application/json',
+            contentType: false,
+            processData: false,
+            // dataType: 'json',
             type: 'POST',
             // enctype: 'multipart/form-data',
+            data: fd,
             url: '/api/profiles/',
-            data: JSON.stringify({
-                // email: email,
-                profile_picture: this.state.profile_picture,
-                password: this.state.password,
-                email: this.state.email,
-                first_name: this.state.first_name,
-                last_name: this.state.last_name,
-                language_country: [parseInt(this.state.language_country)],
-                trip: parseInt(this.state.trip),
-                departure_date: null,
-            }),
             success: function(res){
                 console.log('signup');
                 console.log(res);
-                window.location = "/";
+                // window.location = "/";
+                browserHistory.push('/');
               // this.actions.addUserSuccess(data.message);
 
             },
@@ -485,23 +490,28 @@ openFileDialog(){
         <span style={formheaderStyles.firststyle}>Finish your Account.</span><span style={formheaderStyles.secondstyle}> Start your journey.</span>
 
         </div>
-<div style={{marginTop: 20}}>
-     
+<div style={{marginTop: 20, display: 'inline-block'}}>
+     <div >
          <FloatingActionButton backgroundColor='#294860'
          label="Upload file"
       onClick={this.openFileDialog}
           >
   <SocialPerson />
+   
     </FloatingActionButton>
 
     <input
       ref="fileUpload"
       type="file" 
+      accept = "image/*"
       style={{"display" : "none"}}
       onChange={this.handleChange}/>
-
-      <img ref="image"  src={this.state.imagePreviewUrl} />
       </div>
+     
+     <div >
+      <Avatar style={{backgroundColor: 'white'}} size={56} src={this.state.imagePreviewUrl} /> 
+     </div>
+       </div>
 
 <div>
        <TextField
@@ -650,3 +660,7 @@ export default SignUp;
  // <div>
         // <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} />
         // </div>
+
+
+         // <img ref="image" style={{height: 50, width: 50}} src={this.state.imagePreviewUrl} />
+      // <div style = {{backgroundImage: 'url(' + this.state.imagePreviewUrl + ')'}}></div>
