@@ -58,6 +58,7 @@ export default class SelectLangaugeCountry extends React.Component {
   submitData(e) {
     e.preventDefault();
   console.log(this.state) ;
+  
   var int =  new intermediate('sijan', 'raj');
   
   console.log(int.return1());
