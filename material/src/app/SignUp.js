@@ -378,6 +378,10 @@ class SignUp extends React.Component {
   e.preventDefault();
    console.log('new staetes', this.state);
 
+   var fd = new FormData();  
+   console.log(fp);
+   // fd.append( 'file', input.files[0] );
+
     $.ajax({
             contentType: 'application/json',
             dataType: 'json',
@@ -438,7 +442,7 @@ class SignUp extends React.Component {
 
     reader.onloadend = () => {
       this.setState({
-        profile_picture: reader.result,
+        profile_picture: file,
         imagePreviewUrl: reader.result
       });
 

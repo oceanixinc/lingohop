@@ -73,7 +73,8 @@ const titleStyles = {
 
 const textfieldStyles = {
     margin: {
-      marginRight: 20
+      marginRight: 20,
+      verticalAlign: 'bottom',
 
     }
 };
@@ -278,44 +279,6 @@ submitForm(e) {
       );
     }
 
-
-
-    var form =  <form className="loginForm" onSubmit={this.submitForm}>
-
-    
-    <TextField
-      value={this.state.username}
-      onChange={e => this.setState({ username: e.target.value })}
-      style={textfieldStyles.margin}
-      underlineFocusStyle={styles.underlineStyle}
-      floatingLabelText="Email"
-      // floatingLabelStyle={styles.floatingLabelStyle}
-      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-      errorText={this.state.email_error_text}
-      onBlur={this.isDisabled} 
-     
-      
-    />
-    <TextField
-      value={this.state.password}
-      onChange={e => this.setState({ password: e.target.value })}
-      type="password"
-      underlineFocusStyle={styles.underlineStyle}
-      floatingLabelText="Password"
-      // floatingLabelStyle={styles.floatingLabelStyle}
-      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-      errorText={this.state.password_error_text}
-      onBlur={this.isDisabled} 
-     
-    />
-         <IconButton iconStyle={{iconHoverColor: '#55ff55'}}
-     tooltip="Sing In" key='signin-button' 
-     // onTouchTap={this.handleTouchTap}
-     onClick={this.submitForm}
-     >
-    <ArrowIcon color={Colors.cyan500} style={{marginTop: 30}} hoverColor={hoverColor} />
-    </IconButton>
-  </form> ;
     return (
     <span>
       { this.state.form_error &&
@@ -335,6 +298,10 @@ submitForm(e) {
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
       errorText={this.state.email_error_text}
       onBlur={this.isDisabled} 
+      floatingLabelStyle={{
+        marginTop: -10
+  }}
+  errorStyle ={{marginTop: -44}}
       // required={true}
      
       
@@ -349,6 +316,10 @@ submitForm(e) {
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
       errorText={this.state.password_error_text}
       onBlur={this.isDisabled} 
+      floatingLabelStyle={{
+        marginTop: -10
+  }}
+  errorStyle ={{marginTop: -44}}
       // required={true}
      
     />

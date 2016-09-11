@@ -2,6 +2,7 @@ from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,
 )
 
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
@@ -50,15 +51,18 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
         user_trip = UserTrip.objects.create(
             trip_id=int(trip),
             departure_date=departure_date)
-        if (User.objects.get(email=request.data.get('email', None))):
-            print ('user exit')
+        try:
+            exist_user = User.objects.get(
+                email=request.data.get('email', None))
             error = {}
             error['error'] = 'Email already exist!'
             return Response(
                 'User with email already exist!',
                 status=status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            pass
         data = {
-            # 'profile_picture': thumb_file,
+            'profile_picture': request.data.get('profile_picture', None),
             'password': request.data.get('password', None),
             'email': request.data.get('email', None),
             'first_name': request.data.get('first_name', None),
@@ -89,7 +93,8 @@ class UserProfileDetail(UserProfileMixin, RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-
+# io = BytesIO(imgdata)
+# photo_obj.image.save(fname, File(io))
 
 # imgstr64 = request.data.get('profile_picture', None)
 #         print ('image str', imgstr64)

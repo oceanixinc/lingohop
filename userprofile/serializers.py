@@ -24,7 +24,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             # 'username',
             'password', 'email',
             'first_name', 'last_name',
-            # 'profile_picture',
+            'profile_picture',
             'language_country', 'trip',
             'subscription_type',
         )
@@ -39,6 +39,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         # user_trip = UserTrip.objects.create(
         #     trip=trip,
         #     departure_date=departure_date)
+        print ('validated_data', validated_data)
         user_data = {
             'username': validated_data.get('email'),
             'password': validated_data.get('password'),
