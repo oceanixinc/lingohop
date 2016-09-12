@@ -2,10 +2,38 @@ from userprofile.models import User
 
 
 from rest_framework import serializers
+from django_countries.serializer_fields import CountryField
 
-from django.db import IntegrityError
+from userprofile.models import Trip, LanguageCountry
 
-from userprofile.models import UserTrip, Trip
+
+# class ChoicesField(serializers.Field):
+#     def __init__(self, choices, **kwargs):
+#         self._choices = choices
+#         super(ChoicesField, self).__init__(**kwargs)
+
+#     def to_representation(self, obj):
+#         print ('obj', obj)
+#         return self._choices[obj]
+
+#     def to_internal_value(self, data):
+#         return getattr(self._choices, data)
+
+
+class LanguageCountrySerializer(serializers.ModelSerializer):
+    # country = CountryField(country_dict=True, required=False)
+    # country = serializers.SerializerMethodField(
+    #     'get_country_name')
+    language = serializers.CharField(
+        source='language.name',
+        required=False, read_only=True)
+    country = serializers.CharField(
+        source='country.name',
+        required=False, read_only=True)
+
+    class Meta:
+        model = LanguageCountry
+        fields = ('id', 'country', 'language',)
 
 
 class TripSerializer(serializers.ModelSerializer):
@@ -30,7 +58,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        print ('called', validated_data)
         language_country = validated_data.get('language_country')
 
         trip = validated_data.get('trip')
@@ -39,7 +66,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         # user_trip = UserTrip.objects.create(
         #     trip=trip,
         #     departure_date=departure_date)
-        print ('validated_data', validated_data)
         user_data = {
             'username': validated_data.get('email'),
             'password': validated_data.get('password'),

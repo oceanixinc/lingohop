@@ -43,7 +43,9 @@ const muiTheme = getMuiTheme({
 
 const titleStyles = {
   title: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: '0.6em',
+    verticalAlign: 'middle',
     
   },
    link: {
@@ -76,10 +78,11 @@ class Main extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <AppBar title={<Link to="/" style={titleStyles.link} ><span style={titleStyles.title}>Lingohop</span></Link>} titleStyle={titleStyles}
         iconStyleLeft = {{marginLeft:0}}
-        iconElementLeft={<Link to="/" ><Avatar src="static/photos/logo.svg" style={{ width: '40', height: '40', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}} /> </Link>}
+        iconElementLeft={<Link to="/" ><Avatar src="static/photos/logo.svg" style={{ width: '33', height: '33', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}} /> </Link>}
         >
-      
+      <div>
       <Login/>
+      </div>
     
         </AppBar>
       </MuiThemeProvider>

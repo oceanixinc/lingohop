@@ -26,16 +26,9 @@ const ArrowIcon = (props) => (
 );
 
 
-const language_items = [
-  <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
-  <MenuItem key={2} value={2} primaryText="German - Germany" />,
-  
-];
+const language_items = [];
 
-const trip_items = [
-  <MenuItem key={1} value={1} primaryText="Conference" />,
-  <MenuItem key={2} value={2} primaryText="Vacation" />,
-];
+const trip_items = [];
 
 const hoverColor = 'green';
 export default class SelectLangaugeCountry extends React.Component {
@@ -46,23 +39,25 @@ export default class SelectLangaugeCountry extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.isDisabled = this.isDisabled.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.loadTripData = this.loadTripData.bind(this);
+    this.loadLanguageData = this.loadLanguageData.bind(this);
     this.state = {
       email: null,
       language: null,
       trip: null,
+      trip_data: [],
+      language_data: [],
       invalidData: true,
       email_error_text: null,
     };
   }
 
   submitData(e) {
-    e.preventDefault();
-  console.log(this.state) ;
-  
-  var int =  new intermediate('sijan', 'raj');
-  
-  console.log(int.return1());
-  
+  e.preventDefault();
+  console.log(this.state.language, this.state.trip);
+  localStorage.setItem('front_email', JSON.stringify(this.state.email));
+  localStorage.setItem('language', JSON.stringify(this.state.language));
+  localStorage.setItem('trip', JSON.stringify(this.state.trip));
   browserHistory.push('/signup');
   // this.context.router.transitionTo('/signup');
 
@@ -72,10 +67,88 @@ export default class SelectLangaugeCountry extends React.Component {
     nextState.invalidData = !(nextState.email && nextState.language && nextState.trip);
   };
 
+   componentDidMount() {
+      
+
+        this.loadTripData()
+        this.loadLanguageData()
+   
+    };
+
+    _createTripMenuItems() {
+        let menuItems = [];
+        for (let province of provinces) {
+            let itemIndex = provinces.indexOf(province);
+            let item = (
+                <MenuItem
+                    value={itemIndex}
+                    key={`key-${province}`}
+                    primaryText={province} />
+            );
+            menuItems.push(item);
+        }
+
+        return menuItems;
+    }   
+
+  loadTripData() {
+     
+        $.ajax({
+            method: 'GET',
+            url: '/api/trips/',
+            datatype: 'json',
+            // headers: {
+            //     'Authorization': 'Token ' + localStorage.token
+            // },
+            success: function(res) {
+                this.setState({trip_data: res});
+                 for (let trip of res) {
+                    let itemIndex = res.indexOf(trip);
+                    let key = trip.id +'-'+trip.name
+                    let item = (
+                        <MenuItem
+                            value={trip.id}
+                            key={key}
+                            primaryText={trip.name} />
+                    );
+                    trip_items.push(item);
+                }
+
+            }.bind(this)
+        })
+    };
+    loadLanguageData() {
+     
+        $.ajax({
+            method: 'GET',
+            url: '/api/language-country/',
+            datatype: 'json',
+            // headers: {
+            //     'Authorization': 'Token ' + localStorage.token
+            // },
+            success: function(res) {
+                // this.setState({user: res});
+
+                 for (let language of res) {
+                    let itemIndex = res.indexOf(language);
+                    let value = language.language + '-' + language.country;
+                    let key = language.id +'-'+language.language + '-' + language.country;
+                    let item = (
+                        <MenuItem
+                            value={language.id}
+                            key={key}
+                            primaryText={value} />
+                    );
+                    language_items.push(item);
+                }
+            }.bind(this)
+        })
+    };
+
+
   handleChange(name, event, index, value) { 
      var change = {};
     change[name] = value;
-    console.log(change);
       this.setState(change);
 
     };

@@ -132,10 +132,12 @@ class  UserSettingPanel  extends React.Component {
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.logoutHandler = this.logoutHandler.bind(this);
+    this.loadUserData = this.loadUserData.bind(this);
     this.state = {
       profile: false,
       language: false,
       setting: false,
+      user:[],
     };
   };
 
@@ -188,7 +190,31 @@ class  UserSettingPanel  extends React.Component {
 
     componentDidMount() {
     console.log('mount setting');
+
+    if (auth.loggedIn()) {
+          this.setState({
+          userlogin: true
+        });
+
+        this.loadUserData()
+    }
+
       
+    };
+
+    loadUserData() {
+     
+        $.ajax({
+            method: 'GET',
+            url: '/rest-auth/user/',
+            datatype: 'json',
+            headers: {
+                'Authorization': 'Token ' + localStorage.token
+            },
+            success: function(res) {
+                this.setState({user: res});
+            }.bind(this)
+        })
     };
 
 
@@ -299,6 +325,7 @@ color: 'rgba(32, 27, 27, 0.27)',
         </Popover>
 
          <IconButton 
+         style={{top:3}}
         onTouchTap={this.handleTouchTap.bind(this, 'profile')} 
         >
         <Avatar src="static/photos/person1.png" 
@@ -340,7 +367,7 @@ color: 'rgba(32, 27, 27, 0.27)',
 
            }}
 
-           >Jessica Lee</span>
+           >{ this.state.user.username }</span>
            </div>
       </MenuItem>
             <MenuItem  

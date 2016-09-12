@@ -18,12 +18,20 @@ from django.contrib import admin
 
 from django.views.generic import TemplateView
 
+# from userprofile import trip_urls, language_urls
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(
         r'^(?i)api/profiles/',
         include('userprofile.urls', namespace="profile")),
+    url(
+        r'^(?i)api/trips/',
+        include('userprofile.trip_urls', namespace="trip")),
+    url(
+        r'^(?i)api/language-country/',
+        include('userprofile.language_urls', namespace="language")),
     url(
         r'^[a-zA-Z0-9_.-]*$', TemplateView.as_view(template_name='index.html'),
         name="home"

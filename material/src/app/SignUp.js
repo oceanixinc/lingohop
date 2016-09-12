@@ -19,16 +19,21 @@ import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'rea
 import CustomTheme from './CustomTheme';
 import Avatar from 'material-ui/Avatar';
 
-const language_items = [
-  <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
-  <MenuItem key={2} value={2} primaryText="German - Germany" />,
+// const language_items = [
+//   <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
+//   <MenuItem key={2} value={2} primaryText="German - Germany" />,
   
-];
+// ];
 
-const trip_items = [
-  <MenuItem key={1} value={1} primaryText="Conference" />,
-  <MenuItem key={2} value={2} primaryText="Vacation" />,
-];
+// const trip_items = [
+//   <MenuItem key={1} value={1} primaryText="Conference" />,
+//   <MenuItem key={2} value={2} primaryText="Vacation" />,
+// ];
+
+const language_items = [];
+
+const trip_items = [];
+
 
 
 // This replaces the textColor value on the palette
@@ -162,6 +167,8 @@ class SignUp extends React.Component {
     this.signupForm = this.signupForm.bind(this);
     this.isDisabled = this.isDisabled.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.loadTripData = this.loadTripData.bind(this);
+    this.loadLanguageData = this.loadLanguageData.bind(this);
 
     this.state = {
       profile_picture: '',
@@ -191,11 +198,94 @@ class SignUp extends React.Component {
   };
 
   componentWillReceiveProps(newProps) {
-    console.log('receive props');
-    console.log(newProps);
+    
   }
 
+  componentDidMount() {
+   
+    let email = JSON.parse(localStorage.getItem('front_email')) || [];
+    let language = JSON.parse(localStorage.getItem('language')) || [];
+    let trip = JSON.parse(localStorage.getItem('trip')) || [];
+    console.log(email,language,trip);
+    // if (email.length >0){
+       this.setState({
+                    email: email
+                });
+     // }
+     // if (language >0){
+       this.setState({
+                    language_country: language
+                });
+      // }
+     // if (trip >0){
+       this.setState({
+                    trip: trip
+                });
+      // }
+      console.log(this.state.language_country, this.state.trip)
+
+       this.loadTripData()
+    this.loadLanguageData()
+    
+    };
+
+    loadTripData() {
+     
+        $.ajax({
+            method: 'GET',
+            url: '/api/trips/',
+            datatype: 'json',
+            // headers: {
+            //     'Authorization': 'Token ' + localStorage.token
+            // },
+            success: function(res) {
+                this.setState({trip_data: res});
+                 for (let trip of res) {
+                    let itemIndex = res.indexOf(trip);
+                    let key = trip.id +'-'+trip.name
+                    let item = (
+                        <MenuItem
+                            value={trip.id}
+                            key={key}
+                            primaryText={trip.name} />
+                    );
+                    trip_items.push(item);
+                }
+
+            }.bind(this)
+        })
+    };
+    loadLanguageData() {
+     
+        $.ajax({
+            method: 'GET',
+            url: '/api/language-country/',
+            datatype: 'json',
+            // headers: {
+            //     'Authorization': 'Token ' + localStorage.token
+            // },
+            success: function(res) {
+                // this.setState({user: res});
+
+                 for (let language of res) {
+                    let itemIndex = res.indexOf(language);
+                    let value = language.language + '-' + language.country;
+                    let key = language.id +'-'+language.language + '-' + language.country;
+                    let item = (
+                        <MenuItem
+                            value={language.id}
+                            key={key}
+                            primaryText={value} />
+                    );
+                    language_items.push(item);
+                }
+            }.bind(this)
+        })
+    };
+
   componentWillUpdate(nextProps, nextState) {
+    console.log('updated');
+    
     var check_length = ( nextState.password.length >=6 && nextState.confirm_password.length >=6);
     var check_equal =  (nextState.password == nextState.confirm_password);
     var total_check = (check_length && check_equal)
@@ -382,7 +472,6 @@ class SignUp extends React.Component {
 
   signupForm(e) {
   e.preventDefault();
-   console.log('new staetes', this.state);
 
     let fd = new FormData();  
    // console.log(fp);
@@ -404,8 +493,6 @@ class SignUp extends React.Component {
             data: fd,
             url: '/api/profiles/',
             success: function(res){
-                console.log('signup');
-                console.log(res);
                 // window.location = "/";
                 browserHistory.push('/');
               // this.actions.addUserSuccess(data.message);
@@ -419,9 +506,6 @@ class SignUp extends React.Component {
                     message: status + ' : ' + xhr.responseText,
                 });
 
-           console.log("error",err)
-        console.log("error",xhr.responseText.error)
-         console.log(this.state.message);
       }.bind(this)
 
         })
@@ -432,7 +516,6 @@ class SignUp extends React.Component {
    handleLanguageChange(name, event, index, value) { 
      var change = {};
     change[name] = value;
-    console.log(change);
       this.setState(change);
 
     };
@@ -443,7 +526,6 @@ class SignUp extends React.Component {
 
     let reader = new FileReader();
     let file = e.target.files[0];
-    console.log('file is', file);
 
     reader.onloadend = () => {
       this.setState({
@@ -451,21 +533,14 @@ class SignUp extends React.Component {
         imagePreviewUrl: reader.result
       });
 
-      console.log(this.state);
     }
 
     reader.readAsDataURL(file)
 
-    console.log('states are', this.state);
 
 };
 openFileDialog(){
-  console.log('called');
-  console.log(this.refs.fileUpload);
-  // var fileUploadDom = React.findDOMNode(this.refs.fileUpload);
-  // console.log(fileUploadDom);
   var file_input = this.refs.fileUpload;
-  console.log('test');
   file_input.click();
 };
 

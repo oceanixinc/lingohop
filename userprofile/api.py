@@ -6,30 +6,40 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
-from userprofile.serializers import UserProfileSerializer
-from userprofile.models import User, UserTrip
-
-from django.core.files import File
-
-import base64
-import os
-from django.core.files import File
-import uuid
-from PIL import Image
+from userprofile.serializers import (
+    UserProfileSerializer, TripSerializer,
+    LanguageCountrySerializer)
+from userprofile.models import User, UserTrip, Trip, LanguageCountry
 
 
-class TestFile:
-    def __init__(self, name='', size=0, url=''):
-        self.name = name
-        self.size = size
-        self.url = url
+class TripMixin(object):
+    """Mixin to inherit from.
 
-    def __eq__(self, other):
-        return (
-            isinstance(other, TestFile) and
-            self.name == other.name and
-            self.size == other.size and
-            self.url == other.url)
+    Here we're setting the query set and the serializer
+    """
+
+    serializer_class = TripSerializer
+    queryset = Trip.objects.all()
+
+
+class TripList(TripMixin, ListCreateAPIView):
+    """Return a list of trips or create new ones."""
+    pass
+
+
+class LanguageCountryMixin(object):
+    """Mixin to inherit from.
+
+    Here we're setting the query set and the serializer
+    """
+
+    serializer_class = LanguageCountrySerializer
+    queryset = LanguageCountry.objects.all()
+
+
+class LanguageCountryList(LanguageCountryMixin, ListCreateAPIView):
+    """Return a list of language-countries or create new ones."""
+    pass
 
 
 class UserProfileMixin(object):

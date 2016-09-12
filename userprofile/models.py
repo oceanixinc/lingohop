@@ -2,7 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
-from django.conf.global_settings import LANGUAGES
+# from django.conf.global_settings import LANGUAGES
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
 
@@ -56,6 +56,24 @@ class UserTrip(models.Model):
         null=True, blank=True)
 
 
+class Language(models.Model):
+    """
+    Model to create languages.
+
+    :code: language unique code.
+    :name: language name.
+
+    """
+    code = models.CharField(
+        max_length=60, unique=True, blank=True)
+    name = models.CharField(
+        max_length=60, unique=True, blank=True)
+
+    def __str__(self):
+        """Default function."""
+        return self.name
+
+
 class LanguageCountry(models.Model):
     """
     Model to create language-country combinations.
@@ -64,8 +82,16 @@ class LanguageCountry(models.Model):
     :country: country options.
 
     """
-    language = models.CharField(max_length=7, choices=LANGUAGES)
+    # language = models.CharField(max_length=7, choices=LANGUAGES)
+    language = models.ForeignKey(
+        Language,
+        null=True, blank=True, related_name='languagecountry',
+    )
     country = CountryField()
+
+    def __str__(self):
+        """Default function."""
+        return self.language.name
 
 
 class User(AbstractUser):
