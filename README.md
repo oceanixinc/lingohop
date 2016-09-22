@@ -16,3 +16,13 @@
 	7.b run `sudo npm start` 
 
 8. Run - `python manage.py runserver` in your previous tab
+
+
+#### Database configuration
+
+1. please create .env file on the folder where manage.py exists
+2. in the .env file write the database url in the following format:
+
+	DATABASE_URL=postgres://username:password@hostname:port/database
+
+	ex: DATABASE_URL=postgres://sijan:sijan@localhost:5432/lingohop
