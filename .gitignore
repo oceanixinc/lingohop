@@ -69,3 +69,5 @@ mailhog
 node
 
 lingohop/static/videos/
+
+local_settings.py
