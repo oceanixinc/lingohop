@@ -1,0 +1,17 @@
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.bottom-cards-img{
+    height:400px;
+      object-fit: cover;
+}
+
+.bottom-cards > row >div{
+  margin-bottom:5px;
+}
