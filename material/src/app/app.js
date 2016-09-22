@@ -34,15 +34,6 @@ import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'rea
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-// Render the main app react component into the app div.
-// For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-
-// const AppHeader = () => (
-//   <MuiThemeProvider>
-//     <CardExampleWithAvatar />
-//   </MuiThemeProvider>
-// );
-
 
 const ExperienceLabel = () => (
  <MuiThemeProvider>
@@ -56,22 +47,6 @@ const ExperienceLabel = () => (
   </MuiThemeProvider>
 );
 
-
-// const AppDiscover = () => (
-//   <MuiThemeProvider>
-//     <DiscoverPanel />
-//   </MuiThemeProvider>
-// );
-
-
-
-
-// render(<SignUp />, document.getElementById('app'));
-// render(<FrontVideoComponent />, document.getElementById('header'));
-// render(<DiscoverPanel />, document.getElementById('discover'));
-// render(<ExperienceLabel />, document.getElementById('experienceLabel'));
-// render(<ExperiencePanel />, document.getElementById('experiencePanel'));
-// render(<FooterPanel />, document.getElementById('footer'));
 
 render((
    <Router history={browserHistory}>

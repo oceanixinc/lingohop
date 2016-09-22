@@ -19,26 +19,10 @@ import { browserHistory, Router, Route,  IndexRoute, IndexLink, Link } from 'rea
 import CustomTheme from './CustomTheme';
 import Avatar from 'material-ui/Avatar';
 
-// const language_items = [
-//   <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
-//   <MenuItem key={2} value={2} primaryText="German - Germany" />,
-  
-// ];
-
-// const trip_items = [
-//   <MenuItem key={1} value={1} primaryText="Conference" />,
-//   <MenuItem key={2} value={2} primaryText="Vacation" />,
-// ];
 
 const language_items = [];
 
 const trip_items = [];
-
-
-
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
 
 const style = {
   height:'auto',
@@ -261,9 +245,6 @@ class SignUp extends React.Component {
             method: 'GET',
             url: '/api/language-country/',
             datatype: 'json',
-            // headers: {
-            //     'Authorization': 'Token ' + localStorage.token
-            // },
             success: function(res) {
                 // this.setState({user: res});
 
@@ -284,8 +265,6 @@ class SignUp extends React.Component {
     };
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('updated');
-    
     var check_length = ( nextState.password.length >=6 && nextState.confirm_password.length >=6);
     var check_equal =  (nextState.password == nextState.confirm_password);
     var total_check = (check_length && check_equal)
@@ -294,7 +273,6 @@ class SignUp extends React.Component {
   };
 
    validateEmail(value) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
   };
@@ -731,11 +709,3 @@ openFileDialog(){
 
 export default SignUp;
 
-
- // <div>
-        // <DatePicker textFieldStyle={{width: '100%', marginLeft:'20px'}} hintText="Landscape Dialog" mode="landscape" style={textfieldStyles.datestyle} />
-        // </div>
-
-
-         // <img ref="image" style={{height: 50, width: 50}} src={this.state.imagePreviewUrl} />
-      // <div style = {{backgroundImage: 'url(' + this.state.imagePreviewUrl + ')'}}></div>

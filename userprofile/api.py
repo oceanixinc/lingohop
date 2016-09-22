@@ -112,26 +112,4 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
 class UserProfileDetail(UserProfileMixin, RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
 
-    lookup_field = 'id'
-
-
-# io = BytesIO(imgdata)
-# photo_obj.image.save(fname, File(io))
-
-# imgstr64 = request.data.get('profile_picture', None)
-#         print ('image str', imgstr64)
-#         my_image = imgstr64.split('base64,')
-#         img_ext = my_image[0].split('/')
-#         imgdata = base64.b64decode(my_image[1])
-#         file_name = str(uuid.uuid4())
-#         fname = './media/profiles/%s.%s' % (file_name, img_ext[1])
-#         with open(fname, 'wb') as f:
-#             f.write(imgdata)
-#         print ('type file', type(f))
-#         print ('lanageu', request.data.get('language_country'))
-#         print ('trip', request.data.get('trip'))
-#         # final_file = open(fname)
-#         from io import BytesIO
-#         thumb = Image()
-#         io = BytesIO(imgdata)
-#         
+    lookup_field = 'username'

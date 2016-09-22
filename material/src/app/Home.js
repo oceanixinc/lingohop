@@ -13,22 +13,6 @@ import FrontVideoComponent from './Frontheader'; // Our custom react component
 import DiscoverPanel from './DiscoverPanel'; // Our custom react component
 import ExperiencePanel from './ExperiencePanel'; // Our custom react component
 import CustomTheme from './CustomTheme';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// injectTapEventPlugin();
-
-
-// const ExperienceLabel = () => (
-//  // <MuiThemeProvider>
-//   <div style={{textAlign: 'center', marginTop: 30}}>
-   
-//       <CardTitle 
-     
-//       title="An experience just for you" subtitle="Learn a language based on your unique needs." />
-    
-//   </div>
-//   // </MuiThemeProvider>
-// );
 
 
 class ExperienceLabel extends React.Component {
@@ -47,33 +31,6 @@ class ExperienceLabel extends React.Component {
   }
 }
 
-// export default ExperienceLabel;
-
-
-
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
-const ArrowIcon = (props) => (
-  <SvgIcon {...props}>
-    <path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z" />
-  </SvgIcon>
-);
-
-
-const muiTheme = getMuiTheme({
-  fontFamily: 'Roboto, sans-serif',
-  palette: {
-    textColor: Colors.darkBlack,
-    primary1Color: Colors.white,
-    primary2Color: Colors.indigo700,
-    accent1Color: Colors.redA200,
-    pickerHeaderColor: Colors.darkBlack,
-  },
-  appBar: {
-    height: 60,
-  },
-});
 
 const titleStyles = {
   title: {

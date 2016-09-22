@@ -44,6 +44,9 @@ class TripSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     # trip = TripSerializer()
+    full_name = serializers.CharField(
+        source='get_full_name',
+        required=False, read_only=True)
 
     class Meta:
         model = User
@@ -55,6 +58,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'profile_picture',
             'language_country', 'trip',
             'subscription_type',
+            'full_name',
         )
 
     def create(self, validated_data):

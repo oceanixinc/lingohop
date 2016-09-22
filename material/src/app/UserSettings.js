@@ -1,6 +1,6 @@
  /**
-  * DiscoverPanel.js
-  * In the home page, we have a panel
+  * UserSettings.js
+  * In the user setting component, user nav-bar settings panel will be displayed
   */
 
 import React from 'react';
@@ -154,22 +154,10 @@ class  UserSettingPanel  extends React.Component {
     console.log(value);
     this.setState(change)
 
-    // this.setState({
-      
-    //   anchorEl: event.currentTarget,
-    // });
-    // console.log(this.state);
+   
   };
 
-   // handleChange(name, event, index, value) { 
-   //   var change = {};
-   //  change[name] = value;
-   //  console.log(change);
-   //    this.setState(change);
-
-   //  };
-
-
+ 
   handleRequestClose(name, event, index, value) {
     var change = {};
     change[name] = false;
@@ -212,7 +200,19 @@ class  UserSettingPanel  extends React.Component {
                 'Authorization': 'Token ' + localStorage.token
             },
             success: function(res) {
-                this.setState({user: res});
+                console.log(res);
+
+                // this.setState({user: res});
+
+                          $.ajax({
+                      method: 'GET',
+                      url: '/api/profiles/'+res.username,
+                      datatype: 'json',
+                      success: function(res) {
+                          console.log(res);
+                          this.setState({user: res});
+                      }.bind(this)
+                  })
             }.bind(this)
         })
     };
@@ -328,7 +328,7 @@ color: 'rgba(32, 27, 27, 0.27)',
          style={{top:3}}
         onTouchTap={this.handleTouchTap.bind(this, 'profile')} 
         >
-        <Avatar src="static/photos/person1.png" 
+        <Avatar src={this.state.user.profile_picture} 
         size={30}
      //    style={{ width: '30',
      //  float: 'left',
@@ -351,7 +351,7 @@ color: 'rgba(32, 27, 27, 0.27)',
           >
             <MenuItem >
 
-             <Avatar src="static/photos/person1.png" 
+             <Avatar src={this.state.user.profile_picture} 
         size={30}
 
        
@@ -367,7 +367,7 @@ color: 'rgba(32, 27, 27, 0.27)',
 
            }}
 
-           >{ this.state.user.username }</span>
+           >{ this.state.user.full_name }</span>
            </div>
       </MenuItem>
             <MenuItem  

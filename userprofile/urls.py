@@ -13,7 +13,7 @@ urlpatterns = [
         name='userprofile'
     ),
     url(
-        r'^(?P<id>[0-9]+)$',
+        r'^(?P<username>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$',
         UserProfileDetail.as_view(),
         name='userprofile-detail'
     ),

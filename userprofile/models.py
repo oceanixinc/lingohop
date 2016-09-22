@@ -124,3 +124,16 @@ class User(AbstractUser):
         null=True, blank=True, related_name='userprofile',
     )
     # objects = UserProfileManager()
+
+    def get_full_name(self):
+        if self.first_name:
+            f_name = ' '.join(
+                [i.capitalize() for i in self.first_name.split(' ')])
+            last_name = ' '.join(
+                [i.capitalize() for i in self.last_name.split(' ')])
+            full_name = [f_name, last_name]
+            full_name = ' '.join(
+                [i.strip() for i in full_name if i.strip()])
+            return full_name
+        else:
+            return "%s" % (self.username)

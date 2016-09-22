@@ -54,12 +54,10 @@ export default class SelectLangaugeCountry extends React.Component {
 
   submitData(e) {
   e.preventDefault();
-  console.log(this.state.language, this.state.trip);
   localStorage.setItem('front_email', JSON.stringify(this.state.email));
   localStorage.setItem('language', JSON.stringify(this.state.language));
   localStorage.setItem('trip', JSON.stringify(this.state.trip));
   browserHistory.push('/signup');
-  // this.context.router.transitionTo('/signup');
 
   };
 
@@ -75,21 +73,6 @@ export default class SelectLangaugeCountry extends React.Component {
    
     };
 
-    _createTripMenuItems() {
-        let menuItems = [];
-        for (let province of provinces) {
-            let itemIndex = provinces.indexOf(province);
-            let item = (
-                <MenuItem
-                    value={itemIndex}
-                    key={`key-${province}`}
-                    primaryText={province} />
-            );
-            menuItems.push(item);
-        }
-
-        return menuItems;
-    }   
 
   loadTripData() {
      
@@ -97,9 +80,6 @@ export default class SelectLangaugeCountry extends React.Component {
             method: 'GET',
             url: '/api/trips/',
             datatype: 'json',
-            // headers: {
-            //     'Authorization': 'Token ' + localStorage.token
-            // },
             success: function(res) {
                 this.setState({trip_data: res});
                  for (let trip of res) {
@@ -123,11 +103,7 @@ export default class SelectLangaugeCountry extends React.Component {
             method: 'GET',
             url: '/api/language-country/',
             datatype: 'json',
-            // headers: {
-            //     'Authorization': 'Token ' + localStorage.token
-            // },
             success: function(res) {
-                // this.setState({user: res});
 
                  for (let language of res) {
                     let itemIndex = res.indexOf(language);
@@ -154,7 +130,6 @@ export default class SelectLangaugeCountry extends React.Component {
     };
 
      validateEmail(value) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
   };

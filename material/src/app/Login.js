@@ -121,37 +121,37 @@ class Login extends React.Component {
     };
   };
 
-  componentDidMount() {
-       if (auth.loggedIn()) {
-          this.setState({
-          userlogin: true
-        });
+    componentDidMount() {
+         if (auth.loggedIn()) {
+            this.setState({
+            userlogin: true
+          });
 
-        this.loadUserData()
-    }
-    else{
+          this.loadUserData()
+      }
+      else{
+         this.setState({
+            userlogin: false
+          });
+      }
        this.setState({
-          userlogin: false
-        });
-    }
-     this.setState({
-          form_error: false
-        });
-    };
+            form_error: false
+          });
+      };
 
-    componentWillUnmount() {
-      console.log('login unmount');
-      this.setState({
-          form_error: false
-        });
-  
-};
+      componentWillUnmount() {
+        console.log('login unmount');
+        this.setState({
+            form_error: false
+          });
+    
+  };
 
-componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
     nextState.invalidData = !(nextState.username && nextState.password);
   };
 
- componentDidUnmount() {
+    componentDidUnmount() {
    };
 
 
@@ -176,7 +176,6 @@ componentWillUpdate(nextProps, nextState) {
     };
 
     validateEmail(value) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
   };
