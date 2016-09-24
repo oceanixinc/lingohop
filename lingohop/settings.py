@@ -116,6 +116,21 @@ DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
     'default': env.db("DATABASE_URL", default="postgres:///lingohop"),
 }
+
+import mongoengine as mongo
+
+# _MONGODB_USER = ''
+# _MONGODB_PASSWD = ''
+_MONGODB_HOST = '52.67.163.70'
+_MONGODB_NAME = 'lingohop'
+# _MONGODB_DATABASE_HOST = \
+#     'mongodb://%s:%s@%s/%s' \
+#     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
+
+# mongo.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
+mongo.connect(
+    _MONGODB_NAME, host=_MONGODB_HOST, port=27017, alias='default')
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # Password validation
