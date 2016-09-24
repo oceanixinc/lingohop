@@ -111,11 +111,13 @@ class User(AbstractUser):
     )
     language_country = models.ManyToManyField(
         LanguageCountry,
+        null=True, blank=True,
         related_name='userprofile',
         verbose_name=_("Language Country Information")
     )
     trip = models.ManyToManyField(
         UserTrip,
+        blank=True,
         related_name='userprofile',
         verbose_name=_("Trip Information")
     )
@@ -137,3 +139,14 @@ class User(AbstractUser):
             return full_name
         else:
             return "%s" % (self.username)
+
+
+     # Meta and String
+    class Meta:
+        verbose_name = _("User Information")
+        verbose_name_plural = _("Users Information")
+
+        permissions = (
+
+            ("create_new_user", "Can create new user"),
+        )
