@@ -48,7 +48,7 @@ htmlcov
 *.swo
 
 # npm
-node_modules/
+client/node_modules/
 
 # Compass
 .sass-cache
@@ -68,6 +68,6 @@ mailhog
 
 node
 
-lingohop/static/videos/
+server/lingohop/static/videos/
 
 local_settings.py
