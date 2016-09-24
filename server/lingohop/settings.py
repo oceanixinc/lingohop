@@ -63,6 +63,7 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'userprofile',  # user profile  Modules
+    'content',  # user profile  Modules
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -121,6 +122,7 @@ import mongoengine as mongo
 
 # _MONGODB_USER = ''
 # _MONGODB_PASSWD = ''
+# _MONGODB_HOST = 'localhost'
 _MONGODB_HOST = '52.67.163.70'
 _MONGODB_NAME = 'lingohop'
 # _MONGODB_DATABASE_HOST = \
