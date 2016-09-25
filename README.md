@@ -7,8 +7,9 @@
 3. Go inside 'server' folder where you can find 'requirements.txt'
 4. Run - `pip install -r requirements.txt`
 5. Create database with command - `createdb lingohop`
-6. Run - `python manage.py migrate`
-7. Run - `python manage.py runserver`
+6. Run - pip install mongoengine
+7. Run - `python manage.py migrate`
+8. Run - `python manage.py runserver`
 
 #### Client configuration
 
