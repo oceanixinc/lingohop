@@ -42,7 +42,7 @@ class Category(EmbeddedDocument):
 class Language(EmbeddedDocument):
     """
     """
-    # name = fields.StringField()
+    name = fields.StringField()
     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
@@ -51,7 +51,7 @@ class Country(DynamicDocument):
     """
     name = fields.StringField(max_length=100, unique=True)
     # name = fields.StringField()
-    # spanish = fields.EmbeddedDocumentField(Language)
+    language = fields.ListField((fields.EmbeddedDocumentField(Language)))
 
 
 
@@ -78,6 +78,8 @@ class Asset(EmbeddedDocument):
     id = fields.UUIDField(binary=False, default=uuid.uuid4)
     name = fields.StringField()
     description = fields.StringField()
+    language = fields.EmbeddedDocument(Language)
+    country = fields.EmbeddedDocument(Country)
     category = fields.EmbeddedDocumentField(Category)
     type = fields.StringField() # Audio or Video
     object = fields.FileField()
