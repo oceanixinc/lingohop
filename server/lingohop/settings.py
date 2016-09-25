@@ -122,9 +122,9 @@ import mongoengine as mongo
 
 # _MONGODB_USER = ''
 # _MONGODB_PASSWD = ''
-# _MONGODB_HOST = 'localhost'
-_MONGODB_HOST = '52.67.163.70'
-_MONGODB_NAME = 'lingohop'
+_MONGODB_HOST = 'localhost'
+# _MONGODB_HOST = '52.67.163.70'
+_MONGODB_NAME = 'lingohop1'
 # _MONGODB_DATABASE_HOST = \
 #     'mongodb://%s:%s@%s/%s' \
 #     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)

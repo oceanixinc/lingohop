@@ -6,26 +6,21 @@ from mongoengine import fields
 # Create your models here.
 
 
-# class Category(models.Model):
-#     id = models.UUIDField(
-#         primary_key=True, default=uuid.uuid4, editable=False)
-#     name = models.CharField(max_length=200)
+class Content(EmbeddedDocument):
+    """
+    """
+    question_text = fields.ListField()
+    answer_text = fields.ListField()
+    variables = fields.ListField()
+    rules = fields.ListField()
 
-
-# class Lesson(models.Model):
-#     category = models.ForeignKey(
-#         Category,
-#         null=True, blank=True, related_name='lesson',
-#     )
-#     name = models.CharField(max_length=200)
 
 class Part(EmbeddedDocument):
     """
     """
-    name = fields.StringField()
-    question_text = fields.ListField()
-    answer_text = fields.ListField()
-    question_text = fields.ListField()
+    # name = fields.StringField()
+    part1 = fields.EmbeddedDocumentField(Content)
+    part2 = fields.EmbeddedDocumentField(Content)
 
 
 class Lesson(EmbeddedDocument):
@@ -38,6 +33,7 @@ class Lesson(EmbeddedDocument):
 class Category(EmbeddedDocument):
     """
     """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
     name = fields.StringField()
     lessons = fields.ListField(fields.EmbeddedDocumentField(Lesson))
 
@@ -45,20 +41,26 @@ class Category(EmbeddedDocument):
 class Language(EmbeddedDocument):
     """
     """
-    name = fields.StringField()
-    category = fields.EmbeddedDocumentField(Category)
+    # name = fields.StringField()
+    categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
-class Country(DynamicEmbeddedDocument):
+class Country(DynamicDocument):
     """
     """
-    pass
+    name = fields.StringField(max_length=100, unique=True)
     # name = fields.StringField()
     # spanish = fields.EmbeddedDocumentField(Language)
 
-    def __unicode__(self):
-        return str(self.id)
 
 
-class CountryModel(DynamicDocument):
-    pass
+# class Country(DynamicEmbeddedDocument):
+#     """
+#     """
+#     pass
+#     # name = fields.StringField()
+#     # spanish = fields.EmbeddedDocumentField(Language)
+
+
+# class CountryModel(DynamicDocument):
+#     pass
