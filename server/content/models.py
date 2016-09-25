@@ -13,6 +13,7 @@ class Content(EmbeddedDocument):
     answer_text = fields.ListField()
     variables = fields.ListField()
     rules = fields.ListField()
+    assets = fields.ListField(fields.EmbeddedDocumentField(Asset))
 
 
 class Part(EmbeddedDocument):
@@ -64,3 +65,17 @@ class Country(DynamicDocument):
 
 # class CountryModel(DynamicDocument):
 #     pass
+
+
+class Asset(EmbeddedDocument):
+    """
+    Assets will be similar across languages, as they directly represent real world objects
+    for example a mango or an apple .
+    Idea is to link these assets to language parts across different languages.
+    Thus assets will exist as independently as first class citizens
+    """
+    id = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.StringField()
+    text = fields.StringField()
+    type = fields.StringField() # Audio or Video
+    object = fields.FileField()
