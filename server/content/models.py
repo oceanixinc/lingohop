@@ -73,9 +73,12 @@ class Asset(EmbeddedDocument):
     for example a mango or an apple .
     Idea is to link these assets to language parts across different languages.
     Thus assets will exist as independently as first class citizens
+    It may also be a good thing to categorize these assets
     """
     id = fields.UUIDField(binary=False, default=uuid.uuid4)
     name = fields.StringField()
-    text = fields.StringField()
+    description = fields.StringField()
+    category = fields.EmbeddedDocumentField(Category)
     type = fields.StringField() # Audio or Video
     object = fields.FileField()
+
