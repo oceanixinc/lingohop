@@ -1,7 +1,4 @@
- /**
-  * DiscoverPanel.js
-  * In the home page, we have a panel
-  */
+
 
 import React from 'react';
 import Paper from 'material-ui/Paper';
@@ -45,24 +42,21 @@ const styles = {
   },
   largeIcon: {
     width: 60,
-    height: 60,
+    height: 60
   },
   small: {
-    // width: 72,
-    // height: 72,
+
     width: 27,
     height: 27,
-    padding: 5,
+    padding: 5
   },
   medium: {
     width: 96,
     height: 96,
-    // padding: 24,
   },
   large: {
     width: 120,
-    height: 120,
-    // padding: 30,
+    height: 120
   },
 };
 
@@ -70,22 +64,19 @@ const styles = {
 const buttonStyle = {
   margin: 12,
   marginTop: 60,
-  marginLeft : 140,
-  // backgroundColor: Colors.cyan500,
-  // background: Colors.cyan500,
+  marginLeft : 140
+
 };
 
 const mediaTitleStyles = {
 
   title:{
     fontSize: 20,
-    // fontWeight: 'bold',
     lineHeight: '20px',
   },
   subtitle:{
     fontSize: 12,
-    marginTop: 20,
-    // fontWeight: 'bold',
+    marginTop: 20
   },
 
 };
@@ -119,10 +110,9 @@ const flexContainer = {
 const flex1Container = {
   display: 'flex',
   flexDirection: 'row',
-  
+
 };
 
-// const UserSettingPanel = () => (
 
 class  UserSettingPanel  extends React.Component {
 
@@ -142,8 +132,7 @@ class  UserSettingPanel  extends React.Component {
   };
 
   handleTouchTap(name, event, index, value) {
-    // This prevents ghost click.
-   
+
     event.preventDefault();
     var change = {};
     change[name] = true;
@@ -154,38 +143,23 @@ class  UserSettingPanel  extends React.Component {
     console.log(value);
     this.setState(change)
 
-    // this.setState({
-      
-    //   anchorEl: event.currentTarget,
-    // });
-    // console.log(this.state);
+
   };
 
-   // handleChange(name, event, index, value) { 
-   //   var change = {};
-   //  change[name] = value;
-   //  console.log(change);
-   //    this.setState(change);
 
-   //  };
 
 
   handleRequestClose(name, event, index, value) {
     var change = {};
     change[name] = false;
     this.setState(change)
-    // this.setState({
-    //   open: false,
-    // });
+
   };
 
     logoutHandler() {
       console.log('called logout handler');
        delete localStorage.token
-        // auth.logout()
-        //  this.setState({
-        //   userlogin: false
-        // });
+
     };
 
     componentDidMount() {
@@ -199,11 +173,11 @@ class  UserSettingPanel  extends React.Component {
         this.loadUserData()
     }
 
-      
+
     };
 
     loadUserData() {
-     
+
         $.ajax({
             method: 'GET',
             url: '/rest-auth/user/',
@@ -230,14 +204,14 @@ class  UserSettingPanel  extends React.Component {
   render() {
     return (
       <div>
-       
+
         <IconButton style={{width: '', height: '', padding: ''}} iconStyle={{width:18, height:18}}
-        onTouchTap={this.handleTouchTap.bind(this, 'setting')} 
+        onTouchTap={this.handleTouchTap.bind(this, 'setting')}
         >
         <NavigationApps />
 
         </IconButton>
-        
+
         <Popover
           open={this.state.setting}
           anchorEl={this.state.anchorEl}
@@ -246,7 +220,7 @@ class  UserSettingPanel  extends React.Component {
           onRequestClose={this.handleRequestClose.bind(this, 'setting')}
         >
 
-                <List 
+                <List
 
 
           style={flexContainer}>
@@ -274,23 +248,23 @@ class  UserSettingPanel  extends React.Component {
     >
       <SocialGroup />
     </IconButton>
-      </ListItem>      
-    
-  </List>
-      
+      </ListItem>
 
-  
+  </List>
+
+
+
         </Popover>
 
          <IconButton style={{paddingBottom: 5, width: '', height: '', padding: '', top: -2}}
-        onTouchTap={this.handleTouchTap.bind(this, 'language')} 
+        onTouchTap={this.handleTouchTap.bind(this, 'language')}
         >
-                      <Avatar size={15} src="static/photos/flag_england.svg" 
+                      <Avatar size={15} src="static/photos/flag_england.svg"
 
-   /> 
+   />
 
         </IconButton>
-        
+
         <Popover
           open={this.state.language}
           anchorEl={this.state.anchorEl}
@@ -298,11 +272,11 @@ class  UserSettingPanel  extends React.Component {
           targetOrigin={{horizontal: 'bottom', vertical: 'top'}}
           onRequestClose={this.handleRequestClose.bind(this, 'language')}
         >
-          <Menu 
+          <Menu
 
 
 
-          style={{textAlign:'center'}} listStyle={{ 
+          style={{textAlign:'center'}} listStyle={{
 color: 'rgba(32, 27, 27, 0.27)',}}>
            <span
 
@@ -314,29 +288,28 @@ color: 'rgba(32, 27, 27, 0.27)',
            }}
 
            >Your Languages</span>
-             <MenuItem style={{textAlign:'right', fontSize: 13,color: 'rgba(32, 27, 27, 0.27)'}} primaryText="Spanish - Spain" leftIcon={<Avatar style={{width: 18, height: 18}}  src="static/photos/flag_england.svg" 
+             <MenuItem style={{textAlign:'right', fontSize: 13,color: 'rgba(32, 27, 27, 0.27)'}} primaryText="Spanish - Spain" leftIcon={<Avatar style={{width: 18, height: 18}}  src="static/photos/flag_england.svg"
 
    /> } />
-        <MenuItem style={{textAlign:'right', fontSize: 13,color: 'rgba(32, 27, 27, 0.27)'}} primaryText="Spanish - Mexico" leftIcon={<Avatar style={{width: 18, height: 18}}  src="static/photos/flag_england.svg" 
+        <MenuItem style={{textAlign:'right', fontSize: 13,color: 'rgba(32, 27, 27, 0.27)'}} primaryText="Spanish - Mexico" leftIcon={<Avatar style={{width: 18, height: 18}}  src="static/photos/flag_england.svg"
 
    /> } />
         <MenuItem style={{textAlign:'right', fontSize: 13,color: 'rgba(32, 27, 27, 0.27)'}} primaryText="Add Language" leftIcon={<ContentAddCircle/ >} />
           </Menu>
         </Popover>
 
-         <IconButton 
+         <IconButton
          style={{top:3}}
-        onTouchTap={this.handleTouchTap.bind(this, 'profile')} 
+        onTouchTap={this.handleTouchTap.bind(this, 'profile')}
         >
-        <Avatar src="static/photos/person1.png" 
+        <Avatar src="static/photos/person1.png"
         size={30}
      //    style={{ width: '30',
-     //  float: 'left',
-     // height: '30', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}}
-      /> 
+
+      />
 
         </IconButton>
-        
+
         <Popover style={{padding: 0}}
           open={this.state.profile}
           anchorEl={this.state.anchorEl}
@@ -351,12 +324,12 @@ color: 'rgba(32, 27, 27, 0.27)',
           >
             <MenuItem >
 
-             <Avatar src="static/photos/person1.png" 
+             <Avatar src="static/photos/person1.png"
         size={30}
 
-       
-   
-      /> 
+
+
+      />
       <div>
        <span
 
@@ -370,9 +343,9 @@ color: 'rgba(32, 27, 27, 0.27)',
            >{ this.state.user.username }</span>
            </div>
       </MenuItem>
-            <MenuItem  
-            // onTouchTap={this.logoutHandler} 
-            onTouchTap={this.props.handleLogout} 
+            <MenuItem
+            // onTouchTap={this.logoutHandler}
+            onTouchTap={this.props.handleLogout}
             style={{lineHeight: '20px', fontSize: 12, padding:12}} primaryText="SIGN OUT" />
           </Menu>
         </Popover>
@@ -382,4 +355,3 @@ color: 'rgba(32, 27, 27, 0.27)',
 }
 
 export default UserSettingPanel;
-

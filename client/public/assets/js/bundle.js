@@ -52505,90 +52505,6 @@ module.exports = warning;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Card = require('material-ui/Card');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var BottomCardsPanel = function BottomCardsPanel() {
-    return _react2.default.createElement(
-        'div',
-        { className: 'bottom-cards' },
-        _react2.default.createElement(
-            'row',
-            { className: 'col-md-12' },
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-4 col-md-offset-3' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-2' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            )
-        ),
-        _react2.default.createElement(
-            'row',
-            { className: 'col-md-12' },
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-2 col-md-offset-3' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-4' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            )
-        )
-    );
-};
-
-exports.default = BottomCardsPanel;
-
-},{"material-ui/Card":221,"react":536}],552:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CustomTheme = undefined;
@@ -52613,46 +52529,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-// export const CustomTheme = Object.freeze({
-//   spacing: Spacing,
-//   fontFamily: 'Roboto, sans-serif',
-//   // palette: {
-//   //   textColor: Colors.darkBlack,
-//   //   primary1Color: Colors.white,
-//   //   primary2Color: Colors.indigo700,
-//   //   // accent1Color: Colors.redA200,
-//   //   pickerHeaderColor: Colors.darkBlack,
-//   //   // primary1Color: Colors.blueGrey500,
-//   //   // primary2Color: Colors.cyan700,
-//   //   primary3Color: Colors.lightBlack,
-//   //   accent1Color: Colors.pinkA200,
-//   //   accent2Color: Colors.grey100,
-//   //   accent3Color: Colors.grey500,
-//   //   // textColor: Colors.darkBlack,
-//   //   alternateTextColor: Colors.white,
-//   //   canvasColor: Colors.white,
-//   //   borderColor: Colors.grey300,
-//   //   disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
-//   // },
-//   palette: {
-//     textColor: Colors.darkBlack,
-//     primary1Color: Colors.white,
-//     primary2Color: Colors.indigo700,
-//     accent1Color: Colors.redA200,
-//     pickerHeaderColor: Colors.darkBlack,
-//   },
-//   appBar: {
-//     height: 60,
-//   },
-// });
-
 var CustomTheme = exports.CustomTheme = (0, _getMuiTheme2.default)({
   fontFamily: 'Roboto, sans-serif',
   palette: {
     textColor: Colors.darkBlack,
     primary1Color: Colors.white,
-    // primary2Color: Colors.indigo700,
-    // accent1Color: Colors.redA200,
     pickerHeaderColor: Colors.darkBlack
   },
   appBar: {
@@ -52660,11 +52541,11 @@ var CustomTheme = exports.CustomTheme = (0, _getMuiTheme2.default)({
   }
 });
 
-},{"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"material-ui/styles/spacing":300,"material-ui/utils/colorManipulator":326}],553:[function(require,module,exports){
+},{"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"material-ui/styles/spacing":300,"material-ui/utils/colorManipulator":326}],552:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = require('react');
@@ -52696,70 +52577,62 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var style = {
-  height: 270,
-  width: 423,
-  // margin: 20,
-  textAlign: 'left',
-  display: 'inline-block',
-  overflow: 'hidden'
-}; /**
-    * DiscoverPanel.js
-    * In the home page, we have a panel
-    */
+    height: 270,
+    width: 423,
+    textAlign: 'left',
+    display: 'inline-block',
+    overflow: 'hidden'
+};
 
 var buttonStyle = {
-  margin: 12,
-  marginTop: 60,
-  marginLeft: 140
+    margin: 12,
+    marginTop: 60,
+    marginLeft: 140
 };
 
 var mediaTitleStyles = {
 
-  title: {
-    fontSize: 20,
-    // fontWeight: 'bold',
-    lineHeight: '20px'
-  },
-  subtitle: {
-    fontSize: 12,
-    marginTop: 20
-  }
-
+    title: {
+        fontSize: 20,
+        lineHeight: '20px'
+    },
+    subtitle: {
+        fontSize: 12,
+        marginTop: 20
+    }
 };
 
 var DiscoverPanel = function DiscoverPanel() {
-  return (
-    // <MuiThemeProvider>
-    _react2.default.createElement(
-      'div',
-      { style: { textAlign: 'center', marginTop: 30 } },
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 1 },
-        _react2.default.createElement('img', { src: 'static/photos/paris.png', style: { width: '100%', height: 'auto' } })
-      ),
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 2 },
-        _react2.default.createElement(_Card.CardTitle, {
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          title: 'Discover what learning a new language can do for you', subtitle: 'Open your trip to a new world of possibilities with Lingohop' }),
-        _react2.default.createElement(_RaisedButton2.default, { containerElement: _react2.default.createElement(_reactRouter.Link, { to: '/signup' }), label: 'GET STARTED', backgroundColor: '#00BCD4', labelColor: '#ffffff', style: buttonStyle })
-      )
-    )
-    // </MuiThemeProvider>
-
-  );
+    return _react2.default.createElement(
+        'div',
+        { style: {
+                textAlign: 'center',
+                marginTop: 30
+            } },
+        _react2.default.createElement(
+            _Paper2.default,
+            { style: style, zDepth: 1 },
+            _react2.default.createElement('img', { src: 'static/photos/paris.png', style: {
+                    width: '100%',
+                    height: 'auto'
+                } })
+        ),
+        _react2.default.createElement(
+            _Paper2.default,
+            { style: style, zDepth: 2 },
+            _react2.default.createElement(_Card.CardTitle, { titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, title: 'Discover what learning a new language can do for you', subtitle: 'Open your trip to a new world of possibilities with Lingohop' }),
+            _react2.default.createElement(_RaisedButton2.default, { containerElement: _react2.default.createElement(_reactRouter.Link, { to: '/signup' }), label: 'GET STARTED', backgroundColor: '#00BCD4', labelColor: '#ffffff', style: buttonStyle })
+        )
+    );
 };
 
 exports.default = DiscoverPanel;
 
-},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536,"react-router":376}],554:[function(require,module,exports){
+},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536,"react-router":376}],553:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = require('react');
@@ -52783,164 +52656,128 @@ var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var style = {
-  height: 270,
-  width: 280,
-  margin: 20,
-  textAlign: 'center',
-  display: 'inline-block',
-  overflow: 'hidden',
-  padding: 0
-
-}; /**
-    * ExperiencePanel.js
-    * In the home page, we have a panel for sharing experience
-    * 
-    */
+    height: 270,
+    width: 280,
+    margin: 20,
+    textAlign: 'center',
+    display: 'inline-block',
+    overflow: 'hidden',
+    padding: 0
+};
 
 var buttonStyle = {
-  margin: 12,
-  marginTop: 60,
-  marginLeft: 140
+    margin: 12,
+    marginTop: 60,
+    marginLeft: 140
 };
 
 var imageStyle = {
-  width: '30%',
-  height: 'auto',
-  marginTop: 10
+    width: '30%',
+    height: 'auto',
+    marginTop: 10
 };
 var nameStyle = {
-  marginTop: 10,
-  marginBottom: 15
+    marginTop: 10,
+    marginBottom: 15
 };
 
 var cardStyle = {
-  padding: 0
+    padding: 0
 };
 
 var firstNameStyle = {
-  color: 'rgba(23, 20, 20, 0.46)'
+    color: 'rgba(23, 20, 20, 0.46)'
 };
 var mediaTitleStyles = {
 
-  title: {
-    fontSize: 20,
-    // fontWeight: 'bold',
-    lineHeight: '20px'
-  },
-  subtitle: {
-    fontSize: 12
-  }
-
+    title: {
+        fontSize: 20,
+        lineHeight: '20px'
+    },
+    subtitle: {
+        fontSize: 12
+    }
 };
 
 var ExperiencePanel = function ExperiencePanel() {
-  return (
-    // <MuiThemeProvider>
-    _react2.default.createElement(
-      'div',
-      { style: { textAlign: 'center', marginTop: 0 } },
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 1 },
-        _react2.default.createElement('img', { src: 'static/photos/person1.png', style: imageStyle }),
+    return _react2.default.createElement(
+        'div',
+        { style: {
+                textAlign: 'center',
+                marginTop: 0
+            } },
         _react2.default.createElement(
-          'div',
-          { style: nameStyle },
-          _react2.default.createElement(
-            'span',
-            { style: firstNameStyle },
-            'Alex '
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            ' : Study Aboard'
-          )
+            _Paper2.default,
+            { style: style, zDepth: 1 },
+            _react2.default.createElement('img', { src: 'static/photos/person1.png', style: imageStyle }),
+            _react2.default.createElement(
+                'div',
+                { style: nameStyle },
+                _react2.default.createElement(
+                    'span',
+                    { style: firstNameStyle },
+                    'Alex'
+                ),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    ': Study Aboard'
+                )
+            ),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Engaging in the classroom' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Connecting with host family' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Being prepared for foreign life' })
         ),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '1. Engaging in the classroom' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '2. Connecting with host family' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '3. Being prepared for foreign life' })
-      ),
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 1 },
-        _react2.default.createElement('img', { src: 'static/photos/person2.png', style: imageStyle }),
         _react2.default.createElement(
-          'div',
-          { style: nameStyle },
-          _react2.default.createElement(
-            'span',
-            { style: firstNameStyle },
-            'Sarah '
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            ' : Vacation'
-          )
+            _Paper2.default,
+            { style: style, zDepth: 1 },
+            _react2.default.createElement('img', { src: 'static/photos/person2.png', style: imageStyle }),
+            _react2.default.createElement(
+                'div',
+                { style: nameStyle },
+                _react2.default.createElement(
+                    'span',
+                    { style: firstNameStyle },
+                    'Sarah'
+                ),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    ': Vacation'
+                )
+            ),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Travelling to various cities' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Being prepared for foreign life' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Going out for food or drinks ' })
         ),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '1. Travelling to various cities' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '2. Being prepared for foreign life' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '3. Going out for food or drinks ' })
-      ),
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 1 },
-        _react2.default.createElement('img', { src: 'static/photos/person3.png', style: imageStyle }),
         _react2.default.createElement(
-          'div',
-          { style: nameStyle },
-          _react2.default.createElement(
-            'span',
-            { style: firstNameStyle },
-            'Marc '
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            ' : business trip'
-          )
-        ),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '1. Conducting professional conversations' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '2. Understanding the cultural norms' }),
-        _react2.default.createElement(_Card.CardTitle, { style: cardStyle,
-          titleStyle: mediaTitleStyles.title,
-          subtitleStyle: mediaTitleStyles.subtitle,
-          subtitle: '3. Moving around the city with ease' })
-      )
-    )
-    // </MuiThemeProvider>
-
-  );
+            _Paper2.default,
+            { style: style, zDepth: 1 },
+            _react2.default.createElement('img', { src: 'static/photos/person3.png', style: imageStyle }),
+            _react2.default.createElement(
+                'div',
+                { style: nameStyle },
+                _react2.default.createElement(
+                    'span',
+                    { style: firstNameStyle },
+                    'Marc'
+                ),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    ': business trip'
+                )
+            ),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Conducting professional conversations' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Understanding the cultural norms' }),
+            _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Moving around the city with ease' })
+        )
+    );
 };
 
 exports.default = ExperiencePanel;
 
-},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"react":536}],555:[function(require,module,exports){
+},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"react":536}],554:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53008,7 +52845,6 @@ var CopyRightIcon = function CopyRightIcon(props) {
 var style = {
   height: 200,
   width: '100%',
-  // margin: 20,
   textAlign: 'center',
   display: 'inline-block',
   overflow: 'hidden',
@@ -53043,11 +52879,11 @@ var FooterPanel = function FooterPanel() {
 
 exports.default = FooterPanel;
 
-},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/SvgIcon":274,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536}],556:[function(require,module,exports){
+},{"material-ui/Card":221,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/SvgIcon":274,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536}],555:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = require('react');
@@ -53084,92 +52920,71 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// class Video extends React.Component {
-//   render () {
-//     return <ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' playing />
-//   }
-// }
-
-
 var mediaStyles = {
 
-  color: {
-    color: Colors.pink50
-  }
+    color: {
+        color: Colors.pink50
+    }
 };
 var mediaTitleStyles = {
 
-  titleStyle: {
+    titleStyle: {
 
-    position: 'relative',
-    top: 20,
+        position: 'relative',
+        top: 20,
 
-    textAlign: 'center',
-    background: 'red'
-
-  },
-  container: {
-    position: 'relative',
-    background: 'blue'
-
-  },
-  content: {
-    position: 'relative',
-    background: 'rgba(0,0,0,0)',
-    textAlign: 'center',
-    top: 40
-
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: 'bold'
-  },
-  subtitle: {
-    fontSize: 35,
-    fontWeight: 'bold'
-  },
-  media: {
-    // width: '100%',
-    // height: '100%',
-    // height: 0
-  }
+        textAlign: 'center',
+        background: 'red'
+    },
+    container: {
+        position: 'relative',
+        background: 'blue'
+    },
+    content: {
+        position: 'relative',
+        background: 'rgba(0,0,0,0)',
+        textAlign: 'center',
+        top: 40
+    },
+    title: {
+        fontSize: 35,
+        fontWeight: 'bold'
+    },
+    subtitle: {
+        fontSize: 35,
+        fontWeight: 'bold'
+    },
+    media: {}
 };
 
 var headerLowerStyles = {
 
-  title: {
-    textAlign: 'center',
-    fontSize: 17,
-    color: 'rgba(0, 0, 0, 0.73)'
-  }
+    title: {
+        textAlign: 'center',
+        fontSize: 17,
+        color: 'rgba(0, 0, 0, 0.73)'
+    }
 };
 
 var FrontVideoComponent = function FrontVideoComponent() {
-  return (
-    // <MuiThemeProvider>
-    _react2.default.createElement(
-      _Card.Card,
-      null,
-      _react2.default.createElement(
-        _Card.CardMedia,
-        { style: { background: '#9E9E9E' },
-          overlay: _react2.default.createElement(_Card.CardTitle, { title: 'LIVE THE LANGUAGE', subtitle: 'Learn a language based on the situations that are relevant to you.' }),
-          overlayContentStyle: mediaTitleStyles.content,
-          titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle
-        },
-        _react2.default.createElement(_reactPlayer2.default, { url: 'static/videos/video.mp4', width: '460', height: '360' })
-      ),
-      _react2.default.createElement(_Card.CardTitle, { title: '', subtitleStyle: headerLowerStyles.title, subtitle: 'Start having conversations in your new language today - try if free!' }),
-      _react2.default.createElement(_LanguageTripSelection2.default, null)
-    )
-    // </MuiThemeProvider>
-
-  );
+    return _react2.default.createElement(
+        _Card.Card,
+        null,
+        _react2.default.createElement(
+            _Card.CardMedia,
+            { style: {
+                    background: '#9E9E9E'
+                }, overlay: _react2.default.createElement(_Card.CardTitle, { title: 'LIVE THE LANGUAGE', subtitle: 'Learn a language based on the situations that are relevant to you.' }), overlayContentStyle: mediaTitleStyles.content, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle },
+            _react2.default.createElement(_reactPlayer2.default, { url: 'static/videos/video.mp4', width: '460', height: '360' })
+        ),
+        _react2.default.createElement(_Card.CardTitle, { title: '', subtitleStyle: headerLowerStyles.title, subtitle: 'Start having conversations in your new language today - try if free!' }),
+        _react2.default.createElement(_LanguageTripSelection2.default, null)
+    );
 };
 
 exports.default = FrontVideoComponent;
 
-},{"./LanguageTripSelection":558,"material-ui/Card":221,"material-ui/FlatButton":242,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536,"react-player":339}],557:[function(require,module,exports){
+},{"./LanguageTripSelection":557,"material-ui/Card":221,"material-ui/FlatButton":242,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"react":536,"react-player":339}],556:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53224,9 +53039,9 @@ var _ExperiencePanel = require('./ExperiencePanel');
 
 var _ExperiencePanel2 = _interopRequireDefault(_ExperiencePanel);
 
-var _BottomCardsPanel = require('./BottomCardsPanel');
+var _BottomCardsPanelComponent = require('./components/BottomCardsPanelComponent');
 
-var _BottomCardsPanel2 = _interopRequireDefault(_BottomCardsPanel);
+var _BottomCardsPanelComponent2 = _interopRequireDefault(_BottomCardsPanelComponent);
 
 var _CustomTheme = require('./CustomTheme');
 
@@ -53245,22 +53060,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // Our custom react component
 
 
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// injectTapEventPlugin();
-
-// const ExperienceLabel = () => (
-//  // <MuiThemeProvider>
-//   <div style={{textAlign: 'center', marginTop: 30}}>
-
-//       <CardTitle
-
-//       title="An experience just for you" subtitle="Learn a language based on your unique needs." />
-
-//   </div>
-//   // </MuiThemeProvider>
-// );
-
 var ExperienceLabel = function (_React$Component) {
     _inherits(ExperienceLabel, _React$Component);
 
@@ -53273,8 +53072,7 @@ var ExperienceLabel = function (_React$Component) {
     _createClass(ExperienceLabel, [{
         key: 'render',
         value: function render() {
-            // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-            // using React's context feature.
+
             return _react2.default.createElement(
                 'div',
                 { style: {
@@ -53288,13 +53086,6 @@ var ExperienceLabel = function (_React$Component) {
 
     return ExperienceLabel;
 }(_react2.default.Component);
-
-// export default ExperienceLabel;
-
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
-
 
 var ArrowIcon = function ArrowIcon(props) {
     return _react2.default.createElement(
@@ -53362,7 +53153,7 @@ var Home = function (_React$Component2) {
                     _react2.default.createElement(_DiscoverPanel2.default, null),
                     _react2.default.createElement(ExperienceLabel, null),
                     _react2.default.createElement(_ExperiencePanel2.default, null),
-                    _react2.default.createElement(_BottomCardsPanel2.default, null)
+                    _react2.default.createElement(_BottomCardsPanelComponent2.default, null)
                 )
             );
         }
@@ -53373,7 +53164,7 @@ var Home = function (_React$Component2) {
 
 exports.default = Home;
 
-},{"./BottomCardsPanel":551,"./CustomTheme":552,"./DiscoverPanel":553,"./ExperiencePanel":554,"./Frontheader":556,"material-ui/Avatar":210,"material-ui/Card":221,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],558:[function(require,module,exports){
+},{"./CustomTheme":551,"./DiscoverPanel":552,"./ExperiencePanel":553,"./Frontheader":555,"./components/BottomCardsPanelComponent":567,"material-ui/Avatar":210,"material-ui/Card":221,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],557:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53428,10 +53219,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * LanguageTripSelection.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * In the home page, we have a div to render language - trip selection
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var intermediate = require('./intermediate');
 
@@ -53484,7 +53272,6 @@ var SelectLangaugeCountry = function (_React$Component) {
             localStorage.setItem('language', JSON.stringify(this.state.language));
             localStorage.setItem('trip', JSON.stringify(this.state.trip));
             _reactRouter.browserHistory.push('/signup');
-            // this.context.router.transitionTo('/signup');
         }
     }, {
         key: 'componentWillUpdate',
@@ -53511,10 +53298,7 @@ var SelectLangaugeCountry = function (_React$Component) {
                     var province = _step.value;
 
                     var itemIndex = provinces.indexOf(province);
-                    var item = _react2.default.createElement(_MenuItem2.default, {
-                        value: itemIndex,
-                        key: 'key-' + province,
-                        primaryText: province });
+                    var item = _react2.default.createElement(_MenuItem2.default, { value: itemIndex, key: 'key-' + province, primaryText: province });
                     menuItems.push(item);
                 }
             } catch (err) {
@@ -53542,9 +53326,7 @@ var SelectLangaugeCountry = function (_React$Component) {
                 method: 'GET',
                 url: '/api/trips/',
                 datatype: 'json',
-                // headers: {
-                //     'Authorization': 'Token ' + localStorage.token
-                // },
+
                 success: function (res) {
                     this.setState({ trip_data: res });
                     var _iteratorNormalCompletion2 = true;
@@ -53557,10 +53339,7 @@ var SelectLangaugeCountry = function (_React$Component) {
 
                             var itemIndex = res.indexOf(trip);
                             var key = trip.id + '-' + trip.name;
-                            var item = _react2.default.createElement(_MenuItem2.default, {
-                                value: trip.id,
-                                key: key,
-                                primaryText: trip.name });
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: trip.id, key: key, primaryText: trip.name });
                             trip_items.push(item);
                         }
                     } catch (err) {
@@ -53588,27 +53367,21 @@ var SelectLangaugeCountry = function (_React$Component) {
                 method: 'GET',
                 url: '/api/language-country/',
                 datatype: 'json',
-                // headers: {
-                //     'Authorization': 'Token ' + localStorage.token
-                // },
-                success: function (res) {
-                    // this.setState({user: res});
 
+                success: function (res) {
                     var _iteratorNormalCompletion3 = true;
                     var _didIteratorError3 = false;
                     var _iteratorError3 = undefined;
 
                     try {
+
                         for (var _iterator3 = res[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                             var language = _step3.value;
 
                             var itemIndex = res.indexOf(language);
                             var value = language.language + '-' + language.country;
                             var key = language.id + '-' + language.language + '-' + language.country;
-                            var item = _react2.default.createElement(_MenuItem2.default, {
-                                value: language.id,
-                                key: key,
-                                primaryText: value });
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: language.id, key: key, primaryText: value });
                             language_items.push(item);
                         }
                     } catch (err) {
@@ -53638,7 +53411,6 @@ var SelectLangaugeCountry = function (_React$Component) {
     }, {
         key: 'validateEmail',
         value: function validateEmail(value) {
-            // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(value);
         }
@@ -53647,19 +53419,13 @@ var SelectLangaugeCountry = function (_React$Component) {
         value: function isDisabled() {
 
             if (this.state.email === "") {
-                this.setState({
-                    email_error_text: null
-                });
+                this.setState({ email_error_text: null });
             } else {
                 if (this.validateEmail(this.state.email)) {
                     // emailIsValid = true
-                    this.setState({
-                        email_error_text: null
-                    });
+                    this.setState({ email_error_text: null });
                 } else {
-                    this.setState({
-                        email_error_text: "Sorry, this is not a valid email"
-                    });
+                    this.setState({ email_error_text: "Sorry, this is not a valid email" });
                 }
             }
         }
@@ -53670,56 +53436,61 @@ var SelectLangaugeCountry = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { style: { marginLeft: 100, marginRight: 100, marginBottom: 20, display: 'inline-block' } },
-                _react2.default.createElement(_TextField2.default, {
-                    value: this.state.email,
-                    style: { width: 320, verticalAlign: 'bottom' },
-                    onChange: function onChange(e) {
+                { style: {
+                        marginLeft: 100,
+                        marginRight: 100,
+                        marginBottom: 20,
+                        display: 'inline-block'
+                    } },
+                _react2.default.createElement(_TextField2.default, { value: this.state.email, style: {
+                        width: 320,
+                        verticalAlign: 'bottom'
+                    }, onChange: function onChange(e) {
                         return _this2.setState({ email: e.target.value });
-                    },
-
-                    floatingLabelText: 'Email',
-                    errorText: this.state.email_error_text,
-                    onBlur: this.isDisabled
-
-                }),
+                    }, floatingLabelText: 'Email', errorText: this.state.email_error_text, onBlur: this.isDisabled }),
                 _react2.default.createElement(
                     'div',
-                    { style: { display: 'inline' } },
+                    { style: {
+                            display: 'inline'
+                        } },
                     _react2.default.createElement(
                         _SelectField2.default,
-                        { style: { marginLeft: 50, width: 320, verticalAlign: 'bottom' },
-                            value: this.state.language,
-                            onChange: this.handleChange.bind(this, 'language'),
-                            floatingLabelText: 'Language-Country'
-                        },
+                        { style: {
+                                marginLeft: 50,
+                                width: 320,
+                                verticalAlign: 'bottom'
+                            }, value: this.state.language, onChange: this.handleChange.bind(this, 'language'), floatingLabelText: 'Language-Country' },
                         language_items
                     )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { style: { display: 'inline' } },
+                    { style: {
+                            display: 'inline'
+                        } },
                     _react2.default.createElement(
                         _SelectField2.default,
-                        { style: { marginLeft: 50, width: 320, verticalAlign: 'bottom' },
-                            value: this.state.trip,
-                            onChange: this.handleChange.bind(this, 'trip'),
-                            floatingLabelText: 'Trip Type'
-                        },
+                        { style: {
+                                marginLeft: 50,
+                                width: 320,
+                                verticalAlign: 'bottom'
+                            }, value: this.state.trip, onChange: this.handleChange.bind(this, 'trip'), floatingLabelText: 'Trip Type' },
                         trip_items
                     )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { style: { display: 'inline' } },
+                    { style: {
+                            display: 'inline'
+                        } },
                     _react2.default.createElement(
                         _IconButton2.default,
-                        { iconStyle: { iconHoverColor: '#55ff55' },
-                            tooltip: 'Request', key: 'request-button',
-                            onClick: this.submitData,
-                            disabled: this.state.invalidData
-                        },
-                        _react2.default.createElement(ArrowIcon, { color: Colors.cyan500, style: { marginTop: 30 }, hoverColor: hoverColor })
+                        { iconStyle: {
+                                iconHoverColor: '#55ff55'
+                            }, tooltip: 'Request', key: 'request-button', onClick: this.submitData, disabled: this.state.invalidData },
+                        _react2.default.createElement(ArrowIcon, { color: Colors.cyan500, style: {
+                                marginTop: 30
+                            }, hoverColor: hoverColor })
                     )
                 )
             );
@@ -53731,11 +53502,11 @@ var SelectLangaugeCountry = function (_React$Component) {
 
 exports.default = SelectLangaugeCountry;
 
-},{"./SubmitButton":563,"./intermediate":569,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/MenuItem":257,"material-ui/SelectField":270,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/colors":298,"react":536,"react-router":376}],559:[function(require,module,exports){
+},{"./SubmitButton":562,"./intermediate":569,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/MenuItem":257,"material-ui/SelectField":270,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/colors":298,"react":536,"react-router":376}],558:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -53792,368 +53563,348 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Login.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * This file is responsible handling user login login
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The login is embed in our Appbar
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var auth = require('./auth');
 
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
 var ArrowIcon = function ArrowIcon(props) {
-  return _react2.default.createElement(
-    _SvgIcon2.default,
-    props,
-    _react2.default.createElement('path', { d: 'M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z' })
-  );
+    return _react2.default.createElement(
+        _SvgIcon2.default,
+        props,
+        _react2.default.createElement('path', { d: 'M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z' })
+    );
 };
 
 var muiTheme = (0, _getMuiTheme2.default)({
-  fontFamily: 'Roboto, sans-serif',
-  palette: {
-    textColor: Colors.darkBlack,
-    primary1Color: Colors.white,
-    primary2Color: Colors.indigo700,
-    accent1Color: Colors.redA200,
-    pickerHeaderColor: Colors.darkBlack
-  },
-  appBar: {
-    height: 60
-  }
+    fontFamily: 'Roboto, sans-serif',
+    palette: {
+        textColor: Colors.darkBlack,
+        primary1Color: Colors.white,
+        primary2Color: Colors.indigo700,
+        accent1Color: Colors.redA200,
+        pickerHeaderColor: Colors.darkBlack
+    },
+    appBar: {
+        height: 60
+    }
 });
 
 var formError = {
 
-  error: {
+    error: {
 
-    position: 'relative',
+        position: 'relative',
 
-    fontSize: 12,
+        fontSize: 12,
 
-    color: 'rgb(244, 67, 54)',
-    transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'
+        color: 'rgb(244, 67, 54)',
+        transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'
 
-  }
+    }
 };
 
 var titleStyles = {
-  title: {
-    cursor: 'pointer'
+    title: {
+        cursor: 'pointer'
 
-  },
-  color: {
-    color: Colors.darkBlack
-  },
-  align: {
+    },
+    color: {
+        color: Colors.darkBlack
+    },
+    align: {
 
-    verticalAlign: 'middle'
-  }
+        verticalAlign: 'middle'
+    }
 };
 
 var textfieldStyles = {
-  margin: {
-    marginRight: 20,
-    verticalAlign: 'bottom'
+    margin: {
+        marginRight: 20,
+        verticalAlign: 'bottom'
 
-  }
+    }
 };
 
 var styles = {
-  errorStyle: {
-    color: Colors.orange500
-  },
-  underlineStyle: {
-    borderColor: Colors.cyan500
-  },
-  floatingLabelStyle: {
-    color: Colors.cyan500
-  },
-  floatingLabelFocusStyle: {
-    color: Colors.blue500
-  }
+    errorStyle: {
+        color: Colors.orange500
+    },
+    underlineStyle: {
+        borderColor: Colors.cyan500
+    },
+    floatingLabelStyle: {
+        color: Colors.cyan500
+    },
+    floatingLabelFocusStyle: {
+        color: Colors.blue500
+    }
 };
 
 var hoverColor = 'green';
 
 var Login = function (_React$Component) {
-  _inherits(Login, _React$Component);
+    _inherits(Login, _React$Component);
 
-  function Login(props) {
-    _classCallCheck(this, Login);
+    function Login(props) {
+        _classCallCheck(this, Login);
 
-    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
-    _this.submitForm = _this.submitForm.bind(_this);
-    _this.loadUserData = _this.loadUserData.bind(_this);
-    _this.logoutHandler = _this.logoutHandler.bind(_this);
-    _this.handleLogout = _this.handleLogout.bind(_this);
-    _this.isDisabled = _this.isDisabled.bind(_this);
-    _this.validateEmail = _this.validateEmail.bind(_this);
-    _this.state = {
-      username: '',
-      password: '',
-      userlogin: false,
-      user: [],
-      email_error_text: null,
-      password_error_text: null,
-      disabled: true,
-      form_error: false,
-      invalidData: true
-    };
-    return _this;
-  }
-
-  _createClass(Login, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (auth.loggedIn()) {
-        this.setState({
-          userlogin: true
-        });
-
-        this.loadUserData();
-      } else {
-        this.setState({
-          userlogin: false
-        });
-      }
-      this.setState({
-        form_error: false
-      });
+        _this.submitForm = _this.submitForm.bind(_this);
+        _this.loadUserData = _this.loadUserData.bind(_this);
+        _this.logoutHandler = _this.logoutHandler.bind(_this);
+        _this.handleLogout = _this.handleLogout.bind(_this);
+        _this.isDisabled = _this.isDisabled.bind(_this);
+        _this.validateEmail = _this.validateEmail.bind(_this);
+        _this.state = {
+            username: '',
+            password: '',
+            userlogin: false,
+            user: [],
+            email_error_text: null,
+            password_error_text: null,
+            disabled: true,
+            form_error: false,
+            invalidData: true
+        };
+        return _this;
     }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      console.log('login unmount');
-      this.setState({
-        form_error: false
-      });
-    }
-  }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps, nextState) {
-      nextState.invalidData = !(nextState.username && nextState.password);
-    }
-  }, {
-    key: 'componentDidUnmount',
-    value: function componentDidUnmount() {}
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {}
-  }, {
-    key: 'loadUserData',
-    value: function loadUserData() {
 
-      $.ajax({
-        method: 'GET',
-        url: '/rest-auth/user/',
-        datatype: 'json',
-        headers: {
-          'Authorization': 'Token ' + localStorage.token
-        },
-        success: function (res) {
-          this.setState({ user: res });
-        }.bind(this)
-      });
-    }
-  }, {
-    key: 'validateEmail',
-    value: function validateEmail(value) {
-      // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(value);
-    }
-  }, {
-    key: 'isDisabled',
-    value: function isDisabled() {
+    _createClass(Login, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            if (auth.loggedIn()) {
+                this.setState({
+                    userlogin: true
+                });
 
-      var usernameIsValid = false;
-      var passwordIsValid = false;
-
-      if (this.state.username === "") {
-        this.setState({
-          email_error_text: null
-        });
-      } else {
-        if (this.validateEmail(this.state.username)) {
-          usernameIsValid = true;
-          this.setState({
-            email_error_text: null
-          });
-        } else {
-          this.setState({
-            email_error_text: "Sorry, this is not a valid email"
-          });
+                this.loadUserData();
+            } else {
+                this.setState({
+                    userlogin: false
+                });
+            }
+            this.setState({
+                form_error: false
+            });
         }
-      }
-
-      if (this.state.password === "" || !this.state.password) {
-        this.setState({
-          password_error_text: null
-        });
-      } else {
-        if (this.state.password.length >= 6) {
-          passwordIsValid = true;
-          this.setState({
-            password_error_text: null
-          });
-        } else {
-          this.setState({
-            password_error_text: "Password needs at least 6 characters"
-          });
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('login unmount');
+            this.setState({
+                form_error: false
+            });
         }
-      }
-
-      if (usernameIsValid && passwordIsValid) {
-        this.setState({
-          disabled: false
-        });
-      }
-    }
-  }, {
-    key: 'submitForm',
-    value: function submitForm(e) {
-      var _this2 = this;
-
-      e.preventDefault();
-
-      var username = this.state.username.trim();
-      var pass = this.state.password.trim();
-
-      auth.login(username, pass, function (loggedIn) {
-        console.log('loggedIn');
-        console.log(loggedIn);
-        if (loggedIn) {
-          _this2.setState({
-            userlogin: loggedIn
-          });
-          _this2.loadUserData();
-        } else {
-          _this2.setState({
-            form_error: true
-          });
+    }, {
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate(nextProps, nextState) {
+            nextState.invalidData = !(nextState.username && nextState.password);
         }
-      });
-    }
-  }, {
-    key: 'logoutHandler',
-    value: function logoutHandler() {
-      auth.logout();
-      this.setState({
-        userlogin: false
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
+    }, {
+        key: 'componentDidUnmount',
+        value: function componentDidUnmount() {}
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {}
+    }, {
+        key: 'loadUserData',
+        value: function loadUserData() {
 
-      if (this.state.userlogin) {
-        return (
-          // <div>
-          //   <p>
-          //     Hi, You're logged in as <strong>{ this.state.user.username }</strong>
-          //     <FlatButton onClick={this.logoutHandler} style={{color: Colors.cyanA700}} label="Logout" primary={true} />
-          //   </p>
-          // </div>
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_UserSettings2.default, { handleLogout: this.handleLogout })
-          )
-        );
-      }
+            $.ajax({
+                method: 'GET',
+                url: '/rest-auth/user/',
+                datatype: 'json',
+                headers: {
+                    'Authorization': 'Token ' + localStorage.token
+                },
+                success: function (res) {
+                    this.setState({ user: res });
+                }.bind(this)
+            });
+        }
+    }, {
+        key: 'validateEmail',
+        value: function validateEmail(value) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(value);
+        }
+    }, {
+        key: 'isDisabled',
+        value: function isDisabled() {
 
-      return _react2.default.createElement(
-        'span',
-        null,
-        this.state.form_error && _react2.default.createElement(
-          'div',
-          { id: 'form-error', style: formError.error },
-          'Unable to log in with provided credentials. '
-        ),
-        _react2.default.createElement(
-          'form',
-          { className: 'loginForm', onSubmit: this.submitForm },
-          _react2.default.createElement(_TextField2.default, {
-            value: this.state.username,
-            onChange: function onChange(e) {
-              return _this3.setState({ username: e.target.value });
-            },
-            style: textfieldStyles.margin,
-            underlineFocusStyle: styles.underlineStyle,
-            floatingLabelText: 'Email'
-            // floatingLabelStyle={styles.floatingLabelStyle}
-            , floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
-            errorText: this.state.email_error_text,
-            onBlur: this.isDisabled,
-            floatingLabelStyle: {
-              marginTop: -10
-            },
-            errorStyle: { marginTop: -44 }
-            // required={true}
+            var usernameIsValid = false;
+            var passwordIsValid = false;
+
+            if (this.state.username === "") {
+                this.setState({
+                    email_error_text: null
+                });
+            } else {
+                if (this.validateEmail(this.state.username)) {
+                    usernameIsValid = true;
+                    this.setState({
+                        email_error_text: null
+                    });
+                } else {
+                    this.setState({
+                        email_error_text: "Sorry, this is not a valid email"
+                    });
+                }
+            }
+
+            if (this.state.password === "" || !this.state.password) {
+                this.setState({
+                    password_error_text: null
+                });
+            } else {
+                if (this.state.password.length >= 6) {
+                    passwordIsValid = true;
+                    this.setState({
+                        password_error_text: null
+                    });
+                } else {
+                    this.setState({
+                        password_error_text: "Password needs at least 6 characters"
+                    });
+                }
+            }
+
+            if (usernameIsValid && passwordIsValid) {
+                this.setState({
+                    disabled: false
+                });
+            }
+        }
+    }, {
+        key: 'submitForm',
+        value: function submitForm(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+
+            var username = this.state.username.trim();
+            var pass = this.state.password.trim();
+
+            auth.login(username, pass, function (loggedIn) {
+                console.log('loggedIn');
+                console.log(loggedIn);
+                if (loggedIn) {
+                    _this2.setState({
+                        userlogin: loggedIn
+                    });
+                    _this2.loadUserData();
+                } else {
+                    _this2.setState({
+                        form_error: true
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'logoutHandler',
+        value: function logoutHandler() {
+            auth.logout();
+            this.setState({
+                userlogin: false
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            if (this.state.userlogin) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(_UserSettings2.default, { handleLogout: this.handleLogout })
+                );
+            }
+
+            return _react2.default.createElement(
+                'span',
+                null,
+                this.state.form_error && _react2.default.createElement(
+                    'div',
+                    { id: 'form-error', style: formError.error },
+                    'Unable to log in with provided credentials. '
+                ),
+                _react2.default.createElement(
+                    'form',
+                    { className: 'loginForm', onSubmit: this.submitForm },
+                    _react2.default.createElement(_TextField2.default, {
+                        value: this.state.username,
+                        onChange: function onChange(e) {
+                            return _this3.setState({ username: e.target.value });
+                        },
+                        style: textfieldStyles.margin,
+                        underlineFocusStyle: styles.underlineStyle,
+                        floatingLabelText: 'Email'
+                        // floatingLabelStyle={styles.floatingLabelStyle}
+                        , floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+                        errorText: this.state.email_error_text,
+                        onBlur: this.isDisabled,
+                        floatingLabelStyle: {
+                            marginTop: -10
+                        },
+                        errorStyle: { marginTop: -44 }
+                        // required={true}
 
 
-          }),
-          _react2.default.createElement(_TextField2.default, {
-            value: this.state.password,
-            onChange: function onChange(e) {
-              return _this3.setState({ password: e.target.value });
-            },
-            type: 'password',
-            underlineFocusStyle: styles.underlineStyle,
-            floatingLabelText: 'Password'
-            // floatingLabelStyle={styles.floatingLabelStyle}
-            , floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
-            errorText: this.state.password_error_text,
-            onBlur: this.isDisabled,
-            floatingLabelStyle: {
-              marginTop: -10
-            },
-            errorStyle: { marginTop: -44 }
-            // required={true}
+                    }),
+                    _react2.default.createElement(_TextField2.default, {
+                        value: this.state.password,
+                        onChange: function onChange(e) {
+                            return _this3.setState({ password: e.target.value });
+                        },
+                        type: 'password',
+                        underlineFocusStyle: styles.underlineStyle,
+                        floatingLabelText: 'Password'
+                        // floatingLabelStyle={styles.floatingLabelStyle}
+                        , floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+                        errorText: this.state.password_error_text,
+                        onBlur: this.isDisabled,
+                        floatingLabelStyle: {
+                            marginTop: -10
+                        },
+                        errorStyle: { marginTop: -44 }
+                        // required={true}
 
-          }),
-          _react2.default.createElement(
-            _IconButton2.default,
-            { iconStyle: { iconHoverColor: '#55ff55' },
-              tooltip: 'Sing In', key: 'signin-button'
-              // onTouchTap={this.handleTouchTap}
-              // disabled={!this.state.username && !this.state.password}
-              , disabled: this.state.invalidData,
-              onClick: this.submitForm
-            },
-            _react2.default.createElement(ArrowIcon, { color: Colors.cyan500, style: { marginTop: 30 }, hoverColor: hoverColor })
-          )
-        )
-      );
-    }
-  }, {
-    key: 'handleLogout',
-    value: function handleLogout(e) {
-      this.setState({
-        userlogin: false
-      });
-      auth.logout();
-      this.setState({
-        form_error: false
-      });
-      // window.location = "/";
-    }
-  }]);
+                    }),
+                    _react2.default.createElement(
+                        _IconButton2.default,
+                        { iconStyle: { iconHoverColor: '#55ff55' },
+                            tooltip: 'Sing In', key: 'signin-button'
+                            // onTouchTap={this.handleTouchTap}
+                            // disabled={!this.state.username && !this.state.password}
+                            , disabled: this.state.invalidData,
+                            onClick: this.submitForm
+                        },
+                        _react2.default.createElement(ArrowIcon, { color: Colors.cyan500, style: { marginTop: 30 }, hoverColor: hoverColor })
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'handleLogout',
+        value: function handleLogout(e) {
+            this.setState({
+                userlogin: false
+            });
+            auth.logout();
+            this.setState({
+                form_error: false
+            });
+        }
+    }]);
 
-  return Login;
+    return Login;
 }(_react2.default.Component);
 
 exports.default = Login;
 
-// onClick={this.onFormSubmit}
-
-},{"./UserSettings":565,"./auth":567,"material-ui/AppBar":208,"material-ui/Avatar":210,"material-ui/FlatButton":242,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],560:[function(require,module,exports){
+},{"./UserSettings":564,"./auth":566,"material-ui/AppBar":208,"material-ui/Avatar":210,"material-ui/FlatButton":242,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],559:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -54222,24 +53973,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Main.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * This file is responsible for rendering our components in order
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * We have component named App which will maintain default layout
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * And in render() we have given the other components
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-// Our custom react component
-
-// Our custom react component
-
-
-// Our custom react component
-// Our custom react component
-
-
-// Our custom react component
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var muiTheme = (0, _getMuiTheme2.default)({
   fontFamily: 'Roboto, sans-serif',
@@ -54266,26 +54000,14 @@ var App = function (_React$Component) {
 
   _createClass(App, [{
     key: 'render',
-
-
-    // contextTypes: {
-    //   router: React.PropTypes.object.isRequired,
-    // };
     value: function render() {
 
-      return (
-        // <MuiThemeProvider muiTheme={muiTheme}>
-
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_Theme2.default, null),
-          this.props.children,
-          _react2.default.createElement(_FooterPanel2.default, null)
-        )
-
-        // </MuiThemeProvider>
-
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_Theme2.default, null),
+        this.props.children,
+        _react2.default.createElement(_FooterPanel2.default, null)
       );
     }
   }]);
@@ -54295,7 +54017,7 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./DiscoverPanel":553,"./ExperiencePanel":554,"./FooterPanel":555,"./Frontheader":556,"./Theme":564,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],561:[function(require,module,exports){
+},{"./DiscoverPanel":552,"./ExperiencePanel":553,"./FooterPanel":554,"./Frontheader":555,"./Theme":563,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536}],560:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -54328,8 +54050,7 @@ var NotFound = function (_React$Component) {
   _createClass(NotFound, [{
     key: 'render',
     value: function render() {
-      // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-      // using React's context feature.
+
       return _react2.default.createElement(
         'div',
         { style: { minHeight: 400, textAlign: 'center' } },
@@ -54347,7 +54068,7 @@ var NotFound = function (_React$Component) {
 
 exports.default = NotFound;
 
-},{"react":536}],562:[function(require,module,exports){
+},{"react":536}],561:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -54426,30 +54147,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Theme.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * In the home page, we have to render the page Appbar and integrate login component
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-// const language_items = [
-//   <MenuItem key={1} value={1} primaryText="Spanish - Spain" />,
-//   <MenuItem key={2} value={2} primaryText="German - Germany" />,
-
-// ];
-
-// const trip_items = [
-//   <MenuItem key={1} value={1} primaryText="Conference" />,
-//   <MenuItem key={2} value={2} primaryText="Vacation" />,
-// ];
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var language_items = [];
 
 var trip_items = [];
-
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
 
 var style = {
     height: 'auto',
@@ -54473,11 +54175,11 @@ var mediaTitleStyles = {
 
     title: {
         fontSize: 20,
-        // fontWeight: 'bold',
         lineHeight: '20px'
     },
     subtitle: {
         fontSize: 21
+
     }
 
 };
@@ -54487,14 +54189,12 @@ var styleImage = {
     width: 65,
     marginLeft: 200,
     textAlign: 'center',
-    // display: 'inline-block',
-    // display: 'table-cell',
+
     overflow: 'hidden',
     backgroundColor: '#294860'
 };
 
 var iconStyles = {
-    // marginRight: 24,
     color: '#ffffff',
     verticalAlign: 'middle',
     marginTop: 17
@@ -54502,20 +54202,19 @@ var iconStyles = {
 
 var textfieldStyles = {
     style: {
-        // position: 'relative',
-        // display : '',
+
         width: 290
+
     },
     selectstyle: {
-        // position: 'relative',
-        // display : '',
+
         width: 290,
         height: 65,
         textAlign: 'left'
+
     },
     datestyle: {
-        // position: 'relative',
-        // display : '',
+
         width: 295,
         height: 65,
         marginLeft: 47,
@@ -54526,7 +54225,6 @@ var textfieldStyles = {
 var formheaderStyles = {
     firststyle: {
         fontSize: "16px",
-        // fontWeight: 'bold',
         color: 'rgb(126, 117, 117)'
 
     },
@@ -54554,8 +54252,6 @@ var formError = {
 
 var SignUp = function (_React$Component) {
     _inherits(SignUp, _React$Component);
-
-    // mixins: [Router.Navigation],
 
     function SignUp(props) {
         _classCallCheck(this, SignUp);
@@ -54609,21 +54305,15 @@ var SignUp = function (_React$Component) {
             var language = JSON.parse(localStorage.getItem('language')) || [];
             var trip = JSON.parse(localStorage.getItem('trip')) || [];
             console.log(email, language, trip);
-            // if (email.length >0){
             this.setState({
                 email: email
             });
-            // }
-            // if (language >0){
             this.setState({
                 language_country: language
             });
-            // }
-            // if (trip >0){
             this.setState({
                 trip: trip
             });
-            // }
             console.log(this.state.language_country, this.state.trip);
 
             this.loadTripData();
@@ -54637,9 +54327,6 @@ var SignUp = function (_React$Component) {
                 method: 'GET',
                 url: '/api/trips/',
                 datatype: 'json',
-                // headers: {
-                //     'Authorization': 'Token ' + localStorage.token
-                // },
                 success: function (res) {
                     this.setState({ trip_data: res });
                     var _iteratorNormalCompletion = true;
@@ -54683,17 +54370,14 @@ var SignUp = function (_React$Component) {
                 method: 'GET',
                 url: '/api/language-country/',
                 datatype: 'json',
-                // headers: {
-                //     'Authorization': 'Token ' + localStorage.token
-                // },
-                success: function (res) {
-                    // this.setState({user: res});
 
+                success: function (res) {
                     var _iteratorNormalCompletion2 = true;
                     var _didIteratorError2 = false;
                     var _iteratorError2 = undefined;
 
                     try {
+
                         for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                             var language = _step2.value;
 
@@ -54736,14 +54420,12 @@ var SignUp = function (_React$Component) {
     }, {
         key: 'validateEmail',
         value: function validateEmail(value) {
-            // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(value);
         }
     }, {
         key: 'isDisabled',
         value: function isDisabled(name, event) {
-            // console.log(index);
 
             var emailIsValid = false;
             var passwordIsValid = false;
@@ -54753,12 +54435,10 @@ var SignUp = function (_React$Component) {
             if (name === 'first_name') {
                 if (this.state.first_name === "" || !this.state.first_name) {
                     this.setState({
-                        // first_name_error_text: null
                         first_name_error_text: "First Name is required"
                     });
                 } else {
                     if (this.state.first_name.length > 0) {
-                        // firstNameIsValid = true;
                         this.setState({
                             first_name_error_text: null
                         });
@@ -54772,12 +54452,10 @@ var SignUp = function (_React$Component) {
             if (name === 'last_name') {
                 if (this.state.last_name === "" || !this.state.last_name) {
                     this.setState({
-                        // last_name_error_text: null
                         last_name_error_text: "Last Name is required"
                     });
                 } else {
                     if (this.state.last_name.length > 0) {
-                        // lastNameIsValid = true;
                         this.setState({
                             last_name_error_text: null
                         });
@@ -54792,7 +54470,6 @@ var SignUp = function (_React$Component) {
 
                 if (this.state.email === "") {
                     this.setState({
-                        // email_error_text: null
                         email_error_text: 'Email is required'
                     });
                 } else {
@@ -54813,12 +54490,10 @@ var SignUp = function (_React$Component) {
 
                 if (this.state.password === "" || !this.state.password) {
                     this.setState({
-                        // password_error_text: null
                         password_error_text: 'Password is required'
                     });
                 } else {
                     if (this.state.password.length >= 6) {
-                        // passwordIsValid = true;
                         this.setState({
                             password_error_text: null
                         });
@@ -54839,7 +54514,6 @@ var SignUp = function (_React$Component) {
                 } else {
                     if (this.state.confirm_password.length >= 6) {
                         if (this.state.password === this.state.confirm_password) {
-                            // confirm_passwordIsValid = true;
                             this.setState({
                                 confirm_password_error_text: null
                             });
@@ -54860,7 +54534,6 @@ var SignUp = function (_React$Component) {
 
                 if (this.state.language_country === "" || !this.state.language_country) {
                     this.setState({
-                        // language_country_error_text: null
                         language_country_error_text: "First Name is required"
                     });
                 } else {
@@ -54881,12 +54554,11 @@ var SignUp = function (_React$Component) {
 
                 if (this.state.trip === "" || !this.state.trip) {
                     this.setState({
-                        // trip_error_text: null
+
                         trip_error_text: "First Name is required"
                     });
                 } else {
                     if (this.state.trip.length > 0) {
-                        // firstNameIsValid = true;
                         this.setState({
                             trip_error_text: null
                         });
@@ -55209,7 +54881,7 @@ exports.default = SignUp;
 // <img ref="image" style={{height: 50, width: 50}} src={this.state.imagePreviewUrl} />
 // <div style = {{backgroundImage: 'url(' + this.state.imagePreviewUrl + ')'}}></div>
 
-},{"./CustomTheme":552,"material-ui/Avatar":210,"material-ui/Card":221,"material-ui/DatePicker":233,"material-ui/FloatingActionButton":244,"material-ui/FontIcon":246,"material-ui/MenuItem":257,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/SelectField":270,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/svg-icons/social/person":321,"react":536,"react-router":376}],563:[function(require,module,exports){
+},{"./CustomTheme":551,"material-ui/Avatar":210,"material-ui/Card":221,"material-ui/DatePicker":233,"material-ui/FloatingActionButton":244,"material-ui/FontIcon":246,"material-ui/MenuItem":257,"material-ui/Paper":262,"material-ui/RaisedButton":268,"material-ui/SelectField":270,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/svg-icons/social/person":321,"react":536,"react-router":376}],562:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -55262,7 +54934,7 @@ var SubmitIcon = function SubmitIcon() {
 
 exports.default = SubmitIcon;
 
-},{"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/styles/colors":298,"react":536}],564:[function(require,module,exports){
+},{"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/styles/colors":298,"react":536}],563:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -55325,14 +54997,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Theme.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * In the home page, we have to render the page Appbar and integrate login component
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
 var ArrowIcon = function ArrowIcon(props) {
   return _react2.default.createElement(
     _SvgIcon2.default,
@@ -55395,8 +55061,7 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'render',
     value: function render() {
-      // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-      // using React's context feature.
+
       return _react2.default.createElement(
         _MuiThemeProvider2.default,
         { muiTheme: muiTheme },
@@ -55434,7 +55099,7 @@ var Main = function (_React$Component) {
 
 exports.default = Main;
 
-},{"./CustomTheme":552,"./Login":559,"material-ui/AppBar":208,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536,"react-router":376}],565:[function(require,module,exports){
+},{"./CustomTheme":551,"./Login":558,"material-ui/AppBar":208,"material-ui/Avatar":210,"material-ui/IconButton":248,"material-ui/SvgIcon":274,"material-ui/TextField":280,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/styles/getMuiTheme":299,"react":536,"react-router":376}],564:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -55543,10 +55208,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * DiscoverPanel.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * In the home page, we have a panel
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var auth = require('./auth');
 
@@ -55564,8 +55226,7 @@ var styles = {
     height: 60
   },
   small: {
-    // width: 72,
-    // height: 72,
+
     width: 27,
     height: 27,
     padding: 5
@@ -55584,13 +55245,13 @@ var buttonStyle = {
   margin: 12,
   marginTop: 60,
   marginLeft: 140
+
 };
 
 var mediaTitleStyles = {
 
   title: {
     fontSize: 20,
-    // fontWeight: 'bold',
     lineHeight: '20px'
   },
   subtitle: {
@@ -55632,8 +55293,6 @@ var flex1Container = {
 
 };
 
-// const UserSettingPanel = () => (
-
 var UserSettingPanel = function (_React$Component) {
   _inherits(UserSettingPanel, _React$Component);
 
@@ -55658,7 +55317,6 @@ var UserSettingPanel = function (_React$Component) {
   _createClass(UserSettingPanel, [{
     key: 'handleTouchTap',
     value: function handleTouchTap(name, event, index, value) {
-      // This prevents ghost click.
 
       event.preventDefault();
       var change = {};
@@ -55669,43 +55327,19 @@ var UserSettingPanel = function (_React$Component) {
       console.log(index);
       console.log(value);
       this.setState(change);
-
-      // this.setState({
-
-      //   anchorEl: event.currentTarget,
-      // });
-      // console.log(this.state);
     }
   }, {
     key: 'handleRequestClose',
-
-
-    // handleChange(name, event, index, value) { 
-    //   var change = {};
-    //  change[name] = value;
-    //  console.log(change);
-    //    this.setState(change);
-
-    //  };
-
-
     value: function handleRequestClose(name, event, index, value) {
       var change = {};
       change[name] = false;
       this.setState(change);
-      // this.setState({
-      //   open: false,
-      // });
     }
   }, {
     key: 'logoutHandler',
     value: function logoutHandler() {
       console.log('called logout handler');
       delete localStorage.token;
-      // auth.logout()
-      //  this.setState({
-      //   userlogin: false
-      // });
     }
   }, {
     key: 'componentDidMount',
@@ -55850,7 +55484,7 @@ var UserSettingPanel = function (_React$Component) {
               'Your Languages'
             ),
             _react2.default.createElement(_MenuItem2.default
-            // onTouchTap={this.logoutHandler} 
+            // onTouchTap={this.logoutHandler}
             , { style: { textAlign: 'right', fontSize: 13, color: 'rgba(32, 27, 27, 0.27)' }, primaryText: 'Spanish - Spain', leftIcon: _react2.default.createElement(_Avatar2.default, { style: { width: 18, height: 18 }, src: 'static/photos/flag_england.svg'
 
               }) }),
@@ -55869,8 +55503,7 @@ var UserSettingPanel = function (_React$Component) {
           _react2.default.createElement(_Avatar2.default, { src: 'static/photos/person1.png',
             size: 30
             //    style={{ width: '30',
-            //  float: 'left',
-            // height: '30', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop:8}}
+
           })
         ),
         _react2.default.createElement(
@@ -55928,7 +55561,7 @@ var UserSettingPanel = function (_React$Component) {
 
 exports.default = UserSettingPanel;
 
-},{"./auth":567,"material-ui/Avatar":210,"material-ui/BottomNavigation":213,"material-ui/Card":221,"material-ui/Divider":237,"material-ui/IconButton":248,"material-ui/IconMenu":250,"material-ui/List":255,"material-ui/Menu":259,"material-ui/MenuItem":257,"material-ui/Paper":262,"material-ui/Popover":266,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/svg-icons/action/grade":304,"material-ui/svg-icons/action/list":305,"material-ui/svg-icons/content/add-circle":306,"material-ui/svg-icons/content/filter-list":307,"material-ui/svg-icons/file/file-download":308,"material-ui/svg-icons/navigation/apps":311,"material-ui/svg-icons/navigation/more-vert":319,"material-ui/svg-icons/social/group":320,"material-ui/svg-icons/social/person":321,"react":536,"react-router":376}],566:[function(require,module,exports){
+},{"./auth":566,"material-ui/Avatar":210,"material-ui/BottomNavigation":213,"material-ui/Card":221,"material-ui/Divider":237,"material-ui/IconButton":248,"material-ui/IconMenu":250,"material-ui/List":255,"material-ui/Menu":259,"material-ui/MenuItem":257,"material-ui/Paper":262,"material-ui/Popover":266,"material-ui/RaisedButton":268,"material-ui/styles/MuiThemeProvider":296,"material-ui/styles/colors":298,"material-ui/svg-icons/action/grade":304,"material-ui/svg-icons/action/list":305,"material-ui/svg-icons/content/add-circle":306,"material-ui/svg-icons/content/filter-list":307,"material-ui/svg-icons/file/file-download":308,"material-ui/svg-icons/navigation/apps":311,"material-ui/svg-icons/navigation/more-vert":319,"material-ui/svg-icons/social/group":320,"material-ui/svg-icons/social/person":321,"react":536,"react-router":376}],565:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -55993,83 +55626,54 @@ var _Card = require('material-ui/Card');
 
 var _reactRouter = require('react-router');
 
+var _ContentPortalLoginPage = require('./pages/ContentPortalLoginPage');
+
+var _ContentPortalLoginPage2 = _interopRequireDefault(_ContentPortalLoginPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-// Our custom react component
-// Our custom react component
-// Our custom react component
-// Our custom react component
-// Our custom react component
 (0, _reactTapEventPlugin2.default)();
 
-// Render the main app react component into the app div.
-// For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
+//Pages-----------------------------------------------------------------------------------------
 
-// const AppHeader = () => (
-//   <MuiThemeProvider>
-//     <CardExampleWithAvatar />
-//   </MuiThemeProvider>
-// );
+//Content Portal
 
 
-// Our custom react component
-
-// Our custom react component
-// Our custom react component
-// Our custom react component
-// Our custom react component
-// import ToolbarExamplesSimple from './toolbar'; // Our custom react component
-
-// import Main from './Main'; // Our custom react component
-// import Main from './TestComponentTheme'; // Our custom react component
 var ExperienceLabel = function ExperienceLabel() {
-  return _react2.default.createElement(
+    return _react2.default.createElement(
+        _MuiThemeProvider2.default,
+        null,
+        _react2.default.createElement(
+            'div',
+            { style: {
+                    textAlign: 'center',
+                    marginTop: 30
+                } },
+            _react2.default.createElement(_Card.CardTitle, { title: 'An experience just for you', subtitle: 'Learn a language based on your unique needs.' })
+        )
+    );
+};
+
+(0, _reactDom.render)(_react2.default.createElement(
     _MuiThemeProvider2.default,
     null,
     _react2.default.createElement(
-      'div',
-      { style: { textAlign: 'center', marginTop: 30 } },
-      _react2.default.createElement(_Card.CardTitle, {
-
-        title: 'An experience just for you', subtitle: 'Learn a language based on your unique needs.' })
+        _reactRouter.Router,
+        { history: _reactRouter.hashHistory },
+        _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/main' }),
+        _react2.default.createElement(
+            _reactRouter.Route,
+            { path: 'main', component: _Main2.default },
+            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _SignUp2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
+        ),
+        _react2.default.createElement(_reactRouter.Route, { path: 'contentportal', component: _ContentPortalLoginPage2.default })
     )
-  );
-};
-
-// const AppDiscover = () => (
-//   <MuiThemeProvider>
-//     <DiscoverPanel />
-//   </MuiThemeProvider>
-// );
-
-
-// render(<SignUp />, document.getElementById('app'));
-// render(<FrontVideoComponent />, document.getElementById('header'));
-// render(<DiscoverPanel />, document.getElementById('discover'));
-// render(<ExperienceLabel />, document.getElementById('experienceLabel'));
-// render(<ExperiencePanel />, document.getElementById('experiencePanel'));
-// render(<FooterPanel />, document.getElementById('footer'));
-
-(0, _reactDom.render)(_react2.default.createElement(
-  _reactRouter.Router,
-  { history: _reactRouter.browserHistory },
-  _react2.default.createElement(
-    _reactRouter.Route,
-    { path: '/', component: _Main2.default },
-    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _SignUp2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
-  )
 ), document.getElementById('app'));
 
-},{"./DiscoverPanel":553,"./ExperiencePanel":554,"./FooterPanel":555,"./Frontheader":556,"./Home":557,"./Main":560,"./NotFound":561,"./SignUp":562,"./Theme":564,"./header":568,"material-ui/Card":221,"material-ui/Paper":262,"material-ui/styles/MuiThemeProvider":296,"react":536,"react-dom":337,"react-router":376,"react-tap-event-plugin":390}],567:[function(require,module,exports){
+},{"./DiscoverPanel":552,"./ExperiencePanel":553,"./FooterPanel":554,"./Frontheader":555,"./Home":556,"./Main":559,"./NotFound":560,"./SignUp":561,"./Theme":563,"./header":568,"./pages/ContentPortalLoginPage":570,"material-ui/Card":221,"material-ui/Paper":262,"material-ui/styles/MuiThemeProvider":296,"react":536,"react-dom":337,"react-router":376,"react-tap-event-plugin":390}],566:[function(require,module,exports){
 'use strict';
-
-//auth.js
-// $ = jQuery = require('jquery');
-
 
 module.exports = {
     login: function login(username, pass, cb) {
@@ -56112,29 +55716,107 @@ module.exports = {
             },
             success: function success(res) {
 
-                cb({
-                    authenticated: true,
-                    token: res.key
-                });
+                cb({ authenticated: true, token: res.key });
             },
             error: function error(xhr, status, err) {
                 console.log("error", err);
 
-                cb({
-                    authenticated: false,
-                    error: err
-                });
+                cb({ authenticated: false, error: err });
             }
 
         });
     }
 };
 
-},{}],568:[function(require,module,exports){
+},{}],567:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Card = require('material-ui/Card');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'bottom-cards' },
+        _react2.default.createElement(
+            'row',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-4 col-md-offset-3' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-2' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            )
+        ),
+        _react2.default.createElement(
+            'row',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-2 col-md-offset-3' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-4' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports.default = BottomCardsPanelComponent;
+
+},{"material-ui/Card":221,"react":536}],568:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+            value: true
 });
 
 var _react = require('react');
@@ -56148,42 +55830,21 @@ var _AppBar2 = _interopRequireDefault(_AppBar);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppBarExampleIconMenu = function AppBarExampleIconMenu() {
-    return _react2.default.createElement(_AppBar2.default, { title: _react2.default.createElement(
-            'span',
-            { style: styles.title },
-            ' Test '
-        ),
-        iconElementLeft: _react2.default.createElement(
-            IconButton,
-            null,
-            ' ',
-            _react2.default.createElement(NavigationClose, null),
-            ' '
-        )
+            return _react2.default.createElement(_AppBar2.default, { title: _react2.default.createElement(
+                                    'span',
+                                    { style: styles.title },
+                                    ' Test '
+                        ),
+                        iconElementLeft: _react2.default.createElement(
+                                    IconButton,
+                                    null,
+                                    ' ',
+                                    _react2.default.createElement(NavigationClose, null),
+                                    ' '
+                        )
 
-    });
+            });
 };
-
-// class AppBarExampleIconMenu extends React.Component {
-//     render() {
-//         return( 
-//             <AppBar
-//                 title = {<span style={styles.title }> Test < /span>}
-//                 iconElementLeft = { <IconButton> <NavigationClose /></IconButton>}
-//                 iconElementRight = { < div >
-//                     <TextField
-//                     hintText = "UserName" />
-
-//                     <TextField
-//                     hintText = "PassWord" />
-
-//                     </div>
-//                 }
-
-//             />
-//         );
-//     }
-// }
 
 exports.default = AppBarExampleIconMenu;
 
@@ -56218,5 +55879,108 @@ module.exports = function () {
     return Person;
 }();
 
-},{}]},{},[566])
+},{}],570:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _TextField = require('material-ui/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ContentPortalLoginPage = function (_React$Component) {
+    _inherits(ContentPortalLoginPage, _React$Component);
+
+    function ContentPortalLoginPage() {
+        _classCallCheck(this, ContentPortalLoginPage);
+
+        return _possibleConstructorReturn(this, (ContentPortalLoginPage.__proto__ || Object.getPrototypeOf(ContentPortalLoginPage)).apply(this, arguments));
+    }
+
+    _createClass(ContentPortalLoginPage, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'content-portal' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'text-center welcome col-md-6 col-md-offset-3' },
+                    _react2.default.createElement('img', { src: 'assets/img/logo/logo.svg' }),
+                    _react2.default.createElement(
+                        'p',
+                        { className: 'welcome-text' },
+                        'Welcome to the Lingohop ',
+                        _react2.default.createElement(
+                            'b',
+                            null,
+                            'Content Portal'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-8 col-md-offset-2' },
+                        _react2.default.createElement(_TextField2.default, { hintText: 'Username', className: 'text-field', style: {
+                                width: '100%',
+                                marginTop: '40px'
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-8 col-md-offset-2' },
+                        _react2.default.createElement(_TextField2.default, { hintText: 'Password', className: 'text-field', style: {
+                                width: '100%',
+                                marginTop: '23px'
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'SIGN IN', className: 'signin-btn', primary: true })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'footer text-center col-xs-12' },
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        '© Oceanix Inc'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
+        }
+    }]);
+
+    return ContentPortalLoginPage;
+}(_react2.default.Component);
+
+exports.default = ContentPortalLoginPage;
+
+},{"material-ui/RaisedButton":268,"material-ui/TextField":280,"react":536}]},{},[565])
 //# sourceMappingURL=bundle.js.map

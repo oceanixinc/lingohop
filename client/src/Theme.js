@@ -1,7 +1,4 @@
- /**
-  * Theme.js
-  * In the home page, we have to render the page Appbar and integrate login component
-  */
+
 
 import React from 'react';
 import * as Colors from 'material-ui/styles/colors';
@@ -17,9 +14,7 @@ import { Link } from 'react-router'
 import Login from './Login';
 import CustomTheme from './CustomTheme';
 
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
+
 const ArrowIcon = (props) => (
   <SvgIcon {...props}>
     <path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z" />
@@ -46,12 +41,12 @@ const titleStyles = {
     cursor: 'pointer',
     fontSize: '0.6em',
     verticalAlign: 'middle',
-    
+
   },
    link: {
     textDecoration: 'none',
     color: 'black',
-    
+
   },
   color:{
     color: Colors.darkBlack
@@ -72,8 +67,7 @@ const textfieldStyles = {
 
 class Main extends React.Component {
   render() {
-    // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-    // using React's context feature.
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <AppBar title={<Link to="/" style={titleStyles.link} ><span style={titleStyles.title}>Lingohop</span></Link>} titleStyle={titleStyles}
@@ -83,7 +77,7 @@ class Main extends React.Component {
       <div>
       <Login/>
       </div>
-    
+
         </AppBar>
       </MuiThemeProvider>
     );
@@ -91,4 +85,3 @@ class Main extends React.Component {
 }
 
 export default Main;
-

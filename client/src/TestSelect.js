@@ -8,10 +8,7 @@ const styles = {
   },
 };
 
-/**
- * `SelectField` is implemented as a controlled component, with the current selection set through the `value` property.
- * The `SelectField` can be disabled with the `disabled` property.
- */
+
 export default class TestSelect extends React.Component {
 
   constructor(props) {
@@ -20,7 +17,7 @@ export default class TestSelect extends React.Component {
     this.state = {value: 1};
   }
 
-  handleChange(event, index, value) { 
+  handleChange(event, index, value) {
     console.log('test');
     this.setState({value});};
 

@@ -1,14 +1,7 @@
- /**
-  * Main.js
-  * This file is responsible for rendering our components in order
-  * We have component named App which will maintain default layout
-  * And in render() we have given the other components
-  */
 
-import Main from './Theme'; // Our custom react component
 
-import FooterPanel from './FooterPanel'; // Our custom react component
-
+import Main from './Theme';
+import FooterPanel from './FooterPanel';
 
 
 import React from 'react';
@@ -20,9 +13,9 @@ import SvgIcon from 'material-ui/SvgIcon';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 
-import FrontVideoComponent from './Frontheader'; // Our custom react component
-import DiscoverPanel from './DiscoverPanel'; // Our custom react component
-import ExperiencePanel from './ExperiencePanel'; // Our custom react component
+import FrontVideoComponent from './Frontheader';
+import DiscoverPanel from './DiscoverPanel';
+import ExperiencePanel from './ExperiencePanel';
 
 
 
@@ -42,14 +35,11 @@ const muiTheme = getMuiTheme({
 
 class App extends React.Component {
 
-  // contextTypes: {
-  //   router: React.PropTypes.object.isRequired,
-  // };
+
   render() {
-   
+
     return (
-      // <MuiThemeProvider muiTheme={muiTheme}>
-      
+
         <div>
           <Main />
           { this.props.children }
@@ -58,13 +48,8 @@ class App extends React.Component {
 
 
 
-      // </MuiThemeProvider>
     );
   }
 }
 
 export default App;
-
-
-
-

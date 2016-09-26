@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardMedia, CardTitle} from 'material-ui/Card';
 
-const BottomCardsPanel = () => (
+const BottomCardsPanelComponent = () => (
     <div className="bottom-cards">
         <row className="col-md-12">
             <div className="col-md-4 col-md-offset-3">
@@ -38,4 +38,4 @@ const BottomCardsPanel = () => (
     </div>
 );
 
-export default BottomCardsPanel;
+export default BottomCardsPanelComponent;

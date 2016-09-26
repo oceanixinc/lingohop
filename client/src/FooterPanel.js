@@ -37,7 +37,6 @@ const CopyRightIcon = (props) => (
 const style = {
   height: 200,
   width: '100%',
-  // margin: 20,
   textAlign: 'center',
   display: 'inline-block',
   overflow:'hidden',
@@ -55,8 +54,8 @@ const FooterPanel = () => (
      <CopyRightIcon style={iconStyles} /><span style={copyStyles}>Oceanix, Inc.</span>
    </div>
     </Paper>
-   
-   
+
+
   </div>
    </MuiThemeProvider>
 );

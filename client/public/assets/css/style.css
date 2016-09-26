@@ -1,17 +1,39 @@
-html {
-  font-family: 'Roboto', sans-serif;
-}
+.content-portal {
+  font-family: 'Roboto', sans-serif; }
+  .content-portal .welcome {
+    margin-top: 80px;
+    background-color: white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 2px; }
+    .content-portal .welcome > img {
+      margin-top: 50px;
+      height: 205px; }
+    .content-portal .welcome .welcome-text {
+      margin-top: 36px;
+      font-size: 26px; }
+    .content-portal .welcome .text-field > div {
+      bottom: 14px !important;
+      font-size: 21px !important; }
+    .content-portal .welcome .signin-btn {
+      min-width: 204px !important;
+      margin-top: 54px !important;
+      margin-bottom: 52px !important; }
+      .content-portal .welcome .signin-btn button {
+        background-color: #06b2e2 !important;
+        height: 45px !important;
+        line-height: 45px !important; }
+        .content-portal .welcome .signin-btn button div {
+          height: 45px !important;
+          line-height: 45px !important; }
+      .content-portal .welcome .signin-btn span {
+        font-size: 17px !important; }
+  .content-portal .footer {
+    position: fixed;
+    bottom: 5px;
+    color: gray; }
 
-body {
-  font-size: 13px;
-  line-height: 20px;
-}
+.bottom-cards img {
+  min-height: 400px;
+  object-fit: cover; }
 
-.bottom-cards-img{
-    height:400px;
-      object-fit: cover;
-}
-
-.bottom-cards > row >div{
-  margin-bottom:5px;
-}
+/*# sourceMappingURL=style.css.map */
