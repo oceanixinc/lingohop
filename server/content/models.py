@@ -49,6 +49,8 @@ class Country(DynamicDocument):
     """
     """
     name = fields.StringField(max_length=100, unique=True)
+    languages = fields.MapField(
+        fields.EmbeddedDocumentField(Language))
     # name = fields.StringField()
     # spanish = fields.EmbeddedDocumentField(Language)
 
