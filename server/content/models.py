@@ -13,6 +13,7 @@ class Content(EmbeddedDocument):
     answer_text = fields.ListField()
     variables = fields.ListField()
     rules = fields.ListField()
+    assets = fields.ListField(fields.EmbeddedDocumentField(Asset))
 
 
 class Part(EmbeddedDocument):
@@ -41,7 +42,7 @@ class Category(EmbeddedDocument):
 class Language(EmbeddedDocument):
     """
     """
-    # name = fields.StringField()
+    name = fields.StringField()
     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
@@ -52,7 +53,7 @@ class Country(DynamicDocument):
     languages = fields.MapField(
         fields.EmbeddedDocumentField(Language))
     # name = fields.StringField()
-    # spanish = fields.EmbeddedDocumentField(Language)
+    language = fields.ListField((fields.EmbeddedDocumentField(Language)))
 
 
 
@@ -66,3 +67,22 @@ class Country(DynamicDocument):
 
 # class CountryModel(DynamicDocument):
 #     pass
+
+
+class Asset(EmbeddedDocument):
+    """
+    Assets will be similar across languages, as they directly represent real world objects
+    for example a mango or an apple .
+    Idea is to link these assets to language parts across different languages.
+    Thus assets will exist as independently as first class citizens
+    It may also be a good thing to categorize these assets
+    """
+    id = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.StringField()
+    description = fields.StringField()
+    language = fields.EmbeddedDocument(Language)
+    country = fields.EmbeddedDocument(Country)
+    category = fields.EmbeddedDocumentField(Category)
+    type = fields.StringField() # Audio or Video
+    object = fields.FileField()
+
