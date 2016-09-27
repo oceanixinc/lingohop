@@ -1,7 +1,8 @@
 import uuid
 # from django.db import models
 from mongoengine import (
-    Document, EmbeddedDocument, DynamicDocument, DynamicEmbeddedDocument)
+    Document, EmbeddedDocument,
+    DynamicDocument, DynamicEmbeddedDocument)
 from mongoengine import fields
 # Create your models here.
 
@@ -13,7 +14,7 @@ class Content(EmbeddedDocument):
     answer_text = fields.ListField()
     variables = fields.ListField()
     rules = fields.ListField()
-    assets = fields.ListField(fields.EmbeddedDocumentField(Asset))
+    # assets = fields.ListField(fields.EmbeddedDocumentField(Asset))
 
 
 class Part(EmbeddedDocument):
@@ -50,12 +51,51 @@ class Country(DynamicDocument):
     """
     """
     name = fields.StringField(max_length=100, unique=True)
-    languages = fields.MapField(
-        fields.EmbeddedDocumentField(Language))
+    languages = fields.MapField(fields.MapField(
+        fields.EmbeddedDocumentField(Language)))
     # name = fields.StringField()
     language = fields.ListField((fields.EmbeddedDocumentField(Language)))
 
 
+# class Text(EmbeddedDocument):
+#     """
+#     """
+#     name = fields.StringField()
+#     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
+
+
+class Image(EmbeddedDocument):
+    """
+    """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.ImageField()
+
+
+class AudioFile(EmbeddedDocument):
+    name = fields.FileField()
+
+
+class Audio(EmbeddedDocument):
+    """
+    """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
+    files = fields.MapField(fields.MapField(
+        fields.EmbeddedDocumentField(AudioFile)))
+
+
+class AudioImage(EmbeddedDocument):
+    """
+    """
+    images = fields.ListField(fields.EmbeddedDocumentField(Image))
+    audio = fields.EmbeddedDocumentField(Audio)
+
+
+class Asset(DynamicDocument):
+    """
+    """
+    country = fields.StringField(max_length=100, unique=True)
+    languages = fields.MapField(fields.MapField(
+        fields.EmbeddedDocumentField(AudioImage)))
 
 # class Country(DynamicEmbeddedDocument):
 #     """
@@ -69,20 +109,20 @@ class Country(DynamicDocument):
 #     pass
 
 
-class Asset(EmbeddedDocument):
-    """
-    Assets will be similar across languages, as they directly represent real world objects
-    for example a mango or an apple .
-    Idea is to link these assets to language parts across different languages.
-    Thus assets will exist as independently as first class citizens
-    It may also be a good thing to categorize these assets
-    """
-    id = fields.UUIDField(binary=False, default=uuid.uuid4)
-    name = fields.StringField()
-    description = fields.StringField()
-    language = fields.EmbeddedDocument(Language)
-    country = fields.EmbeddedDocument(Country)
-    category = fields.EmbeddedDocumentField(Category)
-    type = fields.StringField() # Audio or Video
-    object = fields.FileField()
+# class Asset(EmbeddedDocument):
+#     """
+#     Assets will be similar across languages, as they directly represent real world objects
+#     for example a mango or an apple .
+#     Idea is to link these assets to language parts across different languages.
+#     Thus assets will exist as independently as first class citizens
+#     It may also be a good thing to categorize these assets
+#     """
+#     id = fields.UUIDField(binary=False, default=uuid.uuid4)
+#     name = fields.StringField()
+#     description = fields.StringField()
+#     language = fields.EmbeddedDocument(Language)
+#     country = fields.EmbeddedDocument(Country)
+#     category = fields.EmbeddedDocumentField(Category)
+#     type = fields.StringField() # Audio or Video
+#     object = fields.FileField()
 

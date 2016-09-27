@@ -12,12 +12,13 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import environ
 import os
+import mongoengine as mongo
 
 
-ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
+ROOT_DIR = environ.Path(__file__) - 2  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('lingohop')
 # print(ROOT_DIR)
-env_path = str(APPS_DIR.path('.env'))
+env_path = str(ROOT_DIR.path('.env'))
 # env_path = str(APPS_DIR.path('.env'))
 env = environ.Env()
 environ.Env.read_env(env_path)
@@ -118,20 +119,18 @@ DATABASES = {
     'default': env.db("DATABASE_URL", default="postgres:///lingohop"),
 }
 
-import mongoengine as mongo
-
 # _MONGODB_USER = ''
 # _MONGODB_PASSWD = ''
-_MONGODB_HOST = 'localhost'
+# _MONGODB_HOST = 'localhost'
 # _MONGODB_HOST = '52.67.163.70'
-_MONGODB_NAME = 'lingohop1'
+# _MONGODB_NAME = 'lingohop1'
 # _MONGODB_DATABASE_HOST = \
 #     'mongodb://%s:%s@%s/%s' \
 #     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
-
-# mongo.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
-mongo.connect(
-    _MONGODB_NAME, host=_MONGODB_HOST, port=27017, alias='default')
+mongo.connect(env('_MONGODB_NAME'), host=env('_MONGODB_HOST'))
+# print ('urls', env.db('_MONGODB_HOST'), env.db('_MONGODB_NAME'))
+# mongo.connect(
+#     _MONGODB_NAME, host=_MONGODB_HOST, port=27017, alias='default')
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
