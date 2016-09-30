@@ -167,7 +167,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_ROOT = str(ROOT_DIR("../../../../"+'static'))
+STATIC_ROOT = str(ROOT_DIR("../../"+'static'))
 
 
 # Static files (CSS, JavaScript, Images)
@@ -178,7 +178,7 @@ STATIC_URL = '/static/'
 # print ('apss ir', str(BASE_DIR.path('lingohop/static')))
 
 STATICFILES_DIRS = (
-    str(ROOT_DIR.path('lingohop/lingohop/static')),
+    str(ROOT_DIR.path('lingohop/static')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
