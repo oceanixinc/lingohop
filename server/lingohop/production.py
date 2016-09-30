@@ -1,12 +1,15 @@
 from .common import *
 
 import environ
+import os
+from os.path import join, dirname
 
 
 ROOT_DIR = environ.Path(__file__) - 2  # (/a/b/myfile.py - 3 = /)
+BASE_DIR = dirname(dirname(__file__))
 
-
-STATIC_ROOT = str("../../../../"+ROOT_DIR('static'))
+# STATIC_ROOT = str("../../../../"+ROOT_DIR('static'))
+STATIC_ROOT = join(os.path.dirname(BASE_DIR), '../../../../' 'static')
 
 
 
