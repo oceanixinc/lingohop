@@ -1,18 +1,12 @@
 from common import *
 
 import environ
-import os
-import mongoengine as mongo
 
 
 ROOT_DIR = environ.Path(__file__) - 2  # (/a/b/myfile.py - 3 = /)
 
 
 STATIC_ROOT = str(ROOT_DIR('static'))
-
-from __future__ import absolute_import, unicode_literals
-
-from django.utils import six
 
 
 
@@ -30,4 +24,5 @@ MEDIA_URL = '/media/'
 
 # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 # STATIC_URL = MEDIA_URL
+
 STATIC_URL = '/static/'
