@@ -193,6 +193,6 @@ REST_FRAMEWORK = {
 }
 
 try:
-    from local_settings import *
+    from .common import *
 except ImportError:
     pass
