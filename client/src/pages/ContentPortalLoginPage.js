@@ -16,7 +16,7 @@ export default class ContentPortalLoginPage extends React.Component {
                         }}/>
                     </div>
                     <div className="col-md-8 col-md-offset-2">
-                        <TextField hintText="Password" className="text-field" style={{
+                        <TextField hintText="Password" className="text-field" type="password" style={{
                             width: '100%',
                             marginTop: '23px'
                         }}/>

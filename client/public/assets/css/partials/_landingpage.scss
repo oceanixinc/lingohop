@@ -1,0 +1,107 @@
+.landing-page {
+  //  background-size: cover;
+  //  background-repeat: no-repeat;
+  //  background-image: url('http://www.macondogames.com/content_portal_purpose.png');
+//    background-color: rgb(244,244,244);
+//    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+
+    #landing-navbar {
+        border-radius: 0;
+        background-color: #fff;
+        border: 0;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+        background-image: none;
+        height:82px;
+        //opacity:0.5;
+
+        .container-fluid{
+          height:82px;
+
+          .navbar-header{
+            height:82px;
+            .navbar-brand{
+              height:82px;
+              >img{
+                height:52px;
+                padding-left:5px;
+                padding-top:5px;
+              }
+              >p{
+                height:100%;
+                margin:0;
+                line-height:3;
+                margin-left:20px;
+                text-shadow:none;
+              }
+            }
+          }
+        }
+
+        #right-nav{
+          height:82px;
+          >img{
+            height:82px;
+            padding:15px;
+          }
+          .house{
+            padding:25px;
+            padding-right:15px;
+          }
+        }
+    }
+
+    .landing {
+        //opacity: 0.5;
+        margin-top: 115px;
+        background-color: white;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 2px;
+
+        > p {
+            margin-top: 89px;
+            font-size: 33px;
+        }
+
+        .mega-holder {
+            margin-top: 45px;
+            margin-bottom: 130px;
+        }
+
+        .img-holder {
+            position: relative;
+
+            > img {
+                width: 100%;
+            }
+
+            .after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #000;
+                opacity: 0;
+
+                > p {
+                    position: absolute;
+                    top: 50%;
+                    width: 100%;
+                    font-size: 25px;
+                    color: rgb(8,178,277);
+                    opacity: 1;
+                }
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .desc-text {
+            margin-top: 25px;
+            font-size: 22px;
+        }
+    }
+}

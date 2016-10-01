@@ -1,7 +1,7 @@
 .content-portal {
   font-family: 'Roboto', sans-serif; }
   .content-portal .welcome {
-    margin-top: 80px;
+    margin-top: 255px;
     background-color: white;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
     border-radius: 2px; }
@@ -31,6 +31,75 @@
     position: fixed;
     bottom: 5px;
     color: gray; }
+
+.landing-page {
+  font-family: 'Roboto', sans-serif; }
+  .landing-page #landing-navbar {
+    border-radius: 0;
+    background-color: #fff;
+    border: 0;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    background-image: none;
+    height: 82px; }
+    .landing-page #landing-navbar .container-fluid {
+      height: 82px; }
+      .landing-page #landing-navbar .container-fluid .navbar-header {
+        height: 82px; }
+        .landing-page #landing-navbar .container-fluid .navbar-header .navbar-brand {
+          height: 82px; }
+          .landing-page #landing-navbar .container-fluid .navbar-header .navbar-brand > img {
+            height: 52px;
+            padding-left: 5px;
+            padding-top: 5px; }
+          .landing-page #landing-navbar .container-fluid .navbar-header .navbar-brand > p {
+            height: 100%;
+            margin: 0;
+            line-height: 3;
+            margin-left: 20px;
+            text-shadow: none; }
+    .landing-page #landing-navbar #right-nav {
+      height: 82px; }
+      .landing-page #landing-navbar #right-nav > img {
+        height: 82px;
+        padding: 15px; }
+      .landing-page #landing-navbar #right-nav .house {
+        padding: 25px;
+        padding-right: 15px; }
+  .landing-page .landing {
+    margin-top: 115px;
+    background-color: white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 2px; }
+    .landing-page .landing > p {
+      margin-top: 89px;
+      font-size: 33px; }
+    .landing-page .landing .mega-holder {
+      margin-top: 45px;
+      margin-bottom: 130px; }
+    .landing-page .landing .img-holder {
+      position: relative; }
+      .landing-page .landing .img-holder > img {
+        width: 100%; }
+      .landing-page .landing .img-holder .after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;
+        opacity: 0; }
+        .landing-page .landing .img-holder .after > p {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          font-size: 25px;
+          color: #08b2ff;
+          opacity: 1; }
+        .landing-page .landing .img-holder .after:hover {
+          opacity: 0.7; }
+    .landing-page .landing .desc-text {
+      margin-top: 25px;
+      font-size: 22px; }
 
 .bottom-cards img {
   min-height: 400px;

@@ -38,6 +38,7 @@ import {
 
 //Content Portal
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
+import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
 
 injectTapEventPlugin();
 
@@ -64,6 +65,7 @@ render((
                 <Route path='*' component={NotFound}/>
             </Route>
             <Route path="contentportal" component={ContentPortalLoginPage}/>
+            <Route path="landingpage" component={ContentPortalLandingPage}/>
         </Router>
     </MuiThemeProvider>
 
