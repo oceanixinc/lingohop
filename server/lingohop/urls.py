@@ -32,6 +32,9 @@ urlpatterns = [
         r'^(?i)api/trips/',
         include('userprofile.trip_urls', namespace="trip")),
     url(
+        r'^(?i)api/assets/',
+        include('content.asset_urls', namespace="asset")),
+    url(
         r'^(?i)api/language-country/',
         include('userprofile.language_urls', namespace="language")),
     url(
