@@ -35,7 +35,7 @@ class AudioImageSerializer(serializers.Serializer):
 
 class AssetSerializer(serializers.Serializer):
     country = serializers.CharField(allow_blank=True, required=False)
-    audio = AudioFileSerializer(required=False)
+    languages = AudioImageSerializer(many=True, required=False)
 
 
 # class ImageSerializer(serializers.Serializer):
