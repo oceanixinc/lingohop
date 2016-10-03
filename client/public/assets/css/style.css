@@ -66,7 +66,7 @@
         padding: 25px;
         padding-right: 15px; }
   .landing-page .landing {
-    margin-top: 115px;
+    margin-top: 95px;
     background-color: white;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
     border-radius: 2px; }
@@ -75,7 +75,7 @@
       font-size: 33px; }
     .landing-page .landing .mega-holder {
       margin-top: 45px;
-      margin-bottom: 130px; }
+      margin-bottom: 40px; }
     .landing-page .landing .img-holder {
       position: relative; }
       .landing-page .landing .img-holder > img {

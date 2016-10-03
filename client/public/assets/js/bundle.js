@@ -73587,7 +73587,7 @@ var ContentPortalLandingPage = function (_React$Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'img-holder' },
-                                _react2.default.createElement('img', { src: 'assets/img/france.jpg' }),
+                                _react2.default.createElement('img', { src: 'assets/img/upload.png' }),
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'after' },
@@ -73610,7 +73610,7 @@ var ContentPortalLandingPage = function (_React$Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'img-holder' },
-                                _react2.default.createElement('img', { src: 'assets/img/france.jpg' }),
+                                _react2.default.createElement('img', { src: 'assets/img/build.png' }),
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'after' },
@@ -73633,7 +73633,7 @@ var ContentPortalLandingPage = function (_React$Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'img-holder' },
-                                _react2.default.createElement('img', { src: 'assets/img/france.jpg' }),
+                                _react2.default.createElement('img', { src: 'assets/img/edit.png' }),
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'after' },

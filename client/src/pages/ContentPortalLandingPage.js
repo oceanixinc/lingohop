@@ -37,7 +37,7 @@ export default class ContentPortalLandingPage extends React.Component {
 
                         <div className="col-md-4">
                             <div className="img-holder">
-                                <img src='assets/img/france.jpg'/>
+                                <img src='assets/img/upload.png'/>
                                 <div className="after">
                                     <p>UPLOAD</p>
                                 </div>
@@ -47,7 +47,7 @@ export default class ContentPortalLandingPage extends React.Component {
 
                         <div className="col-md-4">
                             <div className="img-holder">
-                                <img src='assets/img/france.jpg'/>
+                                <img src='assets/img/build.png'/>
                                 <div className="after">
                                     <p>BUILD</p>
                                 </div>
@@ -57,7 +57,7 @@ export default class ContentPortalLandingPage extends React.Component {
 
                         <div className="col-md-4">
                             <div className="img-holder">
-                                <img src='assets/img/france.jpg'/>
+                                <img src='assets/img/edit.png'/>
                                 <div className="after">
                                     <p>EDIT</p>
                                 </div>
