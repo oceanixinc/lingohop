@@ -16,6 +16,7 @@ import mongoengine as mongo
 
 
 ROOT_DIR = environ.Path(__file__) - 2  # (/a/b/myfile.py - 3 = /)
+print ('ROOT_DIR', ROOT_DIR)
 APPS_DIR = ROOT_DIR.path('lingohop')
 # print(ROOT_DIR)
 env_path = str(ROOT_DIR.path('.env'))
@@ -59,6 +60,7 @@ THIRD_PARTY_APPS = (
     'rest_framework.authtoken',
     'rest_auth',
     'django_countries',
+    'rest_framework_mongoengine',
     # 'reversion',
 )
 
@@ -182,8 +184,8 @@ STATICFILES_DIRS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
-
+ROOT_MEDIA = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
+MEDIA_ROOT = str(ROOT_MEDIA('media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'

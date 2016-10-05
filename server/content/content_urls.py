@@ -2,14 +2,14 @@
 from django.conf.urls import url
 
 from content.api import (
-    AssetCreate,
+    ContentCreate,
 )
 
 urlpatterns = [
 
     url(
         r'^$',
-        AssetCreate.as_view(),
-        name='asset'
+        ContentCreate.as_view(),
+        name='content'
     ),
 ]
