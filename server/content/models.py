@@ -43,7 +43,7 @@ class Category(EmbeddedDocument):
 class Language(EmbeddedDocument):
     """
     """
-    name = fields.StringField()
+    # name = fields.StringField()
     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
@@ -97,6 +97,13 @@ class Asset(DynamicDocument):
     country = fields.StringField(max_length=100, unique=True)
     languages = fields.MapField(fields.MapField(
         fields.EmbeddedDocumentField(AudioImage)))
+
+
+class Region(DynamicDocument):
+    """
+    """
+    language_country = fields.StringField(max_length=100, unique=True)
+    regions = fields.ListField()
 
 # class Country(DynamicEmbeddedDocument):
 #     """

@@ -16,7 +16,6 @@ import mongoengine as mongo
 
 
 ROOT_DIR = environ.Path(__file__) - 2  # (/a/b/myfile.py - 3 = /)
-print ('ROOT_DIR', ROOT_DIR)
 APPS_DIR = ROOT_DIR.path('lingohop')
 # print(ROOT_DIR)
 env_path = str(ROOT_DIR.path('.env'))
@@ -61,6 +60,7 @@ THIRD_PARTY_APPS = (
     'rest_auth',
     'django_countries',
     'rest_framework_mongoengine',
+    # 'mongoengine_extras',
     # 'reversion',
 )
 

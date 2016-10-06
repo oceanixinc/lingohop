@@ -1,11 +1,13 @@
 from rest_framework.response import Response
-from rest_framework import generics, permissions, status
+from rest_framework import status
+from rest_framework_mongoengine import generics
 from .serializers import (
-    TestSerializer,
-    ContentSerializer)
+    AssetSerializer,
+    ContentSerializer,
+    RegionSerializer)
 
-from .models import Asset, Country
-from rest_framework.parsers import FileUploadParser
+from .models import Asset, Country, Region
+# from rest_framework.parsers import FileUploadParser
 import base64
 import uuid
 
@@ -14,18 +16,17 @@ class ContentCreate(generics.ListCreateAPIView):
     serializer_class = ContentSerializer
     queryset = Country.objects.all()
 
-    # def post(self, request, format=None, *args, **kwargs):
-    #     serializer = AudioImageSerializer(
-    #         data=request.data
-    #     )
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ContentUpdate(generics.RetrieveUpdateDestroyAPIView):
+    """Return a specific asset, update it, or delete it."""
+    serializer_class = ContentSerializer
+    queryset = Country.objects.all()
+
+    lookup_field = 'name'
 
 
 class AssetCreate(generics.ListCreateAPIView):
-    serializer_class = TestSerializer
+    serializer_class = AssetSerializer
     queryset = Asset.objects.all()
     # parser_classes = (FileUploadParser,)
 
@@ -59,10 +60,30 @@ class AssetCreate(generics.ListCreateAPIView):
             request.data['languages'][a][b]['images'][index]['file'] = real_file[1]
         print ('request data', request.data)
 
-        serializer = TestSerializer(
+        serializer = AssetSerializer(
             data=request.data
         )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AssetUpdate(generics.RetrieveUpdateDestroyAPIView):
+    """Return a specific asset, update it, or delete it."""
+    serializer_class = AssetSerializer
+    queryset = Asset.objects.all()
+
+    lookup_field = 'country'
+
+
+class RegionCreate(generics.ListCreateAPIView):
+    serializer_class = RegionSerializer
+    queryset = Region.objects.all()
+
+
+class RegionUpdate(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = RegionSerializer
+    queryset = Region.objects.all()
+
+    lookup_field = 'language_country'

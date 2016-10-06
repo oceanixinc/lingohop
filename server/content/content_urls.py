@@ -2,7 +2,7 @@
 from django.conf.urls import url
 
 from content.api import (
-    ContentCreate,
+    ContentCreate, ContentUpdate
 )
 
 urlpatterns = [
@@ -11,5 +11,11 @@ urlpatterns = [
         r'^$',
         ContentCreate.as_view(),
         name='content'
+    ),
+
+    url(
+        r'^(?P<name>\w+)$',
+        ContentUpdate.as_view(),
+        name='content-update'
     ),
 ]
