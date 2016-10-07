@@ -19,28 +19,13 @@ import {
 import FrontVideoComponent from './Frontheader'; // Our custom react component
 import DiscoverPanel from './DiscoverPanel'; // Our custom react component
 import ExperiencePanel from './ExperiencePanel'; // Our custom react component
-import BottomCardsPanel from './BottomCardsPanel';
+import BottomCardsPanelComponent from './components/BottomCardsPanelComponent';
 import CustomTheme from './CustomTheme';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
 
-// injectTapEventPlugin();
-
-// const ExperienceLabel = () => (
-//  // <MuiThemeProvider>
-//   <div style={{textAlign: 'center', marginTop: 30}}>
-
-//       <CardTitle
-
-//       title="An experience just for you" subtitle="Learn a language based on your unique needs." />
-
-//   </div>
-//   // </MuiThemeProvider>
-// );
 
 class ExperienceLabel extends React.Component {
     render() {
-        // MuiThemeProvider takes the theme as a property and passed it down the hierarchy
-        // using React's context feature.
+
         return (
             <div style={{
                 textAlign: 'center',
@@ -54,11 +39,6 @@ class ExperienceLabel extends React.Component {
     }
 }
 
-// export default ExperienceLabel;
-
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
 const ArrowIcon = (props) => (
     <SvgIcon {...props}>
         <path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z"/>
@@ -110,7 +90,7 @@ class Home extends React.Component {
                     <DiscoverPanel/>
                     <ExperienceLabel/>
                     <ExperiencePanel/>
-                    <BottomCardsPanel/>
+                    <BottomCardsPanelComponent/>
                 </div>
             </MuiThemeProvider>
         );

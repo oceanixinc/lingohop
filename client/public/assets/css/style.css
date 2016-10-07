@@ -1,17 +1,157 @@
-html {
-  font-family: 'Roboto', sans-serif;
-}
+.content-portal {
+  font-family: 'Roboto', sans-serif; }
+  .content-portal .welcome {
+    margin-top: 255px;
+    background-color: white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 2px; }
+    .content-portal .welcome > img {
+      margin-top: 50px;
+      height: 205px; }
+    .content-portal .welcome .welcome-text {
+      margin-top: 36px;
+      font-size: 26px; }
+    .content-portal .welcome .text-field > div {
+      bottom: 14px !important;
+      font-size: 21px !important; }
+    .content-portal .welcome .signin-btn {
+      min-width: 204px !important;
+      margin-top: 54px !important;
+      margin-bottom: 52px !important; }
+      .content-portal .welcome .signin-btn button {
+        background-color: #06b2e2 !important;
+        height: 45px !important;
+        line-height: 45px !important; }
+        .content-portal .welcome .signin-btn button div {
+          height: 45px !important;
+          line-height: 45px !important; }
+      .content-portal .welcome .signin-btn span {
+        font-size: 17px !important; }
+  .content-portal .footer {
+    position: fixed;
+    bottom: 5px;
+    color: gray; }
 
-body {
-  font-size: 13px;
-  line-height: 20px;
-}
+#landing-navbar {
+  border-radius: 0;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+  background-image: none;
+  height: 82px; }
+  #landing-navbar .container-fluid {
+    height: 82px; }
+    #landing-navbar .container-fluid .navbar-header {
+      height: 82px; }
+      #landing-navbar .container-fluid .navbar-header .navbar-brand {
+        height: 82px; }
+        #landing-navbar .container-fluid .navbar-header .navbar-brand > img {
+          height: 52px;
+          padding-left: 5px;
+          padding-top: 5px; }
+        #landing-navbar .container-fluid .navbar-header .navbar-brand > p {
+          height: 100%;
+          margin: 0;
+          line-height: 3;
+          margin-left: 20px;
+          text-shadow: none; }
+  #landing-navbar #right-nav {
+    height: 82px; }
+    #landing-navbar #right-nav > img {
+      height: 82px;
+      padding: 15px; }
+    #landing-navbar #right-nav > i {
+      padding: 25px;
+      padding-right: 15px;
+      font-size: 32px; }
 
-.bottom-cards-img{
-    height:400px;
-      object-fit: cover;
-}
+.landing-page {
+  font-family: 'Roboto', sans-serif; }
+  .landing-page .landing {
+    margin-top: 95px;
+    background-color: white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 2px; }
+    .landing-page .landing > p {
+      margin-top: 89px;
+      font-size: 33px; }
+    .landing-page .landing .mega-holder {
+      margin-top: 45px;
+      margin-bottom: 40px; }
+    .landing-page .landing .img-holder {
+      position: relative; }
+      .landing-page .landing .img-holder > img {
+        width: 100%; }
+      .landing-page .landing .img-holder .after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;
+        opacity: 0; }
+        .landing-page .landing .img-holder .after > p {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          font-size: 25px;
+          color: #08b2ff;
+          opacity: 1; }
+        .landing-page .landing .img-holder .after:hover {
+          opacity: 0.7; }
+    .landing-page .landing .desc-text {
+      margin-top: 25px;
+      font-size: 22px; }
 
-.bottom-cards > row >div{
-  margin-bottom:5px;
-}
+.upload-page .upload {
+  margin-top: 45px;
+  background-color: white;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+  border-radius: 2px; }
+  .upload-page .upload i {
+    margin-top: 10px;
+    font-size: 32px; }
+  .upload-page .upload #main-text {
+    margin: 5px 0;
+    font-size: 33px; }
+  .upload-page .upload #desc-text {
+    font-size: 17px;
+    margin-bottom: 40px; }
+  .upload-page .upload #lego-text {
+    margin-top: 16px;
+    margin-bottom: 32px; }
+  .upload-page .upload #audio {
+    margin-top: 37px; }
+  .upload-page .upload #chips {
+    margin-top: 12px; }
+  .upload-page .upload .big-text {
+    font-size: 20px; }
+  .upload-page .upload label {
+    font-weight: 400 !important; }
+  .upload-page .upload #add-picture {
+    height: 120px;
+    width: 120px;
+    border: 1px solid #333;
+    font-size: 16px;
+    line-height: 110px; }
+  .upload-page .upload .upload-btn {
+    min-width: 180px !important;
+    margin-top: 60px !important;
+    margin-bottom: 52px !important; }
+    .upload-page .upload .upload-btn button {
+      background-color: #06b2e2 !important;
+      height: 45px !important;
+      line-height: 45px !important; }
+      .upload-page .upload .upload-btn button div {
+        height: 45px !important;
+        line-height: 45px !important; }
+    .upload-page .upload .upload-btn span {
+      font-size: 17px !important; }
+
+.bottom-cards {
+  margin-bottom: 10px; }
+  .bottom-cards img {
+    min-height: 400px;
+    object-fit: cover; }
+
+/*# sourceMappingURL=style.css.map */
