@@ -61,7 +61,7 @@ const ExperiencePanel = () => (
         marginTop: 0
     }}>
         <Paper style={style} zDepth={1}>
-            <img src='static/photos/person1.png' style={imageStyle}/>
+            <img src='assets/img/person1.png' style={imageStyle}/>
             <div style={nameStyle}>
                 <span style={firstNameStyle}>Alex
                 </span>
@@ -75,7 +75,7 @@ const ExperiencePanel = () => (
 
         </Paper>
         <Paper style={style} zDepth={1}>
-            <img src='static/photos/person2.png' style={imageStyle}/>
+            <img src='assets/img/person2.png' style={imageStyle}/>
             <div style={nameStyle}>
                 <span style={firstNameStyle}>Sarah
                 </span>
@@ -88,7 +88,7 @@ const ExperiencePanel = () => (
             <CardTitle style={cardStyle} titleStyle={mediaTitleStyles.title} subtitleStyle={mediaTitleStyles.subtitle} subtitle="3. Going out for food or drinks "/>
         </Paper>
         <Paper style={style} zDepth={1}>
-            <img src='static/photos/person3.png' style={imageStyle}/>
+            <img src='assets/img/person3.png' style={imageStyle}/>
             <div style={nameStyle}>
                 <span style={firstNameStyle}>Marc
                 </span>

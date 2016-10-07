@@ -71587,7 +71587,7 @@ var DiscoverPanel = function DiscoverPanel() {
         _react2.default.createElement(
             _Paper2.default,
             { style: style, zDepth: 1 },
-            _react2.default.createElement('img', { src: 'static/photos/paris.png', style: {
+            _react2.default.createElement('img', { src: 'assets/img/paris.png', style: {
                     width: '100%',
                     height: 'auto'
                 } })
@@ -71595,8 +71595,8 @@ var DiscoverPanel = function DiscoverPanel() {
         _react2.default.createElement(
             _Paper2.default,
             { style: style, zDepth: 2 },
-            _react2.default.createElement(_Card.CardTitle, { titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, title: 'Discover what learning a new language can do for you', subtitle: 'Open your trip to a new world of possibilities with Lingohop' }),
-            _react2.default.createElement(_RaisedButton2.default, { containerElement: _react2.default.createElement(_reactRouter.Link, { to: '/signup' }), label: 'GET STARTED', backgroundColor: '#00BCD4', labelColor: '#ffffff', style: buttonStyle })
+            _react2.default.createElement(_Card.CardTitle, { titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, title: 'Speaking a new language opens up a world of opportunity', subtitle: 'You\'re an adventurer, not a tourist. Your journey begins with Lingohop.' }),
+            _react2.default.createElement(_RaisedButton2.default, { containerElement: _react2.default.createElement(_reactRouter.Link, { to: '/signup' }), label: 'See What You Can Learn', backgroundColor: '#00BCD4', labelColor: '#ffffff', style: buttonStyle })
         )
     );
 };
@@ -71684,7 +71684,7 @@ var ExperiencePanel = function ExperiencePanel() {
         _react2.default.createElement(
             _Paper2.default,
             { style: style, zDepth: 1 },
-            _react2.default.createElement('img', { src: 'static/photos/person1.png', style: imageStyle }),
+            _react2.default.createElement('img', { src: 'assets/img/person1.png', style: imageStyle }),
             _react2.default.createElement(
                 'div',
                 { style: nameStyle },
@@ -71706,7 +71706,7 @@ var ExperiencePanel = function ExperiencePanel() {
         _react2.default.createElement(
             _Paper2.default,
             { style: style, zDepth: 1 },
-            _react2.default.createElement('img', { src: 'static/photos/person2.png', style: imageStyle }),
+            _react2.default.createElement('img', { src: 'assets/img/person2.png', style: imageStyle }),
             _react2.default.createElement(
                 'div',
                 { style: nameStyle },
@@ -71728,7 +71728,7 @@ var ExperiencePanel = function ExperiencePanel() {
         _react2.default.createElement(
             _Paper2.default,
             { style: style, zDepth: 1 },
-            _react2.default.createElement('img', { src: 'static/photos/person3.png', style: imageStyle }),
+            _react2.default.createElement('img', { src: 'assets/img/person3.png', style: imageStyle }),
             _react2.default.createElement(
                 'div',
                 { style: nameStyle },
@@ -71756,7 +71756,7 @@ exports.default = ExperiencePanel;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = require('react');
@@ -71790,66 +71790,71 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var iconStyles = {
-  marginRight: 5,
-  color: 'rgba(156, 150, 150, 0.32)',
-  width: '16px',
-  height: '16px'
+    marginRight: 5,
+    color: 'rgba(156, 150, 150, 0.32)',
+    width: '16px',
+    height: '16px'
 };
 
 var copyStyles = {
-  color: 'rgba(156, 150, 150, 0.32)',
-  fontSize: '16px'
+    color: 'rgba(156, 150, 150, 0.32)',
+    fontSize: '16px'
 };
 
 var HomeIcon = function HomeIcon(props) {
-  return _react2.default.createElement(
-    _SvgIcon2.default,
-    props,
-    _react2.default.createElement('path', { d: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z' })
-  );
+    return _react2.default.createElement(
+        _SvgIcon2.default,
+        props,
+        _react2.default.createElement('path', { d: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z' })
+    );
 };
 
 var CopyRightIcon = function CopyRightIcon(props) {
-  return _react2.default.createElement(
-    _SvgIcon2.default,
-    props,
-    _react2.default.createElement('path', { d: 'M10.08 10.86c.05-.33.16-.62.3-.87s.34-.46.59-.62c.24-.15.54-.22.91-.23.23.01.44.05.63.13.2.09.38.21.52.36s.25.33.34.53.13.42.14.64h1.79c-.02-.47-.11-.9-.28-1.29s-.4-.73-.7-1.01-.66-.5-1.08-.66-.88-.23-1.39-.23c-.65 0-1.22.11-1.7.34s-.88.53-1.2.92-.56.84-.71 1.36S8 11.29 8 11.87v.27c0 .58.08 1.12.23 1.64s.39.97.71 1.35.72.69 1.2.91 1.05.34 1.7.34c.47 0 .91-.08 1.32-.23s.77-.36 1.08-.63.56-.58.74-.94.29-.74.3-1.15h-1.79c-.01.21-.06.4-.15.58s-.21.33-.36.46-.32.23-.52.3c-.19.07-.39.09-.6.1-.36-.01-.66-.08-.89-.23-.25-.16-.45-.37-.59-.62s-.25-.55-.3-.88-.08-.67-.08-1v-.27c0-.35.03-.68.08-1.01zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' })
-  );
+    return _react2.default.createElement(
+        _SvgIcon2.default,
+        props,
+        _react2.default.createElement('path', { d: 'M10.08 10.86c.05-.33.16-.62.3-.87s.34-.46.59-.62c.24-.15.54-.22.91-.23.23.01.44.05.63.13.2.09.38.21.52.36s.25.33.34.53.13.42.14.64h1.79c-.02-.47-.11-.9-.28-1.29s-.4-.73-.7-1.01-.66-.5-1.08-.66-.88-.23-1.39-.23c-.65 0-1.22.11-1.7.34s-.88.53-1.2.92-.56.84-.71 1.36S8 11.29 8 11.87v.27c0 .58.08 1.12.23 1.64s.39.97.71 1.35.72.69 1.2.91 1.05.34 1.7.34c.47 0 .91-.08 1.32-.23s.77-.36 1.08-.63.56-.58.74-.94.29-.74.3-1.15h-1.79c-.01.21-.06.4-.15.58s-.21.33-.36.46-.32.23-.52.3c-.19.07-.39.09-.6.1-.36-.01-.66-.08-.89-.23-.25-.16-.45-.37-.59-.62s-.25-.55-.3-.88-.08-.67-.08-1v-.27c0-.35.03-.68.08-1.01zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' })
+    );
 };
 
 var style = {
-  height: 200,
-  width: '100%',
-  textAlign: 'center',
-  display: 'inline-block',
-  overflow: 'hidden',
-  padding: 0
-
+    height: 200,
+    width: '100%',
+    textAlign: 'center',
+    display: 'inline-block',
+    overflow: 'hidden',
+    padding: 0,
+    marginBottom: '-10px'
 };
 
 var FooterPanel = function FooterPanel() {
-  return _react2.default.createElement(
-    _MuiThemeProvider2.default,
-    null,
-    _react2.default.createElement(
-      'div',
-      { style: { textAlign: 'center', marginTop: 0 } },
-      _react2.default.createElement(
-        _Paper2.default,
-        { style: style, zDepth: 1 },
+    return _react2.default.createElement(
+        _MuiThemeProvider2.default,
+        null,
         _react2.default.createElement(
-          'div',
-          { style: { marginTop: 160 } },
-          _react2.default.createElement(CopyRightIcon, { style: iconStyles }),
-          _react2.default.createElement(
-            'span',
-            { style: copyStyles },
-            'Oceanix, Inc.'
-          )
+            'div',
+            { style: {
+                    textAlign: 'center',
+                    marginTop: 0
+                } },
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 1 },
+                _react2.default.createElement(
+                    'div',
+                    { style: {
+                            marginTop: 160
+                        } },
+                    _react2.default.createElement(CopyRightIcon, { style: iconStyles }),
+                    _react2.default.createElement(
+                        'span',
+                        { style: copyStyles },
+                        'Oceanix, Inc.'
+                    )
+                )
+            )
         )
-      )
-    )
-  );
+    );
 };
 
 exports.default = FooterPanel;
@@ -71950,7 +71955,7 @@ var FrontVideoComponent = function FrontVideoComponent() {
             { style: {
                     background: '#9E9E9E'
                 }, overlay: _react2.default.createElement(_Card.CardTitle, { title: 'LIVE THE LANGUAGE', subtitle: 'Learn a language based on the situations that are relevant to you.' }), overlayContentStyle: mediaTitleStyles.content, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle },
-            _react2.default.createElement(_reactPlayer2.default, { url: 'static/videos/video.mp4', width: '460', height: '360' })
+            _react2.default.createElement(_reactPlayer2.default, { url: 'https://www.youtube.com/watch?v=daR7Hb9sb8Q', width: '460', height: '360' })
         ),
         _react2.default.createElement(_Card.CardTitle, { title: '', subtitleStyle: headerLowerStyles.title, subtitle: 'Start having conversations in your new language today - try if free!' }),
         _react2.default.createElement(_LanguageTripSelection2.default, null)
@@ -72412,8 +72417,8 @@ var SelectLangaugeCountry = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { style: {
-                        marginLeft: 100,
-                        marginRight: 100,
+                        marginLeft: '16.6666666%',
+                        width: '66.666666666%',
                         marginBottom: 20,
                         display: 'inline-block'
                     } },
@@ -72434,7 +72439,7 @@ var SelectLangaugeCountry = function (_React$Component) {
                                 marginLeft: 50,
                                 width: 320,
                                 verticalAlign: 'bottom'
-                            }, value: this.state.language, onChange: this.handleChange.bind(this, 'language'), floatingLabelText: 'Language-Country' },
+                            }, value: this.state.language, onChange: this.handleChange.bind(this, 'language'), floatingLabelText: 'I want to speak...' },
                         language_items
                     )
                 ),
@@ -72449,7 +72454,7 @@ var SelectLangaugeCountry = function (_React$Component) {
                                 marginLeft: 50,
                                 width: 320,
                                 verticalAlign: 'bottom'
-                            }, value: this.state.trip, onChange: this.handleChange.bind(this, 'trip'), floatingLabelText: 'Trip Type' },
+                            }, value: this.state.trip, onChange: this.handleChange.bind(this, 'trip'), floatingLabelText: 'For...' },
                         trip_items
                     )
                 ),
@@ -74055,7 +74060,7 @@ var Main = function (_React$Component) {
             iconElementLeft: _react2.default.createElement(
               _reactRouter.Link,
               { to: '/' },
-              _react2.default.createElement(_Avatar2.default, { src: 'static/photos/logo.svg', style: { width: '33', height: '33', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop: 8 } }),
+              _react2.default.createElement(_Avatar2.default, { src: 'assets/img/logo.svg', style: { width: '33', height: '33', backgroundColor: 'rgba(0, 0, 0, 0)', marginTop: 8 } }),
               ' '
             )
           },
@@ -74710,7 +74715,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
     return _react2.default.createElement(
         'div',
-        { className: 'bottom-cards' },
+        { className: 'bottom-cards col-md-12' },
         _react2.default.createElement(
             'row',
             { className: 'col-md-12' },

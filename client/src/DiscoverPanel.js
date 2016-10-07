@@ -45,14 +45,14 @@ const DiscoverPanel = () => (
         marginTop: 30
     }}>
         <Paper style={style} zDepth={1}>
-            <img src='static/photos/paris.png' style={{
+            <img src='assets/img/paris.png' style={{
                 width: '100%',
                 height: 'auto'
             }}/>
         </Paper>
         <Paper style={style} zDepth={2}>
-            <CardTitle titleStyle={mediaTitleStyles.title} subtitleStyle={mediaTitleStyles.subtitle} title="Discover what learning a new language can do for you" subtitle="Open your trip to a new world of possibilities with Lingohop"/>
-            <RaisedButton containerElement={< Link to = "/signup" />} label="GET STARTED" backgroundColor="#00BCD4" labelColor="#ffffff" style={buttonStyle}/>
+            <CardTitle titleStyle={mediaTitleStyles.title} subtitleStyle={mediaTitleStyles.subtitle} title="Speaking a new language opens up a world of opportunity" subtitle="You're an adventurer, not a tourist. Your journey begins with Lingohop."/>
+            <RaisedButton containerElement={< Link to = "/signup" />} label="See What You Can Learn" backgroundColor="#00BCD4" labelColor="#ffffff" style={buttonStyle}/>
         </Paper>
     </div>
 );

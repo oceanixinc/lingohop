@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, CardMedia, CardTitle} from 'material-ui/Card';
 
 const BottomCardsPanelComponent = () => (
-    <div className="bottom-cards">
+    <div className="bottom-cards col-md-12">
         <row className="col-md-12">
             <div className="col-md-4 col-md-offset-3">
                 <Card>

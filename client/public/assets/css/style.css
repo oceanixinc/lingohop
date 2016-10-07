@@ -148,8 +148,10 @@
     .upload-page .upload .upload-btn span {
       font-size: 17px !important; }
 
-.bottom-cards img {
-  min-height: 400px;
-  object-fit: cover; }
+.bottom-cards {
+  margin-bottom: 10px; }
+  .bottom-cards img {
+    min-height: 400px;
+    object-fit: cover; }
 
 /*# sourceMappingURL=style.css.map */

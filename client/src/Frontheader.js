@@ -67,7 +67,7 @@ const FrontVideoComponent = () => (
             background: '#9E9E9E'
         }} overlay={< CardTitle title = "LIVE THE LANGUAGE" subtitle = "Learn a language based on the situations that are relevant to you." />} overlayContentStyle={mediaTitleStyles.content} titleStyle={mediaTitleStyles.title} subtitleStyle={mediaTitleStyles.subtitle}>
 
-            <ReactPlayer url="static/videos/video.mp4" width="460" height="360"></ReactPlayer>
+            <ReactPlayer url="https://www.youtube.com/watch?v=daR7Hb9sb8Q" width="460" height="360"></ReactPlayer>
         </CardMedia>
         <CardTitle title="" subtitleStyle={headerLowerStyles.title} subtitle="Start having conversations in your new language today - try if free!"/>
 

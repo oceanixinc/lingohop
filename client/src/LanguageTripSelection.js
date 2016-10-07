@@ -145,8 +145,8 @@ export default class SelectLangaugeCountry extends React.Component {
     render() {
         return (
             <div style={{
-                marginLeft: 100,
-                marginRight: 100,
+                marginLeft: '16.6666666%',
+                width:'66.666666666%',
                 marginBottom: 20,
                 display: 'inline-block'
             }}>
@@ -163,7 +163,7 @@ export default class SelectLangaugeCountry extends React.Component {
                         marginLeft: 50,
                         width: 320,
                         verticalAlign: 'bottom'
-                    }} value={this.state.language} onChange={this.handleChange.bind(this, 'language')} floatingLabelText="Language-Country">
+                    }} value={this.state.language} onChange={this.handleChange.bind(this, 'language')} floatingLabelText="I want to speak...">
                         {language_items}
                     </SelectField >
                 </div>
@@ -174,7 +174,7 @@ export default class SelectLangaugeCountry extends React.Component {
                         marginLeft: 50,
                         width: 320,
                         verticalAlign: 'bottom'
-                    }} value={this.state.trip} onChange={this.handleChange.bind(this, 'trip')} floatingLabelText="Trip Type">
+                    }} value={this.state.trip} onChange={this.handleChange.bind(this, 'trip')} floatingLabelText="For...">
                         {trip_items}
                     </SelectField>
                 </div>
