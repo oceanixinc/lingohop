@@ -1,9 +1,4 @@
- /**
-  * Login.js
-  * This file is responsible handling user login login
-  * The login is embed in our Appbar
-  * 
-  */
+
 
 import React from 'react';
 import * as Colors from 'material-ui/styles/colors';
@@ -19,9 +14,7 @@ import UserSettingPanel from './UserSettings';
 
 var auth = require('./auth')
 
-// This replaces the textColor value on the palette
-// and then update the keys for each component that depends on it.
-// More on Colors: http://www.material-ui.com/#/customization/colors
+
 const ArrowIcon = (props) => (
   <SvgIcon {...props}>
     <path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z" />
@@ -48,9 +41,9 @@ const formError = {
   error:{
 
     position: 'relative',
-    
+
     fontSize: 12,
-    
+
     color: 'rgb(244, 67, 54)',
     transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
 
@@ -60,7 +53,7 @@ const formError = {
 const titleStyles = {
   title: {
     cursor: 'pointer'
-    
+
   },
   color:{
     color: Colors.darkBlack
@@ -144,7 +137,7 @@ class Login extends React.Component {
       this.setState({
           form_error: false
         });
-  
+
 };
 
 componentWillUpdate(nextProps, nextState) {
@@ -156,12 +149,12 @@ componentWillUpdate(nextProps, nextState) {
 
 
     componentWillReceiveProps(nextProps) {
-  
+
     };
 
 
     loadUserData() {
-     
+
         $.ajax({
             method: 'GET',
             url: '/rest-auth/user/',
@@ -176,7 +169,6 @@ componentWillUpdate(nextProps, nextState) {
     };
 
     validateEmail(value) {
-    // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
   };
@@ -266,12 +258,6 @@ submitForm(e) {
   render() {
     if (this.state.userlogin){
       return(
-        // <div>
-        //   <p>
-        //     Hi, You're logged in as <strong>{ this.state.user.username }</strong>
-        //     <FlatButton onClick={this.logoutHandler} style={{color: Colors.cyanA700}} label="Logout" primary={true} />
-        //   </p>
-        // </div>
         <div>
         <UserSettingPanel handleLogout={this.handleLogout} />
         </div>
@@ -284,10 +270,10 @@ submitForm(e) {
       { this.state.form_error &&
         <div id="form-error" style={formError.error}>Unable to log in with provided credentials. </div>
       }
-   
+
         <form className="loginForm" onSubmit={this.submitForm}>
 
-    
+
     <TextField
       value={this.state.username}
       onChange={e => this.setState({ username: e.target.value })}
@@ -297,14 +283,14 @@ submitForm(e) {
       // floatingLabelStyle={styles.floatingLabelStyle}
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
       errorText={this.state.email_error_text}
-      onBlur={this.isDisabled} 
+      onBlur={this.isDisabled}
       floatingLabelStyle={{
         marginTop: -10
   }}
   errorStyle ={{marginTop: -44}}
       // required={true}
-     
-      
+
+
     />
     <TextField
       value={this.state.password}
@@ -315,16 +301,16 @@ submitForm(e) {
       // floatingLabelStyle={styles.floatingLabelStyle}
       floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
       errorText={this.state.password_error_text}
-      onBlur={this.isDisabled} 
+      onBlur={this.isDisabled}
       floatingLabelStyle={{
         marginTop: -10
   }}
   errorStyle ={{marginTop: -44}}
       // required={true}
-     
+
     />
          <IconButton iconStyle={{iconHoverColor: '#55ff55'}}
-     tooltip="Sing In" key='signin-button' 
+     tooltip="Sing In" key='signin-button'
      // onTouchTap={this.handleTouchTap}
      // disabled={!this.state.username && !this.state.password}
      disabled={this.state.invalidData}
@@ -334,9 +320,9 @@ submitForm(e) {
     </IconButton>
   </form>
 </span>
-    
+
     );
-    
+
   };
 
    handleLogout(e){
@@ -347,11 +333,7 @@ submitForm(e) {
           this.setState({
           form_error: false
         });
-        // window.location = "/";
     };
 }
 
 export default Login;
-
-
-// onClick={this.onFormSubmit}

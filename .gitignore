@@ -71,3 +71,6 @@ node
 server/lingohop/static/videos/
 
 local_settings.py
+
+bundle.js
+bundle.js.map

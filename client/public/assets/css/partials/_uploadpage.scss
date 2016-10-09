@@ -1,0 +1,76 @@
+.upload-page {
+    //margin-top:-100px;
+
+    .upload {
+        //opacity: 0.5;
+        margin-top: 45px;
+        background-color: white;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 2px;
+
+        i {
+            margin-top: 10px;
+            font-size: 32px;
+        }
+
+        #main-text {
+            margin: 5px 0;
+            font-size: 33px;
+        }
+
+        #desc-text{
+          font-size:17px;
+          margin-bottom:40px;
+        }
+
+        #lego-text{
+          margin-top:16px;
+          margin-bottom:32px;
+        }
+
+        #audio{
+          margin-top:37px;
+        }
+
+        #chips{
+          margin-top:12px;
+        }
+
+        .big-text {
+            font-size: 20px;
+        }
+
+        label {
+            font-weight: 400 !important;
+        }
+
+        #add-picture {
+            height: 120px;
+            width: 120px;
+            border: 1px solid #333;
+            font-size: 16px;
+            line-height: 110px;
+        }
+
+        .upload-btn {
+            min-width: 180px !important;
+            margin-top: 60px !important;
+            margin-bottom: 52px !important;
+
+            button {
+                background-color: rgb(6,178,226)!important;
+                height: 45px !important;
+                line-height: 45px !important;
+
+                div {
+                    height: 45px !important;
+                    line-height: 45px !important;
+                }
+            }
+
+            span {
+                font-size: 17px !important;
+            }
+        }
+    }
+}
