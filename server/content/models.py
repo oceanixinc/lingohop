@@ -43,7 +43,7 @@ class Category(EmbeddedDocument):
 class Language(EmbeddedDocument):
     """
     """
-    name = fields.StringField()
+    # name = fields.StringField()
     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
@@ -51,10 +51,10 @@ class Country(DynamicDocument):
     """
     """
     name = fields.StringField(max_length=100, unique=True)
-    languages = fields.MapField(fields.MapField(
-        fields.EmbeddedDocumentField(Language)))
+    languages = fields.MapField(
+        fields.EmbeddedDocumentField(Language))
     # name = fields.StringField()
-    language = fields.ListField((fields.EmbeddedDocumentField(Language)))
+    # language = fields.ListField((fields.EmbeddedDocumentField(Language)))
 
 
 # class Text(EmbeddedDocument):
@@ -68,11 +68,11 @@ class Image(EmbeddedDocument):
     """
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    name = fields.ImageField()
+    file = fields.StringField(required=False, blank=True, null=True)
 
 
 class AudioFile(EmbeddedDocument):
-    name = fields.FileField()
+    file = fields.StringField(required=False, blank=True, null=True)
 
 
 class Audio(EmbeddedDocument):
@@ -86,8 +86,9 @@ class Audio(EmbeddedDocument):
 class AudioImage(EmbeddedDocument):
     """
     """
-    images = fields.ListField(fields.EmbeddedDocumentField(Image))
-    audio = fields.EmbeddedDocumentField(Audio)
+    images = fields.ListField(
+        fields.EmbeddedDocumentField(Image), required=False, null=True)
+    audio = fields.EmbeddedDocumentField(Audio, required=False, null=True)
 
 
 class Asset(DynamicDocument):
@@ -96,6 +97,13 @@ class Asset(DynamicDocument):
     country = fields.StringField(max_length=100, unique=True)
     languages = fields.MapField(fields.MapField(
         fields.EmbeddedDocumentField(AudioImage)))
+
+
+class Region(DynamicDocument):
+    """
+    """
+    language_country = fields.StringField(max_length=100, unique=True)
+    regions = fields.ListField()
 
 # class Country(DynamicEmbeddedDocument):
 #     """

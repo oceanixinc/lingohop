@@ -35,6 +35,9 @@ urlpatterns = [
         r'^(?i)api/assets/',
         include('content.asset_urls', namespace="asset")),
     url(
+        r'^(?i)api/contents/',
+        include('content.content_urls', namespace="content")),
+    url(
         r'^(?i)api/language-country/',
         include('userprofile.language_urls', namespace="language")),
     url(

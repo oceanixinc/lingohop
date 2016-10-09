@@ -1,55 +1,32 @@
-from mongoengine.queryset import DoesNotExist
+from .models import (
+    Asset, Country, Region)
 
-from rest_framework import serializers
-from django.http import Http404
-
-from .models import (Image)
-
-
-class ImageSerializer(serializers.Serializer):
-    name = serializers.ImageField(
-        max_length=None, use_url=True)
-
-    # def __init__(self, *args, **kwargs):
-    #     # self.request = request
-    #     return super(ImageSerializer, self).__init__(*args, **kwargs)
-
-    # def create(self, validated_data):
-    #     print ('validated_data', validated_data)
-    #     # try:
-    #     image = Image()
-    #     image.name.put(validated_data['name'])
-    #     image.save()
-    #     return image
+from rest_framework_mongoengine.serializers import (
+    DocumentSerializer,)
 
 
-class AudioFileSerializer(serializers.Serializer):
-    name = serializers.FileField(
-        max_length=None, use_url=True)
+class AssetSerializer(DocumentSerializer):
+    # languages = AudioImageSerializer(many=False)
+
+    class Meta:
+        model = Asset
+        # fields = ('country', 'languages',)
+        depth = 7
 
 
-class AudioImageSerializer(serializers.Serializer):
-    images = ImageSerializer(many=True, required=False)
-    audio = AudioFileSerializer(required=False)
+class ContentSerializer(DocumentSerializer):
+    # languages = AudioImageSerializer(many=False)
+
+    class Meta:
+        model = Country
+        # fields = ('country', 'languages',)
+        depth = 7
 
 
-class AssetSerializer(serializers.Serializer):
-    country = serializers.CharField(allow_blank=True, required=False)
-    languages = AudioImageSerializer(many=True, required=False)
+class RegionSerializer(DocumentSerializer):
+    # languages = AudioImageSerializer(many=False)
 
-
-# class ImageSerializer(serializers.Serializer):
-#     name = serializers.ImageField(
-#         max_length=None, use_url=True)
-
-#     def __init__(self, *args, **kwargs):
-#         # self.request = request
-#         return super(ImageSerializer, self).__init__(*args, **kwargs)
-
-#     def create(self, validated_data):
-#         print ('validated_data', validated_data)
-#         # try:
-#         image = Image()
-#         image.name.put(validated_data['name'])
-#         image.save()
-#         return image
+    class Meta:
+        model = Region
+        # fields = ('country', 'languages',)
+        depth = 7

@@ -59,6 +59,8 @@ THIRD_PARTY_APPS = (
     'rest_framework.authtoken',
     'rest_auth',
     'django_countries',
+    'rest_framework_mongoengine',
+    # 'mongoengine_extras',
     # 'reversion',
 )
 
@@ -182,8 +184,8 @@ STATICFILES_DIRS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
-
+ROOT_MEDIA = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
+MEDIA_ROOT = str(ROOT_MEDIA('media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
