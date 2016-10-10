@@ -1,4 +1,7 @@
 import React from 'react'
+import {Link} from 'react-router'
+import jQuery from 'jquery';
+
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
@@ -16,6 +19,8 @@ const styles = {
     }
 };
 
+const language_items = [];
+
 export default class ContentPortalUploadPage extends React.Component {
 
     constructor() {
@@ -32,7 +37,8 @@ export default class ContentPortalUploadPage extends React.Component {
             audioThreeUrl: '',
             audioOnePlaying: false,
             audioTwoPlaying: false,
-            audioThreePlaying: false
+            audioThreePlaying: false,
+            language_country:null
         };
 
         this._handleImageUpload = this._handleImageUpload.bind(this);
@@ -42,13 +48,21 @@ export default class ContentPortalUploadPage extends React.Component {
         this._clickAudioOne = this._clickAudioOne.bind(this);
         this._clickAudioTwo = this._clickAudioTwo.bind(this);
         this._clickAudioThree = this._clickAudioThree.bind(this);
+        this.handleLanguageChange = this.handleLanguageChange.bind(this);
+
+    }
+
+    componentWillMount() {
+        this._fetchLanguageCountry();
     }
 
     render() {
         return (
             <div className="upload-page">
                 <div className="text-center upload col-md-6 col-md-offset-3">
+                  <Link to="/contentportal">
                     <i className="material-icons pull-left">arrow_back</i>
+                    </Link>
                     <div className="col-md-12">
                         <p id="main-text">Hello,
                             <b>John</b>
@@ -57,9 +71,15 @@ export default class ContentPortalUploadPage extends React.Component {
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What Language-Country pair does the lego belong to?
-                        <SelectField hintText="Language-Country" style={{
+                        <SelectField
+                          value={this.state.language_country}
+                          onChange={this.handleLanguageChange.bind(this, 'language_country')}
+                           hintText="Language-Country"
+                           style={{
                             width: '100%'
-                        }}></SelectField>
+                        }}>
+                            {language_items}
+                        </SelectField>
                     </div>
                     <div id="lego-text" className="big-text text-left col-md-8 col-md-offset-2">
                         What is the lego text?
@@ -124,6 +144,8 @@ export default class ContentPortalUploadPage extends React.Component {
         document.body.style.backgroundColor = "rgb(244,244,244)" // Set the style
     }
 
+
+//Uploads
     _handleImageUpload(e) {
         e.preventDefault();
 
@@ -182,6 +204,7 @@ export default class ContentPortalUploadPage extends React.Component {
         reader.readAsDataURL(file)
     }
 
+//Audio Previews
     _clickAudioOne() {
         if (this.state.audioOneUrl === '')
             document.getElementById("audio-upload-one").click();
@@ -238,4 +261,33 @@ export default class ContentPortalUploadPage extends React.Component {
             }
         }
     }
+
+    //API Calls
+    _fetchLanguageCountry() {
+
+        jQuery.ajax({
+            method: 'GET',
+            dataType: "json",
+            url: 'api/blogposts.json',
+            success: (res) => {
+                console.log('success')
+                for (let language of res) {
+                    let itemIndex = res.indexOf(language);
+                    let value = language.language + '-' + language.country;
+                    let key = language.id + '-' + language.language + '-' + language.country;
+                    let item = (<MenuItem value={language.id} key={key} primaryText={value}/>);
+                    language_items.push(item);
+                }
+            }
+        })
+
+    }
+
+//
+    handleLanguageChange(name, event, index, value) {
+      var change = {};
+     change[name] = value;
+       this.setState(change);
+
+     };
 }
