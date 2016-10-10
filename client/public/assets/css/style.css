@@ -1,7 +1,7 @@
 .content-portal {
   font-family: 'Roboto', sans-serif; }
   .content-portal .welcome {
-    margin-top: 255px;
+    margin-top: 155px;
     background-color: white;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
     border-radius: 2px; }
@@ -124,6 +124,10 @@
     margin-top: 37px; }
   .upload-page .upload #chips {
     margin-top: 12px; }
+    .upload-page .upload #chips > input, .upload-page .upload #chips > audio {
+      height: 0;
+      width: 0;
+      visibility: hidden; }
   .upload-page .upload .big-text {
     font-size: 20px; }
   .upload-page .upload label {
@@ -133,7 +137,18 @@
     width: 120px;
     border: 1px solid #333;
     font-size: 16px;
-    line-height: 110px; }
+    line-height: 110px;
+    position: relative; }
+    .upload-page .upload #add-picture > input, .upload-page .upload #add-picture > img {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      opacity: 0; }
+    .upload-page .upload #add-picture > img {
+      opacity: 1;
+      object-fit: cover; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;
@@ -153,5 +168,8 @@
   .bottom-cards img {
     min-height: 400px;
     object-fit: cover; }
+
+.inactive {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

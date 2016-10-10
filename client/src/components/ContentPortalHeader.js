@@ -24,7 +24,7 @@ export default class ContentPortalHeader extends React.Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav id="right-nav" pullRight>
-                        <i className="material-icons pull-left">home</i>
+                       <i className="material-icons pull-left">home</i>
                         <img className="pull-left" src="assets/img/person1.png"/>
                     </Nav>
                 </Navbar.Collapse>
