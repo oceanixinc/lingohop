@@ -1,10 +1,19 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
+import jQuery from 'jquery';
+import {Provider} from 'react-redux'
+import {createStore} from 'redux';
+
+//Redux
+import contentportalreducer from './redux/reducers/contentportal'
+let store = createStore(contentportalreducer);
 
 //Material UI
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Main from './Theme';
+
+injectTapEventPlugin();
 
 //Pages
 import App from './Main';
@@ -34,12 +43,13 @@ import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
 
-injectTapEventPlugin();
 
-render((
+
+const app = (
+  <Provider store={store}>
     <MuiThemeProvider>
         <Router history={hashHistory}>
-            <Redirect from="/" to="/main"/>
+            <Redirect from="/" to="/login"/>
             <Route path="main" component={App}>
                 <IndexRoute component={Home}/>
                 <Route path="signup" component={SignUp}/>
@@ -52,5 +62,12 @@ render((
             </Route>
         </Router>
     </MuiThemeProvider>
+  </Provider>
+)
 
-), document.getElementById('app'));
+jQuery(function() {
+    ReactDOM.render(app, document.getElementById('app'), function() {
+        console.timeEnd('react-app');
+        //console.log(store.getState())
+    });
+})

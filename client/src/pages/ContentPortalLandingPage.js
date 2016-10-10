@@ -7,18 +7,20 @@ export default class ContentPortalLandingPage extends React.Component {
             <div className="landing-page">
 
                 <div className="text-center landing col-md-8 col-md-offset-2">
-                    <p className="welcome-text">Do you want to <b>upload</b>, <b>build</b> or <b>edit</b>?</p>
+                    <p className="welcome-text">Do you want to <b>upload</b>,<b>build</b> or <b>edit</b>?</p>
                     <div className="col-md-12 mega-holder">
-
+                      <Link to="/contentportal/upload">
                         <div className="col-md-4">
                             <div className="img-holder">
                                 <img src='assets/img/upload.png'/>
                                 <div className="after">
-                                    <p>UPLOAD</p>
+                                        <p>UPLOAD</p>
                                 </div>
                             </div>
                             <p className="desc-text">I want to upload lesson content.</p>
                         </div>
+                      </Link>
+
 
                         <div className="col-md-4">
                             <div className="img-holder">

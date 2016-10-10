@@ -1,6 +1,5 @@
 .upload-page {
     //margin-top:-100px;
-
     .upload {
         //opacity: 0.5;
         margin-top: 45px;
@@ -18,22 +17,27 @@
             font-size: 33px;
         }
 
-        #desc-text{
-          font-size:17px;
-          margin-bottom:40px;
+        #desc-text {
+            font-size: 17px;
+            margin-bottom: 40px;
         }
 
-        #lego-text{
-          margin-top:16px;
-          margin-bottom:32px;
+        #lego-text {
+            margin-top: 16px;
+            margin-bottom: 32px;
         }
 
-        #audio{
-          margin-top:37px;
+        #audio {
+            margin-top: 37px;
         }
 
-        #chips{
-          margin-top:12px;
+        #chips {
+            margin-top: 12px;
+            >input,>audio{
+              height:0;
+              width:0;
+              visibility:hidden;
+            }
         }
 
         .big-text {
@@ -50,6 +54,21 @@
             border: 1px solid #333;
             font-size: 16px;
             line-height: 110px;
+            position: relative;
+
+            > input, >img {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                left: 0;
+                opacity: 0;
+            }
+
+            >img{
+              opacity:1;
+                object-fit: cover;
+            }
         }
 
         .upload-btn {
