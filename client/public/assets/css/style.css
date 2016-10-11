@@ -149,6 +149,13 @@
     .upload-page .upload #add-picture > img {
       opacity: 1;
       object-fit: cover; }
+  .upload-page .upload #img-gallery {
+    margin-left: 5px; }
+    .upload-page .upload #img-gallery > img {
+      margin-left: 3px;
+      height: 120px;
+      width: 120px;
+      object-fit: cover; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;
