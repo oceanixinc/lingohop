@@ -1,0 +1,31 @@
+"country": "Spain",
+"languages": {
+    "spanish": {
+        "word": {
+            "images": [{
+                    "ID": "999e210c-a425-4360-8e25-791d9bd1539c"
+                }],
+            "audio": {
+                "ID": "7f4557c3-8f69-4e64-a173-c2058910fff6",
+                "files": {
+                    "male": {
+                        "default": {
+                            "file": null
+                        },
+                        "region1": {
+                            "file": null
+                        }
+                    },
+                    "female": {
+                        "default": {
+                            "file": null
+                        },
+                        "region1": {
+                            "file": null
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
