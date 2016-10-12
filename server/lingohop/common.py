@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import environ
 import os
+import sys
 import mongoengine as mongo
 
 
@@ -131,7 +132,11 @@ DATABASES = {
 # _MONGODB_DATABASE_HOST = \
 #     'mongodb://%s:%s@%s/%s' \
 #     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
-mongo.connect(env('_MONGODB_NAME'), host=env('_MONGODB_HOST'))
+MONGO_DATABASE_NAME = env('_MONGODB_NAME')
+if 'test' in sys.argv:
+    MONGO_DATABASE_NAME = 'test_%s' % MONGO_DATABASE_NAME
+
+db_connect = mongo.connect(MONGO_DATABASE_NAME, host=env('_MONGODB_HOST'))
 # print ('urls', env.db('_MONGODB_HOST'), env.db('_MONGODB_NAME'))
 # mongo.connect(
 #     _MONGODB_NAME, host=_MONGODB_HOST, port=27017, alias='default')

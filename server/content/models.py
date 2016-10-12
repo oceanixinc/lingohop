@@ -87,8 +87,11 @@ class AudioImage(EmbeddedDocument):
     """
     """
     images = fields.ListField(
-        fields.EmbeddedDocumentField(Image), required=False, null=True)
-    audio = fields.EmbeddedDocumentField(Audio, required=False, null=True)
+        fields.EmbeddedDocumentField(Image),
+        required=False, blank=True, null=True)
+    audio = fields.EmbeddedDocumentField(
+        Audio,
+        required=False, blank=True, null=True)
 
 
 class Asset(DynamicDocument):
