@@ -291,9 +291,10 @@ export default class ContentPortalUploadPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: 'api/blogposts.json',
+            url: 'http://localhost:8000/api/language-country/',
             success: (res) => {
                 console.log('success')
+                console.log(res)
                 for (let language of res) {
                     let itemIndex = res.indexOf(language);
                     let value = language.language + '-' + language.country;
@@ -365,7 +366,7 @@ export default class ContentPortalUploadPage extends React.Component {
     _uploadContent() {
 
         console.log(this.state.imgFiles)
-        /*  jQuery.ajax({
+          jQuery.ajax({
             method: "POST",
             data: {
                 "country": "Spain",
@@ -374,27 +375,25 @@ export default class ContentPortalUploadPage extends React.Component {
                         "word": {
                             "images": [
                                 {
-                                    "ID": "999e210c-a425-4360-8e25-791d9bd1539c",
                                     "file": this.state.imgFiles[0]
                                 }
                             ],
                             "audio": {
-                                "ID": "7f4557c3-8f69-4e64-a173-c2058910fff6",
                                 "files": {
                                     "male": {
                                         "default": {
-                                            "file": this.state.audioOneFile
+                                            "file": this.state.imgFiles[0]
                                         },
                                         "region1": {
-                                            "file": this.state.audioTwoFile
+                                            "file": this.state.imgFiles[0]
                                         }
                                     },
                                     "female": {
                                         "default": {
-                                            "file": this.state.audioOneFile
+                                            "file": this.state.imgFiles[0]
                                         },
                                         "region1": {
-                                            "file": this.state.audioTwoFile
+                                            "file": this.state.imgFiles[0]
                                         }
                                     }
                                 }
@@ -404,14 +403,14 @@ export default class ContentPortalUploadPage extends React.Component {
                 }
 
             },
-            dataType: "jsonp",
+            dataType: "json",
             processData: false,
             contentType: false,
-            url: 'http://testing.lingohop.com/api/contents/',
+            url: 'http://localhost:8000/api/assets/',
             success: (res) => {
                 console.log('Uploaded successfully')
             }
-        }) */
+        })
         hashHistory.push('/contentportal/uploadfinish')
 
     }
