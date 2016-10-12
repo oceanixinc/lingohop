@@ -42,7 +42,7 @@ class AssetCreate(generics.ListCreateAPIView):
         b = list(data[a].keys())[0]
         c = data[a][b]['images']
         d = data[a][b]['audio']['files']
-        print ('files', d)
+        # print ('files', d)
 
         for index, each in enumerate(c):
             img = each['file']
@@ -50,10 +50,10 @@ class AssetCreate(generics.ListCreateAPIView):
             img_ext = my_image[0].split('/')
             imgdata = base64.b64decode(my_image[1])
             file_name = str(uuid.uuid4())
-            fname = './media/profiles/%s.%s' % (file_name, img_ext[1])
+            fname = '../media/images/%s.%s' % (file_name, img_ext[1])
 
-            file_name = str(uuid.uuid4())
-            fname = '../media/profiles/%s.%s' % (file_name, 'png')
+            # file_name = str(uuid.uuid4())
+            # fname = '../media/profiles/%s.%s' % (file_name, 'png')
 
             real_file = fname.split('../')
             # d64i = bytes(img, 'utf-8')
@@ -64,7 +64,29 @@ class AssetCreate(generics.ListCreateAPIView):
                 # fh.write(d64i)
             # fh.write(img.decode('base64'))
             request.data['languages'][a][b]['images'][index]['file'] = real_file[1]
-        print ('request data', request.data)
+        for gender in d:
+            data = d[gender]
+            for index, region in enumerate(data):
+                audio_file = data[region]['file']
+                if 'base64' in audio_file:
+                    my_audio = audio_file.split('base64,')
+                    img_ext = my_audio[0].split('/')
+                    imgdata = base64.b64decode(my_audio[1])
+                    file_name = str(uuid.uuid4())
+                    fname = '../media/audios/%s.%s' % (file_name, 'mp3')
+
+                    real_file = fname.split('../')
+                    # d64i = bytes(img, 'utf-8')
+                    # d64i = bytes(imgdata, 'utf-8')
+                    with open(fname, "wb") as fh:
+                        # fh.write(base64.decodestring(d64i))
+                        fh.write(imgdata)
+
+                    request.data['languages'][a][b]['audio']['files'][gender][region]['file'] = real_file[1]
+
+
+
+        # print ('request data', request.data)
 
         serializer = AssetSerializer(
             data=request.data

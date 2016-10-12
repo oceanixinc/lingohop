@@ -13,9 +13,7 @@ class AssetTests(BaseTests):
         """
         url = reverse('asset:asset')
         data = self.data
-        print ('url', url)
         response = self.client.post(url, data, format='json')
-        print ('response', response.content)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Asset.objects.count(), 1)
         self.assertEqual(Asset.objects.get().country, 'testcountry')
