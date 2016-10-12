@@ -124,7 +124,8 @@
     margin-top: 37px; }
   .upload-page .upload #chips {
     margin-top: 12px; }
-    .upload-page .upload #chips > input, .upload-page .upload #chips > audio {
+    .upload-page .upload #chips > audio,
+    .upload-page .upload #chips > input {
       height: 0;
       width: 0;
       visibility: hidden; }
@@ -138,8 +139,11 @@
     border: 1px solid #333;
     font-size: 16px;
     line-height: 110px;
-    position: relative; }
-    .upload-page .upload #add-picture > input, .upload-page .upload #add-picture > img {
+    position: relative;
+    float: left;
+    text-align: center; }
+    .upload-page .upload #add-picture > img,
+    .upload-page .upload #add-picture > input {
       position: absolute;
       top: 0;
       height: 100%;
@@ -161,7 +165,7 @@
     margin-top: 60px !important;
     margin-bottom: 52px !important; }
     .upload-page .upload .upload-btn button {
-      background-color: #06b2e2 !important;
+      background-color: #02B3E4 !important;
       height: 45px !important;
       line-height: 45px !important; }
       .upload-page .upload .upload-btn button div {
@@ -169,6 +173,43 @@
         line-height: 45px !important; }
     .upload-page .upload .upload-btn span {
       font-size: 17px !important; }
+  .upload-page .upload .active-btn span {
+    color: white !important; }
+  .upload-page .upload .audiochip {
+    color: white !important;
+    background-color: #15C26B !important; }
+    .upload-page .upload .audiochip > div {
+      background-color: #12a159 !important; }
+    .upload-page .upload .audiochip > span {
+      color: white !important; }
+
+.upload-finish-page .upload-finish {
+  margin-top: 45px;
+  background-color: white;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+  border-radius: 2px; }
+  .upload-finish-page .upload-finish #main-text {
+    margin: 30px 0;
+    font-size: 25px; }
+  .upload-finish-page .upload-finish .img-holder > img {
+    width: 60%;
+    margin-bottom: 20px; }
+  .upload-finish-page .upload-finish .upload-btn {
+    min-width: 180px !important;
+    margin-top: 60px !important;
+    margin-bottom: 52px !important; }
+    .upload-finish-page .upload-finish .upload-btn button {
+      background-color: #02B3E4 !important;
+      height: 45px !important;
+      line-height: 45px !important; }
+      .upload-finish-page .upload-finish .upload-btn button div {
+        height: 45px !important;
+        line-height: 45px !important; }
+    .upload-finish-page .upload-finish .upload-btn span {
+      font-size: 17px !important; }
+  .upload-finish-page .upload-finish .buttons > a > div,
+  .upload-finish-page .upload-finish .buttons > a > button {
+    margin: 5px; }
 
 .bottom-cards {
   margin-bottom: 10px; }

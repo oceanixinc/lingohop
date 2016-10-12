@@ -40,6 +40,7 @@ import ContentPortalLayout from './layout/ContentPortalLayout'
 
 //Content Portal
 import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
+import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
 
@@ -59,6 +60,8 @@ const app = (
             <Route path="contentportal" component={ContentPortalLayout}>
                 <IndexRoute component={ContentPortalLandingPage}/>
                 <Route path="upload" component={ContentPortalUploadPage}/>
+                  <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
+
             </Route>
         </Router>
     </MuiThemeProvider>

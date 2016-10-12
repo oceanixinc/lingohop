@@ -1,10 +1,12 @@
+@import "partials/colorscheme";
 @import "partials/contentportal";
 @import "partials/navbar";
 @import "partials/landingpage";
 @import "partials/uploadpage";
+@import "partials/uploadfinishpage";
 @import "partials/bottomcards";
 
 .inactive{
   display:none;
-  
+
 }
