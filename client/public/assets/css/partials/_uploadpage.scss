@@ -71,6 +71,16 @@
             }
         }
 
+        #img-gallery{
+          margin-left:5px;
+          >img{
+            margin-left:3px;
+            height:120px;
+            width:120px;
+            object-fit:cover;
+          }
+        }
+
         .upload-btn {
             min-width: 180px !important;
             margin-top: 60px !important;
