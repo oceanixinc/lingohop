@@ -2,6 +2,7 @@ defusedxml==0.4.1
 Django==1.9.9
 django-allauth==0.27.0
 django-autoslug==1.9.3
+django-cors-headers==1.2.2
 django-countries==4.0
 django-environ==0.4.0
 django-model-utils==2.4
