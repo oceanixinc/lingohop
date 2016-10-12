@@ -64,8 +64,8 @@ class Language(models.Model):
     :name: language name.
 
     """
-    code = models.CharField(
-        max_length=60, unique=True, blank=True)
+    # code = models.CharField(
+    #     max_length=60, unique=True, blank=True)
     name = models.CharField(
         max_length=60, unique=True, blank=True)
 
@@ -87,11 +87,12 @@ class LanguageCountry(models.Model):
         Language,
         null=True, blank=True, related_name='languagecountry',
     )
-    country = CountryField()
+    country = models.CharField(
+        max_length=60, blank=True)
 
-    def __str__(self):
-        """Default function."""
-        return self.language.name
+    # def __str__(self):
+    #     """Default function."""
+    #     return self.language.name
 
 
 class User(AbstractUser):

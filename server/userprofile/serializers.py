@@ -4,7 +4,8 @@ from userprofile.models import User
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
 
-from userprofile.models import Trip, LanguageCountry
+from userprofile.models import (
+    Trip, LanguageCountry, Language)
 
 
 # class ChoicesField(serializers.Field):
@@ -22,18 +23,24 @@ from userprofile.models import Trip, LanguageCountry
 
 class LanguageCountrySerializer(serializers.ModelSerializer):
     # country = CountryField(country_dict=True, required=False)
-    # country = serializers.SerializerMethodField(
-    #     'get_country_name')
     language = serializers.CharField(
         source='language.name',
-        required=False, read_only=True)
-    country = serializers.CharField(
-        source='country.name',
-        required=False, read_only=True)
+        required=True)
+    # country = serializers.CharField(
+    #     source='country.name',
+    #     required=False, read_only=True)
 
     class Meta:
         model = LanguageCountry
         fields = ('id', 'country', 'language',)
+
+    def create(self, validated_data):
+        language, created = Language.objects.get_or_create(
+            name=validated_data['language']['name'])
+
+        validated_data['language'] = language
+
+        return LanguageCountry.objects.create(**validated_data)
 
 
 class TripSerializer(serializers.ModelSerializer):
