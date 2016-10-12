@@ -33,10 +33,12 @@
 
         #chips {
             margin-top: 12px;
-            >input,>audio{
-              height:0;
-              width:0;
-              visibility:hidden;
+
+             > audio,
+            > input {
+                height: 0;
+                width: 0;
+                visibility: hidden;
             }
         }
 
@@ -55,8 +57,11 @@
             font-size: 16px;
             line-height: 110px;
             position: relative;
+            float: left;
+            text-align: center;
 
-            > input, >img {
+             > img,
+            > input {
                 position: absolute;
                 top: 0;
                 height: 100%;
@@ -65,20 +70,21 @@
                 opacity: 0;
             }
 
-            >img{
-              opacity:1;
+            > img {
+                opacity: 1;
                 object-fit: cover;
             }
         }
 
-        #img-gallery{
-          margin-left:5px;
-          >img{
-            margin-left:3px;
-            height:120px;
-            width:120px;
-            object-fit:cover;
-          }
+        #img-gallery {
+            margin-left: 5px;
+
+            > img {
+                margin-left: 3px;
+                height: 120px;
+                width: 120px;
+                object-fit: cover;
+            }
         }
 
         .upload-btn {
@@ -87,7 +93,7 @@
             margin-bottom: 52px !important;
 
             button {
-                background-color: rgb(6,178,226)!important;
+                background-color: $lightblue!important;
                 height: 45px !important;
                 line-height: 45px !important;
 
@@ -99,6 +105,25 @@
 
             span {
                 font-size: 17px !important;
+            }
+        }
+
+        .active-btn {
+            span {
+                color: white!important;
+            }
+        }
+
+        .audiochip {
+            color: white !important;
+            background-color: $lightgreen !important;
+
+            > div {
+                background-color: $darkgreen !important;
+            }
+
+            > span {
+                color: white !important;
             }
         }
     }

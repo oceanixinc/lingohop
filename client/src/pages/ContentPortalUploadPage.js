@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {Link,hashHistory} from 'react-router'
 import jQuery from 'jquery';
 
 import SelectField from 'material-ui/SelectField';
@@ -37,7 +37,8 @@ export default class ContentPortalUploadPage extends React.Component {
             audioOnePlaying: false,
             audioTwoPlaying: false,
             audioThreePlaying: false,
-            language_country: ''
+            language_country: '',
+            legoText: ''
         };
 
         this._handleImageUpload = this._handleImageUpload.bind(this);
@@ -47,10 +48,11 @@ export default class ContentPortalUploadPage extends React.Component {
         this._clickAudioOne = this._clickAudioOne.bind(this);
         this._clickAudioTwo = this._clickAudioTwo.bind(this);
         this._clickAudioThree = this._clickAudioThree.bind(this);
-        this.handleLanguageChange = this.handleLanguageChange.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
         this._uploadContent = this._uploadContent.bind(this);
         this._uploadTest = this._uploadTest.bind(this);
         this._fetchLanguageCountry = this._fetchLanguageCountry.bind(this);
+
     }
 
     componentWillMount() {
@@ -72,7 +74,7 @@ export default class ContentPortalUploadPage extends React.Component {
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What Language-Country pair does the lego belong to?
-                        <SelectField value={this.state.language_country} onChange={this.handleLanguageChange.bind(this, 'language_country')} hintText="Language-Country" style={{
+                        <SelectField value={this.state.language_country} onChange={this.handleValueChange.bind(this, 'language_country')} hintText="Language-Country" style={{
                             width: '100%'
                         }}>
                             {language_items}
@@ -80,7 +82,9 @@ export default class ContentPortalUploadPage extends React.Component {
                     </div>
                     <div id="lego-text" className="big-text text-left col-md-8 col-md-offset-2">
                         What is the lego text?
-                        <TextField hintText="Lego text" style={{
+                        <TextField value={this.state.legoText} hintText={this.state.legoText != ''
+                            ? ''
+                            : 'Lego Text'} onChange={this.handleValueChange.bind(this, 'legoText')} style={{
                             width: '100%'
                         }}></TextField>
                     </div>
@@ -92,12 +96,10 @@ export default class ContentPortalUploadPage extends React.Component {
                         </RadioButtonGroup>
                     </div>
                     <div className="big-text text-left col-md-8">
-                        <div id="add-picture" className="pull-left text-center">+ Add Picture
+                        <div id="add-picture" className={this.state.imgFiles.length >= 3 && 'inactive'}>+ Add Picture
                             <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
                         </div>
-                        <div id="img-gallery" className="pull-left">
-
-                        </div>
+                        <div id="img-gallery" className="pull-left"></div>
                     </div>
                     <div id="audio" className="big-text text-left col-md-8 col-md-offset-2">
                         Audio Files
@@ -116,21 +118,29 @@ export default class ContentPortalUploadPage extends React.Component {
                             <source src={this.state.audioThreeUrl} type="audio/mp3"/>
                         </audio>
 
-                        <Chip id="chip-one" className="pull-left" style={styles.chip} onTouchTap={this._clickAudioOne}>
+                        <Chip id="chip-one" className={this.state.audioOneUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioOne}>
                             <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" > add < /i>}/>
                             Madrid
                         </Chip>
-                        <Chip id="chip-two" className="pull-left" style={styles.chip} onTouchTap={this._clickAudioTwo}>
+                        <Chip id="chip-two" className={this.state.audioTwoUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioTwo}>
                             <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" > add < /i>}/>
                             Basque Country
                         </Chip>
-                        <Chip id="chip-three" className="pull-left" style={styles.chip} onTouchTap={this._clickAudioThree}>
+                        <Chip id="chip-three" className={this.state.audioThreeUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioThree}>
                             <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" > add < /i>}/>
                             Catalonia
                         </Chip>
                     </div>
                     <div className="col-md-12">
-                        <RaisedButton label="UPLOAD" className="upload-btn" primary={true} onClick={this._uploadContent}/>
+                        <RaisedButton label="UPLOAD" className={this.state.imgFiles.length === 0 || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === ''
+                            ? 'upload-btn'
+                            : 'upload-btn active-btn'} disabled={this.state.imgFiles.length === 0 || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === ''} onClick={this._uploadContent}/>
                     </div>
 
                 </div>
@@ -146,23 +156,31 @@ export default class ContentPortalUploadPage extends React.Component {
     _handleImageUpload(e) {
         e.preventDefault();
 
-        let files = e.target.files;
+        let files = Array.prototype.slice.call(e.target.files);
         let reader = new FileReader();
 
         let imgGallery = document.getElementById("img-gallery");
-        imgGallery.innerHTML = "";
+        imgGallery.innerHTML = ""
 
-        this.setState({imgFiles: files});
-
-
-        for (let file of files) {
-          var img = document.createElement('img');
-          img.innerHTML = "<img src='"+URL.createObjectURL(file)+"'/>";
-
-          while (img.firstChild) {
-              imgGallery.appendChild(img.firstChild);
-          }
+        let originalImgFiles = this.state.imgFiles
+        let newImgFiles = originalImgFiles.concat(files)
+        if (newImgFiles.length > 3) {
+            newImgFiles = newImgFiles.slice(0, 3)
         }
+        console.log(newImgFiles)
+        this.setState({
+            imgFiles: newImgFiles
+        }, () => {
+            for (let file of newImgFiles) {
+                var img = document.createElement('img');
+                img.innerHTML = "<img src='" + URL.createObjectURL(file) + "'/>";
+
+                while (img.firstChild) {
+                    imgGallery.appendChild(img.firstChild);
+                }
+            }
+
+        });
 
     }
 
@@ -292,21 +310,21 @@ export default class ContentPortalUploadPage extends React.Component {
 
         let fd = new FormData();
 
-        for (let file of this.state.imgFiles){
-          fd.append('fileToUpload', file);
-          jQuery.ajax({
-              method: "POST",
-              data: fd,
-              processData: false,
-              contentType: false,
-              url: 'http://localhost/upload/upload.php',
-              success: (res) => {
-                  console.log('Uploaded successfully')
-              }
-          })
+        for (let file of this.state.imgFiles) {
+            fd.append('file', file);
+            jQuery.ajax({
+                method: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                url: 'http://localhost/upload/upload.php',
+                success: (res) => {
+                    console.log('Uploaded successfully')
+                }
+            })
         }
 
-        fd.append('fileToUpload', this.state.audioOneFile);
+        fd.append('file', this.state.audioOneFile);
         jQuery.ajax({
             method: "POST",
             data: fd,
@@ -318,7 +336,7 @@ export default class ContentPortalUploadPage extends React.Component {
             }
         })
 
-        fd.append('fileToUpload', this.state.audioTwoFile);
+        fd.append('file', this.state.audioTwoFile);
         jQuery.ajax({
             method: "POST",
             data: fd,
@@ -330,7 +348,7 @@ export default class ContentPortalUploadPage extends React.Component {
             }
         })
 
-        fd.append('fileToUpload', this.state.audioThreeFile);
+        fd.append('file', this.state.audioThreeFile);
         jQuery.ajax({
             method: "POST",
             data: fd,
@@ -346,7 +364,8 @@ export default class ContentPortalUploadPage extends React.Component {
 
     _uploadContent() {
 
-        jQuery.ajax({
+        console.log(this.state.imgFiles)
+        /*  jQuery.ajax({
             method: "POST",
             data: {
                 "country": "Spain",
@@ -385,19 +404,20 @@ export default class ContentPortalUploadPage extends React.Component {
                 }
 
             },
-            dataType: "json",
+            dataType: "jsonp",
             processData: false,
             contentType: false,
             url: 'http://testing.lingohop.com/api/contents/',
             success: (res) => {
                 console.log('Uploaded successfully')
             }
-        })
+        }) */
+        hashHistory.push('/contentportal/uploadfinish')
 
     }
 
     //
-    handleLanguageChange(name, event, index, value) {
+    handleValueChange(name, event, index, value) {
         var change = {};
         change[name] = value;
         this.setState(change);
