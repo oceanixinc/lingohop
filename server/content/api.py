@@ -41,20 +41,26 @@ class AssetCreate(generics.ListCreateAPIView):
         a = list(data.keys())[0]
         b = list(data[a].keys())[0]
         c = data[a][b]['images']
+        d = data[a][b]['audio']['files']
+        print ('files', d)
 
         for index, each in enumerate(c):
             img = each['file']
-
-            # print (img)
+            my_image = img.split('base64,')
+            img_ext = my_image[0].split('/')
+            imgdata = base64.b64decode(my_image[1])
             file_name = str(uuid.uuid4())
-            # import os
-            # print (os.getcwd())
+            fname = './media/profiles/%s.%s' % (file_name, img_ext[1])
+
+            file_name = str(uuid.uuid4())
             fname = '../media/profiles/%s.%s' % (file_name, 'png')
+
             real_file = fname.split('../')
-            # print ('file name', fname)
-            d64i = bytes(img, 'utf-8')
+            # d64i = bytes(img, 'utf-8')
+            # d64i = bytes(imgdata, 'utf-8')
             with open(fname, "wb") as fh:
-                fh.write(base64.decodestring(d64i))
+                # fh.write(base64.decodestring(d64i))
+                fh.write(imgdata)
                 # fh.write(d64i)
             # fh.write(img.decode('base64'))
             request.data['languages'][a][b]['images'][index]['file'] = real_file[1]
