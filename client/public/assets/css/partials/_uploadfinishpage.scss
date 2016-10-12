@@ -1,0 +1,52 @@
+.upload-finish-page {
+    //margin-top:-100px;
+    .upload-finish {
+        //opacity: 0.5;
+        margin-top: 45px;
+        background-color: white;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 2px;
+
+        #main-text {
+            margin: 30px 0;
+            font-size: 25px;
+        }
+
+        .img-holder {
+            > img {
+                width: 60%;
+                margin-bottom: 20px;
+            }
+        }
+
+        .upload-btn {
+            min-width: 180px !important;
+            margin-top: 60px !important;
+            margin-bottom: 52px !important;
+
+            button {
+                background-color: $lightblue!important;
+                height: 45px !important;
+                line-height: 45px !important;
+
+                div {
+                    height: 45px !important;
+                    line-height: 45px !important;
+                }
+            }
+
+            span {
+                font-size: 17px !important;
+            }
+        }
+
+        .buttons {
+            > a {
+                 > div,
+                > button {
+                    margin: 5px;
+                }
+            }
+        }
+    }
+}
