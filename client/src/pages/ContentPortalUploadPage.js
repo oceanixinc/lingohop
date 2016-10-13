@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link,hashHistory} from 'react-router'
+import {Link, hashHistory} from 'react-router'
 import jQuery from 'jquery';
 
 import SelectField from 'material-ui/SelectField';
@@ -38,7 +38,8 @@ export default class ContentPortalUploadPage extends React.Component {
             audioTwoPlaying: false,
             audioThreePlaying: false,
             language_country: '',
-            legoText: ''
+            legoText: '',
+            imagePreviewUrl: ''
         };
 
         this._handleImageUpload = this._handleImageUpload.bind(this);
@@ -156,8 +157,19 @@ export default class ContentPortalUploadPage extends React.Component {
     _handleImageUpload(e) {
         e.preventDefault();
 
-        let files = Array.prototype.slice.call(e.target.files);
+        //----------------------
         let reader = new FileReader();
+        let file = e.target.files[0];
+        console.log(file)
+        reader.onloadend = () => {
+            console.log(reader.result);
+            this.setState({imagePreviewUrl: reader.result});
+        }
+
+        reader.readAsDataURL(file)
+        //--------------
+
+        let files = Array.prototype.slice.call(e.target.files);
 
         let imgGallery = document.getElementById("img-gallery");
         imgGallery.innerHTML = ""
@@ -167,7 +179,6 @@ export default class ContentPortalUploadPage extends React.Component {
         if (newImgFiles.length > 3) {
             newImgFiles = newImgFiles.slice(0, 3)
         }
-        console.log(newImgFiles)
         this.setState({
             imgFiles: newImgFiles
         }, () => {
@@ -291,9 +302,8 @@ export default class ContentPortalUploadPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: 'api/blogposts.json',
+            url: 'http://testing.lingohop.com/api/language-country/',
             success: (res) => {
-                console.log('success')
                 for (let language of res) {
                     let itemIndex = res.indexOf(language);
                     let value = language.language + '-' + language.country;
@@ -364,37 +374,35 @@ export default class ContentPortalUploadPage extends React.Component {
 
     _uploadContent() {
 
-        console.log(this.state.imgFiles)
-        /*  jQuery.ajax({
+        jQuery.ajax({
             method: "POST",
-            data: {
-                "country": "Spain",
+            data: JSON.stringify({
+                "country": this.state.language_country,
                 "languages": {
                     "spanish": {
                         "word": {
                             "images": [
                                 {
-                                    "ID": "999e210c-a425-4360-8e25-791d9bd1539c",
-                                    "file": this.state.imgFiles[0]
+                                    "file": this.state.imagePreviewUrl
                                 }
                             ],
                             "audio": {
-                                "ID": "7f4557c3-8f69-4e64-a173-c2058910fff6",
+
                                 "files": {
                                     "male": {
-                                        "default": {
-                                            "file": this.state.audioOneFile
-                                        },
                                         "region1": {
-                                            "file": this.state.audioTwoFile
+                                            "file": this.state.audioOneUrl
+                                        },
+                                        "default": {
+                                            "file": this.state.audioTwoUrl
                                         }
                                     },
                                     "female": {
-                                        "default": {
-                                            "file": this.state.audioOneFile
-                                        },
                                         "region1": {
-                                            "file": this.state.audioTwoFile
+                                            "file": this.state.audioThreeUrl
+                                        },
+                                        "default": {
+                                            "file": "lingohop/static/photos/person1.png"
                                         }
                                     }
                                 }
@@ -402,16 +410,21 @@ export default class ContentPortalUploadPage extends React.Component {
                         }
                     }
                 }
-
-            },
-            dataType: "jsonp",
-            processData: false,
-            contentType: false,
-            url: 'http://testing.lingohop.com/api/contents/',
+            }),
+            dataType: "json",
+            contentType: "application/json",
+            url: 'http://testing.lingohop.com/api/assets/',
             success: (res) => {
                 console.log('Uploaded successfully')
+            },
+            error: (a, b, c) => {
+                console.log(a)
+                console.log(b)
+
+                console.log(c)
+
             }
-        }) */
+        })
         hashHistory.push('/contentportal/uploadfinish')
 
     }
