@@ -1,3 +1,9 @@
+.lightblue {
+  color: #02B3E4; }
+
+.darkblue {
+  color: #34495E; }
+
 .content-portal {
   font-family: 'Roboto', sans-serif; }
   .content-portal .welcome {
@@ -32,38 +38,40 @@
     bottom: 5px;
     color: gray; }
 
-#landing-navbar {
+#landing-navbar, #main-navbar {
   border-radius: 0;
   background-color: #fff;
   border: 0;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
   background-image: none;
   height: 82px; }
-  #landing-navbar .container-fluid {
+  #landing-navbar .container-fluid, #main-navbar .container-fluid {
     height: 82px; }
-    #landing-navbar .container-fluid .navbar-header {
+    #landing-navbar .container-fluid .navbar-header, #main-navbar .container-fluid .navbar-header {
       height: 82px; }
-      #landing-navbar .container-fluid .navbar-header .navbar-brand {
+      #landing-navbar .container-fluid .navbar-header .navbar-brand, #main-navbar .container-fluid .navbar-header .navbar-brand {
         height: 82px; }
-        #landing-navbar .container-fluid .navbar-header .navbar-brand > img {
+        #landing-navbar .container-fluid .navbar-header .navbar-brand > img, #main-navbar .container-fluid .navbar-header .navbar-brand > img {
           height: 52px;
           padding-left: 5px;
           padding-top: 5px; }
-        #landing-navbar .container-fluid .navbar-header .navbar-brand > p {
+        #landing-navbar .container-fluid .navbar-header .navbar-brand > p, #main-navbar .container-fluid .navbar-header .navbar-brand > p {
           height: 100%;
           margin: 0;
           line-height: 3;
           margin-left: 20px;
           text-shadow: none; }
-  #landing-navbar #right-nav {
+  #landing-navbar #right-nav, #main-navbar #right-nav {
     height: 82px; }
-    #landing-navbar #right-nav > img {
+    #landing-navbar #right-nav > img, #main-navbar #right-nav > img {
       height: 82px;
       padding: 15px; }
-    #landing-navbar #right-nav > i {
+    #landing-navbar #right-nav > i, #main-navbar #right-nav > i {
       padding: 25px;
       padding-right: 15px;
       font-size: 32px; }
+    #landing-navbar #right-nav > div, #main-navbar #right-nav > div {
+      margin: 15px 15px 20px 15px; }
 
 .landing-page {
   font-family: 'Roboto', sans-serif; }
@@ -211,11 +219,26 @@
   .upload-finish-page .upload-finish .buttons > a > button {
     margin: 5px; }
 
+.main-home-page .footer {
+  display: inline-block;
+  padding: 20px 0;
+  width: 100%;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+  margin-bottom: -10px; }
+  .main-home-page .footer .social-icons > i {
+    padding: 15px; }
+
 .bottom-cards {
   margin-bottom: 10px; }
   .bottom-cards img {
     min-height: 400px;
     object-fit: cover; }
+  .bottom-cards row {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 5px; }
 
 .inactive {
   display: none; }

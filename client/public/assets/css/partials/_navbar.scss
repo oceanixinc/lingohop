@@ -1,4 +1,4 @@
-#landing-navbar {
+#landing-navbar, #main-navbar {
     border-radius: 0;
     background-color: #fff;
     border: 0;
@@ -40,6 +40,9 @@
         padding:25px;
         padding-right:15px;
         font-size:32px;
+      }
+      >div{
+        margin: 15px 15px 20px 15px;
       }
     }
 }

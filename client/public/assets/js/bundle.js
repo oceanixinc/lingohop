@@ -82773,7 +82773,7 @@ var SelectLangaugeCountry = function (_React$Component) {
 
 exports.default = SelectLangaugeCountry;
 
-},{"./SubmitButton":810,"./intermediate":817,"material-ui/Avatar":313,"material-ui/IconButton":353,"material-ui/MenuItem":362,"material-ui/SelectField":378,"material-ui/SvgIcon":382,"material-ui/TextField":388,"material-ui/styles/colors":407,"react":771,"react-router":611}],806:[function(require,module,exports){
+},{"./SubmitButton":810,"./intermediate":820,"material-ui/Avatar":313,"material-ui/IconButton":353,"material-ui/MenuItem":362,"material-ui/SelectField":378,"material-ui/SvgIcon":382,"material-ui/TextField":388,"material-ui/styles/colors":407,"react":771,"react-router":611}],806:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -84889,6 +84889,10 @@ var _ContentPortalLayout = require('./layout/ContentPortalLayout');
 
 var _ContentPortalLayout2 = _interopRequireDefault(_ContentPortalLayout);
 
+var _MainPageLayout = require('./layout/MainPageLayout');
+
+var _MainPageLayout2 = _interopRequireDefault(_MainPageLayout);
+
 var _ContentPortalUploadPage = require('./pages/ContentPortalUploadPage');
 
 var _ContentPortalUploadPage2 = _interopRequireDefault(_ContentPortalUploadPage);
@@ -84904,6 +84908,10 @@ var _ContentPortalLoginPage2 = _interopRequireDefault(_ContentPortalLoginPage);
 var _ContentPortalLandingPage = require('./pages/ContentPortalLandingPage');
 
 var _ContentPortalLandingPage2 = _interopRequireDefault(_ContentPortalLandingPage);
+
+var _MainHomePage = require('./pages/MainHomePage');
+
+var _MainHomePage2 = _interopRequireDefault(_MainHomePage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84928,9 +84936,15 @@ var store = (0, _redux.createStore)(_contentportal2.default);
 //Content Portal
 
 
+//Main
+
+
 //Pages-----------------------------------------------------------------------------------------
 
 //Content Portal
+
+
+//Main
 
 
 var app = _react2.default.createElement(
@@ -84957,6 +84971,11 @@ var app = _react2.default.createElement(
                 _react2.default.createElement(_reactRouter.IndexRoute, { component: _ContentPortalLandingPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: _ContentPortalUploadPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: 'uploadfinish', component: _ContentPortalUploadFinishPage2.default })
+            ),
+            _react2.default.createElement(
+                _reactRouter.Route,
+                { path: 'mainpage', component: _MainPageLayout2.default },
+                _react2.default.createElement(_reactRouter.IndexRoute, { component: _MainHomePage2.default })
             )
         )
     )
@@ -84965,11 +84984,10 @@ var app = _react2.default.createElement(
 (0, _jquery2.default)(function () {
     _reactDom2.default.render(app, document.getElementById('app'), function () {
         console.timeEnd('react-app');
-        //console.log(store.getState())
     });
 });
 
-},{"./Home":804,"./Main":807,"./NotFound":808,"./SignUp":809,"./Theme":811,"./layout/ContentPortalLayout":818,"./pages/ContentPortalLandingPage":819,"./pages/ContentPortalLoginPage":820,"./pages/ContentPortalUploadFinishPage":821,"./pages/ContentPortalUploadPage":822,"./redux/reducers/contentportal":823,"jquery":211,"material-ui/styles/MuiThemeProvider":405,"react":771,"react-dom":546,"react-redux":577,"react-router":611,"react-tap-event-plugin":625,"redux":788}],814:[function(require,module,exports){
+},{"./Home":804,"./Main":807,"./NotFound":808,"./SignUp":809,"./Theme":811,"./layout/ContentPortalLayout":821,"./layout/MainPageLayout":822,"./pages/ContentPortalLandingPage":823,"./pages/ContentPortalLoginPage":824,"./pages/ContentPortalUploadFinishPage":825,"./pages/ContentPortalUploadPage":826,"./pages/MainHomePage":827,"./redux/reducers/contentportal":828,"jquery":211,"material-ui/styles/MuiThemeProvider":405,"react":771,"react-dom":546,"react-redux":577,"react-router":611,"react-tap-event-plugin":625,"redux":788}],814:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -85046,7 +85064,7 @@ var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
         { className: 'bottom-cards col-md-12' },
         _react2.default.createElement(
             'row',
-            { className: 'col-md-12' },
+            null,
             _react2.default.createElement(
                 'div',
                 { className: 'col-md-4 col-md-offset-3' },
@@ -85076,7 +85094,7 @@ var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
         ),
         _react2.default.createElement(
             'row',
-            { className: 'col-md-12' },
+            null,
             _react2.default.createElement(
                 'div',
                 { className: 'col-md-2 col-md-offset-3' },
@@ -85186,6 +85204,333 @@ var ContentPortalHeader = function (_React$Component) {
 exports.default = ContentPortalHeader;
 
 },{"react":771,"react-bootstrap":535}],817:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Paper = require('material-ui/Paper');
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _Card = require('material-ui/Card');
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _MuiThemeProvider = require('material-ui/styles/MuiThemeProvider');
+
+var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+var _colors = require('material-ui/styles/colors');
+
+var Colors = _interopRequireWildcard(_colors);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var style = {
+    height: 270,
+    width: '50%',
+    textAlign: 'left',
+    display: 'inline-block',
+    overflow: 'hidden'
+};
+
+var buttonStyle = {
+    margin: 12,
+    marginTop: 60,
+    marginLeft: 140
+};
+
+var mediaTitleStyles = {
+
+    title: {
+        fontSize: 20,
+        lineHeight: '20px'
+    },
+    subtitle: {
+        fontSize: 12,
+        marginTop: 20
+    }
+};
+
+var DiscoverPanel = function DiscoverPanel() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'col-md-12' },
+        _react2.default.createElement(
+            'div',
+            { className: 'col-md-6 col-md-offset-3' },
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 1 },
+                _react2.default.createElement('img', { src: 'assets/img/paris.png', style: {
+                        width: '100%',
+                        height: 'auto'
+                    } })
+            ),
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 2 },
+                _react2.default.createElement(_Card.CardTitle, { titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, title: 'Speaking a new language opens up a world of opportunity', subtitle: 'You\'re an adventurer, not a tourist. Your journey begins with Lingohop.' }),
+                _react2.default.createElement(_RaisedButton2.default, { containerElement: _react2.default.createElement(_reactRouter.Link, { to: '/signup' }), label: 'See What You Can Learn', backgroundColor: ' #02B3E4', labelColor: '#ffffff', style: buttonStyle })
+            )
+        )
+    );
+};
+
+exports.default = DiscoverPanel;
+
+},{"material-ui/Card":324,"material-ui/Paper":367,"material-ui/RaisedButton":376,"material-ui/styles/MuiThemeProvider":405,"material-ui/styles/colors":407,"react":771,"react-router":611}],818:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Paper = require('material-ui/Paper');
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _Card = require('material-ui/Card');
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _MuiThemeProvider = require('material-ui/styles/MuiThemeProvider');
+
+var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var style = {
+    height: 270,
+    width: '100%',
+    //    margin: 20,
+    textAlign: 'center',
+    display: 'inline-block',
+    overflow: 'hidden',
+    padding: 0
+};
+
+var buttonStyle = {
+    margin: 12,
+    marginTop: 60,
+    marginLeft: 140
+};
+
+var imageStyle = {
+    width: '30%',
+    height: 'auto',
+    marginTop: 10
+};
+var nameStyle = {
+    marginTop: 10,
+    marginBottom: 15
+};
+
+var cardStyle = {
+    padding: 0
+};
+
+var firstNameStyle = {
+    color: 'rgba(23, 20, 20, 0.46)'
+};
+var mediaTitleStyles = {
+
+    title: {
+        fontSize: 20,
+        lineHeight: '20px'
+    },
+    subtitle: {
+        fontSize: 12
+    }
+};
+
+var ExperiencePanel = function ExperiencePanel() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'col-md-12 text-center' },
+        _react2.default.createElement(
+            'div',
+            { className: 'col-md-2 col-md-offset-3' },
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 1 },
+                _react2.default.createElement('img', { src: 'assets/img/person1.png', style: imageStyle }),
+                _react2.default.createElement(
+                    'div',
+                    { style: nameStyle },
+                    _react2.default.createElement(
+                        'span',
+                        { style: firstNameStyle },
+                        'Alex'
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        ': Study Aboard'
+                    )
+                ),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Engaging in the classroom' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Connecting with host family' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Being prepared for foreign life' })
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'col-md-2' },
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 1 },
+                _react2.default.createElement('img', { src: 'assets/img/person2.png', style: imageStyle }),
+                _react2.default.createElement(
+                    'div',
+                    { style: nameStyle },
+                    _react2.default.createElement(
+                        'span',
+                        { style: firstNameStyle },
+                        'Sarah'
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        ': Vacation'
+                    )
+                ),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Travelling to various cities' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Being prepared for foreign life' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Going out for food or drinks ' })
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'col-md-2' },
+            _react2.default.createElement(
+                _Paper2.default,
+                { style: style, zDepth: 1, className: 'col-md-2' },
+                _react2.default.createElement('img', { src: 'assets/img/person3.png', style: imageStyle }),
+                _react2.default.createElement(
+                    'div',
+                    { style: nameStyle },
+                    _react2.default.createElement(
+                        'span',
+                        { style: firstNameStyle },
+                        'Marc'
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        ': business trip'
+                    )
+                ),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '1. Conducting professional conversations' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '2. Understanding the cultural norms' }),
+                _react2.default.createElement(_Card.CardTitle, { style: cardStyle, titleStyle: mediaTitleStyles.title, subtitleStyle: mediaTitleStyles.subtitle, subtitle: '3. Moving around the city with ease' })
+            )
+        )
+    );
+};
+
+exports.default = ExperiencePanel;
+
+},{"material-ui/Card":324,"material-ui/Paper":367,"material-ui/RaisedButton":376,"material-ui/styles/MuiThemeProvider":405,"react":771}],819:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _TextField = require('material-ui/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MainPageHeader = function (_React$Component) {
+    _inherits(MainPageHeader, _React$Component);
+
+    function MainPageHeader() {
+        _classCallCheck(this, MainPageHeader);
+
+        return _possibleConstructorReturn(this, (MainPageHeader.__proto__ || Object.getPrototypeOf(MainPageHeader)).apply(this, arguments));
+    }
+
+    _createClass(MainPageHeader, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactBootstrap.Navbar,
+                { inverse: true, fluid: true, id: 'main-navbar' },
+                _react2.default.createElement(
+                    _reactBootstrap.Navbar.Header,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.Navbar.Brand,
+                        null,
+                        _react2.default.createElement('img', { className: 'pull-left', src: 'assets/img/logo/logo.svg' }),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'pull-left' },
+                            'Lingohop'
+                        )
+                    ),
+                    _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Navbar.Collapse,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.Nav,
+                        { id: 'right-nav', pullRight: true },
+                        _react2.default.createElement(_TextField2.default, { className: 'pull-left', hintText: 'Username' }),
+                        _react2.default.createElement(_TextField2.default, { className: 'pull-left', hintText: 'Password' }),
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons pull-left darkblue' },
+                            'arrow_forward'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return MainPageHeader;
+}(_react2.default.Component);
+
+exports.default = MainPageHeader;
+
+},{"material-ui/TextField":388,"react":771,"react-bootstrap":535}],820:[function(require,module,exports){
 // person.js
 'use strict';
 
@@ -85216,7 +85561,7 @@ module.exports = function () {
     return Person;
 }();
 
-},{}],818:[function(require,module,exports){
+},{}],821:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85268,7 +85613,59 @@ var ContentPortalLayout = function (_React$Component) {
 
 exports.default = ContentPortalLayout;
 
-},{"../components/ContentPortalHeader":816,"react":771}],819:[function(require,module,exports){
+},{"../components/ContentPortalHeader":816,"react":771}],822:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _MainPageHeader = require('../components/MainPageHeader');
+
+var _MainPageHeader2 = _interopRequireDefault(_MainPageHeader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MainPageLayout = function (_React$Component) {
+    _inherits(MainPageLayout, _React$Component);
+
+    function MainPageLayout() {
+        _classCallCheck(this, MainPageLayout);
+
+        return _possibleConstructorReturn(this, (MainPageLayout.__proto__ || Object.getPrototypeOf(MainPageLayout)).apply(this, arguments));
+    }
+
+    _createClass(MainPageLayout, [{
+        key: 'render',
+        value: function render() {
+            var path = this.props.location.pathname;
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_MainPageHeader2.default, null),
+                _react2.default.cloneElement(this.props.children, { key: path })
+            );
+        }
+    }]);
+
+    return MainPageLayout;
+}(_react2.default.Component);
+
+exports.default = MainPageLayout;
+
+},{"../components/MainPageHeader":819,"react":771}],823:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85424,7 +85821,7 @@ var ContentPortalLandingPage = function (_React$Component) {
 
 exports.default = ContentPortalLandingPage;
 
-},{"react":771,"react-router":611}],820:[function(require,module,exports){
+},{"react":771,"react-router":611}],824:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85569,7 +85966,7 @@ var ContentPortalLoginPage = function (_React$Component) {
 
 exports.default = ContentPortalLoginPage;
 
-},{"jquery":211,"material-ui/RaisedButton":376,"material-ui/TextField":388,"react":771,"react-router":611}],821:[function(require,module,exports){
+},{"jquery":211,"material-ui/RaisedButton":376,"material-ui/TextField":388,"react":771,"react-router":611}],825:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85667,7 +86064,7 @@ var ContentPortalUploadFinishPage = function (_React$Component) {
 
 exports.default = ContentPortalUploadFinishPage;
 
-},{"material-ui/FlatButton":347,"material-ui/RaisedButton":376,"react":771,"react-router":611}],822:[function(require,module,exports){
+},{"material-ui/FlatButton":347,"material-ui/RaisedButton":376,"react":771,"react-router":611}],826:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85751,7 +86148,8 @@ var ContentPortalUploadPage = function (_React$Component) {
             audioTwoPlaying: false,
             audioThreePlaying: false,
             language_country: '',
-            legoText: ''
+            legoText: '',
+            imagePreviewUrl: ''
         };
 
         _this._handleImageUpload = _this._handleImageUpload.bind(_this);
@@ -85929,10 +86327,23 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: '_handleImageUpload',
         value: function _handleImageUpload(e) {
+            var _this2 = this;
+
             e.preventDefault();
 
-            var files = Array.prototype.slice.call(e.target.files);
+            //----------------------
             var reader = new FileReader();
+            var file = e.target.files[0];
+            console.log(file);
+            reader.onloadend = function () {
+                console.log(reader.result);
+                _this2.setState({ imagePreviewUrl: reader.result });
+            };
+
+            reader.readAsDataURL(file);
+            //--------------
+
+            var files = Array.prototype.slice.call(e.target.files);
 
             var imgGallery = document.getElementById("img-gallery");
             imgGallery.innerHTML = "";
@@ -85942,7 +86353,6 @@ var ContentPortalUploadPage = function (_React$Component) {
             if (newImgFiles.length > 3) {
                 newImgFiles = newImgFiles.slice(0, 3);
             }
-            console.log(newImgFiles);
             this.setState({
                 imgFiles: newImgFiles
             }, function () {
@@ -85952,10 +86362,10 @@ var ContentPortalUploadPage = function (_React$Component) {
 
                 try {
                     for (var _iterator = newImgFiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var file = _step.value;
+                        var _file = _step.value;
 
                         var img = document.createElement('img');
-                        img.innerHTML = "<img src='" + URL.createObjectURL(file) + "'/>";
+                        img.innerHTML = "<img src='" + URL.createObjectURL(_file) + "'/>";
 
                         while (img.firstChild) {
                             imgGallery.appendChild(img.firstChild);
@@ -85980,22 +86390,6 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: '_handleAudioOneUpload',
         value: function _handleAudioOneUpload(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-
-            var reader = new FileReader();
-            var file = e.target.files[0];
-
-            reader.onloadend = function () {
-                _this2.setState({ audioOneFile: file, audioOneUrl: reader.result });
-                document.getElementById("audio-one-icon").innerHTML = "play_arrow";
-            };
-            reader.readAsDataURL(file);
-        }
-    }, {
-        key: '_handleAudioTwoUpload',
-        value: function _handleAudioTwoUpload(e) {
             var _this3 = this;
 
             e.preventDefault();
@@ -86004,15 +86398,14 @@ var ContentPortalUploadPage = function (_React$Component) {
             var file = e.target.files[0];
 
             reader.onloadend = function () {
-                _this3.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
-                document.getElementById("audio-two-icon").innerHTML = "play_arrow";
+                _this3.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                document.getElementById("audio-one-icon").innerHTML = "play_arrow";
             };
-
             reader.readAsDataURL(file);
         }
     }, {
-        key: '_handleAudioThreeUpload',
-        value: function _handleAudioThreeUpload(e) {
+        key: '_handleAudioTwoUpload',
+        value: function _handleAudioTwoUpload(e) {
             var _this4 = this;
 
             e.preventDefault();
@@ -86021,7 +86414,24 @@ var ContentPortalUploadPage = function (_React$Component) {
             var file = e.target.files[0];
 
             reader.onloadend = function () {
-                _this4.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
+                _this4.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
+                document.getElementById("audio-two-icon").innerHTML = "play_arrow";
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }, {
+        key: '_handleAudioThreeUpload',
+        value: function _handleAudioThreeUpload(e) {
+            var _this5 = this;
+
+            e.preventDefault();
+
+            var reader = new FileReader();
+            var file = e.target.files[0];
+
+            reader.onloadend = function () {
+                _this5.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
                 document.getElementById("audio-three-icon").innerHTML = "play_arrow";
             };
 
@@ -86088,10 +86498,8 @@ var ContentPortalUploadPage = function (_React$Component) {
             _jquery2.default.ajax({
                 method: 'GET',
                 dataType: "json",
-                url: 'http://localhost:8000/api/language-country/',
+                url: 'http://testing.lingohop.com/api/language-country/',
                 success: function success(res) {
-                    console.log('success');
-                    console.log(res);
                     var _iteratorNormalCompletion2 = true;
                     var _didIteratorError2 = false;
                     var _iteratorError2 = undefined;
@@ -86204,33 +86612,33 @@ var ContentPortalUploadPage = function (_React$Component) {
         key: '_uploadContent',
         value: function _uploadContent() {
 
-            console.log(this.state.imgFiles);
             _jquery2.default.ajax({
                 method: "POST",
-                data: {
-                    "country": "Spain",
+                data: JSON.stringify({
+                    "country": this.state.language_country,
                     "languages": {
                         "spanish": {
                             "word": {
                                 "images": [{
-                                    "file": this.state.imgFiles[0]
+                                    "file": this.state.imagePreviewUrl
                                 }],
                                 "audio": {
+
                                     "files": {
                                         "male": {
-                                            "default": {
-                                                "file": this.state.imgFiles[0]
-                                            },
                                             "region1": {
-                                                "file": this.state.imgFiles[0]
+                                                "file": this.state.audioOneUrl
+                                            },
+                                            "default": {
+                                                "file": this.state.audioTwoUrl
                                             }
                                         },
                                         "female": {
-                                            "default": {
-                                                "file": this.state.imgFiles[0]
-                                            },
                                             "region1": {
-                                                "file": this.state.imgFiles[0]
+                                                "file": this.state.audioThreeUrl
+                                            },
+                                            "default": {
+                                                "file": "lingohop/static/photos/person1.png"
                                             }
                                         }
                                     }
@@ -86238,14 +86646,18 @@ var ContentPortalUploadPage = function (_React$Component) {
                             }
                         }
                     }
-
-                },
+                }),
                 dataType: "json",
-                processData: false,
-                contentType: false,
-                url: 'http://localhost:8000/api/assets/',
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/assets/',
                 success: function success(res) {
                     console.log('Uploaded successfully');
+                },
+                error: function error(a, b, c) {
+                    console.log(a);
+                    console.log(b);
+
+                    console.log(c);
                 }
             });
             _reactRouter.hashHistory.push('/contentportal/uploadfinish');
@@ -86267,7 +86679,188 @@ var ContentPortalUploadPage = function (_React$Component) {
 
 exports.default = ContentPortalUploadPage;
 
-},{"jquery":211,"material-ui/Avatar":313,"material-ui/Chip":326,"material-ui/MenuItem":362,"material-ui/RadioButton":374,"material-ui/RaisedButton":376,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771,"react-router":611}],823:[function(require,module,exports){
+},{"jquery":211,"material-ui/Avatar":313,"material-ui/Chip":326,"material-ui/MenuItem":362,"material-ui/RadioButton":374,"material-ui/RaisedButton":376,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771,"react-router":611}],827:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ExperiencePanel = require('../components/ExperiencePanel');
+
+var _ExperiencePanel2 = _interopRequireDefault(_ExperiencePanel);
+
+var _BottomCardsPanelComponent = require('../components/BottomCardsPanelComponent');
+
+var _BottomCardsPanelComponent2 = _interopRequireDefault(_BottomCardsPanelComponent);
+
+var _DiscoverPanel = require('../components/DiscoverPanel');
+
+var _DiscoverPanel2 = _interopRequireDefault(_DiscoverPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MainHomePage = function (_React$Component) {
+    _inherits(MainHomePage, _React$Component);
+
+    function MainHomePage() {
+        _classCallCheck(this, MainHomePage);
+
+        return _possibleConstructorReturn(this, (MainHomePage.__proto__ || Object.getPrototypeOf(MainHomePage)).apply(this, arguments));
+    }
+
+    _createClass(MainHomePage, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'main-home-page' },
+                _react2.default.createElement(_DiscoverPanel2.default, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'text-center col-md-12' },
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'An experience just for you'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Learn a language based on your unique needs'
+                    )
+                ),
+                _react2.default.createElement(_ExperiencePanel2.default, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'text-center col-md-12' },
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Immerse yourself in the country'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Experience lessons built around daily life abroad'
+                    )
+                ),
+                _react2.default.createElement(_BottomCardsPanelComponent2.default, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'footer' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-8 col-md-offset-2' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-2' },
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Company'
+                            ),
+                            _react2.default.createElement(
+                                'ul',
+                                { className: 'list-unstyled' },
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'About'
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'Press'
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'Terms & Conditions'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-2' },
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Product'
+                            ),
+                            _react2.default.createElement(
+                                'ul',
+                                { className: 'list-unstyled' },
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'FAQs'
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'Reviews'
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    'Contact Us'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-2 col-md-offset-6' },
+                            _react2.default.createElement('img', { className: 'col-md-8', src: 'assets/img/logo/logo.svg' })
+                        ),
+                        _react2.default.createElement('hr', { className: 'col-md-12' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'text-center col-md-12' },
+                            'Join us on'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'text-center col-md-12 social-icons lightblue' },
+                            _react2.default.createElement('i', { className: 'fa fa-facebook fa-3x' }),
+                            _react2.default.createElement('i', { className: 'fa fa-twitter fa-3x' }),
+                            _react2.default.createElement('i', { className: 'fa fa-youtube fa-3x' }),
+                            _react2.default.createElement('i', { className: 'fa fa-linkedin fa-3x' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'text-center col-md-12' },
+                            'Oceanix Inc 2016'
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
+        }
+    }]);
+
+    return MainHomePage;
+}(_react2.default.Component);
+
+exports.default = MainHomePage;
+
+},{"../components/BottomCardsPanelComponent":815,"../components/DiscoverPanel":817,"../components/ExperiencePanel":818,"react":771}],828:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

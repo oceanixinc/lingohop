@@ -36,6 +36,9 @@ import {
 //Content Portal
 import ContentPortalLayout from './layout/ContentPortalLayout'
 
+//Main
+import MainPageLayout from './layout/MainPageLayout'
+
 //Pages-----------------------------------------------------------------------------------------
 
 //Content Portal
@@ -44,7 +47,8 @@ import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
 
-
+//Main
+import MainHomePage from './pages/MainHomePage'
 
 const app = (
   <Provider store={store}>
@@ -60,8 +64,10 @@ const app = (
             <Route path="contentportal" component={ContentPortalLayout}>
                 <IndexRoute component={ContentPortalLandingPage}/>
                 <Route path="upload" component={ContentPortalUploadPage}/>
-                  <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
-
+                <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
+            </Route>
+            <Route path="mainpage" component={MainPageLayout}>
+              <IndexRoute component={MainHomePage}/>
             </Route>
         </Router>
     </MuiThemeProvider>
@@ -71,6 +77,5 @@ const app = (
 jQuery(function() {
     ReactDOM.render(app, document.getElementById('app'), function() {
         console.timeEnd('react-app');
-        //console.log(store.getState())
     });
 })
