@@ -1,0 +1,5 @@
+AIM User Credentials
+Access Key ID: AKIAI2NOZSIJR7BLQBEQ
+Secret Access Key: 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
+
+Github access token: cb26cbaddfd72abb0335dd286c816ad658d09abd
