@@ -85044,90 +85044,9 @@ module.exports = {
 };
 
 },{}],815:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Card = require('material-ui/Card');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
-    return _react2.default.createElement(
-        'div',
-        { className: 'bottom-cards col-md-12' },
-        _react2.default.createElement(
-            'row',
-            null,
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-4 col-md-offset-3' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-2' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            )
-        ),
-        _react2.default.createElement(
-            'row',
-            null,
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-2 col-md-offset-3' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'col-md-4' },
-                _react2.default.createElement(
-                    _Card.Card,
-                    null,
-                    _react2.default.createElement(
-                        _Card.CardMedia,
-                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
-                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
-                    )
-                )
-            )
-        )
-    );
-};
-
-exports.default = BottomCardsPanelComponent;
-
-},{"material-ui/Card":324,"react":771}],816:[function(require,module,exports){
+},{}],816:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
