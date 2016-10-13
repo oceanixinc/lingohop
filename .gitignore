@@ -73,3 +73,7 @@ server/lingohop/static/videos/
 local_settings.py
 
 bundle.js.map
+
+media
+
+server/venv
