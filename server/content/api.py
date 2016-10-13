@@ -46,8 +46,9 @@ class AssetCreate(generics.ListCreateAPIView):
 
         for index, each in enumerate(c):
             img = each['file']
-            my_image = img.split('base64,')
+            my_image = img.split(';base64,')
             img_ext = my_image[0].split('/')
+            print ('data', img_ext)
             imgdata = base64.b64decode(my_image[1])
             file_name = str(uuid.uuid4())
             fname = '../media/images/%s.%s' % (file_name, img_ext[1])
