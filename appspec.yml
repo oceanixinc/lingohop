@@ -1,14 +1,15 @@
 version: 0.0
 os: linux
 files:
-  - source: ./install.txt
-    destination: /tmp/CodeDeployExample
+  - source: /
+    destination: /home/ubuntu/src/lingohop/
 hooks:
   BeforeInstall:
     - location: ./scripts/before-install.sh
       timeout: 900
   AfterInstall:
     - location: ./scripts/after-install.sh
+      runas: root
       timeout: 900
   ApplicationStart:
     - location: ./scripts/application-start.sh
