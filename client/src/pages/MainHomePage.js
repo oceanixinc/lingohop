@@ -1,4 +1,7 @@
 import React from 'react'
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+
 import ExperiencePanel from '../components/ExperiencePanel';
 import BottomCardsPanelComponent from '../components/BottomCardsPanelComponent';
 import DiscoverPanel from '../components/DiscoverPanel';
@@ -7,6 +10,25 @@ export default class MainHomePage extends React.Component {
     render() {
         return (
             <div className="main-home-page">
+                <div id="header">
+                    <div className="text-center col-md-12">
+                        <h4>Start having conversations in your new language today - try it for free!</h4>
+                    </div>
+                    <div className="text-center col-md-8 col-md-offset-3">
+                      <div className="col-md-3">
+                        <TextField hintText="Email"/>
+                      </div>
+                      <div className="col-md-3">
+                        <SelectField hintText="I want to speak..."/>
+                      </div>
+                      <div className="col-md-3">
+                        <SelectField hintText="For..."/>
+                      </div>
+                      <div className="col-md-1">
+                        <i className="material-icons darkblue" >arrow_forward</i>
+                      </div>
+                    </div>
+                </div>
                 <DiscoverPanel/>
                 <div className="text-center col-md-12">
                     <h4>An experience just for you</h4>

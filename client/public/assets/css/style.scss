@@ -4,10 +4,25 @@
 @import "partials/landingpage";
 @import "partials/uploadpage";
 @import "partials/uploadfinishpage";
+@import "partials/buildpage";
 @import "partials/mainhomepage";
 @import "partials/bottomcards";
 
-.inactive{
-  display:none;
+.inactive {
+    display: none;
+}
 
+.modal-header, .modal-footer {
+    border: none;
+    text-align: center !important;
+}
+
+#add-photo {
+    height: 120px;
+    width: 100%;
+    border: 1px solid #333;
+    font-size: 16px;
+    line-height: 110px;
+    position: relative;
+    text-align: center;
 }
