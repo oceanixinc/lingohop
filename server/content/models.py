@@ -71,16 +71,23 @@ class Image(EmbeddedDocument):
     file = fields.StringField(required=False, blank=True, null=True)
 
 
-class AudioFile(EmbeddedDocument):
+class Files(EmbeddedDocument):
+    region = fields.StringField(required=False, blank=True, null=True)
     file = fields.StringField(required=False, blank=True, null=True)
+
+
+class AudioFile(EmbeddedDocument):
+    gender = fields.StringField(required=False, blank=True, null=True)
+    files = fields.ListField(
+        fields.EmbeddedDocumentField(Files))
 
 
 class Audio(EmbeddedDocument):
     """
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    files = fields.MapField(fields.MapField(
-        fields.EmbeddedDocumentField(AudioFile)))
+    files = fields.ListField(
+        fields.EmbeddedDocumentField(AudioFile))
 
 
 class AudioImage(EmbeddedDocument):
