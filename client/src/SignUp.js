@@ -473,8 +473,11 @@ class SignUp extends React.Component {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+    console.log('file is');
+    console.log(file);
 
     reader.onloadend = () => {
+      console.log(reader.result);
       this.setState({
         profile_picture: file,
         imagePreviewUrl: reader.result
