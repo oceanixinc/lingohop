@@ -219,16 +219,59 @@
   .upload-finish-page .upload-finish .buttons > a > button {
     margin: 5px; }
 
-.main-home-page .footer {
-  display: inline-block;
-  padding: 20px 0;
-  width: 100%;
-  background-color: #fff;
-  border: 0;
+.build-page .build {
+  margin-top: 45px;
+  background-color: white;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
-  margin-bottom: -10px; }
-  .main-home-page .footer .social-icons > i {
-    padding: 15px; }
+  border-radius: 2px; }
+  .build-page .build i {
+    margin-top: 10px;
+    font-size: 32px; }
+  .build-page .build #main-text {
+    margin: 5px 0;
+    font-size: 33px; }
+  .build-page .build #desc-text {
+    font-size: 17px;
+    margin-bottom: 40px; }
+  .build-page .build .big-text {
+    font-size: 14px; }
+  .build-page .build label {
+    font-weight: 400 !important; }
+  .build-page .build .upload-btn {
+    min-width: 180px !important;
+    margin-top: 60px !important;
+    margin-bottom: 52px !important; }
+    .build-page .build .upload-btn button {
+      background-color: #02B3E4 !important;
+      height: 45px !important;
+      line-height: 45px !important; }
+      .build-page .build .upload-btn button div {
+        height: 45px !important;
+        line-height: 45px !important; }
+    .build-page .build .upload-btn span {
+      font-size: 17px !important; }
+  .build-page .build .active-btn span {
+    color: white !important; }
+
+.main-home-page {
+  margin-top: -24px; }
+  .main-home-page #header {
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    border: 0;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    margin-bottom: 20px; }
+  .main-home-page .footer {
+    display: inline-block;
+    padding: 20px 0;
+    width: 100%;
+    background-color: #fff;
+    border: 0;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    margin-bottom: -10px; }
+    .main-home-page .footer .social-icons > i {
+      padding: 15px; }
 
 .bottom-cards {
   margin-bottom: 10px; }
@@ -242,5 +285,18 @@
 
 .inactive {
   display: none; }
+
+.modal-header, .modal-footer {
+  border: none;
+  text-align: center !important; }
+
+#add-photo {
+  height: 120px;
+  width: 100%;
+  border: 1px solid #333;
+  font-size: 16px;
+  line-height: 110px;
+  position: relative;
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

@@ -46,6 +46,8 @@ import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
 import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
+import ContentPortalBuildPage from './pages/ContentPortalBuildPage'
+
 
 //Main
 import MainHomePage from './pages/MainHomePage'
@@ -65,6 +67,8 @@ const app = (
                 <IndexRoute component={ContentPortalLandingPage}/>
                 <Route path="upload" component={ContentPortalUploadPage}/>
                 <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
+                  <Route path="build" component={ContentPortalBuildPage}/>
+
             </Route>
             <Route path="mainpage" component={MainPageLayout}>
               <IndexRoute component={MainHomePage}/>

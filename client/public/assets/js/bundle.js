@@ -84909,6 +84909,10 @@ var _ContentPortalLandingPage = require('./pages/ContentPortalLandingPage');
 
 var _ContentPortalLandingPage2 = _interopRequireDefault(_ContentPortalLandingPage);
 
+var _ContentPortalBuildPage = require('./pages/ContentPortalBuildPage');
+
+var _ContentPortalBuildPage2 = _interopRequireDefault(_ContentPortalBuildPage);
+
 var _MainHomePage = require('./pages/MainHomePage');
 
 var _MainHomePage2 = _interopRequireDefault(_MainHomePage);
@@ -84970,7 +84974,8 @@ var app = _react2.default.createElement(
                 { path: 'contentportal', component: _ContentPortalLayout2.default },
                 _react2.default.createElement(_reactRouter.IndexRoute, { component: _ContentPortalLandingPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: _ContentPortalUploadPage2.default }),
-                _react2.default.createElement(_reactRouter.Route, { path: 'uploadfinish', component: _ContentPortalUploadFinishPage2.default })
+                _react2.default.createElement(_reactRouter.Route, { path: 'uploadfinish', component: _ContentPortalUploadFinishPage2.default }),
+                _react2.default.createElement(_reactRouter.Route, { path: 'build', component: _ContentPortalBuildPage2.default })
             ),
             _react2.default.createElement(
                 _reactRouter.Route,
@@ -84987,7 +84992,7 @@ var app = _react2.default.createElement(
     });
 });
 
-},{"./Home":804,"./Main":807,"./NotFound":808,"./SignUp":809,"./Theme":811,"./layout/ContentPortalLayout":821,"./layout/MainPageLayout":822,"./pages/ContentPortalLandingPage":823,"./pages/ContentPortalLoginPage":824,"./pages/ContentPortalUploadFinishPage":825,"./pages/ContentPortalUploadPage":826,"./pages/MainHomePage":827,"./redux/reducers/contentportal":828,"jquery":211,"material-ui/styles/MuiThemeProvider":405,"react":771,"react-dom":546,"react-redux":577,"react-router":611,"react-tap-event-plugin":625,"redux":788}],814:[function(require,module,exports){
+},{"./Home":804,"./Main":807,"./NotFound":808,"./SignUp":809,"./Theme":811,"./layout/ContentPortalLayout":821,"./layout/MainPageLayout":822,"./pages/ContentPortalBuildPage":823,"./pages/ContentPortalLandingPage":824,"./pages/ContentPortalLoginPage":825,"./pages/ContentPortalUploadFinishPage":826,"./pages/ContentPortalUploadPage":827,"./pages/MainHomePage":828,"./redux/reducers/contentportal":829,"jquery":211,"material-ui/styles/MuiThemeProvider":405,"react":771,"react-dom":546,"react-redux":577,"react-router":611,"react-tap-event-plugin":625,"redux":788}],814:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -85044,9 +85049,90 @@ module.exports = {
 };
 
 },{}],815:[function(require,module,exports){
-"use strict";
+'use strict';
 
-},{}],816:[function(require,module,exports){
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Card = require('material-ui/Card');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BottomCardsPanelComponent = function BottomCardsPanelComponent() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'bottom-cards col-md-12' },
+        _react2.default.createElement(
+            'row',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-4 col-md-offset-3' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-2' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            )
+        ),
+        _react2.default.createElement(
+            'row',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-2 col-md-offset-3' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'col-md-4' },
+                _react2.default.createElement(
+                    _Card.Card,
+                    null,
+                    _react2.default.createElement(
+                        _Card.CardMedia,
+                        { overlay: _react2.default.createElement(_Card.CardTitle, { title: 'France', subtitle: 'French', style: { height: '80px' } }) },
+                        _react2.default.createElement('img', { src: 'assets/img/france.jpg', className: 'bottom-cards-img' })
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports.default = BottomCardsPanelComponent;
+
+},{"material-ui/Card":324,"react":771}],816:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85599,6 +85685,301 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _SelectField = require('material-ui/SelectField');
+
+var _SelectField2 = _interopRequireDefault(_SelectField);
+
+var _TextField = require('material-ui/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _RadioButton = require('material-ui/RadioButton');
+
+var _MenuItem = require('material-ui/MenuItem');
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _FlatButton = require('material-ui/FlatButton');
+
+var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _reactBootstrap = require('react-bootstrap');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var language_items = [];
+
+var ContentPortalBuildPage = function (_React$Component) {
+    _inherits(ContentPortalBuildPage, _React$Component);
+
+    function ContentPortalBuildPage() {
+        _classCallCheck(this, ContentPortalBuildPage);
+
+        var _this = _possibleConstructorReturn(this, (ContentPortalBuildPage.__proto__ || Object.getPrototypeOf(ContentPortalBuildPage)).call(this));
+
+        _this.state = {
+            language_country: '',
+            showModal: false
+        };
+
+        _this.handleValueChange = _this.handleValueChange.bind(_this);
+        _this._fetchLanguageCountry = _this._fetchLanguageCountry.bind(_this);
+        _this._openModal = _this._openModal.bind(_this);
+        _this._closeModal = _this._closeModal.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(ContentPortalBuildPage, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this._fetchLanguageCountry();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'build-page' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'text-center build col-md-6 col-md-offset-3' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/contentportal' },
+                        _react2.default.createElement(
+                            'i',
+                            { className: 'material-icons pull-left' },
+                            'arrow_back'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(
+                            'p',
+                            { id: 'main-text' },
+                            'Hello,',
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                'John'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { id: 'desc-text' },
+                            'Tell us a little more about the new lesson.'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'What language is being taught?',
+                        _react2.default.createElement(
+                            _SelectField2.default,
+                            { value: this.state.language_country, onChange: this.handleValueChange.bind(this, 'language_country'), hintText: 'Language', style: {
+                                    width: '100%'
+                                } },
+                            language_items
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'What track is it for?',
+                        _react2.default.createElement(_SelectField2.default, { hintText: 'Track', style: {
+                                width: '100%'
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'Please select a category',
+                        _react2.default.createElement(_SelectField2.default, { hintText: 'Category', style: {
+                                width: '100%'
+                            } }),
+                        _react2.default.createElement(_FlatButton2.default, { label: '+Add New Category', onClick: this._openModal })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'What would you like to name the lesson?',
+                        _react2.default.createElement(_TextField2.default, { hintText: 'Lesson Name', style: {
+                                width: '100%'
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'Which part is this?',
+                        _react2.default.createElement(
+                            _RadioButton.RadioButtonGroup,
+                            { name: 'gender', defaultSelected: 'one' },
+                            _react2.default.createElement(_RadioButton.RadioButton, { value: 'one', label: 'Part 1' }),
+                            _react2.default.createElement(_RadioButton.RadioButton, { value: 'two', label: 'Part 2' })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'NEXT', className: 'upload-btn active-btn' })
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showModal, onHide: this._closeModal },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Add a new ',
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                'category'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-6 text-center' },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'add-photo' },
+                                '+ Add Category Photo'
+                            ),
+                            _react2.default.createElement(
+                                'i',
+                                null,
+                                'Max size of 2 mb'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-6' },
+                            _react2.default.createElement(_SelectField2.default, { hintText: 'Position', style: {
+                                    width: '100%'
+                                } }),
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Name', style: {
+                                    width: '100%'
+                                } })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true })
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
+        }
+
+        //API Calls
+
+    }, {
+        key: '_fetchLanguageCountry',
+        value: function _fetchLanguageCountry() {
+
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/language-country/',
+                success: function success(res) {
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
+
+                    try {
+                        for (var _iterator = res[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            var language = _step.value;
+
+                            var itemIndex = res.indexOf(language);
+                            var value = language.language;
+                            var key = language.id + '-' + language.language + '-' + language.country;
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: language.id, key: key, primaryText: value });
+                            language_items.push(item);
+                        }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+                        } finally {
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }, {
+        key: 'handleValueChange',
+        value: function handleValueChange(name, event, index, value) {
+            var change = {};
+            change[name] = value;
+            this.setState(change);
+        }
+    }, {
+        key: '_openModal',
+        value: function _openModal() {
+            this.setState({ showModal: true });
+        }
+    }, {
+        key: '_closeModal',
+        value: function _closeModal() {
+            this.setState({ showModal: false });
+        }
+    }]);
+
+    return ContentPortalBuildPage;
+}(_react2.default.Component);
+
+exports.default = ContentPortalBuildPage;
+
+},{"jquery":211,"material-ui/FlatButton":347,"material-ui/MenuItem":362,"material-ui/RadioButton":374,"material-ui/RaisedButton":376,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771,"react-bootstrap":535,"react-router":611}],824:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85679,26 +86060,30 @@ var ContentPortalLandingPage = function (_React$Component) {
                             )
                         ),
                         _react2.default.createElement(
-                            'div',
-                            { className: 'col-md-4' },
+                            _reactRouter.Link,
+                            { to: '/contentportal/build' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'img-holder' },
-                                _react2.default.createElement('img', { src: 'assets/img/build.png' }),
+                                { className: 'col-md-4' },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'after' },
+                                    { className: 'img-holder' },
+                                    _react2.default.createElement('img', { src: 'assets/img/build.png' }),
                                     _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'BUILD'
+                                        'div',
+                                        { className: 'after' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'BUILD'
+                                        )
                                     )
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    { className: 'desc-text' },
+                                    'I want to build a new lesson.'
                                 )
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'desc-text' },
-                                'I want to build a new lesson.'
                             )
                         ),
                         _react2.default.createElement(
@@ -85740,7 +86125,7 @@ var ContentPortalLandingPage = function (_React$Component) {
 
 exports.default = ContentPortalLandingPage;
 
-},{"react":771,"react-router":611}],824:[function(require,module,exports){
+},{"react":771,"react-router":611}],825:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85885,7 +86270,7 @@ var ContentPortalLoginPage = function (_React$Component) {
 
 exports.default = ContentPortalLoginPage;
 
-},{"jquery":211,"material-ui/RaisedButton":376,"material-ui/TextField":388,"react":771,"react-router":611}],825:[function(require,module,exports){
+},{"jquery":211,"material-ui/RaisedButton":376,"material-ui/TextField":388,"react":771,"react-router":611}],826:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -85983,7 +86368,7 @@ var ContentPortalUploadFinishPage = function (_React$Component) {
 
 exports.default = ContentPortalUploadFinishPage;
 
-},{"material-ui/FlatButton":347,"material-ui/RaisedButton":376,"react":771,"react-router":611}],826:[function(require,module,exports){
+},{"material-ui/FlatButton":347,"material-ui/RaisedButton":376,"react":771,"react-router":611}],827:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -86080,7 +86465,6 @@ var ContentPortalUploadPage = function (_React$Component) {
         _this._clickAudioThree = _this._clickAudioThree.bind(_this);
         _this.handleValueChange = _this.handleValueChange.bind(_this);
         _this._uploadContent = _this._uploadContent.bind(_this);
-        _this._uploadTest = _this._uploadTest.bind(_this);
         _this._fetchLanguageCountry = _this._fetchLanguageCountry.bind(_this);
 
         return _this;
@@ -86451,83 +86835,6 @@ var ContentPortalUploadPage = function (_React$Component) {
             });
         }
     }, {
-        key: '_uploadTest',
-        value: function _uploadTest() {
-
-            var fd = new FormData();
-
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = this.state.imgFiles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var file = _step3.value;
-
-                    fd.append('file', file);
-                    _jquery2.default.ajax({
-                        method: "POST",
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        url: 'http://localhost/upload/upload.php',
-                        success: function success(res) {
-                            console.log('Uploaded successfully');
-                        }
-                    });
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            fd.append('file', this.state.audioOneFile);
-            _jquery2.default.ajax({
-                method: "POST",
-                data: fd,
-                processData: false,
-                contentType: false,
-                url: 'http://localhost/upload/upload.php',
-                success: function success(res) {
-                    console.log('Uploaded successfully');
-                }
-            });
-
-            fd.append('file', this.state.audioTwoFile);
-            _jquery2.default.ajax({
-                method: "POST",
-                data: fd,
-                processData: false,
-                contentType: false,
-                url: 'http://localhost/upload/upload.php',
-                success: function success(res) {
-                    console.log('Uploaded successfully');
-                }
-            });
-
-            fd.append('file', this.state.audioThreeFile);
-            _jquery2.default.ajax({
-                method: "POST",
-                data: fd,
-                processData: false,
-                contentType: false,
-                url: 'http://localhost/upload/upload.php',
-                success: function success(res) {
-                    console.log('Uploaded successfully');
-                }
-            });
-        }
-    }, {
         key: '_uploadContent',
         value: function _uploadContent() {
 
@@ -86582,7 +86889,7 @@ var ContentPortalUploadPage = function (_React$Component) {
             _reactRouter.hashHistory.push('/contentportal/uploadfinish');
         }
 
-        //
+        //---------------------
 
     }, {
         key: 'handleValueChange',
@@ -86598,7 +86905,7 @@ var ContentPortalUploadPage = function (_React$Component) {
 
 exports.default = ContentPortalUploadPage;
 
-},{"jquery":211,"material-ui/Avatar":313,"material-ui/Chip":326,"material-ui/MenuItem":362,"material-ui/RadioButton":374,"material-ui/RaisedButton":376,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771,"react-router":611}],827:[function(require,module,exports){
+},{"jquery":211,"material-ui/Avatar":313,"material-ui/Chip":326,"material-ui/MenuItem":362,"material-ui/RadioButton":374,"material-ui/RaisedButton":376,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771,"react-router":611}],828:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -86610,6 +86917,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _TextField = require('material-ui/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _SelectField = require('material-ui/SelectField');
+
+var _SelectField2 = _interopRequireDefault(_SelectField);
 
 var _ExperiencePanel = require('../components/ExperiencePanel');
 
@@ -86646,6 +86961,47 @@ var MainHomePage = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'main-home-page' },
+                _react2.default.createElement(
+                    'div',
+                    { id: 'header' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'text-center col-md-12' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Start having conversations in your new language today - try it for free!'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'text-center col-md-8 col-md-offset-3' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Email' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            _react2.default.createElement(_SelectField2.default, { hintText: 'I want to speak...' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-3' },
+                            _react2.default.createElement(_SelectField2.default, { hintText: 'For...' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-1' },
+                            _react2.default.createElement(
+                                'i',
+                                { className: 'material-icons darkblue' },
+                                'arrow_forward'
+                            )
+                        )
+                    )
+                ),
                 _react2.default.createElement(_DiscoverPanel2.default, null),
                 _react2.default.createElement(
                     'div',
@@ -86779,7 +87135,7 @@ var MainHomePage = function (_React$Component) {
 
 exports.default = MainHomePage;
 
-},{"../components/BottomCardsPanelComponent":815,"../components/DiscoverPanel":817,"../components/ExperiencePanel":818,"react":771}],828:[function(require,module,exports){
+},{"../components/BottomCardsPanelComponent":815,"../components/DiscoverPanel":817,"../components/ExperiencePanel":818,"material-ui/SelectField":378,"material-ui/TextField":388,"react":771}],829:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

@@ -51,7 +51,6 @@ export default class ContentPortalUploadPage extends React.Component {
         this._clickAudioThree = this._clickAudioThree.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
         this._uploadContent = this._uploadContent.bind(this);
-        this._uploadTest = this._uploadTest.bind(this);
         this._fetchLanguageCountry = this._fetchLanguageCountry.bind(this);
 
     }
@@ -316,61 +315,6 @@ export default class ContentPortalUploadPage extends React.Component {
 
     }
 
-    _uploadTest() {
-
-        let fd = new FormData();
-
-        for (let file of this.state.imgFiles) {
-            fd.append('file', file);
-            jQuery.ajax({
-                method: "POST",
-                data: fd,
-                processData: false,
-                contentType: false,
-                url: 'http://localhost/upload/upload.php',
-                success: (res) => {
-                    console.log('Uploaded successfully')
-                }
-            })
-        }
-
-        fd.append('file', this.state.audioOneFile);
-        jQuery.ajax({
-            method: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            url: 'http://localhost/upload/upload.php',
-            success: (res) => {
-                console.log('Uploaded successfully')
-            }
-        })
-
-        fd.append('file', this.state.audioTwoFile);
-        jQuery.ajax({
-            method: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            url: 'http://localhost/upload/upload.php',
-            success: (res) => {
-                console.log('Uploaded successfully')
-            }
-        })
-
-        fd.append('file', this.state.audioThreeFile);
-        jQuery.ajax({
-            method: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            url: 'http://localhost/upload/upload.php',
-            success: (res) => {
-                console.log('Uploaded successfully')
-            }
-        })
-
-    }
 
     _uploadContent() {
 
@@ -429,7 +373,7 @@ export default class ContentPortalUploadPage extends React.Component {
 
     }
 
-    //
+    //---------------------
     handleValueChange(name, event, index, value) {
         var change = {};
         change[name] = value;

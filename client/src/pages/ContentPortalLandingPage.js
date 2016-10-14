@@ -21,7 +21,7 @@ export default class ContentPortalLandingPage extends React.Component {
                         </div>
                       </Link>
 
-
+                      <Link to="/contentportal/build">
                         <div className="col-md-4">
                             <div className="img-holder">
                                 <img src='assets/img/build.png'/>
@@ -31,6 +31,7 @@ export default class ContentPortalLandingPage extends React.Component {
                             </div>
                             <p className="desc-text">I want to build a new lesson.</p>
                         </div>
+                      </Link>
 
                         <div className="col-md-4">
                             <div className="img-holder">
