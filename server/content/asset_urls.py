@@ -3,7 +3,8 @@ from django.conf.urls import url
 
 from content.api import (
     AssetCreate, AssetUpdate,
-    RegionCreate, RegionUpdate
+    RegionCreate, RegionUpdate,
+    WordApi
 )
 
 urlpatterns = [
@@ -12,6 +13,11 @@ urlpatterns = [
         r'^$',
         AssetCreate.as_view(),
         name='asset'
+    ),
+    url(
+        r'word/$',
+        WordApi.as_view(),
+        name='word'
     ),
 
     url(

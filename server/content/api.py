@@ -4,9 +4,11 @@ from rest_framework_mongoengine import generics
 from .serializers import (
     AssetSerializer,
     ContentSerializer,
-    RegionSerializer)
+    RegionSerializer,
+    WordSerializer)
 
-from .models import Asset, Country, Region
+from .models import (
+    Asset, Country, Region, AudioImage)
 # from rest_framework.parsers import FileUploadParser
 import base64
 import uuid
@@ -126,3 +128,22 @@ class RegionUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Region.objects.all()
 
     lookup_field = 'language_country'
+
+
+class WordApi(generics.ListAPIView):
+    serializer_class = WordSerializer
+    # queryset = AudioImage.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list of words.
+        """
+        assets = Asset.objects.all()
+        total_words = []
+        for each_asset in assets:
+            languages = each_asset.languages
+            for each_language in languages:
+                total_words.append(languages[each_language])
+            print ('languages', languages)
+
+        return total_words
