@@ -36,9 +36,9 @@ class AssetCreate(generics.ListCreateAPIView):
         if country is not None and data is not None:
             try:
                 a = list(data.keys())[0]
-                b = list(data[a].keys())[0]
-                c = data[a][b]['images']
-                d = data[a][b]['audio']['files']
+                b = data[a]['word']
+                c = data[a]['images']
+                d = data[a]['audio']['files']
             except:
                 return Response(
                     {'detail': 'data invalid'},
@@ -46,24 +46,30 @@ class AssetCreate(generics.ListCreateAPIView):
 
             for index, each in enumerate(c):
                 img = each['file']
-                my_image = img.split(';base64,')
-                img_ext = my_image[0].split('/')
-                imgdata = base64.b64decode(my_image[1])
-                file_name = str(uuid.uuid4())
-                fname = '../media/images/%s.%s' % (file_name, img_ext[1])
+                if 'base64' in img:
+                    my_image = img.split(';base64,')
+                    img_ext = my_image[0].split('/')
+                    imgdata = base64.b64decode(my_image[1])
+                    file_name = str(uuid.uuid4())
+                    fname = '../media/images/%s.%s' % (file_name, img_ext[1])
 
-                # file_name = str(uuid.uuid4())
-                # fname = '../media/profiles/%s.%s' % (file_name, 'png')
+                    # file_name = str(uuid.uuid4())
+                    # fname = '../media/profiles/%s.%s' % (file_name, 'png')
 
-                real_file = fname.split('../')
-                # d64i = bytes(img, 'utf-8')
-                # d64i = bytes(imgdata, 'utf-8')
-                with open(fname, "wb") as fh:
-                    # fh.write(base64.decodestring(d64i))
-                    fh.write(imgdata)
-                    # fh.write(d64i)
-                # fh.write(img.decode('base64'))
-                request.data['languages'][a][b]['images'][index]['file'] = real_file[1]
+                    real_file = fname.split('../')
+                    # d64i = bytes(img, 'utf-8')
+                    # d64i = bytes(imgdata, 'utf-8')
+                    with open(fname, "wb") as fh:
+                        # fh.write(base64.decodestring(d64i))
+                        fh.write(imgdata)
+                        # fh.write(d64i)
+                    # fh.write(img.decode('base64'))
+                    request.data['languages'][a]['images'][index]['file'] = real_file[1]
+                else:
+                    return Response(
+                        {'detail': 'binary image not provided'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
             for index, each_row in enumerate(d):
                 gender = each_row['gender']
                 region_files = each_row['files']
@@ -83,7 +89,7 @@ class AssetCreate(generics.ListCreateAPIView):
                         with open(fname, "wb") as fh:
                             # fh.write(base64.decodestring(d64i))
                             fh.write(imgdata)
-                        request.data['languages'][a][b]['audio']['files'][index]['files'][region_index]['file'] = real_file[1]
+                        request.data['languages'][a]['audio']['files'][index]['files'][region_index]['file'] = real_file[1]
 
             serializer = AssetSerializer(
                 data=request.data
@@ -105,6 +111,9 @@ class AssetUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Asset.objects.all()
 
     lookup_field = 'country'
+
+    # def put(self, request, *args, **kwargs):
+    #     print ('put request')
 
 
 class RegionCreate(generics.ListCreateAPIView):
