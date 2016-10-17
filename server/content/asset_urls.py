@@ -10,7 +10,7 @@ from content.api import (
 urlpatterns = [
 
     url(
-        r'^$',
+        r'(?P<country>\w+)/(?P<language>\w+)/$',
         AssetCreate.as_view(),
         name='asset'
     ),

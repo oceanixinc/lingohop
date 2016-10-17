@@ -38,22 +38,20 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
         print ('Language country called', validated_data)
         try:
             asset = Asset.objects.get(
-                country=validated_data['country'])
-            # if asset_created:
-            language_dict = {}
-            language_dict[validated_data['language']['name']] = []
-            asset.languages.append(language_dict)
-            asset.save()
+                country=validated_data['country'],
+                language=validated_data['language']['name'])
         except:
+            pass
+        try:
             asset1 = Asset.objects.create(
                 country=validated_data['country'])
-            # asset.country = validated_data['country']
-            language_dict = {}
-            language_dict[validated_data['language']['name']] = []
-            #asset.languages['spanish'] = audio_image
-            asset1.languages.append(language_dict)
+            asset1.language = validated_data['language']['name']
             asset1.save()
-
+        except:
+            asset2 = Asset()
+            asset2.country = validated_data['country']
+            asset2.language = validated_data['language']['name']
+            asset2.save()
 
         language, created = Language.objects.get_or_create(
             name=validated_data['language']['name'])
