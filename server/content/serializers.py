@@ -1,8 +1,16 @@
 from .models import (
-    Asset, Country, Region)
+    Asset, Country, Region, AudioImage)
 
 from rest_framework_mongoengine.serializers import (
-    DocumentSerializer,)
+    DocumentSerializer, EmbeddedDocumentSerializer)
+
+
+class WordSerializer(EmbeddedDocumentSerializer):
+
+    class Meta:
+        model = AudioImage
+        # fields = ('country', 'languages',)
+        depth = 7
 
 
 class AssetSerializer(DocumentSerializer):
