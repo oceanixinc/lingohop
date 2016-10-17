@@ -41,14 +41,14 @@ class AssetCreate(generics.ListCreateAPIView):
             #     a = list(each_data.keys())[0]
             #     words = data[lan_index][a]
             for word_index, each_word in enumerate(words):
-                # try:
-                b = each_word['word']
-                c = each_word['images']
-                d = each_word['audio']['files']
-                # except:
-                    # return Response(
-                    #     {'detail': 'data invalid'},
-                    #     status=status.HTTP_400_BAD_REQUEST)
+                try:
+                    b = each_word['word']
+                    c = each_word['images']
+                    d = each_word['audio']['files']
+                except:
+                    return Response(
+                        {'detail': 'data invalid'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
                 for index, each in enumerate(c):
                     img = each['file']
