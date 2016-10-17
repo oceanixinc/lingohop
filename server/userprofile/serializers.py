@@ -1,5 +1,5 @@
 from userprofile.models import User
-
+from content.models import *
 
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
@@ -35,6 +35,26 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
         fields = ('id', 'country', 'language',)
 
     def create(self, validated_data):
+        print ('Language country called', validated_data)
+        try:
+            asset = Asset.objects.get(
+                country=validated_data['country'])
+            # if asset_created:
+            language_dict = {}
+            language_dict[validated_data['language']['name']] = []
+            asset.languages.append(language_dict)
+            asset.save()
+        except:
+            asset1 = Asset.objects.create(
+                country=validated_data['country'])
+            # asset.country = validated_data['country']
+            language_dict = {}
+            language_dict[validated_data['language']['name']] = []
+            #asset.languages['spanish'] = audio_image
+            asset1.languages.append(language_dict)
+            asset1.save()
+
+
         language, created = Language.objects.get_or_create(
             name=validated_data['language']['name'])
 
