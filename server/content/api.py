@@ -219,16 +219,20 @@ class WordApi(generics.ListAPIView):
         This view should return a list of words.
         """
         q = self.request.GET.get('q', None)
+        country = self.request.GET.get('country', None)
+        language = self.request.GET.get('language', None)
         # assets = Asset.objects.filter(
         #     country='spain',
         #     words__match={"word": q})
+        asset = Asset.objects.get(
+            country=country,
+            language=language)
+            # words__word__icontains=q).only('words')
         total_words = []
         if q:
-            assets = Asset.objects.filter(
-                country='spain')
-            for each_asset in assets:
-                for each_word in each_asset.words:
-                    if each_word.word.startswith(q):
-                        total_words.append(each_word)
+            for each_word in asset.words:
+                if each_word.word.startswith(q):
+                    total_words.append(each_word)
 
         return total_words
+        # return a.words
