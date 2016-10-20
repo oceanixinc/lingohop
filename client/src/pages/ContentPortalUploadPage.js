@@ -315,49 +315,53 @@ export default class ContentPortalUploadPage extends React.Component {
 
     }
 
-
     _uploadContent() {
-
         jQuery.ajax({
             method: "POST",
             data: JSON.stringify({
                 "country": this.state.language_country,
-                "languages": {
-                    "spanish": {
-                        "word": {
-                            "images": [
+                "language": this.state.language_country,
+                "words": [
+                    {
+                        "word": "hello1",
+                        "images": [
+                            {
+                                "file": this.state.imagePreviewUrl
+                            }
+                        ],
+                        "audio": {
+                            "files": [
                                 {
-                                    "file": this.state.imagePreviewUrl
-                                }
-                            ],
-                            "audio": {
-
-                                "files": {
-                                    "male": {
-                                        "region1": {
-                                            "file": this.state.audioOneUrl
-                                        },
-                                        "default": {
+                                    "gender": "male",
+                                    "files": [
+                                        {
+                                            "region": "region1",
+                                            "file":this.state.audioOneUrl
+                                        }, {
+                                            "region": "region2",
                                             "file": this.state.audioTwoUrl
                                         }
-                                    },
-                                    "female": {
-                                        "region1": {
+                                    ]
+                                }, {
+                                    "gender": "female",
+                                    "files": [
+                                        {
+                                            "region": "region1",
                                             "file": this.state.audioThreeUrl
-                                        },
-                                        "default": {
+                                        }, {
+                                            "region": "region2",
                                             "file": "lingohop/static/photos/person1.png"
                                         }
-                                    }
+                                    ]
                                 }
-                            }
+                            ]
                         }
                     }
-                }
+                ]
             }),
             dataType: "json",
             contentType: "application/json",
-            url: 'http://testing.lingohop.com/api/assets/',
+            url: 'http://localhost:8000/api/assets/',
             success: (res) => {
                 console.log('Uploaded successfully')
             },
