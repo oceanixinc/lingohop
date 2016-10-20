@@ -7,13 +7,19 @@ from mongoengine import fields
 # Create your models here.
 
 
-class Content(EmbeddedDocument):
+class Question(EmbeddedDocument):
     """
     """
     question_text = fields.ListField()
     answer_text = fields.ListField()
     variables = fields.ListField()
-    rules = fields.ListField()
+    images = fields.DictField()
+    audio = fields.DictField()
+    rules = fields.DictField()
+    problem_question = fields.StringField(
+        required=False, blank=True, null=True)
+    problem_image = fields.StringField(
+        required=False, blank=True, null=True)
     # assets = fields.ListField(fields.EmbeddedDocumentField(Asset))
 
 
@@ -21,8 +27,8 @@ class Part(EmbeddedDocument):
     """
     """
     # name = fields.StringField()
-    part1 = fields.EmbeddedDocumentField(Content)
-    part2 = fields.EmbeddedDocumentField(Content)
+    part1 = fields.EmbeddedDocumentField(Question)
+    part2 = fields.EmbeddedDocumentField(Question)
 
 
 class Lesson(EmbeddedDocument):
@@ -47,21 +53,46 @@ class Language(EmbeddedDocument):
     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
-class Country(DynamicDocument):
+class Content(DynamicDocument):
     """
     """
-    name = fields.StringField(max_length=100, unique=True)
-    languages = fields.MapField(
-        fields.EmbeddedDocumentField(Language))
+    country = fields.StringField(max_length=100)
+    language = fields.StringField(max_length=100)
+    categories = fields.ListField(fields.EmbeddedDocumentField(Category))
+
+    def get_categories(self):
+        categories = self.categories
+        all_categories = []
+        for each_category in categories:
+            all_categories.append(each_category.name)
+
+        return all_categories
+
+    def get_lessons(self, category):
+        categories = self.categories
+        all_lessons = []
+        for each_category in categories:
+            if each_category.name == category:
+                lessons = each_category.lessons
+                for each_lesson in lessons:
+                    all_lessons.append(each_lesson.name)
+
+        return all_lessons
+
+    def get_active_categories(self, category):
+        categories = self.categories
+        for each_category in categories:
+            if each_category.name == category:
+                return each_category.lessons
+
+    def get_active_lessons(self, category):
+        categories = self.categories
+        for each_category in categories:
+            if each_category.name == category:
+                return each_category.lessons
+
     # name = fields.StringField()
     # language = fields.ListField((fields.EmbeddedDocumentField(Language)))
-
-
-# class Text(EmbeddedDocument):
-#     """
-#     """
-#     name = fields.StringField()
-#     categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
 
 class Image(EmbeddedDocument):
