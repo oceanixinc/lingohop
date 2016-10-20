@@ -132,8 +132,8 @@
     margin-top: 37px; }
   .upload-page .upload #chips {
     margin-top: 12px; }
-    .upload-page .upload #chips > audio,
-    .upload-page .upload #chips > input {
+    .upload-page .upload #chips > input,
+    .upload-page .upload #chips > audio {
       height: 0;
       width: 0;
       visibility: hidden; }
@@ -150,8 +150,8 @@
     position: relative;
     float: left;
     text-align: center; }
-    .upload-page .upload #add-picture > img,
-    .upload-page .upload #add-picture > input {
+    .upload-page .upload #add-picture > input,
+    .upload-page .upload #add-picture > img {
       position: absolute;
       top: 0;
       height: 100%;
@@ -163,11 +163,18 @@
       object-fit: cover; }
   .upload-page .upload #img-gallery {
     margin-left: 5px; }
-    .upload-page .upload #img-gallery > img {
-      margin-left: 3px;
-      height: 120px;
-      width: 120px;
-      object-fit: cover; }
+    .upload-page .upload #img-gallery > div {
+      display: inline-block;
+      position: relative; }
+      .upload-page .upload #img-gallery > div > div {
+        position: absolute;
+        right: 0;
+        cursor: pointer; }
+      .upload-page .upload #img-gallery > div > img {
+        margin-left: 3px;
+        height: 120px;
+        width: 120px;
+        object-fit: cover; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;
@@ -291,38 +298,8 @@
   line-height: 600px;
   font-size: 32px !important; }
 
-.main-home-page {
-  margin-top: -24px; }
-  .main-home-page #header {
-    display: inline-block;
-    width: 100%;
-    background-color: #fff;
-    border: 0;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
-    margin-bottom: 20px; }
-  .main-home-page .footer {
-    display: inline-block;
-    padding: 20px 0;
-    width: 100%;
-    background-color: #fff;
-    border: 0;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
-    margin-bottom: -10px; }
-    .main-home-page .footer .social-icons > i {
-      padding: 15px; }
-
-.bottom-cards {
-  margin-bottom: 10px; }
-  .bottom-cards img {
-    min-height: 400px;
-    object-fit: cover; }
-  .bottom-cards row {
-    width: 100%;
-    display: inline-block;
-    margin-bottom: 5px; }
-
 .inactive {
-  display: none; }
+  display: none !important; }
 
 .modal-header, .modal-footer {
   border: none;

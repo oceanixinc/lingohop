@@ -20,6 +20,8 @@ const styles = {
 };
 
 const language_items = [];
+const languages = [];
+const countries = [];
 
 export default class ContentPortalUploadPage extends React.Component {
 
@@ -27,31 +29,45 @@ export default class ContentPortalUploadPage extends React.Component {
         super();
 
         this.state = {
-            imgFiles: [],
+            imgOneFile: '',
+            imgTwoFile: '',
+            imgThreeFile: '',
+            imgOneUrl: '',
+            imgTwoUrl: '',
+            imgThreeUrl: '',
+            imgOneFile: '',
+            imgTwoFile: '',
+            imgThreeFile: '',
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
+            audioFourFile: '',
+            audioFiveFile: '',
+            audioSixFile: '',
             audioOneUrl: '',
             audioTwoUrl: '',
             audioThreeUrl: '',
+            audioFourUrl: '',
+            audioFiveUrl: '',
+            audioSixUrl: '',
             audioOnePlaying: false,
             audioTwoPlaying: false,
             audioThreePlaying: false,
+            audioFourPlaying: false,
+            audioFivePlaying: false,
+            audioSixPlaying: false,
             language_country: '',
             legoText: '',
-            imagePreviewUrl: ''
+            gender: 'male'
         };
 
         this._handleImageUpload = this._handleImageUpload.bind(this);
-        this._handleAudioOneUpload = this._handleAudioOneUpload.bind(this);
-        this._handleAudioTwoUpload = this._handleAudioTwoUpload.bind(this);
-        this._handleAudioThreeUpload = this._handleAudioThreeUpload.bind(this);
-        this._clickAudioOne = this._clickAudioOne.bind(this);
-        this._clickAudioTwo = this._clickAudioTwo.bind(this);
-        this._clickAudioThree = this._clickAudioThree.bind(this);
-        this.handleValueChange = this.handleValueChange.bind(this);
+        this._handleImageDelete = this._handleImageDelete.bind(this);
+        this._clickAudio = this._clickAudio.bind(this);
         this._uploadContent = this._uploadContent.bind(this);
-        this._fetchLanguageCountry = this._fetchLanguageCountry.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
+        this.handleLegoTextChange = this.handleLegoTextChange.bind(this);
+        this.handleGenderChange = this.handleGenderChange.bind(this);
 
     }
 
@@ -84,30 +100,45 @@ export default class ContentPortalUploadPage extends React.Component {
                         What is the lego text?
                         <TextField value={this.state.legoText} hintText={this.state.legoText != ''
                             ? ''
-                            : 'Lego Text'} onChange={this.handleValueChange.bind(this, 'legoText')} style={{
+                            : 'Lego Text'} onChange={this.handleLegoTextChange} style={{
                             width: '100%'
                         }}></TextField>
                     </div>
                     <div className="big-text text-left col-md-2 col-md-offset-2">
-                        <RadioButtonGroup name="gender" defaultSelected="male">
+                        <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange}>
                             <RadioButton value="male" label="Male" style={styles.radioButton}/>
                             <RadioButton value="female" label="Female" style={styles.radioButton}/>
                             <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                         </RadioButtonGroup>
                     </div>
                     <div className="big-text text-left col-md-8">
-                        <div id="add-picture" className={this.state.imgFiles.length >= 3 && 'inactive'}>+ Add Picture
+                        <div id="add-picture" className={this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive'}>+ Add Picture
                             <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
                         </div>
-                        <div id="img-gallery" className="pull-left"></div>
+                        <div id="img-gallery" className="pull-left">
+                            <div className={this.state.imgOneUrl === '' && 'inactive'}>
+                                <div onClick={() => this._handleImageDelete(1)}>X</div>
+                                <img src={this.state.imgOneUrl}/>
+                            </div>
+                            <div className={this.state.imgTwoUrl === '' && 'inactive'}>
+                                <div onClick={() => this._handleImageDelete(2)}>X</div>
+                                <img src={this.state.imgTwoUrl}/>
+                            </div>
+                            <div className={this.state.imgThreeUrl === '' && 'inactive'}>
+                                <div onClick={() => this._handleImageDelete(3)}>X</div>
+                                <img src={this.state.imgThreeUrl}/>
+                            </div>
+                        </div>
                     </div>
                     <div id="audio" className="big-text text-left col-md-8 col-md-offset-2">
                         Audio Files
                     </div>
-                    <div id="chips" className="big-text text-left col-md-8 col-md-offset-2">
-                        <input className="fileInput" id="audio-upload-one" type="file" onChange={this._handleAudioOneUpload}/>
-                        <input className="fileInput" id="audio-upload-two" type="file" onChange={this._handleAudioTwoUpload}/>
-                        <input className="fileInput" id="audio-upload-three" type="file" onChange={this._handleAudioThreeUpload}/>
+                    <div id="chips" className={this.state.gender === 'female'
+                        ? 'inactive'
+                        : 'big-text text-left col-md-8 col-md-offset-2'}>
+                        <input className="fileInput" id="audio-upload-one" type="file" onChange={this._handleAudioUpload.bind(this, "one")}/>
+                        <input className="fileInput" id="audio-upload-two" type="file" onChange={this._handleAudioUpload.bind(this, "two")}/>
+                        <input className="fileInput" id="audio-upload-three" type="file" onChange={this._handleAudioUpload.bind(this, "three")}/>
                         <audio controls id="audio-one">
                             <source src={this.state.audioOneUrl} type="audio/mp3"/>
                         </audio>
@@ -120,27 +151,62 @@ export default class ContentPortalUploadPage extends React.Component {
 
                         <Chip id="chip-one" className={this.state.audioOneUrl != ''
                             ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioOne}>
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("one")}>
                             <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" > add < /i>}/>
-                            Madrid
+                            Madrid (M)
                         </Chip>
                         <Chip id="chip-two" className={this.state.audioTwoUrl != ''
                             ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioTwo}>
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("two")}>
                             <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" > add < /i>}/>
-                            Basque Country
+                            Basque Country (M)
                         </Chip>
                         <Chip id="chip-three" className={this.state.audioThreeUrl != ''
                             ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={this._clickAudioThree}>
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("three")}>
                             <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" > add < /i>}/>
-                            Catalonia
+                            Catalonia (M)
+                        </Chip>
+                    </div>
+                    <div id="chips" className={this.state.gender === 'male'
+                        ? 'inactive'
+                        : 'big-text text-left col-md-8 col-md-offset-2'}>
+                        <input className="fileInput" id="audio-upload-four" type="file" onChange={this._handleAudioUpload.bind(this, "four")}/>
+                        <input className="fileInput" id="audio-upload-five" type="file" onChange={this._handleAudioUpload.bind(this, "five")}/>
+                        <input className="fileInput" id="audio-upload-six" type="file" onChange={this._handleAudioUpload.bind(this, "six")}/>
+                        <audio controls id="audio-four">
+                            <source src={this.state.audioFourUrl} type="audio/mp3"/>
+                        </audio>
+                        <audio controls id="audio-five">
+                            <source src={this.state.audioFiveUrl} type="audio/mp3"/>
+                        </audio>
+                        <audio controls id="audio-six">
+                            <source src={this.state.audioSixUrl} type="audio/mp3"/>
+                        </audio>
+
+                        <Chip id="chip-four" className={this.state.audioFourUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("four")}>
+                            <Avatar icon={< i id = "audio-four-icon" className = "material-icons pull-left" > add < /i>}/>
+                            Madrid (F)
+                        </Chip>
+                        <Chip id="chip-five" className={this.state.audioFiveUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("five")}>
+                            <Avatar icon={< i id = "audio-five-icon" className = "material-icons pull-left" > add < /i>}/>
+                            Basque Country (F)
+                        </Chip>
+                        <Chip id="chip-six" className={this.state.audioSixUrl != ''
+                            ? 'audiochip pull-left'
+                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("six")}>
+                            <Avatar icon={< i id = "audio-six-icon" className = "material-icons pull-left" > add < /i>}/>
+                            Catalonia (F)
                         </Chip>
                     </div>
                     <div className="col-md-12">
-                        <RaisedButton label="UPLOAD" className={this.state.imgFiles.length === 0 || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === ''
+                        <RaisedButton label="UPLOAD" className={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''))
                             ? 'upload-btn'
-                            : 'upload-btn active-btn'} disabled={this.state.imgFiles.length === 0 || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === ''} onClick={this._uploadContent}/>
+                            : 'upload-btn active-btn'} disabled={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''))} onClick={this._uploadContent}/>
                     </div>
 
                 </div>
@@ -156,143 +222,239 @@ export default class ContentPortalUploadPage extends React.Component {
     _handleImageUpload(e) {
         e.preventDefault();
 
-        //----------------------
-        let reader = new FileReader();
-        let file = e.target.files[0];
-        console.log(file)
-        reader.onloadend = () => {
-            console.log(reader.result);
-            this.setState({imagePreviewUrl: reader.result});
-        }
-
-        reader.readAsDataURL(file)
-        //--------------
-
         let files = Array.prototype.slice.call(e.target.files);
 
-        let imgGallery = document.getElementById("img-gallery");
-        imgGallery.innerHTML = ""
+        if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
 
-        let originalImgFiles = this.state.imgFiles
-        let newImgFiles = originalImgFiles.concat(files)
-        if (newImgFiles.length > 3) {
-            newImgFiles = newImgFiles.slice(0, 3)
-        }
-        this.setState({
-            imgFiles: newImgFiles
-        }, () => {
-            for (let file of newImgFiles) {
-                var img = document.createElement('img');
-                img.innerHTML = "<img src='" + URL.createObjectURL(file) + "'/>";
+            if (files.length >= 3) {
+                let newImgFiles = files.slice(0, 3)
+                this.getBase64(newImgFiles[0],1)
+                this.getBase64(newImgFiles[1],2)
+                this.getBase64(newImgFiles[2],3)
 
-                while (img.firstChild) {
-                    imgGallery.appendChild(img.firstChild);
-                }
+                this.setState({
+                    imgOneFile: newImgFiles[0],
+                    imgTwoFile: newImgFiles[1],
+                    imgThreeFile: newImgFiles[2]
+                })
+            } else if (files.length === 2) {
+                let newImgFiles = files.slice(0, 2)
+                this.getBase64(newImgFiles[0],1)
+                this.getBase64(newImgFiles[1],2)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0],
+                    imgTwoFile: newImgFiles[1]
+                })
+            } else if (files.length === 1) {
+                let newImgFiles = files.slice(0, 1)
+                this.getBase64(newImgFiles[0],1)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0]
+                })
             }
 
-        });
+        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
+            if (files.length >= 2) {
+                let newImgFiles = files.slice(0, 2)
+                this.getBase64(newImgFiles[0],1)
+                this.getBase64(newImgFiles[1],3)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0],
+                    imgThreeFile: newImgFiles[1]
+                })
+            } else if (files.length == 1) {
+                let newImgFiles = files.slice(0, 1)
+                this.getBase64(newImgFiles[0],1)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0]
+                })
+            }
+
+        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
+            if (files.length >= 2) {
+                let newImgFiles = files.slice(0, 2)
+                this.getBase64(newImgFiles[0],1)
+                this.getBase64(newImgFiles[1],2)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0],
+                    imgTwoFile: newImgFiles[1]
+                })
+            } else if (files.length == 1) {
+                let newImgFiles = files.slice(0, 1)
+                this.getBase64(newImgFiles[0],1)
+
+                this.setState({
+                    imgOneFile: newImgFiles[0]
+                })
+            }
+
+        } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+            if (files.length >= 2) {
+                let newImgFiles = files.slice(0, 2)
+                this.getBase64(newImgFiles[0],2)
+                this.getBase64(newImgFiles[1],3)
+
+                this.setState({
+                    imgTwoFile: newImgFiles[0],
+                    imgThreeFile: newImgFiles[1]
+                })
+            } else if (files.length == 1) {
+                let newImgFiles = files.slice(0, 1)
+                this.getBase64(newImgFiles[0],2)
+
+                this.setState({
+                    imgTwoFile: newImgFiles[0]
+                })
+            }
+
+        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
+            let newImgFiles = files.slice(0, 1)
+            this.getBase64(newImgFiles[0],3)
+
+            this.setState({
+                imgThreeFile: newImgFiles[0]
+            })
+
+        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
+            let newImgFiles = files.slice(0, 1)
+            this.getBase64(newImgFiles[0],1)
+
+            this.setState({
+                imgOneFile: newImgFiles[0]
+            })
+
+        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
+            let newImgFiles = files.slice(0, 1)
+            this.getBase64(newImgFiles[0],2)
+
+            this.setState({
+                imgTwoFile: newImgFiles[0]
+            })
+
+        }
 
     }
 
-    _handleAudioOneUpload(e) {
+    _handleImageDelete(number) {
+        switch (number) {
+            case 1:
+                this.setState({imgOneUrl: '', imgOneFile: ''});
+                break;
+            case 2:
+                this.setState({imgTwoUrl: '', imgTwoFile: ''});
+                break;
+            case 3:
+                this.setState({imgThreeUrl: '', imgThreeFile: ''});
+                break;
+            default:
+                this.setState({imgOneUrl: '', imgOneFile: ''});
+        }
+    }
+    _handleAudioUpload(number, e) {
         e.preventDefault();
 
         let reader = new FileReader();
         let file = e.target.files[0];
 
         reader.onloadend = () => {
-            this.setState({audioOneFile: file, audioOneUrl: reader.result});
-            document.getElementById("audio-one-icon").innerHTML = "play_arrow";
+            switch (number) {
+                case "one":
+                    this.setState({audioOneFile: file, audioOneUrl: reader.result});
+                    break;
+                case "two":
+                    this.setState({audioTwoFile: file, audioTwoUrl: reader.result});
+                    break;
+                case "three":
+                    this.setState({audioThreeFile: file, audioThreeUrl: reader.result});
+                    break;
+                case "four":
+                    this.setState({audioFourFile: file, audioFourUrl: reader.result});
+                    break;
+                case "five":
+                    this.setState({audioFiveFile: file, audioFiveUrl: reader.result});
+                    break;
+                case "six":
+                    this.setState({audioSixFile: file, audioSixUrl: reader.result});
+                    break;
+                default:
+                    this.setState({audioOneFile: file, audioOneUrl: reader.result});
+            }
+            document.getElementById(`audio-${number}-icon`).innerHTML = "play_arrow";
         }
         reader.readAsDataURL(file)
-    }
 
-    _handleAudioTwoUpload(e) {
-        e.preventDefault();
-
-        let reader = new FileReader();
-        let file = e.target.files[0];
-
-        reader.onloadend = () => {
-            this.setState({audioTwoFile: file, audioTwoUrl: reader.result});
-            document.getElementById("audio-two-icon").innerHTML = "play_arrow";
-
-        }
-
-        reader.readAsDataURL(file)
-    }
-
-    _handleAudioThreeUpload(e) {
-        e.preventDefault();
-
-        let reader = new FileReader();
-        let file = e.target.files[0];
-
-        reader.onloadend = () => {
-            this.setState({audioThreeFile: file, audioThreeUrl: reader.result});
-            document.getElementById("audio-three-icon").innerHTML = "play_arrow";
-
-        }
-
-        reader.readAsDataURL(file)
     }
 
     //Audio Previews
-    _clickAudioOne() {
-        if (this.state.audioOneUrl === '')
-            document.getElementById("audio-upload-one").click();
+    _clickAudio(number) {
+        let capitalNumber = this.capitalizeFirstLetter(number)
+        let audioUrl = eval(`this.state.audio${capitalNumber}Url`)
+        let audioPlaying = eval(`this.state.audio${capitalNumber}Playing`)
+
+        if (audioUrl === '')
+            document.getElementById(`audio-upload-${number}`).click();
         else {
-            if (!this.state.audioOnePlaying) {
-                document.getElementById("audio-one").load();
-                document.getElementById("audio-one").play();
-                this.setState({audioOnePlaying: true});
-                document.getElementById("audio-one-icon").innerHTML = "stop";
+            if (!audioPlaying) {
+                document.getElementById(`audio-${number}`).load();
+                document.getElementById(`audio-${number}`).play();
+                document.getElementById(`audio-${number}-icon`).innerHTML = "stop";
+                switch (number) {
+                    case "one":
+                        this.setState({audioOnePlaying: true});
+                        break;
+                    case "two":
+                        this.setState({audioTwoPlaying: true});
+                        break;
+                    case "three":
+                        this.setState({audioThreePlaying: true});
+                        break;
+                    case "four":
+                        this.setState({audioFourPlaying: true});
+                        break;
+                    case "five":
+                        this.setState({audioFivePlaying: true});
+                        break;
+                    case "six":
+                        this.setState({audioSixPlaying: true});
+                        break;
+                    default:
+                        this.setState({audioOnePlaying: true});
+                }
 
             } else {
-                document.getElementById("audio-one").pause();
-                this.setState({audioOnePlaying: false});
-                document.getElementById("audio-one-icon").innerHTML = "play_arrow";
+                document.getElementById(`audio-${number}`).pause();
+                document.getElementById(`audio-${number}-icon`).innerHTML = "play_arrow";
+                switch (number) {
+                    case "one":
+                        this.setState({audioOnePlaying: false});
+                        break;
+                    case "two":
+                        this.setState({audioTwoPlaying: false});
+                        break;
+                    case "three":
+                        this.setState({audioThreePlaying: false});
+                        break;
+                    case "four":
+                        this.setState({audioFourPlaying: false});
+                        break;
+                    case "five":
+                        this.setState({audioFivePlaying: false});
+                        break;
+                    case "six":
+                        this.setState({audioSixPlaying: false});
+                        break;
+                    default:
+                        this.setState({audioOnePlaying: false});
+                }
 
             }
         }
-    }
 
-    _clickAudioTwo() {
-        if (this.state.audioTwoUrl === '')
-            document.getElementById("audio-upload-two").click();
-        else {
-            if (!this.state.audioTwoPlaying) {
-                document.getElementById("audio-two").load();
-                document.getElementById("audio-two").play();
-                this.setState({audioTwoPlaying: true});
-                document.getElementById("audio-two-icon").innerHTML = "stop";
-
-            } else {
-                document.getElementById("audio-two").pause();
-                this.setState({audioTwoPlaying: false});
-                document.getElementById("audio-two-icon").innerHTML = "play_arrow";
-
-            }
-        }
-    }
-
-    _clickAudioThree() {
-        if (this.state.audioThreeUrl === '')
-            document.getElementById("audio-upload-three").click();
-        else {
-            if (!this.state.audioThreePlaying) {
-                document.getElementById("audio-three").load();
-                document.getElementById("audio-three").play();
-                this.setState({audioThreePlaying: true});
-                document.getElementById("audio-three-icon").innerHTML = "stop";
-
-            } else {
-                document.getElementById("audio-three").pause();
-                this.setState({audioThreePlaying: false});
-                document.getElementById("audio-three-icon").innerHTML = "play_arrow";
-
-            }
-        }
     }
 
     //API Calls
@@ -309,6 +471,8 @@ export default class ContentPortalUploadPage extends React.Component {
                     let key = language.id + '-' + language.language + '-' + language.country;
                     let item = (<MenuItem value={language.id} key={key} primaryText={value}/>);
                     language_items.push(item);
+                    languages.push(language.language)
+                    countries.push(language.country)
                 }
             }
         })
@@ -316,17 +480,31 @@ export default class ContentPortalUploadPage extends React.Component {
     }
 
     _uploadContent() {
+
+        let language = languages[this.state.language_country - 1]
+        let country = countries[this.state.language_country - 1]
+
+        console.log(this.state.imgOneUrl)
+        console.log(this.state.imgTwoUrl)
+        console.log(this.state.imgThreeUrl)
+
+
+
         jQuery.ajax({
-            method: "POST",
+            method: "PUT",
             data: JSON.stringify({
-                "country": this.state.language_country,
-                "language": this.state.language_country,
+                "country": country,
+                "language": language,
                 "words": [
                     {
-                        "word": "hello1",
+                        "word": this.state.legoText,
                         "images": [
                             {
-                                "file": this.state.imagePreviewUrl
+                                "file": this.state.imgOneUrl
+                            }, {
+                                "file": this.state.imgTwoUrl
+                            }, {
+                                "file": this.state.imgThreeUrl
                             }
                         ],
                         "audio": {
@@ -336,23 +514,31 @@ export default class ContentPortalUploadPage extends React.Component {
                                     "files": [
                                         {
                                             "region": "region1",
-                                            "file":this.state.audioOneUrl
+                                            "file": this.state.audioOneUrl
                                         }, {
                                             "region": "region2",
                                             "file": this.state.audioTwoUrl
+                                        }, {
+                                            "region": "region3",
+                                            "file": this.state.audioThreeUrl
                                         }
                                     ]
+
                                 }, {
                                     "gender": "female",
                                     "files": [
                                         {
                                             "region": "region1",
-                                            "file": this.state.audioThreeUrl
+                                            "file": this.state.audioFourUrl
                                         }, {
                                             "region": "region2",
-                                            "file": "lingohop/static/photos/person1.png"
+                                            "file": this.state.audioFiveUrl
+                                        }, {
+                                            "region": "region3",
+                                            "file": this.state.audioSixUrl
                                         }
                                     ]
+
                                 }
                             ]
                         }
@@ -361,19 +547,18 @@ export default class ContentPortalUploadPage extends React.Component {
             }),
             dataType: "json",
             contentType: "application/json",
-            url: 'http://localhost:8000/api/assets/',
+            url: `http://testing.lingohop.com/api/assets/${country}/${language}/`,
             success: (res) => {
                 console.log('Uploaded successfully')
+                hashHistory.push('/contentportal/uploadfinish')
             },
             error: (a, b, c) => {
                 console.log(a)
                 console.log(b)
-
                 console.log(c)
 
             }
         })
-        hashHistory.push('/contentportal/uploadfinish')
 
     }
 
@@ -382,6 +567,38 @@ export default class ContentPortalUploadPage extends React.Component {
         var change = {};
         change[name] = value;
         this.setState(change);
+    }
 
-    };
+    handleLegoTextChange(event) {
+        this.setState({legoText: event.target.value});
+    }
+
+    handleGenderChange(event) {
+        this.setState({gender: event.target.value});
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    getBase64(file,number) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          switch (number) {
+              case 1:
+                  this.setState({imgOneUrl: reader.result});
+                  break;
+              case 2:
+                  this.setState({imgTwoUrl: reader.result});
+                  break;
+              case 3:
+                  this.setState({imgThreeUrl: reader.result});
+                  break;
+          }
+        };
+        reader.onerror = function(error) {
+            console.log('Error: ', error);
+        };
+    }
 }

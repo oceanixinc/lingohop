@@ -10,6 +10,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {Modal} from 'react-bootstrap'
 
+const styles = {
+    chip: {
+        margin: 4
+    },
+    radioButton: {
+        marginBottom: 16
+    }
+};
+
 export default class ContentPortalBuildSearchPage extends React.Component {
 
     constructor() {
@@ -63,7 +72,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                         }}></TextField>
                     </div>
                     <div className="col-md-12">
-                        <RaisedButton label="BUILD" className="upload-btn active-btn" />
+                        <RaisedButton label="BUILD" className="upload-btn active-btn" onClick={this._openModal}/>
                     </div>
                 </div>
                 <div className="text-center build-search col-md-3 col-md-offset-1 build-search-right">
@@ -72,24 +81,21 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new
-                            <b>category</b>
-                        </h4>
+                        <h4>New Lego</h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
-                        <div className="col-md-6 text-center">
-                            <div id="add-photo">
-                                + Add Category Photo
-                            </div>
-                            <i>Max size of 2 mb</i>
-                        </div>
-                        <div className="col-md-6">
-                            <SelectField hintText="Position" style={{
-                                width: '100%'
-                            }}></SelectField>
-                            <TextField hintText="Name" style={{
+                        <div className="big-text text-left col-md-12">
+                            What is the lego text?
+                            <TextField style={{
                                 width: '100%'
                             }}></TextField>
+                        </div>
+                        <div className="big-text text-left col-md-2">
+                            <RadioButtonGroup name="gender" defaultSelected="male">
+                                <RadioButton value="male" label="Male" style={styles.radioButton}/>
+                                <RadioButton value="female" label="Female" style={styles.radioButton}/>
+                                <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
+                            </RadioButtonGroup>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
