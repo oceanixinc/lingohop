@@ -6,11 +6,9 @@
 @import "partials/uploadfinishpage";
 @import "partials/buildpage";
 @import "partials/buildsearchpage";
-@import "partials/mainhomepage";
-@import "partials/bottomcards";
 
 .inactive {
-    display: none;
+    display: none !important;
 }
 
 .modal-header, .modal-footer {

@@ -11,15 +11,8 @@ let store = createStore(contentportalreducer);
 //Material UI
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Main from './Theme';
 
 injectTapEventPlugin();
-
-//Pages
-import App from './Main';
-import Home from './Home';
-import SignUp from './SignUp';
-import NotFound from './NotFound';
 
 //React Router
 import {
@@ -53,31 +46,24 @@ import ContentPortalBuildSearchPage from './pages/ContentPortalBuildSearchPage'
 import MainHomePage from './pages/MainHomePage'
 
 const app = (
-  <Provider store={store}>
-    <MuiThemeProvider>
-        <Router history={hashHistory}>
-            <Redirect from="/" to="/login"/>
-            <Route path="main" component={App}>
-                <IndexRoute component={Home}/>
-                <Route path="signup" component={SignUp}/>
-                <Route path='*' component={NotFound}/>
-            </Route>
-            <Route path="login" component={ContentPortalLoginPage}/>
-            <Route path="contentportal" component={ContentPortalLayout}>
-                <IndexRoute component={ContentPortalLandingPage}/>
-                <Route path="upload" component={ContentPortalUploadPage}/>
-                <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
-                  <Route path="build" component={ContentPortalBuildPage}/>
+    <Provider store={store}>
+        <MuiThemeProvider>
+            <Router history={hashHistory}>
+                <Redirect from="/" to="/login"/>
+                <Route path="login" component={ContentPortalLoginPage}/>
+                <Route path="contentportal" component={ContentPortalLayout}>
+                    <IndexRoute component={ContentPortalLandingPage}/>
+                    <Route path="upload" component={ContentPortalUploadPage}/>
+                    <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
+                    <Route path="build" component={ContentPortalBuildPage}/>
                     <Route path="buildsearch" component={ContentPortalBuildSearchPage}/>
-
-
-            </Route>
-            <Route path="mainpage" component={MainPageLayout}>
-              <IndexRoute component={MainHomePage}/>
-            </Route>
-        </Router>
-    </MuiThemeProvider>
-  </Provider>
+                </Route>
+                <Route path="mainpage" component={MainPageLayout}>
+                    <IndexRoute component={MainHomePage}/>
+                </Route>
+            </Router>
+        </MuiThemeProvider>
+    </Provider>
 )
 
 jQuery(function() {
