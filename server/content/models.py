@@ -93,6 +93,7 @@ class Audio(EmbeddedDocument):
 class AudioImage(EmbeddedDocument):
     """
     """
+    word = fields.StringField(max_length=200)
     images = fields.ListField(
         fields.EmbeddedDocumentField(Image),
         required=False, blank=True, null=True)
@@ -101,13 +102,27 @@ class AudioImage(EmbeddedDocument):
         required=False, blank=True, null=True)
 
 
+class AudioImageList(EmbeddedDocument):
+    """
+    """
+    word_list = fields.ListField(
+        fields.EmbeddedDocumentField(AudioImage))
+
+
 class Asset(DynamicDocument):
     """
     """
-    country = fields.StringField(max_length=100, unique=True)
-    languages = fields.MapField(fields.MapField(
-        fields.EmbeddedDocumentField(AudioImage)))
+    country = fields.StringField(max_length=100)
+    language = fields.StringField(max_length=100)
+    words = fields.ListField(
+        fields.EmbeddedDocumentField(AudioImage))
+    #languages = fields.MapField(fields.MapField(
+    #fields.EmbeddedDocumentField(AudioImage)))
+    # languages = fields.ListField(fields.MapField(
+    #     fields.ListField(
+    #         fields.EmbeddedDocumentField(AudioImage))))
 
+# Asset.objects.get(country='spain')
 
 class Region(DynamicDocument):
     """

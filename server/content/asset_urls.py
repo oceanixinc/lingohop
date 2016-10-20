@@ -3,15 +3,21 @@ from django.conf.urls import url
 
 from content.api import (
     AssetCreate, AssetUpdate,
-    RegionCreate, RegionUpdate
+    RegionCreate, RegionUpdate,
+    WordApi
 )
 
 urlpatterns = [
 
     url(
-        r'^$',
+        r'(?P<country>\w+)/(?P<language>\w+)/$',
         AssetCreate.as_view(),
         name='asset'
+    ),
+    url(
+        r'word/$',
+        WordApi.as_view(),
+        name='word'
     ),
 
     url(
