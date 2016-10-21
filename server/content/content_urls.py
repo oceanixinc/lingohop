@@ -8,7 +8,7 @@ from content.api import (
 urlpatterns = [
 
     url(
-        r'^$',
+        r'(?P<country>\w+)/(?P<language>\w+)/$',
         ContentCreate.as_view(),
         name='content'
     ),

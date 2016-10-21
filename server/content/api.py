@@ -1,3 +1,5 @@
+from functools import reduce
+import operator
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_mongoengine import generics
@@ -10,25 +12,10 @@ from .serializers import (
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import (
-    Asset, Country, Region, AudioImage,
-    Image, Files, AudioFile, Audio)
+from .models import *
 # from rest_framework.parsers import FileUploadParser
 import base64
 import uuid
-
-
-class ContentCreate(generics.ListCreateAPIView):
-    serializer_class = ContentSerializer
-    queryset = Country.objects.all()
-
-
-class ContentUpdate(generics.RetrieveUpdateDestroyAPIView):
-    """Return a specific asset, update it, or delete it."""
-    serializer_class = ContentSerializer
-    queryset = Country.objects.all()
-
-    lookup_field = 'name'
 
 
 def get_obj_or_404(klass, *args, **kwargs):
@@ -36,6 +23,205 @@ def get_obj_or_404(klass, *args, **kwargs):
         return klass.objects.get(*args, **kwargs)
     except klass.DoesNotExist:
         raise Http404
+
+
+class MultipleFieldLookupContentMixin(object):
+    """
+    Apply this mixin to any view or viewset to get multiple field filtering
+    based on a `lookup_fields` attribute, instead of the default single field filtering.
+    """
+
+    def get_object(self):
+        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        filter = {}
+        for field in self.lookup_fields:
+            if self.kwargs[field]:  # Ignore empty fields.
+                filter[field] = self.kwargs[field]
+        return get_obj_or_404(Content, **filter)  # Lookup the object
+
+
+class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ContentSerializer
+    queryset = Content.objects.all()
+
+    lookup_fields = ('country', 'language')
+    current_object = None
+
+    def get_audio_files(self, data):
+
+        content = self.current_object
+        print ('content obj is', content)
+        asset = Asset.objects.get(
+            country=content.country,
+            language=content.language)
+        asset_words = asset.words
+        new_dict = {item['word']: item for item in asset_words}
+        try:
+            data.remove('[]')
+        except:
+            pass
+        required_words = []
+        for each in data:
+            try:
+                required_words.append(new_dict[each])
+            except:
+                pass
+
+        outer = {}
+        for each_word in required_words:
+            gender = {}
+            audio_files = each_word.audio.files
+            for each_audio in audio_files:
+                file_list = each_audio.files
+                region = {}
+                for each_file in file_list:
+                    region[each_file.region] = each_file.file
+
+                gender[each_audio.gender] = region
+
+            outer[each_word.word] = gender
+
+        return outer
+
+    def get_question_object(self, data):
+        question = Question()
+        question.question_text = data['question_text']
+        question.answer_text = data['answer_text']
+        question.variables = data['variables']
+        question.rules = data['rules']
+        question.images = data['images']
+        question.audio = self.get_audio_files(data['question_text'])
+
+        return question
+
+    def get_part_object(self, data):
+        part1 = False
+        part2 = False
+        # try:
+        #     question_data = data['part1']
+        #     print ('question_data is', question_data)
+        #     part1 = True
+        # except:
+        #     pass
+        # try:
+        #     question_data = data['part2']
+        #     print ('question_data is', question_data)
+        #     part2 = True
+        # except:
+        #     pass
+        question_data = data['part1']
+
+        if question_data is None:
+            question_data = data['part2']
+            part2 = True
+        else:
+            part1 = True
+        question = self.get_question_object(question_data)
+
+        part = Part()
+
+        print ('parts boolean', part1, part2)
+
+        if part1:
+            part.part1 = question
+        else:
+            part.part2 = question
+        return part
+
+    def get_lesson_object(self, data):
+        lesson_data = data[0]
+        part = self.get_part_object(lesson_data['parts'])
+        lesson = Lesson()
+        lesson.name = lesson_data['name']
+        lesson.parts = part
+
+        return lesson
+
+    def get_category_object(self, data):
+        category = data[0]
+        lesson = self.get_lesson_object(category['lessons'])
+        category1 = Category()
+        category1.name = category['name']
+        category1.lessons.append(lesson)
+
+        return category1
+
+    def put(self, request, *args, **kwargs):
+        country = request.data.get('country', None)
+        language = request.data.get('language', None)
+        categories = request.data.get('categories', None)
+
+        content = Content.objects.get(
+            country=country,
+            language=language)
+        print ('content is', content)
+        self.current_object = content
+
+        obj_categories = content.get_categories()
+
+        for each_category in categories:
+            category_name = each_category['name']
+            lessons = each_category['lessons']
+            if category_name in obj_categories:
+                index1 = obj_categories.index(category_name)
+                obj_lessons = content.get_lessons(category_name)
+                for each_lesson in lessons:
+                    lesson_name = each_lesson['name']
+                    if lesson_name in obj_lessons:
+                        print ('lesson present')
+                        index3 = obj_lessons.index(lesson_name)
+                        parts = each_lesson['parts']
+                        empty_part = content.get_empty_part(
+                            category_name, lesson_name)
+                        # if empty_part is not None:
+                        obj_parts = self.get_part_object(parts)
+                        if bool(obj_parts.part1):
+                            content.categories[index1].lessons[index3].parts.part1 = obj_parts.part1
+                            content.save()
+                        if bool(obj_parts.part2):
+                            content.categories[index1].lessons[index3].parts.part2 = obj_parts.part2
+                            content.save()
+
+                    else:
+                        print ('lesson not present')
+                        new_lesson = self.get_lesson_object(
+                            lessons)
+                        lesson_objects = content.get_active_lessons(category_name)
+                        index2 = len(lesson_objects) - 1
+                        lesson_objects[index2].is_active = False
+                        # category_objects = content.categories
+                        # index1 = len(category_objects) - 1
+                        content.categories[index1].lessons.append(new_lesson)
+                        content.save()
+                        # content.categories__lesson.append(new_lesson)
+            else:
+                print ('category not present')
+                new_category = self.get_category_object(categories)
+                print ('new_category', new_category)
+                content.update(push__categories=new_category)
+
+        serializer = ContentSerializer(
+            content,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            # serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ContentUpdate(generics.RetrieveUpdateDestroyAPIView):
+    """Return a specific asset, update it, or delete it."""
+    serializer_class = ContentSerializer
+    queryset = Content.objects.all()
+
+    lookup_field = 'name'
+
+
 
 
 class MultipleFieldLookupMixin(object):
@@ -227,8 +413,8 @@ class WordApi(generics.ListAPIView):
         asset = Asset.objects.get(
             country=country,
             language=language)
-            # words__word__icontains=q).only('words')
         total_words = []
+        # total_words = [word for word in asset.words if word.word.startswith(q)]
         if q:
             for each_word in asset.words:
                 if each_word.word.startswith(q):
