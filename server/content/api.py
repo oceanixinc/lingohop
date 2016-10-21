@@ -1,3 +1,5 @@
+from functools import reduce
+import operator
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_mongoengine import generics
@@ -44,6 +46,43 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
     queryset = Content.objects.all()
 
     lookup_fields = ('country', 'language')
+    current_object = None
+
+    def get_audio_files(self, data):
+
+        content = self.current_object
+        print ('content obj is', content)
+        asset = Asset.objects.get(
+            country=content.country,
+            language=content.language)
+        asset_words = asset.words
+        new_dict = {item['word']: item for item in asset_words}
+        try:
+            data.remove('[]')
+        except:
+            pass
+        required_words = []
+        for each in data:
+            try:
+                required_words.append(new_dict[each])
+            except:
+                pass
+
+        outer = {}
+        for each_word in required_words:
+            gender = {}
+            audio_files = each_word.audio.files
+            for each_audio in audio_files:
+                file_list = each_audio.files
+                region = {}
+                for each_file in file_list:
+                    region[each_file.region] = each_file.file
+
+                gender[each_audio.gender] = region
+
+            outer[each_word.word] = gender
+
+        return outer
 
     def get_question_object(self, data):
         question = Question()
@@ -51,36 +90,46 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         question.answer_text = data['answer_text']
         question.variables = data['variables']
         question.rules = data['rules']
+        question.images = data['images']
+        question.audio = self.get_audio_files(data['question_text'])
 
         return question
 
     def get_part_object(self, data):
         part1 = False
         part2 = False
-        try:
-            question_data = data['part1']
-            part1 = True
-        except:
-            pass
-        try:
+        # try:
+        #     question_data = data['part1']
+        #     print ('question_data is', question_data)
+        #     part1 = True
+        # except:
+        #     pass
+        # try:
+        #     question_data = data['part2']
+        #     print ('question_data is', question_data)
+        #     part2 = True
+        # except:
+        #     pass
+        question_data = data['part1']
+
+        if question_data is None:
             question_data = data['part2']
             part2 = True
-        except:
-            pass
-
+        else:
+            part1 = True
         question = self.get_question_object(question_data)
 
         part = Part()
+
+        print ('parts boolean', part1, part2)
 
         if part1:
             part.part1 = question
         else:
             part.part2 = question
-
         return part
 
     def get_lesson_object(self, data):
-        print ('Lesson data is', data)
         lesson_data = data[0]
         part = self.get_part_object(lesson_data['parts'])
         lesson = Lesson()
@@ -91,9 +140,7 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
 
     def get_category_object(self, data):
         category = data[0]
-        print ('category is', category)
         lesson = self.get_lesson_object(category['lessons'])
-        print ('called finish category')
         category1 = Category()
         category1.name = category['name']
         category1.lessons.append(lesson)
@@ -108,6 +155,8 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         content = Content.objects.get(
             country=country,
             language=language)
+        print ('content is', content)
+        self.current_object = content
 
         obj_categories = content.get_categories()
 
@@ -115,15 +164,27 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
             category_name = each_category['name']
             lessons = each_category['lessons']
             if category_name in obj_categories:
-                print ('yes')
                 index1 = obj_categories.index(category_name)
                 obj_lessons = content.get_lessons(category_name)
                 for each_lesson in lessons:
                     lesson_name = each_lesson['name']
                     if lesson_name in obj_lessons:
-                        pass
+                        print ('lesson present')
+                        index3 = obj_lessons.index(lesson_name)
+                        parts = each_lesson['parts']
+                        empty_part = content.get_empty_part(
+                            category_name, lesson_name)
+                        # if empty_part is not None:
+                        obj_parts = self.get_part_object(parts)
+                        if bool(obj_parts.part1):
+                            content.categories[index1].lessons[index3].parts.part1 = obj_parts.part1
+                            content.save()
+                        if bool(obj_parts.part2):
+                            content.categories[index1].lessons[index3].parts.part2 = obj_parts.part2
+                            content.save()
+
                     else:
-                        print ('aclled')
+                        print ('lesson not present')
                         new_lesson = self.get_lesson_object(
                             lessons)
                         lesson_objects = content.get_active_lessons(category_name)
@@ -135,7 +196,7 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
                         content.save()
                         # content.categories__lesson.append(new_lesson)
             else:
-                print ('new_category')
+                print ('category not present')
                 new_category = self.get_category_object(categories)
                 print ('new_category', new_category)
                 content.update(push__categories=new_category)

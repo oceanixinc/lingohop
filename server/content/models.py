@@ -27,15 +27,24 @@ class Part(EmbeddedDocument):
     """
     """
     # name = fields.StringField()
-    part1 = fields.EmbeddedDocumentField(Question)
-    part2 = fields.EmbeddedDocumentField(Question)
+    part1 = fields.EmbeddedDocumentField(
+        Question,
+        required=False, blank=True, null=True
+    )
+    part2 = fields.EmbeddedDocumentField(
+        Question,
+        required=False, blank=True, null=True
+    )
 
 
 class Lesson(EmbeddedDocument):
     """
     """
     name = fields.StringField()
-    parts = fields.EmbeddedDocumentField(Part)
+    parts = fields.EmbeddedDocumentField(
+        Part,
+        required=False, blank=True, null=True
+    )
 
 
 class Category(EmbeddedDocument):
@@ -90,6 +99,21 @@ class Content(DynamicDocument):
         for each_category in categories:
             if each_category.name == category:
                 return each_category.lessons
+
+    def get_empty_part(self, category, lesson):
+        categories = self.categories
+        for each_category in categories:
+            if each_category.name == category:
+                lessons = each_category.lessons
+                for each_lesson in lessons:
+                    if each_lesson.name == lesson:
+                        parts = each_lesson.parts
+                        if parts.part1 is None:
+                            return 'part1'
+                        if parts.part2 is None:
+                            return 'part2'
+                        else:
+                            return None
 
     # name = fields.StringField()
     # language = fields.ListField((fields.EmbeddedDocumentField(Language)))
