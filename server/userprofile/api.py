@@ -10,6 +10,7 @@ from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
     LanguageCountrySerializer)
 from userprofile.models import User, UserTrip, Trip, LanguageCountry
+from content.models import Asset
 
 
 class TripMixin(object):
@@ -34,7 +35,27 @@ class LanguageCountryMixin(object):
     """
 
     serializer_class = LanguageCountrySerializer
-    queryset = LanguageCountry.objects.all()
+    # queryset = LanguageCountry.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list of sections.
+        """
+        # print
+        my_kwargs = {}
+        assets = Asset.objects.all()
+        country = []
+        language = []
+        for each_asset in assets:
+            country.append(each_asset.country)
+            language.append(each_asset.language)
+        my_kwargs['language__name__in'] = language
+        my_kwargs['country__in'] = country
+        print (my_kwargs)
+        data = LanguageCountry.objects.filter(
+            **my_kwargs).select_related(
+            'language__name').order_by('country')
+        return data
 
 
 class LanguageCountryList(LanguageCountryMixin, ListCreateAPIView):
