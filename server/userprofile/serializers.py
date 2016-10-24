@@ -66,6 +66,14 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
             content2.language = validated_data['language']['name']
             content2.save()
 
+        try:
+            region = Region.objects.get(
+                language_country=validated_data['language']['name'] + '-' + validated_data['country'])
+        except:
+            region = Region()
+            region.language_country = validated_data['language']['name'] + '-' + validated_data['country']
+            region.save()
+
         language, created = Language.objects.get_or_create(
             name=validated_data['language']['name'])
 
