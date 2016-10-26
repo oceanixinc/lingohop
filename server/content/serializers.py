@@ -28,6 +28,18 @@ class ContentSerializer(DocumentSerializer):
     class Meta:
         model = Content
         # fields = ('country', 'languages',)
+        # extra_kwargs = {'client': {'required': 'False'}}
+        extra_kwargs = {
+            "words": {
+                "audio": {
+                    "files": {
+                        "files": {
+                            "file": {'required': False}
+                        }
+                    }
+                }
+            }
+        }
         depth = 7
 
 
