@@ -171,6 +171,14 @@ class Asset(DynamicDocument):
     language = fields.StringField(max_length=100)
     words = fields.ListField(
         fields.EmbeddedDocumentField(AudioImage))
+
+    def get_words(self):
+        words = self.words
+        all_words = []
+        for each_word in words:
+            all_words.append(each_word.word)
+
+        return all_words
     #languages = fields.MapField(fields.MapField(
     #fields.EmbeddedDocumentField(AudioImage)))
     # languages = fields.ListField(fields.MapField(

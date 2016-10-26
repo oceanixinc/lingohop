@@ -51,7 +51,6 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
     def get_audio_files(self, data):
 
         content = self.current_object
-        print ('content obj is', content)
         asset = Asset.objects.get(
             country=content.country,
             language=content.language)
@@ -121,8 +120,6 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
 
         part = Part()
 
-        print ('parts boolean', part1, part2)
-
         if part1:
             part.part1 = question
         else:
@@ -155,7 +152,6 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         content = Content.objects.get(
             country=country,
             language=language)
-        print ('content is', content)
         self.current_object = content
 
         obj_categories = content.get_categories()
@@ -169,7 +165,6 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
                 for each_lesson in lessons:
                     lesson_name = each_lesson['name']
                     if lesson_name in obj_lessons:
-                        print ('lesson present')
                         index3 = obj_lessons.index(lesson_name)
                         parts = each_lesson['parts']
                         empty_part = content.get_empty_part(
@@ -184,7 +179,6 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
                             content.save()
 
                     else:
-                        print ('lesson not present')
                         new_lesson = self.get_lesson_object(
                             lessons)
                         lesson_objects = content.get_active_lessons(category_name)
@@ -196,9 +190,7 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
                         content.save()
                         # content.categories__lesson.append(new_lesson)
             else:
-                print ('category not present')
                 new_category = self.get_category_object(categories)
-                print ('new_category', new_category)
                 content.update(push__categories=new_category)
 
         serializer = ContentSerializer(
@@ -220,8 +212,6 @@ class ContentUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Content.objects.all()
 
     lookup_field = 'name'
-
-
 
 
 class MultipleFieldLookupMixin(object):
@@ -248,7 +238,6 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
     # parser_classes = (FileUploadParser,)
 
     def get_audio_image(self, data):
-        print ('data is', data)
         word = data['word']
         images = data['images']
         audio = data['audio']['files']
@@ -351,18 +340,27 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     country=country,
                     language=language)
                 # if asset:
+                obj_words = asset[0].get_words()
                 audio_image = self.get_audio_image(
                     request.data['words'][0])
+                if b in obj_words:
+                    asset[0].update(pull__words__word=b)
                 asset[0].update(push__words=audio_image)
 
-                #     print (word_serializer.errors)
-                # else:
                 serializer = AssetSerializer(
                     asset[0],
                     data=request.data,
                     partial=True
                 )
-                if serializer.is_valid():
+                is_valid = serializer.is_valid()
+
+                if not is_valid:
+                    file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
+
+                    if file_error == 'This field may not be blank.':
+                        is_valid = True
+
+                if is_valid:
                     # serializer.save()
                     return Response(
                         serializer.data, status=status.HTTP_201_CREATED)
