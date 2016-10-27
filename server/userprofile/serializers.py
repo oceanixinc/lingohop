@@ -40,6 +40,9 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
             asset = Asset.objects.get(
                 country=validated_data['country'],
                 language=validated_data['language']['name'])
+            content = Content.objects.get(
+                country=validated_data['country'],
+                language=validated_data['language']['name'])
         except:
             pass
         try:
@@ -47,11 +50,29 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
                 country=validated_data['country'])
             asset1.language = validated_data['language']['name']
             asset1.save()
+
+            content1 = Content.objects.create(
+                country=validated_data['country'])
+            content1.language = validated_data['language']['name']
+            content1.save()
         except:
             asset2 = Asset()
             asset2.country = validated_data['country']
             asset2.language = validated_data['language']['name']
             asset2.save()
+
+            content2 = Content()
+            content2.country = validated_data['country']
+            content2.language = validated_data['language']['name']
+            content2.save()
+
+        try:
+            region = Region.objects.get(
+                language_country=validated_data['language']['name'] + '-' + validated_data['country'])
+        except:
+            region = Region()
+            region.language_country = validated_data['language']['name'] + '-' + validated_data['country']
+            region.save()
 
         language, created = Language.objects.get_or_create(
             name=validated_data['language']['name'])
