@@ -292,29 +292,33 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
 
                 for index, each in enumerate(c):
                     img = each['file']
-                    if 'base64' in img:
-                        my_image = img.split(';base64,')
-                        img_ext = my_image[0].split('/')
-                        imgdata = base64.b64decode(my_image[1])
-                        file_name = str(uuid.uuid4())
-                        fname = '../media/images/%s.%s' % (file_name, img_ext[1])
+                    print ('image is', img)
+                    print (img == None)
+                    print (len(img))
+                    if len(img) > 0:
+                        if 'base64' in img:
+                            my_image = img.split(';base64,')
+                            img_ext = my_image[0].split('/')
+                            imgdata = base64.b64decode(my_image[1])
+                            file_name = str(uuid.uuid4())
+                            fname = '../media/images/%s.%s' % (file_name, img_ext[1])
 
-                        # file_name = str(uuid.uuid4())
-                        # fname = '../media/profiles/%s.%s' % (file_name, 'png')
+                            # file_name = str(uuid.uuid4())
+                            # fname = '../media/profiles/%s.%s' % (file_name, 'png')
 
-                        real_file = fname.split('../')
-                        # d64i = bytes(img, 'utf-8')
-                        # d64i = bytes(imgdata, 'utf-8')
-                        with open(fname, "wb") as fh:
-                            # fh.write(base64.decodestring(d64i))
-                            fh.write(imgdata)
-                            # fh.write(d64i)
-                        # fh.write(img.decode('base64'))
-                        request.data['words'][word_index]['images'][index]['file'] = "/" + real_file[1]
-                    else:
-                        return Response(
-                            {'detail': 'binary image not provided'},
-                            status=status.HTTP_400_BAD_REQUEST)
+                            real_file = fname.split('../')
+                            # d64i = bytes(img, 'utf-8')
+                            # d64i = bytes(imgdata, 'utf-8')
+                            with open(fname, "wb") as fh:
+                                # fh.write(base64.decodestring(d64i))
+                                fh.write(imgdata)
+                                # fh.write(d64i)
+                            # fh.write(img.decode('base64'))
+                            request.data['words'][word_index]['images'][index]['file'] = "/" + real_file[1]
+                        else:
+                            return Response(
+                                {'detail': 'binary image not provided'},
+                                status=status.HTTP_400_BAD_REQUEST)
 
                 for index, each_row in enumerate(d):
                     gender = each_row['gender']
@@ -354,11 +358,20 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     partial=True
                 )
                 is_valid = serializer.is_valid()
-
+                print ('errors are', serializer.errors)
+                image_error = ''
+                file_error = ''
                 if not is_valid:
-                    file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
-
-                    if file_error == 'This field may not be blank.':
+                    try:
+                        image_error = serializer.errors['words']['images']['file'][0]
+                    except:
+                        pass
+                    try:
+                        file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
+                    except:
+                        pass
+                    print ('errors total', image_error, file_error)
+                    if file_error == 'This field may not be blank.' or image_error == 'This field may not be blank.':
                         is_valid = True
 
                 if is_valid:
