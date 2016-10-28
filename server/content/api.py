@@ -427,7 +427,7 @@ class WordApi(generics.ListAPIView):
 
 
 
-class CategoryApi(generics.ListAPIView):
+class CategoryApi(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
