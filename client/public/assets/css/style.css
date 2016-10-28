@@ -132,8 +132,8 @@
     margin-top: 37px; }
   .upload-page .upload #chips {
     margin-top: 12px; }
-    .upload-page .upload #chips > input,
-    .upload-page .upload #chips > audio {
+    .upload-page .upload #chips > audio,
+    .upload-page .upload #chips > input {
       height: 0;
       width: 0;
       visibility: hidden; }
@@ -150,8 +150,8 @@
     position: relative;
     float: left;
     text-align: center; }
-    .upload-page .upload #add-picture > input,
-    .upload-page .upload #add-picture > img {
+    .upload-page .upload #add-picture > img,
+    .upload-page .upload #add-picture > input {
       position: absolute;
       top: 0;
       height: 100%;
@@ -197,6 +197,18 @@
       background-color: #12a159 !important; }
     .upload-page .upload .audiochip > span {
       color: white !important; }
+  .upload-page .upload .close-icon {
+    width: 22px;
+    height: 22px;
+    line-height: 19px;
+    text-align: center;
+    color: white;
+    background-color: green;
+    border-radius: 25px;
+    right: 4px;
+    top: 4px; }
+    .upload-page .upload .close-icon:hover {
+      background-color: red; }
 
 .upload-finish-page .upload-finish {
   margin-top: 45px;
