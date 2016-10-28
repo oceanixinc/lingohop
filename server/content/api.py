@@ -292,9 +292,6 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
 
                 for index, each in enumerate(c):
                     img = each['file']
-                    print ('image is', img)
-                    print (img == None)
-                    print (len(img))
                     if len(img) > 0:
                         if 'base64' in img:
                             my_image = img.split(';base64,')
@@ -358,7 +355,6 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     partial=True
                 )
                 is_valid = serializer.is_valid()
-                print ('errors are', serializer.errors)
                 image_error = ''
                 file_error = ''
                 if not is_valid:
