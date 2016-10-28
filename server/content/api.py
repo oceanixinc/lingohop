@@ -7,7 +7,8 @@ from .serializers import (
     AssetSerializer,
     ContentSerializer,
     RegionSerializer,
-    WordSerializer)
+    WordSerializer,
+    CategorySerializer)
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -420,3 +421,8 @@ class WordApi(generics.ListAPIView):
 
         return total_words
         # return a.words
+
+
+class CategoryList(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
