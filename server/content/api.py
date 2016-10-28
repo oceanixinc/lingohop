@@ -409,20 +409,46 @@ class WordApi(generics.ListAPIView):
         # assets = Asset.objects.filter(
         #     country='spain',
         #     words__match={"word": q})
-        asset = Asset.objects.get(
-            country=country,
-            language=language)
-        total_words = []
-        # total_words = [word for word in asset.words if word.word.startswith(q)]
-        if q:
-            for each_word in asset.words:
-                if each_word.word.startswith(q):
-                    total_words.append(each_word)
+        try:
+            asset = Asset.objects.get(
+                country=country,
+                language=language)
+            total_words = []
+            # total_words = [word for word in asset.words if word.word.startswith(q)]
+            if q:
+                for each_word in asset.words:
+                    if each_word.word.startswith(q):
+                        total_words.append(each_word)
 
-        return total_words
-        # return a.words
+            return total_words
+            # return a.words
+        except Asset.DoesNotExist:
+            return []
 
 
-class CategoryList(generics.ListAPIView):
+
+class CategoryApi(generics.ListAPIView):
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list of words.
+        """
+        country = self.request.GET.get('country', None)
+        language = self.request.GET.get('language', None)
+        # assets = Asset.objects.filter(
+        #     country='spain',
+        #     words__match={"word": q})
+        try:
+            content = Content.objects.get(
+                country=country,
+                language=language)
+            categories = []
+            if country and language:
+                for c in content.categories:
+                    categories.append(c)
+
+            return categories
+
+        except Content.DoesNotExist:
+            return []
