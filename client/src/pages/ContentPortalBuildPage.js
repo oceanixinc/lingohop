@@ -11,6 +11,9 @@ import FlatButton from 'material-ui/FlatButton';
 import {Modal} from 'react-bootstrap'
 
 const language_items = [];
+const region_items = [];
+const languages = [];
+const countries = [];
 
 export default class ContentPortalBuildPage extends React.Component {
 
@@ -19,6 +22,7 @@ export default class ContentPortalBuildPage extends React.Component {
 
         this.state = {
             language_country: '',
+            region:'',
             showModal: false
         };
 
@@ -56,6 +60,14 @@ export default class ContentPortalBuildPage extends React.Component {
                         </SelectField>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
+                        What is the region?
+                        <SelectField value={this.state.region} onChange={this.handleValueChange.bind(this, 'region')} hintText="Region" style={{
+                            width: '100%'
+                        }}>
+                            {region_items}
+                        </SelectField>
+                    </div>
+                    <div className="big-text text-left col-md-8 col-md-offset-2">
                         What track is it for?
                         <SelectField hintText="Track" style={{
                             width: '100%'
@@ -87,7 +99,9 @@ export default class ContentPortalBuildPage extends React.Component {
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>category</b></h4>
+                        <h4>Add a new
+                            <b>category</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-6 text-center">
@@ -106,7 +120,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <RaisedButton label="BUILD" primary={true} />
+                        <RaisedButton label="BUILD" primary={true}/>
                     </Modal.Footer>
 
                 </Modal>
@@ -126,14 +140,43 @@ export default class ContentPortalBuildPage extends React.Component {
             dataType: "json",
             url: 'http://testing.lingohop.com/api/language-country/',
             success: (res) => {
+                let i = 1;
                 for (let language of res) {
-                    let itemIndex = res.indexOf(language);
-                    let value = language.language;
+                    let value = `${language.language} (${language.country})`;
                     let key = language.id + '-' + language.language + '-' + language.country;
-                    let item = (<MenuItem value={language.id} key={key} primaryText={value}/>);
+                    let item = (<MenuItem value={i} key={key} primaryText={value}/>);
                     language_items.push(item);
+                    i++;
+                    languages.push(language.language)
+                    countries.push(language.country)
+
                 }
             }
+        })
+
+    }
+
+    _fetchRegion() {
+        let language = languages[this.state.language_country - 1]
+        let country = countries[this.state.language_country - 1]
+        jQuery.ajax({
+            method: 'GET',
+            dataType: "json",
+            url: `http://testing.lingohop.com/api/assets/region/${language}-${country}/`,
+            success: (res) => {
+                console.log(res)
+                region_items.length = 0
+                let i = 1
+                for (let region of res.regions) {
+                    let value = region
+                    let item = (<MenuItem value={i} key={i} primaryText={value}/>);
+                    region_items.push(item);
+                    i++;
+                }
+                this.forceUpdate()
+
+            }
+
         })
 
     }
@@ -141,7 +184,11 @@ export default class ContentPortalBuildPage extends React.Component {
     handleValueChange(name, event, index, value) {
         var change = {};
         change[name] = value;
-        this.setState(change);
+        this.setState(change, () => {
+            if (name === 'language_country') {
+                this._fetchRegion()
+            }
+        });
 
     };
 
@@ -153,8 +200,8 @@ export default class ContentPortalBuildPage extends React.Component {
         this.setState({showModal: false});
     };
 
-    _nextPage(){
-      hashHistory.push('/contentportal/buildsearch')
+    _nextPage() {
+        hashHistory.push('/contentportal/buildsearch')
     };
 
 }
