@@ -1,5 +1,5 @@
 from .models import (
-    Asset, Content, Region, AudioImage)
+    Asset, Content, Region, AudioImage, Category)
 
 from rest_framework_mongoengine.serializers import (
     DocumentSerializer, EmbeddedDocumentSerializer)
@@ -49,4 +49,12 @@ class RegionSerializer(DocumentSerializer):
     class Meta:
         model = Region
         # fields = ('country', 'languages',)
+        depth = 7
+
+
+class CategorySerializer(EmbeddedDocumentSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('ID', 'name', 'lessons')
         depth = 7

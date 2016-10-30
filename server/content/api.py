@@ -7,7 +7,8 @@ from .serializers import (
     AssetSerializer,
     ContentSerializer,
     RegionSerializer,
-    WordSerializer)
+    WordSerializer,
+    CategorySerializer)
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -291,29 +292,30 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
 
                 for index, each in enumerate(c):
                     img = each['file']
-                    if 'base64' in img:
-                        my_image = img.split(';base64,')
-                        img_ext = my_image[0].split('/')
-                        imgdata = base64.b64decode(my_image[1])
-                        file_name = str(uuid.uuid4())
-                        fname = '../media/images/%s.%s' % (file_name, img_ext[1])
+                    if len(img) > 0:
+                        if 'base64' in img:
+                            my_image = img.split(';base64,')
+                            img_ext = my_image[0].split('/')
+                            imgdata = base64.b64decode(my_image[1])
+                            file_name = str(uuid.uuid4())
+                            fname = '../media/images/%s.%s' % (file_name, img_ext[1])
 
-                        # file_name = str(uuid.uuid4())
-                        # fname = '../media/profiles/%s.%s' % (file_name, 'png')
+                            # file_name = str(uuid.uuid4())
+                            # fname = '../media/profiles/%s.%s' % (file_name, 'png')
 
-                        real_file = fname.split('../')
-                        # d64i = bytes(img, 'utf-8')
-                        # d64i = bytes(imgdata, 'utf-8')
-                        with open(fname, "wb") as fh:
-                            # fh.write(base64.decodestring(d64i))
-                            fh.write(imgdata)
-                            # fh.write(d64i)
-                        # fh.write(img.decode('base64'))
-                        request.data['words'][word_index]['images'][index]['file'] = "/" + real_file[1]
-                    else:
-                        return Response(
-                            {'detail': 'binary image not provided'},
-                            status=status.HTTP_400_BAD_REQUEST)
+                            real_file = fname.split('../')
+                            # d64i = bytes(img, 'utf-8')
+                            # d64i = bytes(imgdata, 'utf-8')
+                            with open(fname, "wb") as fh:
+                                # fh.write(base64.decodestring(d64i))
+                                fh.write(imgdata)
+                                # fh.write(d64i)
+                            # fh.write(img.decode('base64'))
+                            request.data['words'][word_index]['images'][index]['file'] = "/" + real_file[1]
+                        else:
+                            return Response(
+                                {'detail': 'binary image not provided'},
+                                status=status.HTTP_400_BAD_REQUEST)
 
                 for index, each_row in enumerate(d):
                     gender = each_row['gender']
@@ -353,11 +355,19 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     partial=True
                 )
                 is_valid = serializer.is_valid()
-
+                image_error = ''
+                file_error = ''
                 if not is_valid:
-                    file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
-
-                    if file_error == 'This field may not be blank.':
+                    try:
+                        image_error = serializer.errors['words']['images']['file'][0]
+                    except:
+                        pass
+                    try:
+                        file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
+                    except:
+                        pass
+                    print ('errors total', image_error, file_error)
+                    if file_error == 'This field may not be blank.' or image_error == 'This field may not be blank.':
                         is_valid = True
 
                 if is_valid:
@@ -408,15 +418,46 @@ class WordApi(generics.ListAPIView):
         # assets = Asset.objects.filter(
         #     country='spain',
         #     words__match={"word": q})
-        asset = Asset.objects.get(
-            country=country,
-            language=language)
-        total_words = []
-        # total_words = [word for word in asset.words if word.word.startswith(q)]
-        if q:
-            for each_word in asset.words:
-                if each_word.word.startswith(q):
-                    total_words.append(each_word)
+        try:
+            asset = Asset.objects.get(
+                country=country,
+                language=language)
+            total_words = []
+            # total_words = [word for word in asset.words if word.word.startswith(q)]
+            if q:
+                for each_word in asset.words:
+                    if each_word.word.startswith(q):
+                        total_words.append(each_word)
 
-        return total_words
-        # return a.words
+            return total_words
+            # return a.words
+        except Asset.DoesNotExist:
+            return []
+
+
+
+class CategoryApi(generics.ListCreateAPIView):
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of words.
+        """
+        country = self.request.GET.get('country', None)
+        language = self.request.GET.get('language', None)
+        # assets = Asset.objects.filter(
+        #     country='spain',
+        #     words__match={"word": q})
+        try:
+            content = Content.objects.get(
+                country=country,
+                language=language)
+            categories = []
+            if country and language:
+                for c in content.categories:
+                    categories.append(c)
+
+            return categories
+
+        except Content.DoesNotExist:
+            return []
