@@ -19,16 +19,19 @@ const styles = {
     }
 };
 
+const searchResults = [];
+
 export default class ContentPortalBuildSearchPage extends React.Component {
 
     constructor() {
         super();
 
         this.state = {
-            showModal: false
+            showModal: false,
+            search: ''
         };
 
-        this.handleValueChange = this.handleValueChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
 
@@ -49,7 +52,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         Are there any legos to be taught before the question?
-                        <TextField hintText="Search..." style={{
+                        <TextField hintText="Search..." value={this.state.search} onChange={this.handleSearch} style={{
                             width: '100%'
                         }}></TextField>
                     </div>
@@ -77,7 +80,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 </div>
                 <div className="text-center build-search col-md-3 col-md-offset-1 build-search-right">
                     <i>Search for legos to view options</i>
-
+                    {searchResults}
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
@@ -111,19 +114,46 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         document.body.style.backgroundColor = "rgb(244,244,244)" // Set the style
     }
 
-    handleValueChange(name, event, index, value) {
-        var change = {};
-        change[name] = value;
-        this.setState(change);
-
-    };
-
     _openModal() {
         this.setState({showModal: true});
     };
 
     _closeModal() {
         this.setState({showModal: false});
-    };
+    }
+
+    handleSearch(event) {
+        let searchString = event.target.value
+
+        for (let search of searchString.split(" ")) {
+            this._fetchSearch(search)
+        }
+
+        this.setState({search: event.target.value});
+    }
+
+    //API Calls
+    _fetchSearch(searchTerm) {
+
+        jQuery.ajax({
+            method: 'GET',
+            dataType: "json",
+            url: `http://testing.lingohop.com/api/assets/word/?country=USA&language=English&q=${searchTerm}`,
+            success: (res) => {
+                console.log(res)
+
+                searchResults.length = 0
+                for (let item of res) {
+                    let word = (
+                        <p>{item.word}</p>
+                    )
+                    searchResults.push(word)
+                }
+                
+                this.forceUpdate()
+            }
+        })
+
+    }
 
 }
