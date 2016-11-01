@@ -74740,6 +74740,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var language_items = [];
+var region_items = [];
+var languages = [];
+var countries = [];
 
 var ContentPortalBuildPage = function (_React$Component) {
     _inherits(ContentPortalBuildPage, _React$Component);
@@ -74751,6 +74754,7 @@ var ContentPortalBuildPage = function (_React$Component) {
 
         _this.state = {
             language_country: '',
+            region: '',
             showModal: false
         };
 
@@ -74820,6 +74824,18 @@ var ContentPortalBuildPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'What is the region?',
+                        _react2.default.createElement(
+                            _SelectField2.default,
+                            { value: this.state.region, onChange: this.handleValueChange.bind(this, 'region'), hintText: 'Region', style: {
+                                    width: '100%'
+                                } },
+                            region_items
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What track is it for?',
                         _react2.default.createElement(_SelectField2.default, { hintText: 'Track', style: {
                                 width: '100%'
@@ -74868,7 +74884,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'Add a new ',
+                            'Add a new',
                             _react2.default.createElement(
                                 'b',
                                 null,
@@ -74929,6 +74945,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                 dataType: "json",
                 url: 'http://testing.lingohop.com/api/language-country/',
                 success: function success(res) {
+                    var i = 1;
                     var _iteratorNormalCompletion = true;
                     var _didIteratorError = false;
                     var _iteratorError = undefined;
@@ -74937,11 +74954,13 @@ var ContentPortalBuildPage = function (_React$Component) {
                         for (var _iterator = res[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                             var language = _step.value;
 
-                            var itemIndex = res.indexOf(language);
-                            var value = language.language;
+                            var value = language.language + ' (' + language.country + ')';
                             var key = language.id + '-' + language.language + '-' + language.country;
-                            var item = _react2.default.createElement(_MenuItem2.default, { value: language.id, key: key, primaryText: value });
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: key, primaryText: value });
                             language_items.push(item);
+                            i++;
+                            languages.push(language.language);
+                            countries.push(language.country);
                         }
                     } catch (err) {
                         _didIteratorError = true;
@@ -74961,11 +74980,65 @@ var ContentPortalBuildPage = function (_React$Component) {
             });
         }
     }, {
+        key: '_fetchRegion',
+        value: function _fetchRegion() {
+            var _this2 = this;
+
+            var language = languages[this.state.language_country - 1];
+            var country = countries[this.state.language_country - 1];
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/assets/region/' + language + '-' + country + '/',
+                success: function success(res) {
+                    console.log(res);
+                    region_items.length = 0;
+                    var i = 1;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = res.regions[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var region = _step2.value;
+
+                            var value = region;
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: i, primaryText: value });
+                            region_items.push(item);
+                            i++;
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+
+                    _this2.forceUpdate();
+                }
+
+            });
+        }
+    }, {
         key: 'handleValueChange',
         value: function handleValueChange(name, event, index, value) {
+            var _this3 = this;
+
             var change = {};
             change[name] = value;
-            this.setState(change);
+            this.setState(change, function () {
+                if (name === 'language_country') {
+                    _this3._fetchRegion();
+                }
+            });
         }
     }, {
         key: '_openModal',
@@ -75049,6 +75122,8 @@ var styles = {
     }
 };
 
+var searchResults = [];
+
 var ContentPortalBuildSearchPage = function (_React$Component) {
     _inherits(ContentPortalBuildSearchPage, _React$Component);
 
@@ -75058,10 +75133,11 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (ContentPortalBuildSearchPage.__proto__ || Object.getPrototypeOf(ContentPortalBuildSearchPage)).call(this));
 
         _this.state = {
-            showModal: false
+            showModal: false,
+            search: ''
         };
 
-        _this.handleValueChange = _this.handleValueChange.bind(_this);
+        _this.handleSearch = _this.handleSearch.bind(_this);
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
 
@@ -75109,7 +75185,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'Are there any legos to be taught before the question?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', style: {
+                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.search, onChange: this.handleSearch, style: {
                                 width: '100%'
                             } })
                     ),
@@ -75150,7 +75226,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         'i',
                         null,
                         'Search for legos to view options'
-                    )
+                    ),
+                    searchResults
                 ),
                 _react2.default.createElement(
                     _reactBootstrap.Modal,
@@ -75201,13 +75278,6 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
         }
     }, {
-        key: 'handleValueChange',
-        value: function handleValueChange(name, event, index, value) {
-            var change = {};
-            change[name] = value;
-            this.setState(change);
-        }
-    }, {
         key: '_openModal',
         value: function _openModal() {
             this.setState({ showModal: true });
@@ -75216,6 +75286,88 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: '_closeModal',
         value: function _closeModal() {
             this.setState({ showModal: false });
+        }
+    }, {
+        key: 'handleSearch',
+        value: function handleSearch(event) {
+            var searchString = event.target.value;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = searchString.split(" ")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var search = _step.value;
+
+                    this._fetchSearch(search);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.setState({ search: event.target.value });
+        }
+
+        //API Calls
+
+    }, {
+        key: '_fetchSearch',
+        value: function _fetchSearch(searchTerm) {
+            var _this2 = this;
+
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/assets/word/?country=USA&language=English&q=' + searchTerm,
+                success: function success(res) {
+                    console.log(res);
+
+                    searchResults.length = 0;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var item = _step2.value;
+
+                            var word = _react2.default.createElement(
+                                'p',
+                                null,
+                                item.word
+                            );
+                            searchResults.push(word);
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+
+                    _this2.forceUpdate();
+                }
+            });
         }
     }]);
 
