@@ -9,6 +9,7 @@ from .serializers import (
     RegionSerializer,
     WordSerializer,
     CategorySerializer)
+from mongoengine import fields
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -40,6 +41,77 @@ class MultipleFieldLookupContentMixin(object):
             if self.kwargs[field]:  # Ignore empty fields.
                 filter[field] = self.kwargs[field]
         return get_obj_or_404(Content, **filter)  # Lookup the object
+
+
+def list_field_to_dict(list_field):
+
+    return_data = []
+
+    for item in list_field:
+        if isinstance(item, EmbeddedDocument):
+            return_data.append(mongo_to_dict(item, []))
+        else:
+            return_data.append(mongo_to_python_type(item, item))
+
+    return return_data
+
+
+def mongo_to_python_type(field, data):
+
+    if isinstance(field, fields.DateTimeField):
+        return str(data.isoformat())
+    # elif isinstance(field, ComplexDateTimeField):
+    #     return field.to_python(data).isoformat()
+    elif isinstance(field, fields.StringField):
+        return str(data)
+    elif isinstance(field, fields.FloatField):
+        return float(data)
+    elif isinstance(field, fields.IntField):
+        return int(data)
+    elif isinstance(field, fields.BooleanField):
+        return bool(data)
+    elif isinstance(field, fields.ObjectIdField):
+        return str(data)
+    elif isinstance(field, fields.DecimalField):
+        return data
+    else:
+        return str(data)
+
+
+def mongo_to_dict(obj, exclude_fields):
+    return_data = []
+
+    if obj is None:
+        return None
+
+    if isinstance(obj, Document):
+        return_data.append(("id", str(obj.id)))
+
+    for field_name in obj._fields:
+
+        if field_name in exclude_fields:
+            continue
+
+        if field_name in ("id",):
+            continue
+
+        data = obj._data[field_name]
+
+        if isinstance(obj._fields[field_name], fields.ListField):
+            return_data.append((field_name, list_field_to_dict(data)))
+        elif isinstance(obj._fields[field_name], fields.EmbeddedDocumentField):
+            return_data.append((field_name, mongo_to_dict(data, [])))
+        elif isinstance(obj._fields[field_name], fields.DictField):
+            return_data.append((field_name, data))
+        else:
+            return_data.append(
+                (
+                    field_name,
+                    mongo_to_python_type(obj._fields[field_name], data)
+                )
+            )
+
+    return dict(return_data)
 
 
 class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDestroyAPIView):
@@ -84,18 +156,25 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
 
         return outer
 
-    def get_question_object(self, data):
+    def get_question_object(self, data, *args, **kwargs):
+        default = kwargs.get('default', False)
         question = Question()
         question.question_text = data['question_text']
         question.answer_text = data['answer_text']
         question.variables = data['variables']
         question.rules = data['rules']
         question.images = data['images']
-        question.audio = self.get_audio_files(data['question_text'])
+        question.audio = self.get_audio_files(
+            data['question_text'] + data['answer_text'])
 
-        return question
+        # return question
+        if default:
+            return mongo_to_dict(question, [])
+        else:
+            return question
 
-    def get_part_object(self, data):
+    def get_part_object(self, data, *args, **kwargs):
+        default = kwargs.get('default', False)
         part1 = False
         part2 = False
         # try:
@@ -111,13 +190,12 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         # except:
         #     pass
         question_data = data['part1']
-
-        if question_data is None:
+        if question_data is None or len(question_data) == 0:
             question_data = data['part2']
             part2 = True
         else:
             part1 = True
-        question = self.get_question_object(question_data)
+        question = self.get_question_object(question_data, default=False)
 
         part = Part()
 
@@ -125,25 +203,40 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
             part.part1 = question
         else:
             part.part2 = question
-        return part
 
-    def get_lesson_object(self, data):
+        if isinstance(part, dict):
+            return part
+        if default:
+            return mongo_to_dict(part, [])
+        else:
+            return part
+
+    def get_lesson_object(self, data, *args, **kwargs):
+        default = kwargs.get('default', False)
         lesson_data = data[0]
-        part = self.get_part_object(lesson_data['parts'])
+        part = self.get_part_object(lesson_data['parts'], default=False)
         lesson = Lesson()
         lesson.name = lesson_data['name']
         lesson.parts = part
+        if isinstance(lesson, dict):
+            return lesson
+        if default:
+            return mongo_to_dict(lesson, [])
+        else:
+            return lesson
 
-        return lesson
-
-    def get_category_object(self, data):
+    def get_category_object(self, data, *args, **kwargs):
+        default = kwargs.get('default', False)
         category = data[0]
-        lesson = self.get_lesson_object(category['lessons'])
+        lesson = self.get_lesson_object(category['lessons'], default=False)
         category1 = Category()
-        category1.name = category['name']
+        category1.category_name = category['category_name']
         category1.lessons.append(lesson)
 
-        return category1
+        if default:
+            return mongo_to_dict(category1, [])
+        else:
+            return category1
 
     def put(self, request, *args, **kwargs):
         country = request.data.get('country', None)
@@ -155,44 +248,138 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
             language=language)
         self.current_object = content
 
-        obj_categories = content.get_categories()
+        # obj_categories = content.get_categories()
 
-        for each_category in categories:
-            category_name = each_category['name']
-            lessons = each_category['lessons']
-            if category_name in obj_categories:
-                index1 = obj_categories.index(category_name)
-                obj_lessons = content.get_lessons(category_name)
-                for each_lesson in lessons:
-                    lesson_name = each_lesson['name']
-                    if lesson_name in obj_lessons:
-                        index3 = obj_lessons.index(lesson_name)
-                        parts = each_lesson['parts']
-                        empty_part = content.get_empty_part(
-                            category_name, lesson_name)
-                        # if empty_part is not None:
-                        obj_parts = self.get_part_object(parts)
-                        if bool(obj_parts.part1):
-                            content.categories[index1].lessons[index3].parts.part1 = obj_parts.part1
-                            content.save()
-                        if bool(obj_parts.part2):
-                            content.categories[index1].lessons[index3].parts.part2 = obj_parts.part2
+        journeys = request.data.get('journeys')
+        journey_names = list(journeys.keys())
+        obj_journeys = content.get_journeys()
+        journey_input = journey_names[0]
+        region_names = list(journeys[journey_input].keys())
+        region_input = region_names[0]
+        track_names = list(journeys[journey_input][region_input].keys())
+        track_input = track_names[0]
+        categories = journeys[journey_input][region_input][track_input]
+        if journey_input in obj_journeys:
+            obj_regions = content.get_regions(journey_names[0])
+            region_names = list(journeys[journey_input].keys())
+            region_input = region_names[0]
+            if region_names[0] in obj_regions:
+                obj_tracks = content.get_tracks(journey_input, region_input)
+                track_names = list(journeys[journey_input][region_input].keys())
+                track_input = track_names[0]
+                if track_input in obj_tracks:
+                    # categories = journeys[journey_input][region_input][track_input]
+                    obj_categories = content.get_categories(
+                        journey_input, region_input, track_input)
+                    category_input = categories[0]
+                    category_name = category_input['category_name']
+                    lessons = category_input['lessons']
+                    if category_name in obj_categories:
+                        index1 = obj_categories.index(category_name)
+                        obj_lessons = content.get_lessons(
+                            journey_input, region_input,
+                            track_input, category_name
+                        )
+                        lesson_name = lessons[0]['name']
+                        if lesson_name in obj_lessons:
+                            index3 = obj_lessons.index(lesson_name)
+                            parts = lessons[0]['parts']
+                            obj_parts = self.get_part_object(parts, default=True)
+                            if bool(obj_parts['part1']):
+                                content.journeys[journey_input][region_input][track_input][index1]["lessons"][index3]["parts"]["part1"]= obj_parts['part1']
+                                # content.journeys[index1].lessons[index3].parts.part1 = obj_parts.part1
+                                content.save()
+                            if bool(obj_parts['part2']):
+                                content.journeys[journey_input][region_input][track_input][index1]["lessons"][index3]["parts"]["part2"] = obj_parts['part2']
+                                # content.categories[index1].lessons[index3].parts.part2 = obj_parts.part2
+                                content.save()
+                        else:
+                            new_lesson = self.get_lesson_object(
+                                lessons, default=True)
+                            lesson_objects = content.get_active_lessons(
+                                journey_input, region_input,
+                                track_input,
+                                category_name)
+                            index2 = len(lesson_objects)
+                            # lesson_objects[index2].is_active = False
+                            content.journeys[journey_input][region_input][track_input][index1]["lessons"].append(new_lesson)
+                            # content.categories[index1].lessons.append(new_lesson)
                             content.save()
 
                     else:
-                        new_lesson = self.get_lesson_object(
-                            lessons)
-                        lesson_objects = content.get_active_lessons(category_name)
-                        index2 = len(lesson_objects) - 1
-                        lesson_objects[index2].is_active = False
-                        # category_objects = content.categories
-                        # index1 = len(category_objects) - 1
-                        content.categories[index1].lessons.append(new_lesson)
+                        new_category = self.get_category_object(categories, default=True)
+                        content.journeys[journey_input][region_input][track_input].append(new_category)
                         content.save()
-                        # content.categories__lesson.append(new_lesson)
+
+                else:
+                    # categories = journeys[journey_input][region_input][track_input]
+                    # obj_categories = content.get_categories(
+                    #     journey_input, region_input, track_input)
+                    # category_input = categories[0]
+                    # for each_category in categories:
+                    # category_name = category_input['category_name']
+                    # lessons = category_input['lessons']
+                    new_category = self.get_category_object(categories, default=True)
+                    new_track = {}
+                    new_track[track_input] = [new_category]
+                    content.journeys[journey_input][region_input].update(new_track)
+                    content.save()
+
             else:
-                new_category = self.get_category_object(categories)
-                content.update(push__categories=new_category)
+                new_category = self.get_category_object(categories, default=True)
+                new_region = {}
+                new_region[region_input] = journeys[journey_input][region_input]
+                content.journeys[journey_input].update(new_region)
+                content.save()
+        else:
+            new_category = self.get_category_object(categories, default=True)
+            new_track = {}
+            new_track[track_input] = [new_category]
+            new_region = {}
+            new_region[region_input] = new_track
+            new_journey = {}
+            new_journey[journey_input] = new_region
+            # new_journey[journey_names[0]] = journeys[journey_names[0]]
+            # content.journeys.update(new_journey)
+            content.journeys.update(new_journey)
+            content.save()
+
+
+            # content.update(
+            #     set__journeys__'+'journey_names[0]=journeys[journey_names[0]])
+
+        # for each_category in categories:
+        #     category_name = each_category['name']
+        #     lessons = each_category['lessons']
+        #     if category_name in obj_categories:
+        #         index1 = obj_categories.index(category_name)
+        #         obj_lessons = content.get_lessons(category_name)
+        #         for each_lesson in lessons:
+        #             lesson_name = each_lesson['name']
+        #             if lesson_name in obj_lessons:
+        #                 index3 = obj_lessons.index(lesson_name)
+        #                 parts = each_lesson['parts']
+        #                 empty_part = content.get_empty_part(
+        #                     category_name, lesson_name)
+        #                 obj_parts = self.get_part_object(parts)
+        #                 if bool(obj_parts.part1):
+        #                     content.categories[index1].lessons[index3].parts.part1 = obj_parts.part1
+        #                     content.save()
+        #                 if bool(obj_parts.part2):
+        #                     content.categories[index1].lessons[index3].parts.part2 = obj_parts.part2
+        #                     content.save()
+
+        #             else:
+        #                 new_lesson = self.get_lesson_object(
+        #                     lessons)
+        #                 lesson_objects = content.get_active_lessons(category_name)
+        #                 index2 = len(lesson_objects) - 1
+        #                 lesson_objects[index2].is_active = False
+        #                 content.categories[index1].lessons.append(new_lesson)
+        #                 content.save()
+        #     else:
+        #         new_category = self.get_category_object(categories)
+        #         content.update(push__categories=new_category)
 
         serializer = ContentSerializer(
             content,
@@ -366,7 +553,6 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                         file_error = serializer.errors['words']['audio']['files']['files']['file'][0]
                     except:
                         pass
-                    print ('errors total', image_error, file_error)
                     if file_error == 'This field may not be blank.' or image_error == 'This field may not be blank.':
                         is_valid = True
 
