@@ -51,7 +51,7 @@ class Category(EmbeddedDocument):
     """
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    name = fields.StringField()
+    category_name = fields.StringField()
     lessons = fields.ListField(fields.EmbeddedDocumentField(Lesson))
 
 
@@ -67,50 +67,63 @@ class Content(DynamicDocument):
     """
     country = fields.StringField(max_length=100)
     language = fields.StringField(max_length=100)
-    categories = fields.ListField(fields.EmbeddedDocumentField(Category))
+    journeys = fields.DictField()
+    # categories = fields.ListField(fields.EmbeddedDocumentField(Category))
 
-    def get_categories(self):
-        categories = self.categories
+    def get_categories(self, journey, region, track):
+        categories = self.journeys[journey][region][track]
         all_categories = []
         for each_category in categories:
-            all_categories.append(each_category.name)
+            all_categories.append(each_category['category_name'])
 
         return all_categories
 
-    def get_lessons(self, category):
-        categories = self.categories
+    def get_journeys(self):
+
+        return list(self.journeys.keys())
+
+    def get_regions(self, journey):
+        journey = self.journeys[journey]
+        return list(journey.keys())
+
+    def get_tracks(self, journey, region):
+        track = self.journeys[journey][region]
+        return list(track.keys())
+
+    def get_lessons(self, journey, region, track, category):
+        categories = self.journeys[journey][region][track]
         all_lessons = []
         for each_category in categories:
-            if each_category.name == category:
-                lessons = each_category.lessons
+            if each_category['category_name'] == category:
+                lessons = each_category['lessons']
                 for each_lesson in lessons:
-                    all_lessons.append(each_lesson.name)
+                    all_lessons.append(each_lesson['name'])
 
         return all_lessons
 
     def get_active_categories(self, category):
         categories = self.categories
         for each_category in categories:
-            if each_category.name == category:
-                return each_category.lessons
+            if each_category['category_name'] == category:
+                return each_category['lessons']
 
-    def get_active_lessons(self, category):
-        categories = self.categories
+    def get_active_lessons(self, journey, region, track, category):
+        categories = self.journeys[journey][region][track]
         for each_category in categories:
-            if each_category.name == category:
-                return each_category.lessons
+            if each_category['category_name'] == category:
+                return each_category['lessons']
 
     def get_empty_part(self, category, lesson):
         categories = self.categories
         for each_category in categories:
-            if each_category.name == category:
-                lessons = each_category.lessons
+            if each_category['category_name'] == category:
+                lessons = each_category['lessons']
                 for each_lesson in lessons:
-                    if each_lesson.name == lesson:
-                        parts = each_lesson.parts
-                        if parts.part1 is None:
+                    if each_lesson['name'] == lesson:
+                        parts = each_lesson['parts']
+                        if parts['part1'] is None:
                             return 'part1'
-                        if parts.part2 is None:
+                        if parts['part2'] is None:
                             return 'part2'
                         else:
                             return None
