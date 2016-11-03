@@ -74824,6 +74824,14 @@ var ContentPortalBuildPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        'What is the user journey?',
+                        _react2.default.createElement(_SelectField2.default, { hintText: 'User Journey', style: {
+                                width: '100%'
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What is the region?',
                         _react2.default.createElement(
                             _SelectField2.default,
@@ -75221,10 +75229,10 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'text-center build-search col-md-3 col-md-offset-1 build-search-right' },
+                    { className: 'text-left build-search col-md-3 col-md-offset-1 build-search-right' },
                     _react2.default.createElement(
                         'i',
-                        null,
+                        { className: this.state.search != '' && 'inactive' },
                         'Search for legos to view options'
                     ),
                     searchResults
@@ -75348,7 +75356,47 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                 null,
                                 item.word
                             );
-                            searchResults.push(word);
+
+                            var imgArray = [];
+
+                            var _iteratorNormalCompletion3 = true;
+                            var _didIteratorError3 = false;
+                            var _iteratorError3 = undefined;
+
+                            try {
+                                for (var _iterator3 = item.images[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                    var img = _step3.value;
+
+                                    var imgFile = _react2.default.createElement('img', { src: 'http://testing.lingohop.com' + img.file });
+                                    imgArray.push(imgFile);
+                                }
+                            } catch (err) {
+                                _didIteratorError3 = true;
+                                _iteratorError3 = err;
+                            } finally {
+                                try {
+                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                        _iterator3.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError3) {
+                                        throw _iteratorError3;
+                                    }
+                                }
+                            }
+
+                            var holder = _react2.default.createElement(
+                                'div',
+                                { className: 'search-holder' },
+                                word,
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'search-img-holder pull-left' },
+                                    imgArray
+                                )
+                            );
+
+                            searchResults.push(holder);
                         }
                     } catch (err) {
                         _didIteratorError2 = true;
@@ -75870,7 +75918,7 @@ var ContentPortalUploadPage = function (_React$Component) {
             imgOneUrl: '',
             imgTwoUrl: '',
             imgThreeUrl: ''
-        }, _defineProperty(_this$state, 'imgOneFile', ''), _defineProperty(_this$state, 'imgTwoFile', ''), _defineProperty(_this$state, 'imgThreeFile', ''), _defineProperty(_this$state, 'audioOneFile', ''), _defineProperty(_this$state, 'audioTwoFile', ''), _defineProperty(_this$state, 'audioThreeFile', ''), _defineProperty(_this$state, 'audioFourFile', ''), _defineProperty(_this$state, 'audioFiveFile', ''), _defineProperty(_this$state, 'audioSixFile', ''), _defineProperty(_this$state, 'audioOneUrl', ''), _defineProperty(_this$state, 'audioTwoUrl', ''), _defineProperty(_this$state, 'audioThreeUrl', ''), _defineProperty(_this$state, 'audioFourUrl', ''), _defineProperty(_this$state, 'audioFiveUrl', ''), _defineProperty(_this$state, 'audioSixUrl', ''), _defineProperty(_this$state, 'audioOnePlaying', false), _defineProperty(_this$state, 'audioTwoPlaying', false), _defineProperty(_this$state, 'audioThreePlaying', false), _defineProperty(_this$state, 'audioFourPlaying', false), _defineProperty(_this$state, 'audioFivePlaying', false), _defineProperty(_this$state, 'audioSixPlaying', false), _defineProperty(_this$state, 'language_country', ''), _defineProperty(_this$state, 'legoText', ''), _defineProperty(_this$state, 'gender', 'male'), _defineProperty(_this$state, 'regionOne', ''), _defineProperty(_this$state, 'regionTwo', ''), _defineProperty(_this$state, 'regionThree', ''), _defineProperty(_this$state, 'showModal', false), _defineProperty(_this$state, 'isUploading', false), _this$state);
+        }, _defineProperty(_this$state, 'imgOneFile', ''), _defineProperty(_this$state, 'imgTwoFile', ''), _defineProperty(_this$state, 'imgThreeFile', ''), _defineProperty(_this$state, 'audioOneFile', ''), _defineProperty(_this$state, 'audioTwoFile', ''), _defineProperty(_this$state, 'audioThreeFile', ''), _defineProperty(_this$state, 'audioFourFile', ''), _defineProperty(_this$state, 'audioFiveFile', ''), _defineProperty(_this$state, 'audioSixFile', ''), _defineProperty(_this$state, 'audioOneUrl', ''), _defineProperty(_this$state, 'audioTwoUrl', ''), _defineProperty(_this$state, 'audioThreeUrl', ''), _defineProperty(_this$state, 'audioFourUrl', ''), _defineProperty(_this$state, 'audioFiveUrl', ''), _defineProperty(_this$state, 'audioSixUrl', ''), _defineProperty(_this$state, 'audioOnePlaying', false), _defineProperty(_this$state, 'audioTwoPlaying', false), _defineProperty(_this$state, 'audioThreePlaying', false), _defineProperty(_this$state, 'audioFourPlaying', false), _defineProperty(_this$state, 'audioFivePlaying', false), _defineProperty(_this$state, 'audioSixPlaying', false), _defineProperty(_this$state, 'language_country', ''), _defineProperty(_this$state, 'legoText', ''), _defineProperty(_this$state, 'gender', 'male'), _defineProperty(_this$state, 'regionOne', ''), _defineProperty(_this$state, 'regionTwo', ''), _defineProperty(_this$state, 'regionThree', ''), _defineProperty(_this$state, 'showModal', false), _defineProperty(_this$state, 'showValidateModal', false), _defineProperty(_this$state, 'isUploading', false), _this$state);
 
         _this._handleImageUpload = _this._handleImageUpload.bind(_this);
         _this._handleImageDelete = _this._handleImageDelete.bind(_this);
@@ -75881,6 +75929,8 @@ var ContentPortalUploadPage = function (_React$Component) {
         _this.handleGenderChange = _this.handleGenderChange.bind(_this);
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
+        _this._openValidateModal = _this._openValidateModal.bind(_this);
+        _this._closeValidateModal = _this._closeValidateModal.bind(_this);
 
         return _this;
     }
@@ -75929,6 +75979,33 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _reactBootstrap.Modal.Footer,
                         null,
                         _react2.default.createElement(_RaisedButton2.default, { label: 'CLOSE', primary: true, onClick: this._closeModal, className: this.state.isUploading && 'inactive' })
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showValidateModal, onHide: this._closeValidateModal, backdrop: 'static' },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        null,
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Audio Validation Error'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        { className: 'col-md-12 text-center' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'The audio files for each particular region have to be in the "word_region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good_Catalonia". Please check the naming of your audio files'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'CLOSE', primary: true, onClick: this._closeValidateModal })
                     )
                 ),
                 _react2.default.createElement(
@@ -76203,6 +76280,16 @@ var ContentPortalUploadPage = function (_React$Component) {
             this.setState({ showModal: false });
         }
     }, {
+        key: '_openValidateModal',
+        value: function _openValidateModal() {
+            this.setState({ showValidateModal: true });
+        }
+    }, {
+        key: '_closeValidateModal',
+        value: function _closeValidateModal() {
+            this.setState({ showValidateModal: false });
+        }
+    }, {
         key: '_handleImageUpload',
 
 
@@ -76315,7 +76402,6 @@ var ContentPortalUploadPage = function (_React$Component) {
 
             var reader = new FileReader();
             var file = e.target.files[0];
-
             reader.onloadend = function () {
                 switch (number) {
                     case "one":
@@ -76487,78 +76573,124 @@ var ContentPortalUploadPage = function (_React$Component) {
         value: function _uploadContent() {
             var _this5 = this;
 
-            this.setState({
-                isUploading: true
-            }, function () {
-                _this5._openModal();
-            });
+            if (this.validateAudioFiles()) {
 
-            var language = languages[this.state.language_country - 1];
-            var country = countries[this.state.language_country - 1];
+                this.setState({
+                    isUploading: true
+                }, function () {
+                    _this5._openModal();
+                });
 
-            _jquery2.default.ajax({
-                method: "PUT",
-                data: JSON.stringify({
-                    "country": country,
-                    "language": language,
-                    "words": [{
-                        "word": this.state.legoText,
-                        "images": [{
-                            "file": this.state.imgOneUrl
-                        }, {
-                            "file": this.state.imgTwoUrl
-                        }, {
-                            "file": this.state.imgThreeUrl
-                        }],
-                        "audio": {
-                            "files": [{
-                                "gender": "male",
-                                "files": [{
-                                    "region": "region1",
-                                    "file": this.state.audioOneUrl
-                                }, {
-                                    "region": "region2",
-                                    "file": this.state.audioTwoUrl
-                                }, {
-                                    "region": "region3",
-                                    "file": this.state.audioThreeUrl
-                                }]
+                var language = languages[this.state.language_country - 1];
+                var country = countries[this.state.language_country - 1];
 
+                _jquery2.default.ajax({
+                    method: "PUT",
+                    data: JSON.stringify({
+                        "country": country,
+                        "language": language,
+                        "words": [{
+                            "word": this.state.legoText,
+                            "images": [{
+                                "file": this.state.imgOneUrl
                             }, {
-                                "gender": "female",
+                                "file": this.state.imgTwoUrl
+                            }, {
+                                "file": this.state.imgThreeUrl
+                            }],
+                            "audio": {
                                 "files": [{
-                                    "region": "region1",
-                                    "file": this.state.audioFourUrl
-                                }, {
-                                    "region": "region2",
-                                    "file": this.state.audioFiveUrl
-                                }, {
-                                    "region": "region3",
-                                    "file": this.state.audioSixUrl
-                                }]
+                                    "gender": "male",
+                                    "files": [{
+                                        "region": "region1",
+                                        "file": this.state.audioOneUrl
+                                    }, {
+                                        "region": "region2",
+                                        "file": this.state.audioTwoUrl
+                                    }, {
+                                        "region": "region3",
+                                        "file": this.state.audioThreeUrl
+                                    }]
 
-                            }]
-                        }
-                    }]
-                }),
-                dataType: "json",
-                contentType: "application/json",
-                url: 'http://testing.lingohop.com/api/assets/' + country + '/' + language + '/',
-                success: function success(res) {
-                    console.log('Uploaded successfully');
-                    _reactRouter.hashHistory.push('/contentportal/uploadfinish');
-                },
-                error: function error(a, b, c) {
-                    _this5.setState({ isUploading: false });
-                    console.log(a);
-                    console.log(b);
-                    console.log(c);
-                }
-            });
+                                }, {
+                                    "gender": "female",
+                                    "files": [{
+                                        "region": "region1",
+                                        "file": this.state.audioFourUrl
+                                    }, {
+                                        "region": "region2",
+                                        "file": this.state.audioFiveUrl
+                                    }, {
+                                        "region": "region3",
+                                        "file": this.state.audioSixUrl
+                                    }]
+
+                                }]
+                            }
+                        }]
+                    }),
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: 'http://testing.lingohop.com/api/assets/' + country + '/' + language + '/',
+                    success: function success(res) {
+                        console.log('Uploaded successfully');
+                        _reactRouter.hashHistory.push('/contentportal/uploadfinish');
+                    },
+                    error: function error(a, b, c) {
+                        _this5.setState({ isUploading: false });
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
+                    }
+                });
+            } else {
+                this._openValidateModal();
+            }
         }
 
         //---------------------
 
+    }, {
+        key: 'validateAudioFiles',
+        value: function validateAudioFiles() {
+
+            var maleValidation = true;
+            var femaleValidation = true;
+
+            if (this.state.gender === 'male' || this.state.gender === 'neutral') {
+                var nameOne = this.state.audioOneFile.name;
+                var nameTwo = this.state.audioTwoFile.name;
+                var nameThree = this.state.audioThreeFile.name;
+
+                nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
+                nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
+                nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
+
+                var validOne = nameOne === this.state.legoText + '-' + this.state.regionOne;
+                var validTwo = nameTwo === this.state.legoText + '-' + this.state.regionTwo;
+                var validThree = nameThree === this.state.legoText + '-' + this.state.regionThree;
+
+                maleValidation = validOne && validTwo && validThree;
+            }
+
+            if (this.state.gender === 'female' || this.state.gender === 'neutral') {
+                var nameFour = this.state.audioFourFile.name;
+                var nameFive = this.state.audioFiveFile.name;
+                var nameSix = this.state.audioSixFile.name;
+
+                nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'));
+                nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
+                nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
+
+                var validFour = nameFour === this.state.legoText + '-' + this.state.regionOne;
+                var validFive = nameFive === this.state.legoText + '-' + this.state.regionTwo;
+                var validSix = nameSix === this.state.legoText + '-' + this.state.regionThree;
+
+                femaleValidation = validFour && validFive && validSix;
+            }
+
+            return maleValidation && femaleValidation;
+        }
     }, {
         key: 'handleValueChange',
         value: function handleValueChange(name, event, index, value) {

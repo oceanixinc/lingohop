@@ -60,6 +60,12 @@ export default class ContentPortalBuildPage extends React.Component {
                         </SelectField>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
+                        What is the user journey?
+                        <SelectField hintText="User Journey" style={{
+                            width: '100%'
+                        }}></SelectField>
+                    </div>
+                    <div className="big-text text-left col-md-8 col-md-offset-2">
                         What is the region?
                         <SelectField value={this.state.region} onChange={this.handleValueChange.bind(this, 'region')} hintText="Region" style={{
                             width: '100%'

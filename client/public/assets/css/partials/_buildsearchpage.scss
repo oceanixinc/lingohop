@@ -54,12 +54,21 @@
                 color: white!important;
             }
         }
-
     }
 
-    .build-search-right{
-      height:600px;
-      font-size: 32px !important;
+    .build-search-right {
+        height: 600px;
 
+        .search-holder {
+            display: inline-block;
+            width:100%;
+        }
+
+        img {
+            height: 50px;
+            width: 50px;
+            object-fit: cover;
+            padding: 2px;
+        }
     }
 }

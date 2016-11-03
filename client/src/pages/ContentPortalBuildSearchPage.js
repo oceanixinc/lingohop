@@ -78,8 +78,8 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                         <RaisedButton label="BUILD" className="upload-btn active-btn" onClick={this._openModal}/>
                     </div>
                 </div>
-                <div className="text-center build-search col-md-3 col-md-offset-1 build-search-right">
-                    <i>Search for legos to view options</i>
+                <div className="text-left build-search col-md-3 col-md-offset-1 build-search-right">
+                    <i className={this.state.search != '' && 'inactive'}>Search for legos to view options</i>
                     {searchResults}
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
@@ -147,9 +147,26 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     let word = (
                         <p>{item.word}</p>
                     )
-                    searchResults.push(word)
+
+                    let imgArray = []
+
+                    for (let img of item.images) {
+                        let imgFile = (<img src={`http://testing.lingohop.com${img.file}`}/>)
+                        imgArray.push(imgFile)
+                    }
+
+                    let holder = (
+                        <div className="search-holder">
+                            {word}
+                            <div className="search-img-holder pull-left">
+                                {imgArray}
+                            </div>
+                        </div>
+                    )
+
+                    searchResults.push(holder)
                 }
-                
+
                 this.forceUpdate()
             }
         })
