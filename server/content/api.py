@@ -511,7 +511,7 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                         region = each_region['region']
                         region_file = each_region['file']
                         if len(region_file) > 0:
-                            if "audio" in region_file:
+                            if "audio/mpeg" in region_file:
                                 if 'base64' in region_file:
                                     my_audio = region_file.split('base64,')
                                     img_ext = my_audio[0].split('/')
