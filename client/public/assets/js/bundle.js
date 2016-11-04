@@ -75111,6 +75111,14 @@ var _FlatButton = require('material-ui/FlatButton');
 
 var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
+var _Avatar = require('material-ui/Avatar');
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
+var _Chip = require('material-ui/Chip');
+
+var _Chip2 = _interopRequireDefault(_Chip);
+
 var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -75131,6 +75139,7 @@ var styles = {
 };
 
 var searchResults = [];
+var chips = [];
 
 var ContentPortalBuildSearchPage = function (_React$Component) {
     _inherits(ContentPortalBuildSearchPage, _React$Component);
@@ -75146,6 +75155,9 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         };
 
         _this.handleSearch = _this.handleSearch.bind(_this);
+        _this.handleChipDelete = _this.handleChipDelete.bind(_this);
+        _this.createChip = _this.createChip.bind(_this);
+
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
 
@@ -75199,6 +75211,11 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
+                        { className: 'col-md-8 col-md-offset-2' },
+                        chips
+                    ),
+                    _react2.default.createElement(
+                        'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What is the first question?',
                         _react2.default.createElement(_TextField2.default, { hintText: 'Search...', style: {
@@ -75234,6 +75251,12 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         'i',
                         { className: this.state.search != '' && 'inactive' },
                         'Search for legos to view options'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        { className: this.state.search === '' && 'inactive' },
+                        'Existing legos for ',
+                        this.state.search
                     ),
                     searchResults
                 ),
@@ -75300,32 +75323,31 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         value: function handleSearch(event) {
             var searchString = event.target.value;
 
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+            /*for (let search of searchString.split(" ")) {
+                this._fetchSearch(search)
+            }*/
 
-            try {
-                for (var _iterator = searchString.split(" ")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var search = _step.value;
+            var lastTerm = searchString.split(" ").slice(-1).pop();
 
-                    this._fetchSearch(search);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
+            this._fetchSearch(lastTerm);
 
             this.setState({ search: event.target.value });
+        }
+    }, {
+        key: 'handleChipDelete',
+        value: function handleChipDelete() {}
+    }, {
+        key: 'createChip',
+        value: function createChip(url, text) {
+            var chip = _react2.default.createElement(
+                _Chip2.default,
+                { style: styles.chip, className: 'pull-left', onRequestDelete: this.handleChipDelete },
+                _react2.default.createElement(_Avatar2.default, { src: url }),
+                ' ',
+                text
+            );
+            chips.push(chip);
+            this.forceUpdate();
         }
 
         //API Calls
@@ -75340,16 +75362,15 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 dataType: "json",
                 url: 'http://testing.lingohop.com/api/assets/word/?country=USA&language=English&q=' + searchTerm,
                 success: function success(res) {
-                    console.log(res);
 
                     searchResults.length = 0;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
 
                     try {
-                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                            var item = _step2.value;
+                        var _loop = function _loop() {
+                            var item = _step.value;
 
                             var word = _react2.default.createElement(
                                 'p',
@@ -75359,28 +75380,34 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
                             var imgArray = [];
 
-                            var _iteratorNormalCompletion3 = true;
-                            var _didIteratorError3 = false;
-                            var _iteratorError3 = undefined;
+                            var _iteratorNormalCompletion2 = true;
+                            var _didIteratorError2 = false;
+                            var _iteratorError2 = undefined;
 
                             try {
-                                for (var _iterator3 = item.images[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                                    var img = _step3.value;
+                                var _loop2 = function _loop2() {
+                                    var img = _step2.value;
 
-                                    var imgFile = _react2.default.createElement('img', { src: 'http://testing.lingohop.com' + img.file });
+                                    var imgFile = _react2.default.createElement('img', { src: 'http://testing.lingohop.com' + img.file, onClick: function onClick() {
+                                            return _this2.createChip('http://testing.lingohop.com' + img.file, item.word);
+                                        } });
                                     imgArray.push(imgFile);
+                                };
+
+                                for (var _iterator2 = item.images[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                                    _loop2();
                                 }
                             } catch (err) {
-                                _didIteratorError3 = true;
-                                _iteratorError3 = err;
+                                _didIteratorError2 = true;
+                                _iteratorError2 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                        _iterator3.return();
+                                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                        _iterator2.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError3) {
-                                        throw _iteratorError3;
+                                    if (_didIteratorError2) {
+                                        throw _iteratorError2;
                                     }
                                 }
                             }
@@ -75397,18 +75424,22 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             );
 
                             searchResults.push(holder);
+                        };
+
+                        for (var _iterator = res[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            _loop();
                         }
                     } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
+                        _didIteratorError = true;
+                        _iteratorError = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
                             }
                         } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
+                            if (_didIteratorError) {
+                                throw _iteratorError;
                             }
                         }
                     }
@@ -75424,7 +75455,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
 exports.default = ContentPortalBuildSearchPage;
 
-},{"jquery":209,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],754:[function(require,module,exports){
+},{"jquery":209,"material-ui/Avatar":308,"material-ui/Chip":318,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],754:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

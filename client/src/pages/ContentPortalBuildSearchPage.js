@@ -8,6 +8,9 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
+
 import {Modal} from 'react-bootstrap'
 
 const styles = {
@@ -20,6 +23,7 @@ const styles = {
 };
 
 const searchResults = [];
+const chips = [];
 
 export default class ContentPortalBuildSearchPage extends React.Component {
 
@@ -32,6 +36,9 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         };
 
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleChipDelete = this.handleChipDelete.bind(this);
+        this.createChip = this.createChip.bind(this);
+
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
 
@@ -55,6 +62,9 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                         <TextField hintText="Search..." value={this.state.search} onChange={this.handleSearch} style={{
                             width: '100%'
                         }}></TextField>
+                    </div>
+                    <div className="col-md-8 col-md-offset-2">
+                        {chips}
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What is the first question?
@@ -80,6 +90,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 </div>
                 <div className="text-left build-search col-md-3 col-md-offset-1 build-search-right">
                     <i className={this.state.search != '' && 'inactive'}>Search for legos to view options</i>
+                    <p className={this.state.search === '' && 'inactive'}>Existing legos for {this.state.search}</p>
                     {searchResults}
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
@@ -125,11 +136,26 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     handleSearch(event) {
         let searchString = event.target.value
 
-        for (let search of searchString.split(" ")) {
+        /*for (let search of searchString.split(" ")) {
             this._fetchSearch(search)
-        }
+        }*/
+
+        let lastTerm = searchString.split(" ").slice(-1).pop()
+        this._fetchSearch(lastTerm)
 
         this.setState({search: event.target.value});
+    }
+
+    handleChipDelete() {}
+
+    createChip(url, text) {
+        let chip = (
+            <Chip style={styles.chip} className="pull-left" onRequestDelete={this.handleChipDelete}>
+                <Avatar src={url}/> {text}
+            </Chip>
+        )
+        chips.push(chip)
+        this.forceUpdate()
     }
 
     //API Calls
@@ -140,7 +166,6 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             dataType: "json",
             url: `http://testing.lingohop.com/api/assets/word/?country=USA&language=English&q=${searchTerm}`,
             success: (res) => {
-                console.log(res)
 
                 searchResults.length = 0
                 for (let item of res) {
@@ -151,7 +176,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     let imgArray = []
 
                     for (let img of item.images) {
-                        let imgFile = (<img src={`http://testing.lingohop.com${img.file}`}/>)
+                        let imgFile = (<img src={`http://testing.lingohop.com${img.file}`} onClick={() => this.createChip(`http://testing.lingohop.com${img.file}`, item.word)}/>)
                         imgArray.push(imgFile)
                     }
 

@@ -305,6 +305,7 @@
       font-size: 17px !important; }
   .build-search-page .build-search .active-btn span {
     color: white !important; }
+
 .build-search-page .build-search-right {
   height: 600px; }
   .build-search-page .build-search-right .search-holder {
@@ -331,5 +332,3 @@
   line-height: 110px;
   position: relative;
   text-align: center; }
-
-/*# sourceMappingURL=style.css.map */

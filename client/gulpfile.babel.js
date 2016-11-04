@@ -10,6 +10,7 @@ import watchify from 'watchify';
 import babelify from 'babelify';
 import uglify from 'gulp-uglify';
 import ifElse from 'gulp-if-else';
+import sass from 'gulp-sass';
 
 watchify.args.debug = true;
 
@@ -64,8 +65,15 @@ gulp.task('images', () =>
         .pipe(gulp.dest('dist/images'))
 );
 
+gulp.task('sass', function () {
+  return gulp.src('public/assets/css/style.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('public/assets/css'));
+});
+
 gulp.task('watch', ['serve'], () => {
   gulp.watch('src/**/*', ['js-watch'])
   gulp.watch('public/assets/css/style.css', sync.reload)
   gulp.watch('public/index.html', sync.reload)
+    gulp.watch('public/assets/css/style.scss', ['sass']);
 });
