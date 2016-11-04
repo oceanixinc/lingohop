@@ -510,20 +510,26 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     for region_index, each_region in enumerate(region_files):
                         region = each_region['region']
                         region_file = each_region['file']
-                        if 'base64' in region_file:
-                            my_audio = region_file.split('base64,')
-                            img_ext = my_audio[0].split('/')
-                            imgdata = base64.b64decode(my_audio[1])
-                            file_name = gender + '_ ' + region + '_' + b
-                            fname = '../media/audios/%s.%s' % (file_name, 'mp3')
+                        if len(region_file) > 0:
+                            if "audio" in region_file:
+                                if 'base64' in region_file:
+                                    my_audio = region_file.split('base64,')
+                                    img_ext = my_audio[0].split('/')
+                                    imgdata = base64.b64decode(my_audio[1])
+                                    file_name = gender + '_ ' + region + '_' + b
+                                    fname = '../media/audios/%s.%s' % (file_name, 'mp3')
 
-                            real_file = fname.split('../')
-                            # d64i = bytes(img, 'utf-8')
-                            # d64i = bytes(imgdata, 'utf-8')
-                            with open(fname, "wb") as fh:
-                                # fh.write(base64.decodestring(d64i))
-                                fh.write(imgdata)
-                            request.data['words'][word_index]['audio']['files'][index]['files'][region_index]['file'] = "/" + real_file[1]
+                                    real_file = fname.split('../')
+                                    # d64i = bytes(img, 'utf-8')
+                                    # d64i = bytes(imgdata, 'utf-8')
+                                    with open(fname, "wb") as fh:
+                                        # fh.write(base64.decodestring(d64i))
+                                        fh.write(imgdata)
+                                    request.data['words'][word_index]['audio']['files'][index]['files'][region_index]['file'] = "/" + real_file[1]
+                            else:
+                                return Response(
+                                    {'detail': 'audio file is invalid'},
+                                    status=status.HTTP_400_BAD_REQUEST)
 
                 asset = Asset.objects.filter(
                     country=country,
