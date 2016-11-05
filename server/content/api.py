@@ -627,29 +627,6 @@ class WordApi(generics.ListAPIView):
             return []
 
 
-
 class CategoryApi(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
-
-    def get_queryset(self):
-        """
-        This view should return a list of words.
-        """
-        country = self.request.GET.get('country', None)
-        language = self.request.GET.get('language', None)
-        # assets = Asset.objects.filter(
-        #     country='spain',
-        #     words__match={"word": q})
-        try:
-            content = Content.objects.get(
-                country=country,
-                language=language)
-            categories = []
-            if country and language:
-                for c in content.categories:
-                    categories.append(c)
-
-            return categories
-
-        except Content.DoesNotExist:
-            return []
+    queryset = Category.objects.all()
