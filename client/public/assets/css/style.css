@@ -305,9 +305,17 @@
       font-size: 17px !important; }
   .build-search-page .build-search .active-btn span {
     color: white !important; }
+
 .build-search-page .build-search-right {
-  height: 600px;
-  font-size: 32px !important; }
+  height: 600px; }
+  .build-search-page .build-search-right .search-holder {
+    display: inline-block;
+    width: 100%; }
+  .build-search-page .build-search-right img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    padding: 2px; }
 
 .inactive {
   display: none !important; }
@@ -324,5 +332,3 @@
   line-height: 110px;
   position: relative;
   text-align: center; }
-
-/*# sourceMappingURL=style.css.map */

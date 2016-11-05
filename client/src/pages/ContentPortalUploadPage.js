@@ -66,6 +66,7 @@ export default class ContentPortalUploadPage extends React.Component {
             regionTwo: '',
             regionThree: '',
             showModal: false,
+            showValidateModal: false,
             isUploading: false
         };
 
@@ -78,6 +79,8 @@ export default class ContentPortalUploadPage extends React.Component {
         this.handleGenderChange = this.handleGenderChange.bind(this);
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
+        this._openValidateModal = this._openValidateModal.bind(this);
+        this._closeValidateModal = this._closeValidateModal.bind(this);
 
     }
 
@@ -99,6 +102,18 @@ export default class ContentPortalUploadPage extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <RaisedButton label="CLOSE" primary={true} onClick={this._closeModal} className={this.state.isUploading && 'inactive'}/>
+                    </Modal.Footer>
+
+                </Modal>
+                <Modal show={this.state.showValidateModal} onHide={this._closeValidateModal} backdrop='static'>
+                    <Modal.Header>
+                        <h4>Audio Validation Error</h4>
+                    </Modal.Header>
+                    <Modal.Body className="col-md-12 text-center">
+                        <h4>The audio files for each particular region have to be in the "word_region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good_Catalonia". Please check the naming of your audio files</h4>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <RaisedButton label="CLOSE" primary={true} onClick={this._closeValidateModal}/>
                     </Modal.Footer>
 
                 </Modal>
@@ -263,6 +278,14 @@ export default class ContentPortalUploadPage extends React.Component {
         this.setState({showModal: false});
     };
 
+    _openValidateModal() {
+        this.setState({showValidateModal: true});
+    };
+
+    _closeValidateModal() {
+        this.setState({showValidateModal: false});
+    };
+
     //Uploads
     _handleImageUpload(e) {
         e.preventDefault();
@@ -375,7 +398,6 @@ export default class ContentPortalUploadPage extends React.Component {
 
         let reader = new FileReader();
         let file = e.target.files[0];
-
         reader.onloadend = () => {
             switch (number) {
                 case "one":
@@ -520,89 +542,134 @@ export default class ContentPortalUploadPage extends React.Component {
 
     _uploadContent() {
 
-        this.setState({
-            isUploading: true
-        }, () => {
-            this._openModal()
-        })
+        if (this.validateAudioFiles()) {
 
-        let language = languages[this.state.language_country - 1]
-        let country = countries[this.state.language_country - 1]
+            this.setState({
+                isUploading: true
+            }, () => {
+                this._openModal()
+            })
 
-        jQuery.ajax({
-            method: "PUT",
-            data: JSON.stringify({
-                "country": country,
-                "language": language,
-                "words": [
-                    {
-                        "word": this.state.legoText,
-                        "images": [
-                            {
-                                "file": this.state.imgOneUrl
-                            }, {
-                                "file": this.state.imgTwoUrl
-                            }, {
-                                "file": this.state.imgThreeUrl
-                            }
-                        ],
-                        "audio": {
-                            "files": [
+            let language = languages[this.state.language_country - 1]
+            let country = countries[this.state.language_country - 1]
+
+            jQuery.ajax({
+                method: "PUT",
+                data: JSON.stringify({
+                    "country": country,
+                    "language": language,
+                    "words": [
+                        {
+                            "word": this.state.legoText,
+                            "images": [
                                 {
-                                    "gender": "male",
-                                    "files": [
-                                        {
-                                            "region": "region1",
-                                            "file": this.state.audioOneUrl
-                                        }, {
-                                            "region": "region2",
-                                            "file": this.state.audioTwoUrl
-                                        }, {
-                                            "region": "region3",
-                                            "file": this.state.audioThreeUrl
-                                        }
-                                    ]
-
+                                    "file": this.state.imgOneUrl
                                 }, {
-                                    "gender": "female",
-                                    "files": [
-                                        {
-                                            "region": "region1",
-                                            "file": this.state.audioFourUrl
-                                        }, {
-                                            "region": "region2",
-                                            "file": this.state.audioFiveUrl
-                                        }, {
-                                            "region": "region3",
-                                            "file": this.state.audioSixUrl
-                                        }
-                                    ]
-
+                                    "file": this.state.imgTwoUrl
+                                }, {
+                                    "file": this.state.imgThreeUrl
                                 }
-                            ]
+                            ],
+                            "audio": {
+                                "files": [
+                                    {
+                                        "gender": "male",
+                                        "files": [
+                                            {
+                                                "region": "region1",
+                                                "file": this.state.audioOneUrl
+                                            }, {
+                                                "region": "region2",
+                                                "file": this.state.audioTwoUrl
+                                            }, {
+                                                "region": "region3",
+                                                "file": this.state.audioThreeUrl
+                                            }
+                                        ]
+
+                                    }, {
+                                        "gender": "female",
+                                        "files": [
+                                            {
+                                                "region": "region1",
+                                                "file": this.state.audioFourUrl
+                                            }, {
+                                                "region": "region2",
+                                                "file": this.state.audioFiveUrl
+                                            }, {
+                                                "region": "region3",
+                                                "file": this.state.audioSixUrl
+                                            }
+                                        ]
+
+                                    }
+                                ]
+                            }
                         }
-                    }
-                ]
-            }),
-            dataType: "json",
-            contentType: "application/json",
-            url: `http://testing.lingohop.com/api/assets/${country}/${language}/`,
-            success: (res) => {
-                console.log('Uploaded successfully')
-                hashHistory.push('/contentportal/uploadfinish')
-            },
-            error: (a, b, c) => {
-                this.setState({isUploading: false})
-                console.log(a)
-                console.log(b)
-                console.log(c)
+                    ]
+                }),
+                dataType: "json",
+                contentType: "application/json",
+                url: `http://testing.lingohop.com/api/assets/${country}/${language}/`,
+                success: (res) => {
+                    console.log('Uploaded successfully')
+                    hashHistory.push('/contentportal/uploadfinish')
+                },
+                error: (a, b, c) => {
+                    this.setState({isUploading: false})
+                    console.log(a)
+                    console.log(b)
+                    console.log(c)
 
-            }
-        })
-
+                }
+            })
+        } else {
+            this._openValidateModal()
+        }
     }
 
     //---------------------
+
+    validateAudioFiles() {
+
+        let maleValidation = true
+        let femaleValidation = true
+
+        if (this.state.gender === 'male' || this.state.gender === 'neutral') {
+            let nameOne = this.state.audioOneFile.name
+            let nameTwo = this.state.audioTwoFile.name
+            let nameThree = this.state.audioThreeFile.name
+
+            nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'))
+            nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'))
+            nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'))
+
+            let validOne = (nameOne === `${this.state.legoText}-${this.state.regionOne}`)
+            let validTwo = (nameTwo === `${this.state.legoText}-${this.state.regionTwo}`)
+            let validThree = (nameThree === `${this.state.legoText}-${this.state.regionThree}`)
+
+            maleValidation = validOne && validTwo && validThree
+        }
+
+        if (this.state.gender === 'female' || this.state.gender === 'neutral') {
+            let nameFour = this.state.audioFourFile.name
+            let nameFive = this.state.audioFiveFile.name
+            let nameSix = this.state.audioSixFile.name
+
+            nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'))
+            nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'))
+            nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'))
+
+            let validFour = (nameFour === `${this.state.legoText}-${this.state.regionOne}`)
+            let validFive = (nameFive === `${this.state.legoText}-${this.state.regionTwo}`)
+            let validSix = (nameSix === `${this.state.legoText}-${this.state.regionThree}`)
+
+            femaleValidation = validFour && validFive && validSix
+        }
+
+        return (maleValidation && femaleValidation)
+    }
+
     handleValueChange(name, event, index, value) {
 
         var change = {};
