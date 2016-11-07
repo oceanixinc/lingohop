@@ -47,19 +47,26 @@ class Lesson(EmbeddedDocument):
     )
 
 
-class Category(EmbeddedDocument):
+class Image(EmbeddedDocument):
     """
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    category_name = fields.StringField()
-    lessons = fields.ListField(fields.EmbeddedDocumentField(Lesson))
+    file = fields.StringField(required=False, blank=True, null=True)
 
 
-class Language(EmbeddedDocument):
+class Category(DynamicDocument):
+    """
+    Generic list of categories, lessons db will choose from this list and insert into its structure
+    """
+    name = fields.StringField()
+    image = fields.EmbeddedDocumentField(Image, required=False, blank=True, null=True)
+
+
+class Language(DynamicEmbeddedDocument):
     """
     """
     # name = fields.StringField()
-    categories = fields.ListField(fields.EmbeddedDocumentField(Category))
+    categories = fields.ListField(fields.DynamicField(Category))
 
 
 class Content(DynamicDocument):
@@ -132,13 +139,6 @@ class Content(DynamicDocument):
     # language = fields.ListField((fields.EmbeddedDocumentField(Language)))
 
 
-class Image(EmbeddedDocument):
-    """
-    """
-    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    file = fields.StringField(required=False, blank=True, null=True)
-
-
 class Files(EmbeddedDocument):
     region = fields.StringField(required=False, blank=True, null=True)
     file = fields.StringField(required=False, blank=True, null=True)
@@ -199,6 +199,7 @@ class Asset(DynamicDocument):
     #         fields.EmbeddedDocumentField(AudioImage))))
 
 # Asset.objects.get(country='spain')
+
 
 class Region(DynamicDocument):
     """

@@ -52,9 +52,8 @@ class RegionSerializer(DocumentSerializer):
         depth = 7
 
 
-class CategorySerializer(EmbeddedDocumentSerializer):
+class CategorySerializer(DocumentSerializer):
 
     class Meta:
         model = Category
-        fields = ('ID', 'name', 'lessons')
         depth = 7
