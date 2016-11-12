@@ -1,5 +1,5 @@
 from .models import (
-    Asset, Content, Region, AudioImage, Category)
+    Asset, Content, Region, AudioImage, Category, Journey, Track)
 
 from rest_framework_mongoengine.serializers import (
     DocumentSerializer, EmbeddedDocumentSerializer)
@@ -56,4 +56,18 @@ class CategorySerializer(DocumentSerializer):
 
     class Meta:
         model = Category
+        depth = 7
+
+
+class JourneySerializer(DocumentSerializer):
+
+    class Meta:
+        model = Journey
+        depth = 7
+
+
+class TrackSerializer(DocumentSerializer):
+
+    class Meta:
+        model = Track
         depth = 7

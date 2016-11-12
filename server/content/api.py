@@ -8,7 +8,7 @@ from .serializers import (
     ContentSerializer,
     RegionSerializer,
     WordSerializer,
-    CategorySerializer)
+    CategorySerializer, JourneySerializer, TrackSerializer)
 from mongoengine import fields
 
 from django.shortcuts import get_object_or_404
@@ -630,3 +630,13 @@ class WordApi(generics.ListAPIView):
 class CategoryApi(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+
+class JourneyApi(generics.ListCreateAPIView):
+    serializer_class = JourneySerializer
+    queryset = Journey.objects.all()
+
+
+class TrackApi(generics.ListCreateAPIView):
+    serializer_class = TrackSerializer
+    queryset = Track.objects.all()
