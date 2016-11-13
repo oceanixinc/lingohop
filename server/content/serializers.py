@@ -1,15 +1,16 @@
 from .models import (
     Asset, Content, Region, AudioImage, Category, Journey, Track)
-
+from rest_framework import serializers
 from rest_framework_mongoengine.serializers import (
     DocumentSerializer, EmbeddedDocumentSerializer)
 
 
 class WordSerializer(EmbeddedDocumentSerializer):
+    # gender = serializers.SerializerMethodField('get_gender_name')
 
     class Meta:
         model = AudioImage
-        fields = ('word', 'images',)
+        fields = ('word', 'images', 'audio',)
         depth = 7
 
 

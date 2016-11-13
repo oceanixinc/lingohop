@@ -2,16 +2,23 @@
 from django.conf.urls import url
 
 from content.api import (
-    ContentCreate, ContentUpdate, CategoryApi, JourneyApi, TrackApi
+    ContentCreate, ContentRetrieveApi,
+    ContentUpdate, CategoryApi, JourneyApi, TrackApi
 )
 
 urlpatterns = [
-
     url(
         r'(?P<country>\w+)/(?P<language>\w+)/$',
         ContentCreate.as_view(),
         name='content'
     ),
+
+    url(
+        r'^$',
+        ContentRetrieveApi.as_view(),
+        name='content-data'
+    ),
+
 
     url(
         r'^(?P<name>\w+)$',
