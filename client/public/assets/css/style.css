@@ -306,6 +306,30 @@
   .build-search-page .build-search .active-btn span {
     color: white !important; }
 
+.build-search-page .build-search-left .male {
+  background-color: #0D47A1 !important; }
+  .build-search-page .build-search-left .male > span {
+    color: white !important; }
+  .build-search-page .build-search-left .male > svg {
+    color: white !important;
+    fill: white !important; }
+
+.build-search-page .build-search-left .female {
+  background-color: #F06292 !important; }
+  .build-search-page .build-search-left .female > span {
+    color: white !important; }
+  .build-search-page .build-search-left .female > svg {
+    color: white !important;
+    fill: white !important; }
+
+.build-search-page .build-search-left .neutral {
+  background-color: green !important; }
+  .build-search-page .build-search-left .neutral > span {
+    color: white !important; }
+  .build-search-page .build-search-left .neutral > svg {
+    color: white !important;
+    fill: white !important; }
+
 .build-search-page .build-search-right {
   height: 600px; }
   .build-search-page .build-search-right .search-holder {
@@ -315,7 +339,14 @@
     height: 50px;
     width: 50px;
     object-fit: cover;
-    padding: 2px; }
+    padding: 2px;
+    margin: 1px; }
+  .build-search-page .build-search-right .male {
+    border-bottom: 1px solid #0D47A1; }
+  .build-search-page .build-search-right .female {
+    border-bottom: 1px solid #F06292; }
+  .build-search-page .build-search-right .neutral {
+    border-bottom: 1px solid green; }
 
 .inactive {
   display: none !important; }
