@@ -58,8 +58,25 @@ class Category(DynamicDocument):
     """
     Generic list of categories, lessons db will choose from this list and insert into its structure
     """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
     name = fields.StringField()
     image = fields.EmbeddedDocumentField(Image, required=False, blank=True, null=True)
+
+
+class Journey(DynamicDocument):
+    """
+    Generic list of categories, lessons db will choose from this list and insert into its structure
+    """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.StringField()
+
+
+class Track(DynamicDocument):
+    """
+    Generic list of categories, lessons db will choose from this list and insert into its structure
+    """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.StringField()
 
 
 class Language(DynamicEmbeddedDocument):

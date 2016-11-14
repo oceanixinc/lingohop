@@ -1,14 +1,14 @@
 from functools import reduce
 import operator
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, views
 from rest_framework_mongoengine import generics
 from .serializers import (
     AssetSerializer,
     ContentSerializer,
     RegionSerializer,
     WordSerializer,
-    CategorySerializer)
+    CategorySerializer, JourneySerializer, TrackSerializer)
 from mongoengine import fields
 
 from django.shortcuts import get_object_or_404
@@ -18,6 +18,17 @@ from .models import *
 # from rest_framework.parsers import FileUploadParser
 import base64
 import uuid
+
+
+import json
+from bson import ObjectId
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 
 def get_obj_or_404(klass, *args, **kwargs):
@@ -112,6 +123,9 @@ def mongo_to_dict(obj, exclude_fields):
             )
 
     return dict(return_data)
+
+
+
 
 
 class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDestroyAPIView):
@@ -418,6 +432,41 @@ class MultipleFieldLookupMixin(object):
         return get_obj_or_404(Asset, **filter)  # Lookup the object
 
 
+class ContentRetrieveApi(views.APIView):
+
+    def get(self, request, format=None):
+        country = self.request.GET.get('country', None)
+        language = self.request.GET.get('language', None)
+        try:
+            content = Content.objects.get(
+                country=country,
+                language=language)
+        except:
+            return Response(
+                {'detail': 'country-language not available'},
+                status=status.HTTP_200_OK)
+        journey_data = self.request.GET.get('journey', None)
+        region_data = self.request.GET.get('region', None)
+        track_data = self.request.GET.get('track', None)
+        if journey_data and region_data and track_data:
+            return Response(
+                content.journeys[journey_data][region_data][track_data],
+                status=status.HTTP_200_OK)
+        if journey_data and region_data:
+            return Response(
+                content.journeys[journey_data][region_data],
+                status=status.HTTP_200_OK)
+        if journey_data:
+            return Response(
+                content.journeys[journey_data],
+                status=status.HTTP_200_OK)
+        else:
+            serializer = ContentSerializer(content)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK)
+
+
 class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AssetSerializer
     queryset = Asset.objects.all()
@@ -630,3 +679,13 @@ class WordApi(generics.ListAPIView):
 class CategoryApi(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+
+class JourneyApi(generics.ListCreateAPIView):
+    serializer_class = JourneySerializer
+    queryset = Journey.objects.all()
+
+
+class TrackApi(generics.ListCreateAPIView):
+    serializer_class = TrackSerializer
+    queryset = Track.objects.all()
