@@ -54,7 +54,15 @@ class Image(EmbeddedDocument):
     file = fields.StringField(required=False, blank=True, null=True)
 
 
-class Category(DynamicDocument):
+class Category(EmbeddedDocument):
+    """
+    """
+    ID = fields.UUIDField(binary=False, default=uuid.uuid4)
+    name = fields.StringField()
+    lessons = fields.ListField(fields.EmbeddedDocumentField(Lesson))
+
+
+class MainCategory(DynamicDocument):
     """
     Generic list of categories, lessons db will choose from this list and insert into its structure
     """
