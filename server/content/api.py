@@ -677,8 +677,9 @@ class WordApi(generics.ListAPIView):
 
 
 class CategoryApi(generics.ListCreateAPIView):
+    """Category can be added, list"""
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+    queryset = MainCategory.objects.all()
 
 
 class JourneyApi(generics.ListCreateAPIView):
