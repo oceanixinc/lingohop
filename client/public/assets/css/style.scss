@@ -11,17 +11,40 @@
     display: none !important;
 }
 
-.modal-header, .modal-footer {
+.modal-footer,
+.modal-header {
     border: none;
     text-align: center !important;
 }
 
+#category-photo {
+    display: none;
+}
+
 #add-photo {
-    height: 120px;
+    height: 254px;
     width: 100%;
     border: 1px solid #333;
     font-size: 16px;
-    line-height: 110px;
+    line-height: 238px;
     position: relative;
     text-align: center;
+}
+
+#category-preview {
+    height: 254px;
+    width: 100%;
+    border: 1px solid #333;
+    position: relative;
+    object-fit: cover;
+}
+
+.active-btn {
+    button {
+        background-color: $lightblue!important;
+    }
+
+    span {
+        color: white!important;
+    }
 }

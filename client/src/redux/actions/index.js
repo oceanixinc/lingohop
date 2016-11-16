@@ -36,20 +36,20 @@ export const setRegion = (region) =>{
 export const setTrack = (track) =>{
   return {
     type: 'SET_TRACK',
-    language: track
+    track: track
   }
 }
 
 export const setCategory = (category) =>{
   return {
     type: 'SET_CATEGORY',
-    language: category
+    category: category
   }
 }
 
 export const setLesson = (lesson) =>{
   return {
     type: 'SET_LESSON',
-    language: lesson
+    lesson: lesson
   }
 }

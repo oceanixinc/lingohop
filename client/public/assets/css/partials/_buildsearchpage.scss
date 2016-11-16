@@ -95,6 +95,12 @@
                 fill: white !important;
             }
         }
+
+        .variable {
+            > span {
+                text-decoration: underline;
+            }
+        }
     }
 
     .build-search-right {

@@ -35,6 +35,7 @@ import MainPageLayout from './layout/MainPageLayout'
 //Pages-----------------------------------------------------------------------------------------
 
 //Content Portal
+import TestPage from './pages/TestPage'
 import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
 import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
@@ -51,6 +52,7 @@ const app = (
             <Router history={hashHistory}>
                 <Redirect from="/" to="/login"/>
                 <Route path="login" component={ContentPortalLoginPage}/>
+                  <Route path="test" component={TestPage}/>
                 <Route path="contentportal" component={ContentPortalLayout}>
                     <IndexRoute component={ContentPortalLandingPage}/>
                     <Route path="upload" component={ContentPortalUploadPage}/>

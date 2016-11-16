@@ -34,12 +34,27 @@ export default class ContentPortalBuildPage extends React.Component {
             journey: '',
             track: '',
             lesson: '',
-            showModal: false
+            newJourney: '',
+            newTrack: '',
+            newCategory: '',
+            showModal: false,
+            categoryImgUrl: ''
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
         this.handleLessonChange = this.handleLessonChange.bind(this);
+        this.handleNewJourneyChange = this.handleNewJourneyChange.bind(this);
+        this.handleNewTrackChange = this.handleNewTrackChange.bind(this);
+        this.handleNewCategoryChange = this.handleNewCategoryChange.bind(this);
+
+        this._handleImageUpload = this._handleImageUpload.bind(this);
+        this._clickImageUpload = this._clickImageUpload.bind(this);
+
         this._fetchLanguageCountry = this._fetchLanguageCountry.bind(this);
+        this._newTrack = this._newTrack.bind(this);
+        this._newJourney = this._newJourney.bind(this);
+        this._newCategory = this._newCategory.bind(this);
+
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
         this._nextPage = this._nextPage.bind(this);
@@ -48,7 +63,6 @@ export default class ContentPortalBuildPage extends React.Component {
 
     componentWillMount() {
         this._fetchLanguageCountry();
-        this._fetchCategory();
         this._fetchJourney();
         this._fetchTrack();
     }
@@ -81,6 +95,10 @@ export default class ContentPortalBuildPage extends React.Component {
                         }}>
                             {journey_items}
                         </SelectField>
+                        <TextField value={this.state.newJourney} onChange={this.handleNewJourneyChange} hintText="New Journey" style={{
+                            marginRight: '5px'
+                        }}></TextField>
+                        <FlatButton label="+ Add Journey" onClick={this._newJourney}/>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What is the region?
@@ -97,6 +115,10 @@ export default class ContentPortalBuildPage extends React.Component {
                         }}>
                             {track_items}
                         </SelectField>
+                        <TextField value={this.state.newTrack} onChange={this.handleNewTrackChange} hintText="New Track" style={{
+                            marginRight: '5px'
+                        }}></TextField>
+                        <FlatButton label="+ Add Track" onClick={this._newTrack}/>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         Please select a category
@@ -105,7 +127,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         }}>
                             {category_items}
                         </SelectField>
-                        <FlatButton label="+Add New Category" onClick={this._openModal}/>
+                        <FlatButton label="+ Add New Category" onClick={this._openModal}/>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What would you like to name the lesson?
@@ -132,22 +154,24 @@ export default class ContentPortalBuildPage extends React.Component {
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-6 text-center">
-                            <div id="add-photo">
+                            <input id="category-photo" className="fileInput" type="file" onChange={this._handleImageUpload}/>
+                            <div id="add-photo" className={this.state.categoryImgUrl != '' && 'inactive'} onClick={this._clickImageUpload}>
                                 + Add Category Photo
                             </div>
+                            <img id="category-preview" className={this.state.categoryImgUrl === '' && 'inactive'} src={this.state.categoryImgUrl} onClick={this._clickImageUpload}/>
                             <i>Max size of 2 mb</i>
                         </div>
                         <div className="col-md-6">
                             <SelectField hintText="Position" style={{
                                 width: '100%'
                             }}></SelectField>
-                            <TextField hintText="Name" style={{
+                            <TextField hintText="Name" value={this.state.newCategory} onChange={this.handleNewCategoryChange} style={{
                                 width: '100%'
                             }}></TextField>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <RaisedButton label="BUILD" primary={true}/>
+                        <RaisedButton label="BUILD" primary={true} className={!(this.state.categoryImgUrl === '' || this.state.newCategory === '') && 'active-btn'} disabled={this.state.categoryImgUrl === '' || this.state.newCategory === ''} onClick={this._newCategory}/>
                     </Modal.Footer>
 
                 </Modal>
@@ -210,12 +234,15 @@ export default class ContentPortalBuildPage extends React.Component {
     }
 
     _fetchCategory() {
-
+        let language = languages[this.state.language_country - 1]
+        let country = countries[this.state.language_country - 1]
+        categories.length = 0
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/contents/category/`,
+            url: `http://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
             success: (res) => {
+                category_items.length = 0
                 let i = 1
                 for (let category of res) {
                     let value = category.name
@@ -232,12 +259,13 @@ export default class ContentPortalBuildPage extends React.Component {
     }
 
     _fetchJourney() {
-
+        journeys.length = 0;
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
             url: `http://testing.lingohop.com/api/contents/journey/`,
             success: (res) => {
+                journey_items.length = 0;
                 let i = 1
                 for (let journey of res) {
                     let value = journey.name
@@ -253,12 +281,13 @@ export default class ContentPortalBuildPage extends React.Component {
     }
 
     _fetchTrack() {
-
+        tracks.length = 0;
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
             url: `http://testing.lingohop.com/api/contents/track/`,
             success: (res) => {
+                track_items.length = 0
                 let i = 1
                 for (let track of res) {
                     let value = track.name
@@ -273,9 +302,83 @@ export default class ContentPortalBuildPage extends React.Component {
         })
     }
 
+    _newTrack() {
+        jQuery.ajax({
+            method: 'POST',
+            dataType: "json",
+            data: JSON.stringify({"ID": 1, "name": this.state.newTrack}),
+            contentType: "application/json",
+            url: `http://testing.lingohop.com/api/contents/track/`,
+            success: (res) => {
+                this.setState({
+                    newTrack: ''
+                }, () => {
+                    this._fetchTrack()
+                })
+            }
+        })
+    }
+
+    _newJourney() {
+        jQuery.ajax({
+            method: 'POST',
+            dataType: "json",
+            data: JSON.stringify({"ID": 1, "name": this.state.newJourney}),
+            contentType: "application/json",
+            url: `http://testing.lingohop.com/api/contents/journey/`,
+            success: (res) => {
+                this.setState({
+                    newJourney: ''
+                }, () => {
+                    this._fetchJourney()
+                })
+            }
+        })
+    }
+
+    _newCategory() {
+        let language = languages[this.state.language_country - 1]
+        let country = countries[this.state.language_country - 1]
+        jQuery.ajax({
+            method: 'POST',
+            dataType: "json",
+            data: JSON.stringify({
+                "ID": 1,
+                "name": this.state.newCategory,
+                "image": {
+                    "ID": 1,
+                    "file": this.state.categoryImgUrl
+                }
+            }),
+            contentType: "application/json",
+            url: `http://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
+            success: (res) => {
+                this.setState({
+                    newCategory: '',
+                    categoryImgUrl: ''
+                }, () => {
+                    this._fetchCategory()
+                })
+            }
+        })
+    }
+
+    /************Other*******************************************/
     handleLessonChange(event) {
         this.setState({lesson: event.target.value});
         this.props.setLesson(event.target.value);
+    }
+
+    handleNewTrackChange(event) {
+        this.setState({newTrack: event.target.value});
+    }
+
+    handleNewJourneyChange(event) {
+        this.setState({newJourney: event.target.value});
+    }
+
+    handleNewCategoryChange(event) {
+        this.setState({newCategory: event.target.value});
     }
 
     handleValueChange(name, event, index, value) {
@@ -285,25 +388,43 @@ export default class ContentPortalBuildPage extends React.Component {
             switch (name) {
                 case 'language_country':
                     this._fetchRegion();
-                    this.props.setLanguage(languages[this.state.language_country - 1])
-                    this.props.setCountry(countries[this.state.language_country - 1])
+                    this._fetchCategory();
+                    this.props.setLanguage(languages[this.state.language_country - 1]);
+                    this.props.setCountry(countries[this.state.language_country - 1]);
                     break;
                 case 'region':
-                    this.props.setRegion(regions[this.state.region-1]);
+                    this.props.setRegion(regions[this.state.region - 1]);
                     break;
                 case 'category':
-                    this.props.setCategory(categories[this.state.category-1]);
+                    this.props.setCategory(categories[this.state.category - 1]);
                     break;
                 case 'journey':
-                    this.props.setJourney(journeys[this.state.journey-1]);
+                    this.props.setJourney(journeys[this.state.journey - 1]);
                     break;
                 case 'track':
-                    this.props.setTrack(tracks[this.state.track-1]);
+                    this.props.setTrack(tracks[this.state.track - 1]);
                     break;
             }
         });
 
     };
+
+    _handleImageUpload(e) {
+
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({categoryImgUrl: reader.result});
+        }
+        reader.readAsDataURL(file)
+
+    }
+
+    _clickImageUpload() {
+        document.getElementById('category-photo').click();
+    }
 
     _openModal() {
         this.setState({showModal: true});
