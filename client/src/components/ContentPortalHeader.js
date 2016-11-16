@@ -1,14 +1,7 @@
 import React from 'react'
 import {
     Navbar,
-    Nav,
-    NavItem,
-    NavDropdown,
-    MenuItem,
-    Button,
-    FormGroup,
-    InputGroup,
-    FormControl
+    Nav
 } from 'react-bootstrap'
 
 export default class ContentPortalHeader extends React.Component {
@@ -17,7 +10,7 @@ export default class ContentPortalHeader extends React.Component {
             <Navbar inverse fluid id="landing-navbar">
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <img className="pull-left" src="assets/img/logo/logo.svg"/>
+                        <img className="pull-left" src="assets/img/logo/1024x1024.png"/>
                         <p className="pull-left">Lingohop</p>
                     </Navbar.Brand>
                     <Navbar.Toggle/>

@@ -35,12 +35,13 @@ import MainPageLayout from './layout/MainPageLayout'
 //Pages-----------------------------------------------------------------------------------------
 
 //Content Portal
+import TestPage from './pages/TestPage'
 import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
 import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
-import ContentPortalBuildPage from './pages/ContentPortalBuildPage'
-import ContentPortalBuildSearchPage from './pages/ContentPortalBuildSearchPage'
+import ReduxContentPortalBuildPage from './redux-pages/ReduxContentPortalBuildPage'
+import ReduxContentPortalBuildSearchPage from './redux-pages/ReduxContentPortalBuildSearchPage'
 
 //Main
 import MainHomePage from './pages/MainHomePage'
@@ -51,12 +52,13 @@ const app = (
             <Router history={hashHistory}>
                 <Redirect from="/" to="/login"/>
                 <Route path="login" component={ContentPortalLoginPage}/>
+                  <Route path="test" component={TestPage}/>
                 <Route path="contentportal" component={ContentPortalLayout}>
                     <IndexRoute component={ContentPortalLandingPage}/>
                     <Route path="upload" component={ContentPortalUploadPage}/>
                     <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
-                    <Route path="build" component={ContentPortalBuildPage}/>
-                    <Route path="buildsearch" component={ContentPortalBuildSearchPage}/>
+                    <Route path="build" component={ReduxContentPortalBuildPage}/>
+                    <Route path="buildsearch" component={ReduxContentPortalBuildSearchPage}/>
                 </Route>
                 <Route path="mainpage" component={MainPageLayout}>
                     <IndexRoute component={MainHomePage}/>

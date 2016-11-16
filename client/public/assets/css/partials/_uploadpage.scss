@@ -32,8 +32,8 @@
         #chips {
             margin-top: 12px;
 
-             > audio,
-            > input {
+             > input,
+            > audio {
                 height: 0;
                 width: 0;
                 visibility: hidden;
@@ -58,8 +58,8 @@
             float: left;
             text-align: center;
 
-             > img,
-            > input {
+             > input,
+            > img {
                 position: absolute;
                 top: 0;
                 height: 100%;
@@ -102,9 +102,8 @@
             margin-bottom: 52px !important;
 
             button {
-                background-color: $lightblue!important;
-                height: 45px !important;
                 line-height: 45px !important;
+                height: 45px !important;
 
                 div {
                     height: 45px !important;
@@ -117,11 +116,7 @@
             }
         }
 
-        .active-btn {
-            span {
-                color: white!important;
-            }
-        }
+
 
         .audiochip {
             color: white !important;
