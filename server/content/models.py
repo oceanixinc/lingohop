@@ -58,7 +58,7 @@ class Category(EmbeddedDocument):
     """
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
-    name = fields.StringField()
+    category_name = fields.StringField()
     lessons = fields.ListField(fields.EmbeddedDocumentField(Lesson))
 
 
