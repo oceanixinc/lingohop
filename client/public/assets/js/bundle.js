@@ -74003,6 +74003,10 @@ var _MainPageLayout = require('./layout/MainPageLayout');
 
 var _MainPageLayout2 = _interopRequireDefault(_MainPageLayout);
 
+var _TestPage = require('./pages/TestPage');
+
+var _TestPage2 = _interopRequireDefault(_TestPage);
+
 var _ContentPortalUploadPage = require('./pages/ContentPortalUploadPage');
 
 var _ContentPortalUploadPage2 = _interopRequireDefault(_ContentPortalUploadPage);
@@ -74019,13 +74023,13 @@ var _ContentPortalLandingPage = require('./pages/ContentPortalLandingPage');
 
 var _ContentPortalLandingPage2 = _interopRequireDefault(_ContentPortalLandingPage);
 
-var _ContentPortalBuildPage = require('./pages/ContentPortalBuildPage');
+var _ReduxContentPortalBuildPage = require('./redux-pages/ReduxContentPortalBuildPage');
 
-var _ContentPortalBuildPage2 = _interopRequireDefault(_ContentPortalBuildPage);
+var _ReduxContentPortalBuildPage2 = _interopRequireDefault(_ReduxContentPortalBuildPage);
 
-var _ContentPortalBuildSearchPage = require('./pages/ContentPortalBuildSearchPage');
+var _ReduxContentPortalBuildSearchPage = require('./redux-pages/ReduxContentPortalBuildSearchPage');
 
-var _ContentPortalBuildSearchPage2 = _interopRequireDefault(_ContentPortalBuildSearchPage);
+var _ReduxContentPortalBuildSearchPage2 = _interopRequireDefault(_ReduxContentPortalBuildSearchPage);
 
 var _MainHomePage = require('./pages/MainHomePage');
 
@@ -74073,14 +74077,15 @@ var app = _react2.default.createElement(
             { history: _reactRouter.hashHistory },
             _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/login' }),
             _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _ContentPortalLoginPage2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: 'test', component: _TestPage2.default }),
             _react2.default.createElement(
                 _reactRouter.Route,
                 { path: 'contentportal', component: _ContentPortalLayout2.default },
                 _react2.default.createElement(_reactRouter.IndexRoute, { component: _ContentPortalLandingPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: 'upload', component: _ContentPortalUploadPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: 'uploadfinish', component: _ContentPortalUploadFinishPage2.default }),
-                _react2.default.createElement(_reactRouter.Route, { path: 'build', component: _ContentPortalBuildPage2.default }),
-                _react2.default.createElement(_reactRouter.Route, { path: 'buildsearch', component: _ContentPortalBuildSearchPage2.default })
+                _react2.default.createElement(_reactRouter.Route, { path: 'build', component: _ReduxContentPortalBuildPage2.default }),
+                _react2.default.createElement(_reactRouter.Route, { path: 'buildsearch', component: _ReduxContentPortalBuildSearchPage2.default })
             ),
             _react2.default.createElement(
                 _reactRouter.Route,
@@ -74097,7 +74102,7 @@ var app = _react2.default.createElement(
     });
 });
 
-},{"./layout/ContentPortalLayout":750,"./layout/MainPageLayout":751,"./pages/ContentPortalBuildPage":752,"./pages/ContentPortalBuildSearchPage":753,"./pages/ContentPortalLandingPage":754,"./pages/ContentPortalLoginPage":755,"./pages/ContentPortalUploadFinishPage":756,"./pages/ContentPortalUploadPage":757,"./pages/MainHomePage":758,"./redux/reducers/contentportal":759,"jquery":209,"material-ui/styles/MuiThemeProvider":371,"react":716,"react-dom":499,"react-redux":522,"react-router":556,"react-tap-event-plugin":570,"redux":733}],745:[function(require,module,exports){
+},{"./layout/ContentPortalLayout":750,"./layout/MainPageLayout":751,"./pages/ContentPortalLandingPage":754,"./pages/ContentPortalLoginPage":755,"./pages/ContentPortalUploadFinishPage":756,"./pages/ContentPortalUploadPage":757,"./pages/MainHomePage":758,"./pages/TestPage":759,"./redux-pages/ReduxContentPortalBuildPage":760,"./redux-pages/ReduxContentPortalBuildSearchPage":761,"./redux/reducers/contentportal":763,"jquery":209,"material-ui/styles/MuiThemeProvider":371,"react":716,"react-dom":499,"react-redux":522,"react-router":556,"react-tap-event-plugin":570,"redux":733}],745:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74225,7 +74230,7 @@ var ContentPortalHeader = function (_React$Component) {
                     _react2.default.createElement(
                         _reactBootstrap.Navbar.Brand,
                         null,
-                        _react2.default.createElement('img', { className: 'pull-left', src: 'assets/img/logo/logo.svg' }),
+                        _react2.default.createElement('img', { className: 'pull-left', src: 'assets/img/logo/1024x1024.png' }),
                         _react2.default.createElement(
                             'p',
                             { className: 'pull-left' },
@@ -74695,6 +74700,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _ContentPortalBuildPa;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -74733,6 +74740,8 @@ var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -74741,8 +74750,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var language_items = [];
 var region_items = [];
+var category_items = [];
+var journey_items = [];
+var track_items = [];
 var languages = [];
 var countries = [];
+var regions = [];
+var categories = [];
+var journeys = [];
+var tracks = [];
 
 var ContentPortalBuildPage = function (_React$Component) {
     _inherits(ContentPortalBuildPage, _React$Component);
@@ -74755,11 +74771,31 @@ var ContentPortalBuildPage = function (_React$Component) {
         _this.state = {
             language_country: '',
             region: '',
-            showModal: false
+            category: '',
+            journey: '',
+            track: '',
+            lesson: '',
+            newJourney: '',
+            newTrack: '',
+            newCategory: '',
+            showModal: false,
+            categoryImgUrl: ''
         };
 
         _this.handleValueChange = _this.handleValueChange.bind(_this);
+        _this.handleLessonChange = _this.handleLessonChange.bind(_this);
+        _this.handleNewJourneyChange = _this.handleNewJourneyChange.bind(_this);
+        _this.handleNewTrackChange = _this.handleNewTrackChange.bind(_this);
+        _this.handleNewCategoryChange = _this.handleNewCategoryChange.bind(_this);
+
+        _this._handleImageUpload = _this._handleImageUpload.bind(_this);
+        _this._clickImageUpload = _this._clickImageUpload.bind(_this);
+
         _this._fetchLanguageCountry = _this._fetchLanguageCountry.bind(_this);
+        _this._newTrack = _this._newTrack.bind(_this);
+        _this._newJourney = _this._newJourney.bind(_this);
+        _this._newCategory = _this._newCategory.bind(_this);
+
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
         _this._nextPage = _this._nextPage.bind(_this);
@@ -74771,6 +74807,8 @@ var ContentPortalBuildPage = function (_React$Component) {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this._fetchLanguageCountry();
+            this._fetchJourney();
+            this._fetchTrack();
         }
     }, {
         key: 'render',
@@ -74825,9 +74863,17 @@ var ContentPortalBuildPage = function (_React$Component) {
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What is the user journey?',
-                        _react2.default.createElement(_SelectField2.default, { hintText: 'User Journey', style: {
-                                width: '100%'
-                            } })
+                        _react2.default.createElement(
+                            _SelectField2.default,
+                            { value: this.state.journey, onChange: this.handleValueChange.bind(this, 'journey'), hintText: 'User Journey', style: {
+                                    width: '100%'
+                                } },
+                            journey_items
+                        ),
+                        _react2.default.createElement(_TextField2.default, { value: this.state.newJourney, onChange: this.handleNewJourneyChange, hintText: 'New Journey', style: {
+                                marginRight: '5px'
+                            } }),
+                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add Journey', onClick: this._newJourney })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -74845,24 +74891,36 @@ var ContentPortalBuildPage = function (_React$Component) {
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What track is it for?',
-                        _react2.default.createElement(_SelectField2.default, { hintText: 'Track', style: {
-                                width: '100%'
-                            } })
+                        _react2.default.createElement(
+                            _SelectField2.default,
+                            { value: this.state.track, onChange: this.handleValueChange.bind(this, 'track'), hintText: 'Track', style: {
+                                    width: '100%'
+                                } },
+                            track_items
+                        ),
+                        _react2.default.createElement(_TextField2.default, { value: this.state.newTrack, onChange: this.handleNewTrackChange, hintText: 'New Track', style: {
+                                marginRight: '5px'
+                            } }),
+                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add Track', onClick: this._newTrack })
                     ),
                     _react2.default.createElement(
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'Please select a category',
-                        _react2.default.createElement(_SelectField2.default, { hintText: 'Category', style: {
-                                width: '100%'
-                            } }),
-                        _react2.default.createElement(_FlatButton2.default, { label: '+Add New Category', onClick: this._openModal })
+                        _react2.default.createElement(
+                            _SelectField2.default,
+                            { value: this.state.category, onChange: this.handleValueChange.bind(this, 'category'), hintText: 'Category', style: {
+                                    width: '100%'
+                                } },
+                            category_items
+                        ),
+                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add New Category', onClick: this._openModal })
                     ),
                     _react2.default.createElement(
                         'div',
                         { className: 'big-text text-left col-md-8 col-md-offset-2' },
                         'What would you like to name the lesson?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Lesson Name', style: {
+                        _react2.default.createElement(_TextField2.default, { value: this.state.lesson, onChange: this.handleLessonChange, hintText: 'Lesson Name', style: {
                                 width: '100%'
                             } })
                     ),
@@ -74906,11 +74964,13 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-md-6 text-center' },
+                            _react2.default.createElement('input', { id: 'category-photo', className: 'fileInput', type: 'file', onChange: this._handleImageUpload }),
                             _react2.default.createElement(
                                 'div',
-                                { id: 'add-photo' },
+                                { id: 'add-photo', className: this.state.categoryImgUrl != '' && 'inactive', onClick: this._clickImageUpload },
                                 '+ Add Category Photo'
                             ),
+                            _react2.default.createElement('img', { id: 'category-preview', className: this.state.categoryImgUrl === '' && 'inactive', src: this.state.categoryImgUrl, onClick: this._clickImageUpload }),
                             _react2.default.createElement(
                                 'i',
                                 null,
@@ -74923,7 +74983,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                             _react2.default.createElement(_SelectField2.default, { hintText: 'Position', style: {
                                     width: '100%'
                                 } }),
-                            _react2.default.createElement(_TextField2.default, { hintText: 'Name', style: {
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Name', value: this.state.newCategory, onChange: this.handleNewCategoryChange, style: {
                                     width: '100%'
                                 } })
                         )
@@ -74931,7 +74991,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                     _react2.default.createElement(
                         _reactBootstrap.Modal.Footer,
                         null,
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true })
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true, className: !(this.state.categoryImgUrl === '' || this.state.newCategory === '') && 'active-btn', disabled: this.state.categoryImgUrl === '' || this.state.newCategory === '', onClick: this._newCategory })
                     )
                 )
             );
@@ -74994,12 +75054,12 @@ var ContentPortalBuildPage = function (_React$Component) {
 
             var language = languages[this.state.language_country - 1];
             var country = countries[this.state.language_country - 1];
+            regions.length = 0;
             _jquery2.default.ajax({
                 method: 'GET',
                 dataType: "json",
                 url: 'http://testing.lingohop.com/api/assets/region/' + language + '-' + country + '/',
                 success: function success(res) {
-                    console.log(res);
                     region_items.length = 0;
                     var i = 1;
                     var _iteratorNormalCompletion2 = true;
@@ -75014,6 +75074,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                             var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: i, primaryText: value });
                             region_items.push(item);
                             i++;
+                            regions.push(region);
                         }
                     } catch (err) {
                         _didIteratorError2 = true;
@@ -75036,17 +75097,290 @@ var ContentPortalBuildPage = function (_React$Component) {
             });
         }
     }, {
+        key: '_fetchCategory',
+        value: function _fetchCategory() {
+            var _this3 = this;
+
+            var language = languages[this.state.language_country - 1];
+            var country = countries[this.state.language_country - 1];
+            categories.length = 0;
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/contents/category/?country=' + country + '&language=' + language,
+                success: function success(res) {
+                    category_items.length = 0;
+                    var i = 1;
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
+
+                    try {
+                        for (var _iterator3 = res[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                            var category = _step3.value;
+
+                            var value = category.name;
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: i, primaryText: value });
+                            category_items.push(item);
+                            i++;
+                            categories.push(category.name);
+                        }
+                    } catch (err) {
+                        _didIteratorError3 = true;
+                        _iteratorError3 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                _iterator3.return();
+                            }
+                        } finally {
+                            if (_didIteratorError3) {
+                                throw _iteratorError3;
+                            }
+                        }
+                    }
+
+                    _this3.forceUpdate();
+                }
+
+            });
+        }
+    }, {
+        key: '_fetchJourney',
+        value: function _fetchJourney() {
+            var _this4 = this;
+
+            journeys.length = 0;
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/contents/journey/',
+                success: function success(res) {
+                    journey_items.length = 0;
+                    var i = 1;
+                    var _iteratorNormalCompletion4 = true;
+                    var _didIteratorError4 = false;
+                    var _iteratorError4 = undefined;
+
+                    try {
+                        for (var _iterator4 = res[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                            var journey = _step4.value;
+
+                            var value = journey.name;
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: i, primaryText: value });
+                            journey_items.push(item);
+                            i++;
+                            journeys.push(journey.name);
+                        }
+                    } catch (err) {
+                        _didIteratorError4 = true;
+                        _iteratorError4 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                _iterator4.return();
+                            }
+                        } finally {
+                            if (_didIteratorError4) {
+                                throw _iteratorError4;
+                            }
+                        }
+                    }
+
+                    _this4.forceUpdate();
+                }
+
+            });
+        }
+    }, {
+        key: '_fetchTrack',
+        value: function _fetchTrack() {
+            var _this5 = this;
+
+            tracks.length = 0;
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/contents/track/',
+                success: function success(res) {
+                    track_items.length = 0;
+                    var i = 1;
+                    var _iteratorNormalCompletion5 = true;
+                    var _didIteratorError5 = false;
+                    var _iteratorError5 = undefined;
+
+                    try {
+                        for (var _iterator5 = res[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                            var track = _step5.value;
+
+                            var value = track.name;
+                            var item = _react2.default.createElement(_MenuItem2.default, { value: i, key: i, primaryText: value });
+                            track_items.push(item);
+                            i++;
+                            tracks.push(track.name);
+                        }
+                    } catch (err) {
+                        _didIteratorError5 = true;
+                        _iteratorError5 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                                _iterator5.return();
+                            }
+                        } finally {
+                            if (_didIteratorError5) {
+                                throw _iteratorError5;
+                            }
+                        }
+                    }
+
+                    _this5.forceUpdate();
+                }
+
+            });
+        }
+    }, {
+        key: '_newTrack',
+        value: function _newTrack() {
+            var _this6 = this;
+
+            _jquery2.default.ajax({
+                method: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ "ID": 1, "name": this.state.newTrack }),
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/contents/track/',
+                success: function success(res) {
+                    _this6.setState({
+                        newTrack: ''
+                    }, function () {
+                        _this6._fetchTrack();
+                    });
+                }
+            });
+        }
+    }, {
+        key: '_newJourney',
+        value: function _newJourney() {
+            var _this7 = this;
+
+            _jquery2.default.ajax({
+                method: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ "ID": 1, "name": this.state.newJourney }),
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/contents/journey/',
+                success: function success(res) {
+                    _this7.setState({
+                        newJourney: ''
+                    }, function () {
+                        _this7._fetchJourney();
+                    });
+                }
+            });
+        }
+    }, {
+        key: '_newCategory',
+        value: function _newCategory() {
+            var _this8 = this;
+
+            var language = languages[this.state.language_country - 1];
+            var country = countries[this.state.language_country - 1];
+            _jquery2.default.ajax({
+                method: 'POST',
+                dataType: "json",
+                data: JSON.stringify({
+                    "ID": 1,
+                    "name": this.state.newCategory,
+                    "image": {
+                        "ID": 1,
+                        "file": this.state.categoryImgUrl
+                    }
+                }),
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/contents/category/?country=' + country + '&language=' + language,
+                success: function success(res) {
+                    _this8.setState({
+                        newCategory: '',
+                        categoryImgUrl: ''
+                    }, function () {
+                        _this8._fetchCategory();
+                    });
+                }
+            });
+        }
+
+        /************Other*******************************************/
+
+    }, {
+        key: 'handleLessonChange',
+        value: function handleLessonChange(event) {
+            this.setState({ lesson: event.target.value });
+            this.props.setLesson(event.target.value);
+        }
+    }, {
+        key: 'handleNewTrackChange',
+        value: function handleNewTrackChange(event) {
+            this.setState({ newTrack: event.target.value });
+        }
+    }, {
+        key: 'handleNewJourneyChange',
+        value: function handleNewJourneyChange(event) {
+            this.setState({ newJourney: event.target.value });
+        }
+    }, {
+        key: 'handleNewCategoryChange',
+        value: function handleNewCategoryChange(event) {
+            this.setState({ newCategory: event.target.value });
+        }
+    }, {
         key: 'handleValueChange',
         value: function handleValueChange(name, event, index, value) {
-            var _this3 = this;
+            var _this9 = this;
 
             var change = {};
             change[name] = value;
             this.setState(change, function () {
-                if (name === 'language_country') {
-                    _this3._fetchRegion();
+                switch (name) {
+                    case 'language_country':
+                        _this9._fetchRegion();
+                        _this9._fetchCategory();
+                        _this9.props.setLanguage(languages[_this9.state.language_country - 1]);
+                        _this9.props.setCountry(countries[_this9.state.language_country - 1]);
+                        break;
+                    case 'region':
+                        _this9.props.setRegion(regions[_this9.state.region - 1]);
+                        break;
+                    case 'category':
+                        _this9.props.setCategory(categories[_this9.state.category - 1]);
+                        break;
+                    case 'journey':
+                        _this9.props.setJourney(journeys[_this9.state.journey - 1]);
+                        break;
+                    case 'track':
+                        _this9.props.setTrack(tracks[_this9.state.track - 1]);
+                        break;
                 }
             });
+        }
+    }, {
+        key: '_handleImageUpload',
+        value: function _handleImageUpload(e) {
+            var _this10 = this;
+
+            e.preventDefault();
+            var reader = new FileReader();
+            var file = e.target.files[0];
+
+            reader.onloadend = function () {
+                _this10.setState({ categoryImgUrl: reader.result });
+            };
+            reader.readAsDataURL(file);
+        }
+    }, {
+        key: '_clickImageUpload',
+        value: function _clickImageUpload() {
+            document.getElementById('category-photo').click();
         }
     }, {
         key: '_openModal',
@@ -75070,12 +75404,30 @@ var ContentPortalBuildPage = function (_React$Component) {
 
 exports.default = ContentPortalBuildPage;
 
+
+ContentPortalBuildPage.propTypes = (_ContentPortalBuildPa = {
+    loggedInUser: _react2.default.PropTypes.string.isRequired,
+    language: _react2.default.PropTypes.string.isRequired,
+    country: _react2.default.PropTypes.string.isRequired,
+    journey: _react2.default.PropTypes.string.isRequired,
+    region: _react2.default.PropTypes.string.isRequired,
+    track: _react2.default.PropTypes.string.isRequired,
+    category: _react2.default.PropTypes.string.isRequired,
+    lesson: _react2.default.PropTypes.string.isRequired,
+    setUser: _react2.default.PropTypes.func.isRequired,
+    setLanguage: _react2.default.PropTypes.func.isRequired
+}, _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildPa);
+
 },{"jquery":209,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],753:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _ContentPortalBuildSe;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -75123,6 +75475,8 @@ var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -75140,6 +75494,7 @@ var styles = {
 
 var searchResults = [];
 var chips = [];
+var answerchips = [];
 
 var ContentPortalBuildSearchPage = function (_React$Component) {
     _inherits(ContentPortalBuildSearchPage, _React$Component);
@@ -75151,12 +75506,22 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
         _this.state = {
             showModal: false,
-            search: ''
+            search: '',
+            answersearch: '',
+            activesearch: 'question',
+            question: '',
+            answer: ''
         };
 
         _this.handleSearch = _this.handleSearch.bind(_this);
+        _this.handleAnswerSearch = _this.handleAnswerSearch.bind(_this);
+        _this.handleAnswer = _this.handleAnswer.bind(_this);
+        _this.handleQuestion = _this.handleQuestion.bind(_this);
         _this.handleChipDelete = _this.handleChipDelete.bind(_this);
         _this.createChip = _this.createChip.bind(_this);
+        _this.setChipVariable = _this.setChipVariable.bind(_this);
+
+        _this._buildLesson = _this._buildLesson.bind(_this);
 
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
@@ -75172,93 +75537,112 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 { className: 'build-search-page' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'text-center build-search col-md-6 col-md-offset-1' },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/contentportal/build' },
-                        _react2.default.createElement(
-                            'i',
-                            { className: 'material-icons pull-left' },
-                            'arrow_back'
-                        )
-                    ),
+                    { className: 'col-md-7' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-12' },
+                        { className: 'text-center build-search col-md-12 build-search-left' },
                         _react2.default.createElement(
-                            'p',
-                            { id: 'main-text' },
-                            'Hello,',
+                            _reactRouter.Link,
+                            { to: '/contentportal/build' },
                             _react2.default.createElement(
-                                'b',
-                                null,
-                                'John'
+                                'i',
+                                { className: 'material-icons pull-left' },
+                                'arrow_back'
                             )
                         ),
                         _react2.default.createElement(
-                            'p',
-                            { id: 'desc-text' },
-                            'Add in some content to finish your lesson.'
+                            'div',
+                            { className: 'col-md-12' },
+                            _react2.default.createElement(
+                                'p',
+                                { id: 'main-text' },
+                                'Hello,',
+                                _react2.default.createElement(
+                                    'b',
+                                    null,
+                                    'John'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { id: 'desc-text' },
+                                'Add in some content to finish your lesson.'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                            'Are there any legos to be taught before the question?',
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.search, onChange: this.handleSearch, style: {
+                                    width: '100%'
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-8 col-md-offset-2' },
+                            chips
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                            'What is the first question?',
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.question, onChange: this.handleQuestion, style: {
+                                    width: '100%'
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                            'What is the first answer?',
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.answer, onChange: this.handleAnswer, style: {
+                                    width: '100%'
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'big-text text-left col-md-8 col-md-offset-2' },
+                            'Are there any legos to be taught before the answer?',
+                            _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.answersearch, onChange: this.handleAnswerSearch, style: {
+                                    width: '100%'
+                                } })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-8 col-md-offset-2' },
+                            answerchips
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-12' },
+                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: 'upload-btn active-btn', onClick: this._buildLesson })
                         )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
-                        'Are there any legos to be taught before the question?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.search, onChange: this.handleSearch, style: {
-                                width: '100%'
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-md-8 col-md-offset-2' },
-                        chips
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
-                        'What is the first question?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', style: {
-                                width: '100%'
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
-                        'What is the first answer?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', style: {
-                                width: '100%'
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'big-text text-left col-md-8 col-md-offset-2' },
-                        'Are there any legos to be taught before the answer?',
-                        _react2.default.createElement(_TextField2.default, { hintText: 'Search...', style: {
-                                width: '100%'
-                            } })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-md-12' },
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: 'upload-btn active-btn', onClick: this._openModal })
                     )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'text-left build-search col-md-3 col-md-offset-1 build-search-right' },
+                    { className: 'col-md-5' },
                     _react2.default.createElement(
-                        'i',
-                        { className: this.state.search != '' && 'inactive' },
-                        'Search for legos to view options'
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        { className: this.state.search === '' && 'inactive' },
-                        'Existing legos for ',
-                        this.state.search
-                    ),
-                    searchResults
+                        'div',
+                        { className: 'text-left build-search col-md-12 build-search-right' },
+                        _react2.default.createElement(
+                            'i',
+                            { className: (this.state.search != '' || this.state.answersearch != '') && 'inactive' },
+                            'Search for legos to view options'
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: (this.state.activesearch === 'answer' || this.state.search === '') && 'inactive' },
+                            'Existing legos for ',
+                            this.state.search
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: (this.state.activesearch === 'question' || this.state.answersearch === '') && 'inactive' },
+                            'Existing legos for ',
+                            this.state.answersearch
+                        ),
+                        searchResults
+                    )
                 ),
                 _react2.default.createElement(
                     _reactBootstrap.Modal,
@@ -75304,6 +75688,13 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             );
         }
     }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            searchResults.length = 0;
+            chips.length = 0;
+            answerchips.length = 0;
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
@@ -75319,34 +75710,102 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             this.setState({ showModal: false });
         }
     }, {
+        key: 'handleQuestion',
+        value: function handleQuestion(event) {
+            this.setState({ question: event.target.value });
+        }
+    }, {
+        key: 'handleAnswer',
+        value: function handleAnswer(event) {
+            this.setState({ answer: event.target.value });
+        }
+    }, {
         key: 'handleSearch',
         value: function handleSearch(event) {
+
             var searchString = event.target.value;
 
-            /*for (let search of searchString.split(" ")) {
-                this._fetchSearch(search)
-            }*/
-
             var lastTerm = searchString.split(" ").slice(-1).pop();
-
             this._fetchSearch(lastTerm);
 
-            this.setState({ search: event.target.value });
+            this.setState({ search: event.target.value, activesearch: 'question' });
+        }
+    }, {
+        key: 'handleAnswerSearch',
+        value: function handleAnswerSearch(event) {
+
+            var searchString = event.target.value;
+
+            var lastTerm = searchString.split(" ").slice(-1).pop();
+            this._fetchSearch(lastTerm);
+
+            this.setState({ answersearch: event.target.value, activesearch: 'answer' });
+        }
+    }, {
+        key: 'setChipVariable',
+        value: function setChipVariable(e) {
+            var chipClass = (0, _jquery2.default)(e.target.parentNode).attr('class');
+
+            if (chipClass.includes('variable')) (0, _jquery2.default)(e.target.parentNode).removeClass('variable');else (0, _jquery2.default)(e.target.parentNode).addClass('variable');
         }
     }, {
         key: 'handleChipDelete',
-        value: function handleChipDelete() {}
+        value: function handleChipDelete(deleteId) {
+            var _arr = [chips, answerchips];
+
+
+            for (var _i = 0; _i < _arr.length; _i++) {
+                var iterableArray = _arr[_i];var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = iterableArray.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var _step$value = _slicedToArray(_step.value, 2);
+
+                        var index = _step$value[0];
+                        var i = _step$value[1];
+
+                        if (i.props.deleteId === deleteId) {
+                            iterableArray = iterableArray.splice(index, 1);
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            }
+
+            this.forceUpdate();
+        }
     }, {
         key: 'createChip',
-        value: function createChip(url, text) {
+        value: function createChip(url, text, extraClass) {
+            var _this2 = this;
+
+            var deleteId = Math.random();
+
             var chip = _react2.default.createElement(
                 _Chip2.default,
-                { style: styles.chip, className: 'pull-left', onRequestDelete: this.handleChipDelete },
+                { style: styles.chip, deleteId: '' + deleteId, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
+                        return _this2.handleChipDelete('' + deleteId);
+                    } },
                 _react2.default.createElement(_Avatar2.default, { src: url }),
                 ' ',
                 text
             );
-            chips.push(chip);
+            if (this.state.activesearch === 'question') chips.push(chip);else if (this.state.activesearch === 'answer') answerchips.push(chip);
+
             this.forceUpdate();
         }
 
@@ -75355,22 +75814,29 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_fetchSearch',
         value: function _fetchSearch(searchTerm) {
-            var _this2 = this;
+            var _this3 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
                 dataType: "json",
-                url: 'http://testing.lingohop.com/api/assets/word/?country=USA&language=English&q=' + searchTerm,
+                url: 'http://testing.lingohop.com/api/assets/word/?country=' + this.props.country + '&language=' + this.props.language + '&q=' + searchTerm,
                 success: function success(res) {
 
                     searchResults.length = 0;
-                    var _iteratorNormalCompletion = true;
-                    var _didIteratorError = false;
-                    var _iteratorError = undefined;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
 
                     try {
                         var _loop = function _loop() {
-                            var item = _step.value;
+                            var item = _step2.value;
+
+
+                            var male = item.audio.files[0].files[0].file != '';
+                            var female = item.audio.files[1].files[0].file != '';
+                            var extraClass = '';
+
+                            if (male && female) extraClass = 'neutral';else if (male && !female) extraClass = 'male';else if (!male && female) extraClass = 'female';
 
                             var word = _react2.default.createElement(
                                 'p',
@@ -75380,34 +75846,34 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
                             var imgArray = [];
 
-                            var _iteratorNormalCompletion2 = true;
-                            var _didIteratorError2 = false;
-                            var _iteratorError2 = undefined;
+                            var _iteratorNormalCompletion3 = true;
+                            var _didIteratorError3 = false;
+                            var _iteratorError3 = undefined;
 
                             try {
                                 var _loop2 = function _loop2() {
-                                    var img = _step2.value;
+                                    var img = _step3.value;
 
-                                    var imgFile = _react2.default.createElement('img', { src: 'http://testing.lingohop.com' + img.file, onClick: function onClick() {
-                                            return _this2.createChip('http://testing.lingohop.com' + img.file, item.word);
+                                    var imgFile = _react2.default.createElement('img', { className: '' + extraClass, src: 'http://testing.lingohop.com' + img.file, onClick: function onClick() {
+                                            return _this3.createChip('http://testing.lingohop.com' + img.file, item.word, extraClass);
                                         } });
                                     imgArray.push(imgFile);
                                 };
 
-                                for (var _iterator2 = item.images[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                                for (var _iterator3 = item.images[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                                     _loop2();
                                 }
                             } catch (err) {
-                                _didIteratorError2 = true;
-                                _iteratorError2 = err;
+                                _didIteratorError3 = true;
+                                _iteratorError3 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                        _iterator2.return();
+                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                        _iterator3.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError2) {
-                                        throw _iteratorError2;
+                                    if (_didIteratorError3) {
+                                        throw _iteratorError3;
                                     }
                                 }
                             }
@@ -75426,25 +75892,80 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             searchResults.push(holder);
                         };
 
-                        for (var _iterator = res[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                             _loop();
                         }
                     } catch (err) {
-                        _didIteratorError = true;
-                        _iteratorError = err;
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion && _iterator.return) {
-                                _iterator.return();
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
                             }
                         } finally {
-                            if (_didIteratorError) {
-                                throw _iteratorError;
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
                             }
                         }
                     }
 
-                    _this2.forceUpdate();
+                    _this3.forceUpdate();
+                }
+            });
+        }
+    }, {
+        key: '_buildLesson',
+        value: function _buildLesson() {
+
+            _jquery2.default.ajax({
+                method: "PUT",
+                data: JSON.stringify({
+                    "country": '' + this.props.country,
+                    "language": '' + this.props.language,
+                    "journeys": {
+                        "journey1": {
+                            "region1": {
+                                "track1": [{
+                                    "category_name": '' + this.props.category,
+                                    "Video": "URL of video",
+                                    "lessons": [{
+                                        "name": '' + this.props.lesson,
+                                        "parts": {
+                                            "part1": {
+                                                "question_text": this.state.question.split(" "),
+                                                "answer_text": this.state.answer.split(" "),
+                                                "variables": ["beach", "park"],
+                                                "images": {
+                                                    "Default ": "default_beach",
+                                                    "The": " ",
+                                                    "beach": "imageOfBeach"
+                                                },
+                                                "audio": {},
+                                                "rules": {
+                                                    "tbd": "test"
+                                                },
+                                                "problem_question": "",
+                                                "problem_image": ""
+                                            },
+                                            "part2": ""
+                                        }
+                                    }]
+                                }]
+                            }
+                        }
+                    }
+                }),
+                dataType: "json",
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/contents/' + this.props.country + '/' + this.props.language + '/',
+                success: function success(res) {
+                    console.log('Uploaded successfully');
+                },
+                error: function error(a, b, c) {
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
                 }
             });
         }
@@ -75454,6 +75975,20 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = ContentPortalBuildSearchPage;
+
+
+ContentPortalBuildSearchPage.propTypes = (_ContentPortalBuildSe = {
+    loggedInUser: _react2.default.PropTypes.string.isRequired,
+    language: _react2.default.PropTypes.string.isRequired,
+    country: _react2.default.PropTypes.string.isRequired,
+    journey: _react2.default.PropTypes.string.isRequired,
+    region: _react2.default.PropTypes.string.isRequired,
+    track: _react2.default.PropTypes.string.isRequired,
+    category: _react2.default.PropTypes.string.isRequired,
+    lesson: _react2.default.PropTypes.string.isRequired,
+    setUser: _react2.default.PropTypes.func.isRequired,
+    setLanguage: _react2.default.PropTypes.func.isRequired
+}, _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildSe);
 
 },{"jquery":209,"material-ui/Avatar":308,"material-ui/Chip":318,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],754:[function(require,module,exports){
 'use strict';
@@ -75505,7 +76040,7 @@ var ContentPortalLandingPage = function (_React$Component) {
                             null,
                             'upload'
                         ),
-                        ',',
+                        ', ',
                         _react2.default.createElement(
                             'b',
                             null,
@@ -76092,7 +76627,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'big-text text-left col-md-2 col-md-offset-2' },
+                        { className: 'big-text text-left col-md-3 col-md-offset-2' },
                         _react2.default.createElement(
                             _RadioButton.RadioButtonGroup,
                             { name: 'gender', defaultSelected: 'male', onChange: this.handleGenderChange },
@@ -76103,7 +76638,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'big-text text-left col-md-8' },
+                        { className: 'big-text text-left col-md-7' },
                         _react2.default.createElement(
                             'div',
                             { id: 'add-picture', className: this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive' },
@@ -76153,7 +76688,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { id: 'audio', className: 'big-text text-left col-md-8 col-md-offset-2' },
+                        { id: 'audio', className: 'big-text text-left col-md-10 col-md-offset-2' },
                         'Audio Files'
                     ),
                     _react2.default.createElement(
@@ -77010,13 +77545,291 @@ var MainHomePage = function (_React$Component) {
 exports.default = MainHomePage;
 
 },{"../components/BottomCardsPanelComponent":745,"../components/DiscoverPanel":747,"../components/ExperiencePanel":748,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716}],759:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TestPage = function (_React$Component) {
+    _inherits(TestPage, _React$Component);
+
+    function TestPage() {
+        _classCallCheck(this, TestPage);
+
+        return _possibleConstructorReturn(this, (TestPage.__proto__ || Object.getPrototypeOf(TestPage)).apply(this, arguments));
+    }
+
+    _createClass(TestPage, [{
+        key: "render",
+        value: function render() {
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement("canvas", { id: "can", width: "37", height: "37" })
+            );
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var canvas = document.getElementById("can");
+            var ctx = canvas.getContext("2d");
+            var lastend = 0;
+            var data = [1, 1, 2, 1];
+            var myTotal = 0;
+            var myColor = ['#4e4e4e', '#d5d5d5', '#EAC66B', '#ed8f2a'];
+
+            for (var e = 0; e < data.length; e++) {
+                myTotal += data[e];
+            }
+
+            for (var i = 0; i < data.length; i++) {
+                ctx.fillStyle = myColor[i];
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height / 2);
+                ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + Math.PI * 2 * (data[i] / myTotal), false);
+                ctx.lineTo(canvas.width / 2, canvas.height / 2);
+                ctx.fill();
+                lastend += Math.PI * 2 * (data[i] / myTotal);
+            }
+
+            ctx.fillStyle = 'rgba(255,255,255,0.80)';
+            ctx.beginPath();
+            //ctx.moveTo(canvas.width/2, canvas.height/2);
+            ctx.arc(canvas.width / 2, canvas.height / 2, 15, 0, 360, false);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#333';
+            ctx.font = "20px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(myTotal, canvas.width / 2, canvas.height / 2 + 2, canvas.width - 11);
+        }
+    }]);
+
+    return TestPage;
+}(_react2.default.Component);
+
+exports.default = TestPage;
+
+},{"react":716}],760:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var _index = require('../redux/actions/index');
+
+var _ContentPortalBuildPage = require('../pages/ContentPortalBuildPage');
+
+var _ContentPortalBuildPage2 = _interopRequireDefault(_ContentPortalBuildPage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        loggedInUser: state.loggedInUser,
+        language: state.language,
+        country: state.country,
+        journey: state.journey,
+        region: state.region,
+        track: state.track,
+        category: state.category,
+        lesson: state.lesson
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        setUser: function setUser(a) {
+            dispatch((0, _index.setUser)(a));
+        },
+        setLanguage: function setLanguage(a) {
+            dispatch((0, _index.setLanguage)(a));
+        },
+        setCountry: function setCountry(a) {
+            dispatch((0, _index.setCountry)(a));
+        },
+        setJourney: function setJourney(a) {
+            dispatch((0, _index.setJourney)(a));
+        },
+        setRegion: function setRegion(a) {
+            dispatch((0, _index.setRegion)(a));
+        },
+        setTrack: function setTrack(a) {
+            dispatch((0, _index.setTrack)(a));
+        },
+        setCategory: function setCategory(a) {
+            dispatch((0, _index.setCategory)(a));
+        },
+        setLesson: function setLesson(a) {
+            dispatch((0, _index.setLesson)(a));
+        }
+    };
+};
+
+var ReduxContentPortalBuildPage = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ContentPortalBuildPage2.default);
+
+exports.default = ReduxContentPortalBuildPage;
+
+},{"../pages/ContentPortalBuildPage":752,"../redux/actions/index":762,"react-redux":522}],761:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var _index = require('../redux/actions/index');
+
+var _ContentPortalBuildSearchPage = require('../pages/ContentPortalBuildSearchPage');
+
+var _ContentPortalBuildSearchPage2 = _interopRequireDefault(_ContentPortalBuildSearchPage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        loggedInUser: state.loggedInUser,
+        language: state.language,
+        country: state.country,
+        journey: state.journey,
+        region: state.region,
+        track: state.track,
+        category: state.category,
+        lesson: state.lesson
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        setUser: function setUser(a) {
+            dispatch((0, _index.setUser)(a));
+        },
+        setLanguage: function setLanguage(a) {
+            dispatch((0, _index.setLanguage)(a));
+        },
+        setCountry: function setCountry(a) {
+            dispatch((0, _index.setCountry)(a));
+        },
+        setJourney: function setJourney(a) {
+            dispatch((0, _index.setJourney)(a));
+        },
+        setRegion: function setRegion(a) {
+            dispatch((0, _index.setRegion)(a));
+        },
+        setTrack: function setTrack(a) {
+            dispatch((0, _index.setTrack)(a));
+        },
+        setCategory: function setCategory(a) {
+            dispatch((0, _index.setCategory)(a));
+        },
+        setLesson: function setLesson(a) {
+            dispatch((0, _index.setLesson)(a));
+        }
+    };
+};
+
+var ReduxContentPortalBuildSearchPage = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ContentPortalBuildSearchPage2.default);
+
+exports.default = ReduxContentPortalBuildSearchPage;
+
+},{"../pages/ContentPortalBuildSearchPage":753,"../redux/actions/index":762,"react-redux":522}],762:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var setUser = exports.setUser = function setUser(loggedInUser) {
+  return {
+    type: 'SET_USER',
+    loggedInUser: loggedInUser
+  };
+};
+
+var setLanguage = exports.setLanguage = function setLanguage(language) {
+  return {
+    type: 'SET_LANGUAGE',
+    language: language
+  };
+};
+
+var setCountry = exports.setCountry = function setCountry(country) {
+  return {
+    type: 'SET_COUNTRY',
+    country: country
+  };
+};
+
+var setJourney = exports.setJourney = function setJourney(journey) {
+  return {
+    type: 'SET_JOURNEY',
+    journey: journey
+  };
+};
+
+var setRegion = exports.setRegion = function setRegion(region) {
+  return {
+    type: 'SET_REGION',
+    region: region
+  };
+};
+
+var setTrack = exports.setTrack = function setTrack(track) {
+  return {
+    type: 'SET_TRACK',
+    track: track
+  };
+};
+
+var setCategory = exports.setCategory = function setCategory(category) {
+  return {
+    type: 'SET_CATEGORY',
+    category: category
+  };
+};
+
+var setLesson = exports.setLesson = function setLesson(lesson) {
+  return {
+    type: 'SET_LESSON',
+    lesson: lesson
+  };
+};
+
+},{}],763:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var initialState = {
-    loggedInUser: ''
+    loggedInUser: '',
+    language: 'English',
+    country: 'USA',
+    journey: '',
+    region: '',
+    track: '',
+    category: '',
+    lesson: ''
 };
 
 var contentportalreducer = function contentportalreducer(state, action) {
@@ -77027,6 +77840,20 @@ var contentportalreducer = function contentportalreducer(state, action) {
     switch (action.type) {
         case 'SET_USER':
             return Object.assign({}, state, { loggedInUser: action.loggedInUser });
+        case 'SET_LANGUAGE':
+            return Object.assign({}, state, { language: action.language });
+        case 'SET_COUNTRY':
+            return Object.assign({}, state, { country: action.country });
+        case 'SET_JOURNEY':
+            return Object.assign({}, state, { journey: action.journey });
+        case 'SET_REGION':
+            return Object.assign({}, state, { region: action.region });
+        case 'SET_TRACK':
+            return Object.assign({}, state, { track: action.track });
+        case 'SET_CATEGORY':
+            return Object.assign({}, state, { category: action.category });
+        case 'SET_LESSON':
+            return Object.assign({}, state, { lesson: action.lesson });
         default:
             return state;
     }

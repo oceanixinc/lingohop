@@ -75,5 +75,5 @@ gulp.task('watch', ['serve'], () => {
   gulp.watch('src/**/*', ['js-watch'])
   gulp.watch('public/assets/css/style.css', sync.reload)
   gulp.watch('public/index.html', sync.reload)
-    gulp.watch('public/assets/css/style.scss', ['sass']);
+    gulp.watch(['public/assets/css/style.scss','public/assets/css/partials/*.scss'], ['sass']);
 });

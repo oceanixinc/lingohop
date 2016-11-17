@@ -143,14 +143,14 @@ export default class ContentPortalUploadPage extends React.Component {
                             width: '100%'
                         }}></TextField>
                     </div>
-                    <div className="big-text text-left col-md-2 col-md-offset-2">
+                    <div className="big-text text-left col-md-3 col-md-offset-2">
                         <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange}>
                             <RadioButton value="male" label="Male" style={styles.radioButton}/>
                             <RadioButton value="female" label="Female" style={styles.radioButton}/>
                             <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                         </RadioButtonGroup>
                     </div>
-                    <div className="big-text text-left col-md-8">
+                    <div className="big-text text-left col-md-7">
                         <div id="add-picture" className={this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive'}>+ Add Picture
                             <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
                         </div>
@@ -169,7 +169,7 @@ export default class ContentPortalUploadPage extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div id="audio" className="big-text text-left col-md-8 col-md-offset-2">
+                    <div id="audio" className="big-text text-left col-md-10 col-md-offset-2">
                         Audio Files
                     </div>
                     <div id="chips" className={(this.state.gender === 'female' || this.state.regionOne === '')

@@ -104,7 +104,8 @@
           width: 100%;
           font-size: 25px;
           color: #08b2ff;
-          opacity: 1; }
+          opacity: 1;
+          margin-top: -17.85px; }
         .landing-page .landing .img-holder .after:hover {
           opacity: 0.7; }
     .landing-page .landing .desc-text {
@@ -132,8 +133,8 @@
     margin-top: 37px; }
   .upload-page .upload #chips {
     margin-top: 12px; }
-    .upload-page .upload #chips > audio,
-    .upload-page .upload #chips > input {
+    .upload-page .upload #chips > input,
+    .upload-page .upload #chips > audio {
       height: 0;
       width: 0;
       visibility: hidden; }
@@ -150,8 +151,8 @@
     position: relative;
     float: left;
     text-align: center; }
-    .upload-page .upload #add-picture > img,
-    .upload-page .upload #add-picture > input {
+    .upload-page .upload #add-picture > input,
+    .upload-page .upload #add-picture > img {
       position: absolute;
       top: 0;
       height: 100%;
@@ -180,16 +181,13 @@
     margin-top: 60px !important;
     margin-bottom: 52px !important; }
     .upload-page .upload .upload-btn button {
-      background-color: #02B3E4 !important;
-      height: 45px !important;
-      line-height: 45px !important; }
+      line-height: 45px !important;
+      height: 45px !important; }
       .upload-page .upload .upload-btn button div {
         height: 45px !important;
         line-height: 45px !important; }
     .upload-page .upload .upload-btn span {
       font-size: 17px !important; }
-  .upload-page .upload .active-btn span {
-    color: white !important; }
   .upload-page .upload .audiochip {
     color: white !important;
     background-color: #15C26B !important; }
@@ -306,6 +304,33 @@
   .build-search-page .build-search .active-btn span {
     color: white !important; }
 
+.build-search-page .build-search-left .male {
+  background-color: #0D47A1 !important; }
+  .build-search-page .build-search-left .male > span {
+    color: white !important; }
+  .build-search-page .build-search-left .male > svg {
+    color: white !important;
+    fill: white !important; }
+
+.build-search-page .build-search-left .female {
+  background-color: #F06292 !important; }
+  .build-search-page .build-search-left .female > span {
+    color: white !important; }
+  .build-search-page .build-search-left .female > svg {
+    color: white !important;
+    fill: white !important; }
+
+.build-search-page .build-search-left .neutral {
+  background-color: green !important; }
+  .build-search-page .build-search-left .neutral > span {
+    color: white !important; }
+  .build-search-page .build-search-left .neutral > svg {
+    color: white !important;
+    fill: white !important; }
+
+.build-search-page .build-search-left .variable > span {
+  text-decoration: underline; }
+
 .build-search-page .build-search-right {
   height: 600px; }
   .build-search-page .build-search-right .search-holder {
@@ -315,20 +340,44 @@
     height: 50px;
     width: 50px;
     object-fit: cover;
-    padding: 2px; }
+    padding: 2px;
+    margin: 1px; }
+  .build-search-page .build-search-right .male {
+    border-bottom: 1px solid #0D47A1; }
+  .build-search-page .build-search-right .female {
+    border-bottom: 1px solid #F06292; }
+  .build-search-page .build-search-right .neutral {
+    border-bottom: 1px solid green; }
 
 .inactive {
   display: none !important; }
 
-.modal-header, .modal-footer {
+.modal-footer,
+.modal-header {
   border: none;
   text-align: center !important; }
 
+#category-photo {
+  display: none; }
+
 #add-photo {
-  height: 120px;
+  height: 254px;
   width: 100%;
   border: 1px solid #333;
   font-size: 16px;
-  line-height: 110px;
+  line-height: 238px;
   position: relative;
   text-align: center; }
+
+#category-preview {
+  height: 254px;
+  width: 100%;
+  border: 1px solid #333;
+  position: relative;
+  object-fit: cover; }
+
+.active-btn button {
+  background-color: #02B3E4 !important; }
+
+.active-btn span {
+  color: white !important; }
