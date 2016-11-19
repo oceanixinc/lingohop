@@ -25,6 +25,8 @@ const styles = {
 const searchResults = [];
 const chips = [];
 const answerchips = [];
+const qchips = [];
+const achips = [];
 
 export default class ContentPortalBuildSearchPage extends React.Component {
 
@@ -84,11 +86,17 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                                 width: '100%'
                             }}></TextField>
                         </div>
+                        <div className="col-md-8 col-md-offset-2 variable-chips">
+                            {qchips}
+                        </div>
                         <div className="big-text text-left col-md-8 col-md-offset-2">
                             What is the first answer?
                             <TextField hintText="Search..." value={this.state.answer} onChange={this.handleAnswer} style={{
                                 width: '100%'
                             }}></TextField>
+                        </div>
+                        <div className="col-md-8 col-md-offset-2 variable-chips">
+                            {achips}
                         </div>
                         <div className="big-text text-left col-md-8 col-md-offset-2">
                             Are there any legos to be taught before the answer?
@@ -159,11 +167,21 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     }
 
     handleQuestion(event) {
-        this.setState({question: event.target.value});
+        let searchString = event.target.value
+
+        let lastTerm = searchString.split(" ").slice(-1).pop()
+        this._fetchSearch(lastTerm)
+
+        this.setState({question: event.target.value, activesearch: 'q'});
     }
 
     handleAnswer(event) {
-        this.setState({answer: event.target.value});
+        let searchString = event.target.value
+
+        let lastTerm = searchString.split(" ").slice(-1).pop()
+        this._fetchSearch(lastTerm)
+
+        this.setState({answer: event.target.value, activesearch: 'a'});
     }
 
     handleSearch(event) {
@@ -189,16 +207,22 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     setChipVariable(e) {
         let chipClass = jQuery(e.target.parentNode).attr('class')
 
-        if (chipClass.includes('variable'))
-            jQuery(e.target.parentNode).removeClass('variable')
-        else
-            jQuery(e.target.parentNode).addClass('variable')
+        let chipParentClass = jQuery(e.target.parentNode.parentNode).attr('class')
+
+        if (chipParentClass.includes('variable-chips')) {
+            if (chipClass.includes('variable'))
+                jQuery(e.target.parentNode).removeClass('variable')
+            else
+                jQuery(e.target.parentNode).addClass('variable')
+        }
     }
 
     handleChipDelete(deleteId) {
 
         for (let iterableArray of[chips,
-            answerchips]) {
+            answerchips,
+            achips,
+            qchips]) {
             for (let [index,
                 i]of iterableArray.entries()) {
                 if (i.props.deleteId === deleteId) {
@@ -224,6 +248,10 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             chips.push(chip)
         else if (this.state.activesearch === 'answer')
             answerchips.push(chip)
+        else if (this.state.activesearch === 'q')
+            qchips.push(chip)
+        else if (this.state.activesearch === 'a')
+            achips.push(chip)
 
         this.forceUpdate()
     }

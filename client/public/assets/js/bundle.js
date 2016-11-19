@@ -74779,6 +74779,8 @@ var ContentPortalBuildPage = function (_React$Component) {
             newTrack: '',
             newCategory: '',
             showModal: false,
+            showSecondModal: false,
+            showThirdModal: false,
             categoryImgUrl: ''
         };
 
@@ -74798,6 +74800,10 @@ var ContentPortalBuildPage = function (_React$Component) {
 
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
+        _this._openSecondModal = _this._openSecondModal.bind(_this);
+        _this._closeSecondModal = _this._closeSecondModal.bind(_this);
+        _this._openThirdModal = _this._openThirdModal.bind(_this);
+        _this._closeThirdModal = _this._closeThirdModal.bind(_this);
         _this._nextPage = _this._nextPage.bind(_this);
 
         return _this;
@@ -74870,10 +74876,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                                 } },
                             journey_items
                         ),
-                        _react2.default.createElement(_TextField2.default, { value: this.state.newJourney, onChange: this.handleNewJourneyChange, hintText: 'New Journey', style: {
-                                marginRight: '5px'
-                            } }),
-                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add Journey', onClick: this._newJourney })
+                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add New Journey', onClick: this._openSecondModal })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -74898,10 +74901,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                                 } },
                             track_items
                         ),
-                        _react2.default.createElement(_TextField2.default, { value: this.state.newTrack, onChange: this.handleNewTrackChange, hintText: 'New Track', style: {
-                                marginRight: '5px'
-                            } }),
-                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add Track', onClick: this._newTrack })
+                        _react2.default.createElement(_FlatButton2.default, { label: '+ Add New Track', onClick: this._openThirdModal })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -74950,7 +74950,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'Add a new',
+                            'Add a new ',
                             _react2.default.createElement(
                                 'b',
                                 null,
@@ -74992,6 +74992,74 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _reactBootstrap.Modal.Footer,
                         null,
                         _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true, className: !(this.state.categoryImgUrl === '' || this.state.newCategory === '') && 'active-btn', disabled: this.state.categoryImgUrl === '' || this.state.newCategory === '', onClick: this._newCategory })
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showSecondModal, onHide: this._closeSecondModal },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Add a new ',
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                'journey'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-12 text-center' },
+                            _react2.default.createElement(_TextField2.default, { value: this.state.newJourney, onChange: this.handleNewJourneyChange, hintText: 'New Journey', style: {
+                                    width: '100%'
+                                } })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true, className: this.state.newJourney != '' && 'active-btn', disabled: this.state.newJourney === '', onClick: this._newJourney })
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showThirdModal, onHide: this._closeThirdModal },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Add a new ',
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                'track'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        { className: 'col-md-12' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-12 text-center' },
+                            _react2.default.createElement(_TextField2.default, { value: this.state.newTrack, onChange: this.handleNewTrackChange, hintText: 'New Track', style: {
+                                    width: '100%'
+                                } })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true, className: this.state.newTrack != '' && 'active-btn', disabled: this.state.newTrack === '', onClick: this._newTrack })
                     )
                 )
             );
@@ -75393,6 +75461,26 @@ var ContentPortalBuildPage = function (_React$Component) {
             this.setState({ showModal: false });
         }
     }, {
+        key: '_openSecondModal',
+        value: function _openSecondModal() {
+            this.setState({ showSecondModal: true });
+        }
+    }, {
+        key: '_closeSecondModal',
+        value: function _closeSecondModal() {
+            this.setState({ showSecondModal: false });
+        }
+    }, {
+        key: '_openThirdModal',
+        value: function _openThirdModal() {
+            this.setState({ showThirdModal: true });
+        }
+    }, {
+        key: '_closeThirdModal',
+        value: function _closeThirdModal() {
+            this.setState({ showThirdModal: false });
+        }
+    }, {
         key: '_nextPage',
         value: function _nextPage() {
             _reactRouter.hashHistory.push('/contentportal/buildsearch');
@@ -75495,6 +75583,8 @@ var styles = {
 var searchResults = [];
 var chips = [];
 var answerchips = [];
+var qchips = [];
+var achips = [];
 
 var ContentPortalBuildSearchPage = function (_React$Component) {
     _inherits(ContentPortalBuildSearchPage, _React$Component);
@@ -75592,11 +75682,21 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
+                            { className: 'col-md-8 col-md-offset-2 variable-chips' },
+                            qchips
+                        ),
+                        _react2.default.createElement(
+                            'div',
                             { className: 'big-text text-left col-md-8 col-md-offset-2' },
                             'What is the first answer?',
                             _react2.default.createElement(_TextField2.default, { hintText: 'Search...', value: this.state.answer, onChange: this.handleAnswer, style: {
                                     width: '100%'
                                 } })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-md-8 col-md-offset-2 variable-chips' },
+                            achips
                         ),
                         _react2.default.createElement(
                             'div',
@@ -75712,12 +75812,22 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'handleQuestion',
         value: function handleQuestion(event) {
-            this.setState({ question: event.target.value });
+            var searchString = event.target.value;
+
+            var lastTerm = searchString.split(" ").slice(-1).pop();
+            this._fetchSearch(lastTerm);
+
+            this.setState({ question: event.target.value, activesearch: 'q' });
         }
     }, {
         key: 'handleAnswer',
         value: function handleAnswer(event) {
-            this.setState({ answer: event.target.value });
+            var searchString = event.target.value;
+
+            var lastTerm = searchString.split(" ").slice(-1).pop();
+            this._fetchSearch(lastTerm);
+
+            this.setState({ answer: event.target.value, activesearch: 'a' });
         }
     }, {
         key: 'handleSearch',
@@ -75746,12 +75856,16 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         value: function setChipVariable(e) {
             var chipClass = (0, _jquery2.default)(e.target.parentNode).attr('class');
 
-            if (chipClass.includes('variable')) (0, _jquery2.default)(e.target.parentNode).removeClass('variable');else (0, _jquery2.default)(e.target.parentNode).addClass('variable');
+            var chipParentClass = (0, _jquery2.default)(e.target.parentNode.parentNode).attr('class');
+
+            if (chipParentClass.includes('variable-chips')) {
+                if (chipClass.includes('variable')) (0, _jquery2.default)(e.target.parentNode).removeClass('variable');else (0, _jquery2.default)(e.target.parentNode).addClass('variable');
+            }
         }
     }, {
         key: 'handleChipDelete',
         value: function handleChipDelete(deleteId) {
-            var _arr = [chips, answerchips];
+            var _arr = [chips, answerchips, achips, qchips];
 
 
             for (var _i = 0; _i < _arr.length; _i++) {
@@ -75804,7 +75918,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 ' ',
                 text
             );
-            if (this.state.activesearch === 'question') chips.push(chip);else if (this.state.activesearch === 'answer') answerchips.push(chip);
+            if (this.state.activesearch === 'question') chips.push(chip);else if (this.state.activesearch === 'answer') answerchips.push(chip);else if (this.state.activesearch === 'q') qchips.push(chip);else if (this.state.activesearch === 'a') achips.push(chip);
 
             this.forceUpdate();
         }
