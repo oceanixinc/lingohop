@@ -38,6 +38,8 @@ export default class ContentPortalBuildPage extends React.Component {
             newTrack: '',
             newCategory: '',
             showModal: false,
+            showSecondModal: false,
+            showThirdModal: false,
             categoryImgUrl: ''
         };
 
@@ -57,6 +59,10 @@ export default class ContentPortalBuildPage extends React.Component {
 
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
+        this._openSecondModal = this._openSecondModal.bind(this);
+        this._closeSecondModal = this._closeSecondModal.bind(this);
+        this._openThirdModal = this._openThirdModal.bind(this);
+        this._closeThirdModal = this._closeThirdModal.bind(this);
         this._nextPage = this._nextPage.bind(this);
 
     }
@@ -95,10 +101,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         }}>
                             {journey_items}
                         </SelectField>
-                        <TextField value={this.state.newJourney} onChange={this.handleNewJourneyChange} hintText="New Journey" style={{
-                            marginRight: '5px'
-                        }}></TextField>
-                        <FlatButton label="+ Add Journey" onClick={this._newJourney}/>
+                        <FlatButton label="+ Add New Journey" onClick={this._openSecondModal}/>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         What is the region?
@@ -115,10 +118,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         }}>
                             {track_items}
                         </SelectField>
-                        <TextField value={this.state.newTrack} onChange={this.handleNewTrackChange} hintText="New Track" style={{
-                            marginRight: '5px'
-                        }}></TextField>
-                        <FlatButton label="+ Add Track" onClick={this._newTrack}/>
+                        <FlatButton label="+ Add New Track" onClick={this._openThirdModal}/>
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         Please select a category
@@ -148,9 +148,7 @@ export default class ContentPortalBuildPage extends React.Component {
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new
-                            <b>category</b>
-                        </h4>
+                        <h4>Add a new <b>category</b></h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-6 text-center">
@@ -173,8 +171,38 @@ export default class ContentPortalBuildPage extends React.Component {
                     <Modal.Footer>
                         <RaisedButton label="BUILD" primary={true} className={!(this.state.categoryImgUrl === '' || this.state.newCategory === '') && 'active-btn'} disabled={this.state.categoryImgUrl === '' || this.state.newCategory === ''} onClick={this._newCategory}/>
                     </Modal.Footer>
-
                 </Modal>
+                <Modal show={this.state.showSecondModal} onHide={this._closeSecondModal}>
+                    <Modal.Header closeButton>
+                        <h4>Add a new <b>journey</b></h4>
+                    </Modal.Header>
+                    <Modal.Body className="col-md-12">
+                        <div className="col-md-12 text-center">
+                            <TextField value={this.state.newJourney} onChange={this.handleNewJourneyChange} hintText="New Journey" style={{
+                                width: '100%'
+                            }}></TextField>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <RaisedButton label="BUILD" primary={true} className={this.state.newJourney != '' && 'active-btn'} disabled={this.state.newJourney === ''} onClick={this._newJourney}/>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.showThirdModal} onHide={this._closeThirdModal}>
+                    <Modal.Header closeButton>
+                        <h4>Add a new <b>track</b></h4>
+                    </Modal.Header>
+                    <Modal.Body className="col-md-12">
+                        <div className="col-md-12 text-center">
+                            <TextField value={this.state.newTrack} onChange={this.handleNewTrackChange} hintText="New Track" style={{
+                                width: '100%'
+                            }}></TextField>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <RaisedButton label="BUILD" primary={true} className={this.state.newTrack != '' && 'active-btn'} disabled={this.state.newTrack === ''} onClick={this._newTrack}/>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         )
     }
@@ -432,6 +460,22 @@ export default class ContentPortalBuildPage extends React.Component {
 
     _closeModal() {
         this.setState({showModal: false});
+    };
+
+    _openSecondModal() {
+        this.setState({showSecondModal: true});
+    };
+
+    _closeSecondModal() {
+        this.setState({showSecondModal: false});
+    };
+
+    _openThirdModal() {
+        this.setState({showThirdModal: true});
+    };
+
+    _closeThirdModal() {
+        this.setState({showThirdModal: false});
     };
 
     _nextPage() {
