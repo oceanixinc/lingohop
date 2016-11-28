@@ -143,12 +143,16 @@ export default class ContentPortalBuildPage extends React.Component {
                         </RadioButtonGroup>
                     </div>
                     <div className="col-md-12">
-                        <RaisedButton label="NEXT" className="upload-btn active-btn" onClick={this._nextPage}/>
+                        <RaisedButton label="NEXT" className={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')
+                            ? "upload-btn"
+                            : "upload-btn active-btn"} disabled={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')} onClick={this._nextPage}/>
                     </div>
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>category</b></h4>
+                        <h4>Add a new
+                            <b>category</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-6 text-center">
@@ -174,7 +178,9 @@ export default class ContentPortalBuildPage extends React.Component {
                 </Modal>
                 <Modal show={this.state.showSecondModal} onHide={this._closeSecondModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>journey</b></h4>
+                        <h4>Add a new
+                            <b>journey</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-12 text-center">
@@ -189,7 +195,9 @@ export default class ContentPortalBuildPage extends React.Component {
                 </Modal>
                 <Modal show={this.state.showThirdModal} onHide={this._closeThirdModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>track</b></h4>
+                        <h4>Add a new
+                            <b>track</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-12 text-center">

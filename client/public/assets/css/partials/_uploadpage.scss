@@ -29,17 +29,6 @@
             margin-top: 37px;
         }
 
-        #chips {
-            margin-top: 12px;
-
-             > input,
-            > audio {
-                height: 0;
-                width: 0;
-                visibility: hidden;
-            }
-        }
-
         .big-text {
             font-size: 20px;
         }
@@ -74,27 +63,7 @@
             }
         }
 
-        #img-gallery {
-            margin-left: 5px;
 
-            > div {
-                display: inline-block;
-                position: relative;
-
-                > div {
-                    position: absolute;
-                    right: 0;
-                    cursor: pointer;
-                }
-
-                > img {
-                    margin-left: 3px;
-                    height: 120px;
-                    width: 120px;
-                    object-fit: cover;
-                }
-            }
-        }
 
         .upload-btn {
             min-width: 180px !important;
@@ -118,33 +87,5 @@
 
 
 
-        .audiochip {
-            color: white !important;
-            background-color: $lightgreen !important;
-
-            > div {
-                background-color: $darkgreen !important;
-            }
-
-            > span {
-                color: white !important;
-            }
-        }
-
-        .close-icon {
-            width: 22px;
-            height: 22px;
-            line-height: 19px;
-            text-align: center;
-            color: white;
-            background-color: green;
-            border-radius: 25px;
-            right: 4px;
-            top: 4px;
-
-            &:hover {
-                background-color: red;
-            }
-        }
     }
 }
