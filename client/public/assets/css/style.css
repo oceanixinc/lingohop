@@ -131,13 +131,6 @@
     margin-bottom: 32px; }
   .upload-page .upload #audio {
     margin-top: 37px; }
-  .upload-page .upload #chips {
-    margin-top: 12px; }
-    .upload-page .upload #chips > input,
-    .upload-page .upload #chips > audio {
-      height: 0;
-      width: 0;
-      visibility: hidden; }
   .upload-page .upload .big-text {
     font-size: 20px; }
   .upload-page .upload label {
@@ -162,20 +155,6 @@
     .upload-page .upload #add-picture > img {
       opacity: 1;
       object-fit: cover; }
-  .upload-page .upload #img-gallery {
-    margin-left: 5px; }
-    .upload-page .upload #img-gallery > div {
-      display: inline-block;
-      position: relative; }
-      .upload-page .upload #img-gallery > div > div {
-        position: absolute;
-        right: 0;
-        cursor: pointer; }
-      .upload-page .upload #img-gallery > div > img {
-        margin-left: 3px;
-        height: 120px;
-        width: 120px;
-        object-fit: cover; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;
@@ -188,25 +167,6 @@
         line-height: 45px !important; }
     .upload-page .upload .upload-btn span {
       font-size: 17px !important; }
-  .upload-page .upload .audiochip {
-    color: white !important;
-    background-color: #15C26B !important; }
-    .upload-page .upload .audiochip > div {
-      background-color: #12a159 !important; }
-    .upload-page .upload .audiochip > span {
-      color: white !important; }
-  .upload-page .upload .close-icon {
-    width: 22px;
-    height: 22px;
-    line-height: 19px;
-    text-align: center;
-    color: white;
-    background-color: green;
-    border-radius: 25px;
-    right: 4px;
-    top: 4px; }
-    .upload-page .upload .close-icon:hover {
-      background-color: red; }
 
 .upload-finish-page .upload-finish {
   margin-top: 45px;
@@ -328,11 +288,43 @@
     color: white !important;
     fill: white !important; }
 
-.build-search-page .build-search-left .variable > span {
-  text-decoration: underline; }
+.build-search-page .build-search-left .variable {
+  border: 2px solid white !important; }
+
+.build-search-page .build-search-left .neutral.variable {
+  -moz-box-shadow: 1px 1px 2px 2px green;
+  -webkit-box-shadow: 1px 1px 2px 2px green;
+  box-shadow: 1px 1px 2px 2px green; }
+
+.build-search-page .build-search-left .male.variable {
+  -moz-box-shadow: 1px 1px 2px 2px #0D47A1;
+  -webkit-box-shadow: 1px 1px 2px 2px #0D47A1;
+  box-shadow: 1px 1px 2px 2px #0D47A1; }
+
+.build-search-page .build-search-left .female.variable {
+  -moz-box-shadow: 1px 1px 2px 2px #F06292;
+  -webkit-box-shadow: 1px 1px 2px 2px #F06292;
+  box-shadow: 1px 1px 2px 2px #F06292; }
 
 .build-search-page .build-search-right {
   height: 600px; }
+  .build-search-page .build-search-right i {
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -50%;
+    width: 100%;
+    font-size: 16px;
+    top: 50%;
+    line-height: 2;
+    margin-top: -16px;
+    color: gray; }
+  .build-search-page .build-search-right > p {
+    margin-top: 25px;
+    font-size: 16px; }
+  .build-search-page .build-search-right green {
+    color: green;
+    font-weight: 600; }
   .build-search-page .build-search-right .search-holder {
     display: inline-block;
     width: 100%; }
@@ -348,6 +340,17 @@
     border-bottom: 1px solid #F06292; }
   .build-search-page .build-search-right .neutral {
     border-bottom: 1px solid green; }
+  .build-search-page .build-search-right #lego-footer {
+    position: absolute;
+    bottom: 0; }
+    .build-search-page .build-search-right #lego-footer p {
+      margin: 0 0 0 5px;
+      font-size: 12px;
+      color: gray; }
+    .build-search-page .build-search-right #lego-footer #add-lego {
+      cursor: pointer;
+      color: #02B3E4;
+      margin-bottom: 10px; }
 
 .inactive {
   display: none !important; }
@@ -381,3 +384,68 @@
 
 .active-btn span {
   color: white !important; }
+
+#add-picture {
+  height: 120px;
+  width: 120px;
+  border: 1px solid #333;
+  font-size: 16px;
+  line-height: 110px;
+  position: relative;
+  float: left;
+  text-align: center; }
+  #add-picture > input,
+  #add-picture > img {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    opacity: 0; }
+  #add-picture > img {
+    opacity: 1;
+    object-fit: cover; }
+
+#img-gallery {
+  margin-left: 5px; }
+  #img-gallery > div {
+    display: inline-block;
+    position: relative; }
+    #img-gallery > div > div {
+      position: absolute;
+      right: 0;
+      cursor: pointer; }
+    #img-gallery > div > img {
+      margin-left: 3px;
+      height: 120px;
+      width: 120px;
+      object-fit: cover; }
+
+#chips {
+  margin-top: 12px; }
+  #chips > input,
+  #chips > audio {
+    height: 0;
+    width: 0;
+    visibility: hidden; }
+
+.audiochip {
+  color: white !important;
+  background-color: #15C26B !important; }
+  .audiochip > div {
+    background-color: #12a159 !important; }
+  .audiochip > span {
+    color: white !important; }
+
+.close-icon {
+  width: 22px;
+  height: 22px;
+  line-height: 19px;
+  text-align: center;
+  color: white;
+  background-color: green;
+  border-radius: 25px;
+  right: 4px;
+  top: 4px; }
+  .close-icon:hover {
+    background-color: red; }

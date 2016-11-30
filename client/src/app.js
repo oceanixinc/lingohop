@@ -52,7 +52,7 @@ const app = (
             <Router history={hashHistory}>
                 <Redirect from="/" to="/login"/>
                 <Route path="login" component={ContentPortalLoginPage}/>
-                  <Route path="test" component={TestPage}/>
+                <Route path="test" component={TestPage}/>
                 <Route path="contentportal" component={ContentPortalLayout}>
                     <IndexRoute component={ContentPortalLandingPage}/>
                     <Route path="upload" component={ContentPortalUploadPage}/>

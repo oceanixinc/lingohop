@@ -1,12 +1,13 @@
 const initialState = {
     loggedInUser: '',
-    language: 'English',
-    country: 'USA',
+    language: 'Hindi',
+    country: 'India',
     journey: '',
     region: '',
     track: '',
     category: '',
-    lesson: ''
+    lesson: '',
+    part: 'one'
 }
 
 const contentportalreducer = (state, action) => {
@@ -31,6 +32,8 @@ const contentportalreducer = (state, action) => {
             return Object.assign({}, state, {category: action.category})
         case 'SET_LESSON':
             return Object.assign({}, state, {lesson: action.lesson})
+        case 'SET_PART':
+            return Object.assign({}, state, {part: action.part})
         default:
             return state
     }

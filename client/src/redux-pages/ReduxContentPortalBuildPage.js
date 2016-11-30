@@ -8,7 +8,8 @@ import {
     setRegion,
     setTrack,
     setCategory,
-    setLesson
+    setLesson,
+    setPart
 } from '../redux/actions/index'
 import ContentPortalBuildPage from '../pages/ContentPortalBuildPage'
 
@@ -21,7 +22,8 @@ const mapStateToProps = (state) => {
         region: state.region,
         track: state.track,
         category: state.category,
-        lesson: state.lesson
+        lesson: state.lesson,
+        part:state.part
     }
 }
 
@@ -50,6 +52,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setLesson: (a) => {
             dispatch(setLesson(a))
+        },
+        setPart: (a) => {
+          dispatch(setPart(a))
         }
     }
 }

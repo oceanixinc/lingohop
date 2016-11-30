@@ -44,6 +44,7 @@ export default class ContentPortalBuildPage extends React.Component {
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
+        this.handlePartChange = this.handlePartChange.bind(this);
         this.handleLessonChange = this.handleLessonChange.bind(this);
         this.handleNewJourneyChange = this.handleNewJourneyChange.bind(this);
         this.handleNewTrackChange = this.handleNewTrackChange.bind(this);
@@ -137,18 +138,22 @@ export default class ContentPortalBuildPage extends React.Component {
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         Which part is this?
-                        <RadioButtonGroup name="gender" defaultSelected="one">
+                        <RadioButtonGroup name="parts" defaultSelected="one" onChange={this.handlePartChange}>
                             <RadioButton value="one" label="Part 1"/>
                             <RadioButton value="two" label="Part 2"/>
                         </RadioButtonGroup>
                     </div>
                     <div className="col-md-12">
-                        <RaisedButton label="NEXT" className="upload-btn active-btn" onClick={this._nextPage}/>
+                        <RaisedButton label="NEXT" className={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')
+                            ? "upload-btn"
+                            : "upload-btn active-btn"} disabled={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')} onClick={this._nextPage}/>
                     </div>
                 </div>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>category</b></h4>
+                        <h4>Add a new
+                            <b>category</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-6 text-center">
@@ -174,7 +179,9 @@ export default class ContentPortalBuildPage extends React.Component {
                 </Modal>
                 <Modal show={this.state.showSecondModal} onHide={this._closeSecondModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>journey</b></h4>
+                        <h4>Add a new
+                            <b>journey</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-12 text-center">
@@ -189,7 +196,9 @@ export default class ContentPortalBuildPage extends React.Component {
                 </Modal>
                 <Modal show={this.state.showThirdModal} onHide={this._closeThirdModal}>
                     <Modal.Header closeButton>
-                        <h4>Add a new <b>track</b></h4>
+                        <h4>Add a new
+                            <b>track</b>
+                        </h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12">
                         <div className="col-md-12 text-center">
@@ -392,6 +401,11 @@ export default class ContentPortalBuildPage extends React.Component {
     }
 
     /************Other*******************************************/
+    handlePartChange(event) {
+        this.setState({part: event.target.value});
+        this.props.setPart(event.target.value);
+    }
+
     handleLessonChange(event) {
         this.setState({lesson: event.target.value});
         this.props.setLesson(event.target.value);
@@ -493,6 +507,7 @@ ContentPortalBuildPage.propTypes = {
     track: React.PropTypes.string.isRequired,
     category: React.PropTypes.string.isRequired,
     lesson: React.PropTypes.string.isRequired,
+    part: React.PropTypes.string.isRequired,
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
@@ -500,5 +515,6 @@ ContentPortalBuildPage.propTypes = {
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
-    setLanguage: React.PropTypes.func.isRequired
+    setLanguage: React.PropTypes.func.isRequired,
+    setPart: React.PropTypes.func.isRequired
 }

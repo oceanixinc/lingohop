@@ -26,7 +26,7 @@ export default class ContentPortalLoginPage extends React.Component {
         return (
             <div className="content-portal">
                 <div className="text-center welcome col-md-6 col-md-offset-3">
-                    <img src="assets/img/logo/logo.svg"/>
+                    <img src="assets/img/logo/1024X1024.png"/>
                     <p className="welcome-text">Welcome to the Lingohop
                         <b>Content Portal</b>
                     </p>

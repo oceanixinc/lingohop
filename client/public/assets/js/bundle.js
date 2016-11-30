@@ -74785,6 +74785,7 @@ var ContentPortalBuildPage = function (_React$Component) {
         };
 
         _this.handleValueChange = _this.handleValueChange.bind(_this);
+        _this.handlePartChange = _this.handlePartChange.bind(_this);
         _this.handleLessonChange = _this.handleLessonChange.bind(_this);
         _this.handleNewJourneyChange = _this.handleNewJourneyChange.bind(_this);
         _this.handleNewTrackChange = _this.handleNewTrackChange.bind(_this);
@@ -74930,7 +74931,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         'Which part is this?',
                         _react2.default.createElement(
                             _RadioButton.RadioButtonGroup,
-                            { name: 'gender', defaultSelected: 'one' },
+                            { name: 'parts', defaultSelected: 'one', onChange: this.handlePartChange },
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'one', label: 'Part 1' }),
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'two', label: 'Part 2' })
                         )
@@ -74938,7 +74939,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-md-12' },
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'NEXT', className: 'upload-btn active-btn', onClick: this._nextPage })
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'NEXT', className: this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '', onClick: this._nextPage })
                     )
                 ),
                 _react2.default.createElement(
@@ -74950,7 +74951,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'Add a new ',
+                            'Add a new',
                             _react2.default.createElement(
                                 'b',
                                 null,
@@ -75003,7 +75004,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'Add a new ',
+                            'Add a new',
                             _react2.default.createElement(
                                 'b',
                                 null,
@@ -75037,7 +75038,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'Add a new ',
+                            'Add a new',
                             _react2.default.createElement(
                                 'b',
                                 null,
@@ -75381,6 +75382,12 @@ var ContentPortalBuildPage = function (_React$Component) {
         /************Other*******************************************/
 
     }, {
+        key: 'handlePartChange',
+        value: function handlePartChange(event) {
+            this.setState({ part: event.target.value });
+            this.props.setPart(event.target.value);
+        }
+    }, {
         key: 'handleLessonChange',
         value: function handleLessonChange(event) {
             this.setState({ lesson: event.target.value });
@@ -75502,9 +75509,10 @@ ContentPortalBuildPage.propTypes = (_ContentPortalBuildPa = {
     track: _react2.default.PropTypes.string.isRequired,
     category: _react2.default.PropTypes.string.isRequired,
     lesson: _react2.default.PropTypes.string.isRequired,
+    part: _react2.default.PropTypes.string.isRequired,
     setUser: _react2.default.PropTypes.func.isRequired,
     setLanguage: _react2.default.PropTypes.func.isRequired
-}, _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildPa);
+}, _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setPart', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildPa);
 
 },{"jquery":209,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],753:[function(require,module,exports){
 'use strict';
@@ -75600,7 +75608,36 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             answersearch: '',
             activesearch: 'question',
             question: '',
-            answer: ''
+            answer: '',
+            imgOneFile: '',
+            imgTwoFile: '',
+            imgThreeFile: '',
+            imgOneUrl: '',
+            imgTwoUrl: '',
+            imgThreeUrl: '',
+            audioOneFile: '',
+            audioTwoFile: '',
+            audioThreeFile: '',
+            audioFourFile: '',
+            audioFiveFile: '',
+            audioSixFile: '',
+            audioOneUrl: '',
+            audioTwoUrl: '',
+            audioThreeUrl: '',
+            audioFourUrl: '',
+            audioFiveUrl: '',
+            audioSixUrl: '',
+            audioOnePlaying: false,
+            audioTwoPlaying: false,
+            audioThreePlaying: false,
+            audioFourPlaying: false,
+            audioFivePlaying: false,
+            audioSixPlaying: false,
+            regionOne: '',
+            regionTwo: '',
+            regionThree: '',
+            gender: 'male',
+            legoText: ''
         };
 
         _this.handleSearch = _this.handleSearch.bind(_this);
@@ -75616,12 +75653,21 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
 
+        _this._handleImageUpload = _this._handleImageUpload.bind(_this);
+        _this._handleImageDelete = _this._handleImageDelete.bind(_this);
+        _this._clickAudio = _this._clickAudio.bind(_this);
+        _this.handleGenderChange = _this.handleGenderChange.bind(_this);
+        _this.handleLegoTextChange = _this.handleLegoTextChange.bind(_this);
+        _this._uploadContent = _this._uploadContent.bind(_this);
+
         return _this;
     }
 
     _createClass(ContentPortalBuildSearchPage, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'build-search-page' },
@@ -75714,7 +75760,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: 'upload-btn active-btn', onClick: this._buildLesson })
+                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '', onClick: this._buildLesson })
                         )
                     )
                 ),
@@ -75726,22 +75772,64 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         { className: 'text-left build-search col-md-12 build-search-right' },
                         _react2.default.createElement(
                             'i',
-                            { className: (this.state.search != '' || this.state.answersearch != '') && 'inactive' },
+                            { className: this.state.search != '' || this.state.answersearch != '' || this.state.question != '' || this.state.answer != '' ? 'inactive' : 'text-center' },
                             'Search for legos to view options'
                         ),
                         _react2.default.createElement(
                             'p',
-                            { className: (this.state.activesearch === 'answer' || this.state.search === '') && 'inactive' },
-                            'Existing legos for ',
-                            this.state.search
+                            { className: this.state.activesearch != 'question' || this.state.search === '' ? 'inactive' : 'text-center' },
+                            'Existing legos for',
+                            _react2.default.createElement(
+                                'green',
+                                null,
+                                this.state.search
+                            )
                         ),
                         _react2.default.createElement(
                             'p',
-                            { className: (this.state.activesearch === 'question' || this.state.answersearch === '') && 'inactive' },
-                            'Existing legos for ',
-                            this.state.answersearch
+                            { className: this.state.activesearch != 'answer' || this.state.answersearch === '' ? 'inactive' : 'text-center' },
+                            'Existing legos for',
+                            _react2.default.createElement(
+                                'green',
+                                null,
+                                this.state.answersearch
+                            )
                         ),
-                        searchResults
+                        _react2.default.createElement(
+                            'p',
+                            { className: this.state.activesearch != 'q' || this.state.question === '' ? 'inactive' : 'text-center' },
+                            'Existing legos for',
+                            _react2.default.createElement(
+                                'green',
+                                null,
+                                this.state.question
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: this.state.activesearch != 'a' || this.state.answer === '' ? 'inactive' : 'text-center' },
+                            'Existing legos for',
+                            _react2.default.createElement(
+                                'green',
+                                null,
+                                this.state.answer
+                            )
+                        ),
+                        searchResults,
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'lego-footer' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Dont see what you were looking for?'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'add-lego', onClick: this._openModal },
+                                'Add Lego +'
+                            )
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -75763,7 +75851,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             'div',
                             { className: 'big-text text-left col-md-12' },
                             'What is the lego text?',
-                            _react2.default.createElement(_TextField2.default, { style: {
+                            _react2.default.createElement(_TextField2.default, { value: this.state.legoText, onChange: this.handleLegoTextChange, style: {
                                     width: '100%'
                                 } })
                         ),
@@ -75772,17 +75860,200 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             { className: 'big-text text-left col-md-2' },
                             _react2.default.createElement(
                                 _RadioButton.RadioButtonGroup,
-                                { name: 'gender', defaultSelected: 'male' },
+                                { name: 'gender', defaultSelected: 'male', onChange: this.handleGenderChange },
                                 _react2.default.createElement(_RadioButton.RadioButton, { value: 'male', label: 'Male', style: styles.radioButton }),
                                 _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton }),
                                 _react2.default.createElement(_RadioButton.RadioButton, { value: 'neutral', label: 'Neutral', style: styles.radioButton })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'big-text text-left col-md-9 col-md-offset-1' },
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'add-picture', className: this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive' },
+                                '+ Add Picture',
+                                _react2.default.createElement('input', { className: 'fileInput', type: 'file', multiple: true, onChange: this._handleImageUpload })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'img-gallery', className: 'pull-left' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: this.state.imgOneUrl === '' && 'inactive' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'close-icon', onClick: function onClick() {
+                                                return _this2._handleImageDelete(1);
+                                            } },
+                                        'x'
+                                    ),
+                                    _react2.default.createElement('img', { src: this.state.imgOneUrl })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: this.state.imgTwoUrl === '' && 'inactive' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'close-icon', onClick: function onClick() {
+                                                return _this2._handleImageDelete(2);
+                                            } },
+                                        'x'
+                                    ),
+                                    _react2.default.createElement('img', { src: this.state.imgTwoUrl })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: this.state.imgThreeUrl === '' && 'inactive' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'close-icon', onClick: function onClick() {
+                                                return _this2._handleImageDelete(3);
+                                            } },
+                                        'x'
+                                    ),
+                                    _react2.default.createElement('img', { src: this.state.imgThreeUrl })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'audio', className: 'big-text text-left col-md-12' },
+                            'Audio Files'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'chips', className: this.state.gender === 'female' || this.state.regionOne === '' ? 'inactive' : 'big-text text-left col-md-12' },
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-one', type: 'file', onChange: this._handleAudioUpload.bind(this, "one") }),
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-two', type: 'file', onChange: this._handleAudioUpload.bind(this, "two") }),
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-three', type: 'file', onChange: this._handleAudioUpload.bind(this, "three") }),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-one' },
+                                _react2.default.createElement('source', { src: this.state.audioOneUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-two' },
+                                _react2.default.createElement('source', { src: this.state.audioTwoUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-three' },
+                                _react2.default.createElement('source', { src: this.state.audioThreeUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-one', className: this.state.audioOneUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("one");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-one-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "one") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionOne,
+                                '(M)'
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-two', className: this.state.audioTwoUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("two");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-two-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "two") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionTwo,
+                                '(M)'
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-three', className: this.state.audioThreeUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("three");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-three-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "three") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionThree,
+                                '(M)'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'chips', className: this.state.gender === 'male' || this.state.regionOne === '' ? 'inactive' : 'big-text text-left col-md-12' },
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-four', type: 'file', onChange: this._handleAudioUpload.bind(this, "four") }),
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-five', type: 'file', onChange: this._handleAudioUpload.bind(this, "five") }),
+                            _react2.default.createElement('input', { className: 'fileInput', id: 'audio-upload-six', type: 'file', onChange: this._handleAudioUpload.bind(this, "six") }),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-four' },
+                                _react2.default.createElement('source', { src: this.state.audioFourUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-five' },
+                                _react2.default.createElement('source', { src: this.state.audioFiveUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                'audio',
+                                { controls: true, id: 'audio-six' },
+                                _react2.default.createElement('source', { src: this.state.audioSixUrl, type: 'audio/mp3' })
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-four', className: this.state.audioFourUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("four");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-four-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "four") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionOne,
+                                '(F)'
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-five', className: this.state.audioFiveUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("five");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-five-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "five") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionTwo,
+                                '(F)'
+                            ),
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-six', className: this.state.audioSixUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("six");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-six-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "six") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionThree,
+                                '(F)'
                             )
                         )
                     ),
                     _react2.default.createElement(
                         _reactBootstrap.Modal.Footer,
                         null,
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true })
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', primary: true, onClick: this._uploadContent })
                     )
                 )
             );
@@ -75793,6 +76064,9 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             searchResults.length = 0;
             chips.length = 0;
             answerchips.length = 0;
+            qchips.length = 0;
+            achips.length = 0;
+            this._fetchRegion();
         }
     }, {
         key: 'componentDidMount',
@@ -75865,37 +76139,101 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'handleChipDelete',
         value: function handleChipDelete(deleteId) {
-            var _arr = [chips, answerchips, achips, qchips];
+            var _this3 = this;
 
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-            for (var _i = 0; _i < _arr.length; _i++) {
-                var iterableArray = _arr[_i];var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+            try {
 
-                try {
-                    for (var _iterator = iterableArray.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var _step$value = _slicedToArray(_step.value, 2);
+                for (var _iterator = [chips, answerchips, qchips, achips].entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _step$value = _slicedToArray(_step.value, 2);
 
-                        var index = _step$value[0];
-                        var i = _step$value[1];
+                    var arrayIndex = _step$value[0];
+                    var iterableArray = _step$value[1];
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
 
-                        if (i.props.deleteId === deleteId) {
-                            iterableArray = iterableArray.splice(index, 1);
+                    try {
+                        for (var _iterator2 = iterableArray.entries()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var _step2$value = _slicedToArray(_step2.value, 2);
+
+                            var index = _step2$value[0];
+                            var i = _step2$value[1];
+
+                            if (i.props.deleteId === deleteId) {
+                                (function () {
+                                    var textToRemove = iterableArray[index].props.children[2];
+                                    switch (arrayIndex) {
+                                        case 0:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    search: prevState.search.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 1:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    answersearch: prevState.answersearch.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 2:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    question: prevState.question.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 3:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    answer: prevState.answer.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        default:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    search: prevState.search.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                    }
+                                    iterableArray = iterableArray.splice(index, 1);
+                                    searchResults.length = 0;
+                                })();
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
                         }
                     }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
                 } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
+                    if (_didIteratorError) {
+                        throw _iteratorError;
                     }
                 }
             }
@@ -75905,30 +76243,295 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'createChip',
         value: function createChip(url, text, extraClass) {
-            var _this2 = this;
+            var _this4 = this;
 
             var deleteId = Math.random();
 
             var chip = _react2.default.createElement(
                 _Chip2.default,
                 { style: styles.chip, deleteId: '' + deleteId, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
-                        return _this2.handleChipDelete('' + deleteId);
+                        return _this4.handleChipDelete('' + deleteId);
                     } },
                 _react2.default.createElement(_Avatar2.default, { src: url }),
                 ' ',
                 text
             );
-            if (this.state.activesearch === 'question') chips.push(chip);else if (this.state.activesearch === 'answer') answerchips.push(chip);else if (this.state.activesearch === 'q') qchips.push(chip);else if (this.state.activesearch === 'a') achips.push(chip);
+            if (this.state.activesearch === 'question') {
+                chips.push(chip);
+                var currentTextArray = this.state.search.split(" ");
+                currentTextArray[currentTextArray.length - 1] = text;
+                this.setState({
+                    search: currentTextArray.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'answer') {
+                answerchips.push(chip);
+                var _currentTextArray = this.state.answersearch.split(" ");
+                _currentTextArray[_currentTextArray.length - 1] = text;
+                this.setState({
+                    answersearch: _currentTextArray.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'q') {
+                qchips.push(chip);
+                var _currentTextArray2 = this.state.question.split(" ");
+                _currentTextArray2[_currentTextArray2.length - 1] = text;
+                this.setState({
+                    question: _currentTextArray2.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'a') {
+                achips.push(chip);
+                var _currentTextArray3 = this.state.answer.split(" ");
+                _currentTextArray3[_currentTextArray3.length - 1] = text;
+                this.setState({
+                    answer: _currentTextArray3.toString().replace(/,/g, " ")
+                });
+            }
 
             this.forceUpdate();
+        }
+        //New Lego
+
+    }, {
+        key: 'handleGenderChange',
+        value: function handleGenderChange(event) {
+            this.setState({ gender: event.target.value });
+        }
+    }, {
+        key: 'handleLegoTextChange',
+        value: function handleLegoTextChange(event) {
+            this.setState({ legoText: event.target.value });
+        }
+    }, {
+        key: '_handleImageUpload',
+        value: function _handleImageUpload(e) {
+            e.preventDefault();
+
+            var files = Array.prototype.slice.call(e.target.files);
+
+            if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+
+                if (files.length >= 3) {
+                    var newImgFiles = files.slice(0, 3);
+                    this.getBase64(newImgFiles[0], 1);
+                    this.getBase64(newImgFiles[1], 2);
+                    this.getBase64(newImgFiles[2], 3);
+
+                    this.setState({ imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1], imgThreeFile: newImgFiles[2] });
+                } else if (files.length === 2) {
+                    var _newImgFiles = files.slice(0, 2);
+                    this.getBase64(_newImgFiles[0], 1);
+                    this.getBase64(_newImgFiles[1], 2);
+
+                    this.setState({ imgOneFile: _newImgFiles[0], imgTwoFile: _newImgFiles[1] });
+                } else if (files.length === 1) {
+                    var _newImgFiles2 = files.slice(0, 1);
+                    this.getBase64(_newImgFiles2[0], 1);
+
+                    this.setState({ imgOneFile: _newImgFiles2[0] });
+                }
+            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
+                if (files.length >= 2) {
+                    var _newImgFiles3 = files.slice(0, 2);
+                    this.getBase64(_newImgFiles3[0], 1);
+                    this.getBase64(_newImgFiles3[1], 3);
+
+                    this.setState({ imgOneFile: _newImgFiles3[0], imgThreeFile: _newImgFiles3[1] });
+                } else if (files.length == 1) {
+                    var _newImgFiles4 = files.slice(0, 1);
+                    this.getBase64(_newImgFiles4[0], 1);
+
+                    this.setState({ imgOneFile: _newImgFiles4[0] });
+                }
+            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
+                if (files.length >= 2) {
+                    var _newImgFiles5 = files.slice(0, 2);
+                    this.getBase64(_newImgFiles5[0], 1);
+                    this.getBase64(_newImgFiles5[1], 2);
+
+                    this.setState({ imgOneFile: _newImgFiles5[0], imgTwoFile: _newImgFiles5[1] });
+                } else if (files.length == 1) {
+                    var _newImgFiles6 = files.slice(0, 1);
+                    this.getBase64(_newImgFiles6[0], 1);
+
+                    this.setState({ imgOneFile: _newImgFiles6[0] });
+                }
+            } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+                if (files.length >= 2) {
+                    var _newImgFiles7 = files.slice(0, 2);
+                    this.getBase64(_newImgFiles7[0], 2);
+                    this.getBase64(_newImgFiles7[1], 3);
+
+                    this.setState({ imgTwoFile: _newImgFiles7[0], imgThreeFile: _newImgFiles7[1] });
+                } else if (files.length == 1) {
+                    var _newImgFiles8 = files.slice(0, 1);
+                    this.getBase64(_newImgFiles8[0], 2);
+
+                    this.setState({ imgTwoFile: _newImgFiles8[0] });
+                }
+            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
+                var _newImgFiles9 = files.slice(0, 1);
+                this.getBase64(_newImgFiles9[0], 3);
+
+                this.setState({ imgThreeFile: _newImgFiles9[0] });
+            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
+                var _newImgFiles10 = files.slice(0, 1);
+                this.getBase64(_newImgFiles10[0], 1);
+
+                this.setState({ imgOneFile: _newImgFiles10[0] });
+            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
+                var _newImgFiles11 = files.slice(0, 1);
+                this.getBase64(_newImgFiles11[0], 2);
+
+                this.setState({ imgTwoFile: _newImgFiles11[0] });
+            }
+        }
+    }, {
+        key: '_handleImageDelete',
+        value: function _handleImageDelete(number) {
+            switch (number) {
+                case 1:
+                    this.setState({ imgOneUrl: '', imgOneFile: '' });
+                    break;
+                case 2:
+                    this.setState({ imgTwoUrl: '', imgTwoFile: '' });
+                    break;
+                case 3:
+                    this.setState({ imgThreeUrl: '', imgThreeFile: '' });
+                    break;
+                default:
+                    this.setState({ imgOneUrl: '', imgOneFile: '' });
+            }
+        }
+    }, {
+        key: '_clickPlay',
+        value: function _clickPlay(number, event) {
+            event.stopPropagation();
+            var capitalNumber = this.capitalizeFirstLetter(number);
+            var audioUrl = eval('this.state.audio' + capitalNumber + 'Url');
+            var audioPlaying = eval('this.state.audio' + capitalNumber + 'Playing');
+
+            if (audioUrl === '') document.getElementById('audio-upload-' + number).click();else {
+                if (!audioPlaying) {
+                    document.getElementById('audio-' + number).load();
+                    document.getElementById('audio-' + number).play();
+                    document.getElementById('audio-' + number + '-icon').innerHTML = "stop";
+                    switch (number) {
+                        case "one":
+                            this.setState({ audioOnePlaying: true });
+                            break;
+                        case "two":
+                            this.setState({ audioTwoPlaying: true });
+                            break;
+                        case "three":
+                            this.setState({ audioThreePlaying: true });
+                            break;
+                        case "four":
+                            this.setState({ audioFourPlaying: true });
+                            break;
+                        case "five":
+                            this.setState({ audioFivePlaying: true });
+                            break;
+                        case "six":
+                            this.setState({ audioSixPlaying: true });
+                            break;
+                        default:
+                            this.setState({ audioOnePlaying: true });
+                    }
+                } else {
+                    document.getElementById('audio-' + number).pause();
+                    document.getElementById('audio-' + number + '-icon').innerHTML = "play_arrow";
+                    switch (number) {
+                        case "one":
+                            this.setState({ audioOnePlaying: false });
+                            break;
+                        case "two":
+                            this.setState({ audioTwoPlaying: false });
+                            break;
+                        case "three":
+                            this.setState({ audioThreePlaying: false });
+                            break;
+                        case "four":
+                            this.setState({ audioFourPlaying: false });
+                            break;
+                        case "five":
+                            this.setState({ audioFivePlaying: false });
+                            break;
+                        case "six":
+                            this.setState({ audioSixPlaying: false });
+                            break;
+                        default:
+                            this.setState({ audioOnePlaying: false });
+                    }
+                }
+            }
+        }
+    }, {
+        key: '_clickAudio',
+        value: function _clickAudio(number) {
+            var capitalNumber = this.capitalizeFirstLetter(number);
+            var audioUrl = eval('this.state.audio' + capitalNumber + 'Url');
+            var audioPlaying = eval('this.state.audio' + capitalNumber + 'Playing');
+
+            document.getElementById('audio-upload-' + number).click();
+        }
+    }, {
+        key: '_handleAudioUpload',
+        value: function _handleAudioUpload(number, e) {
+            var _this5 = this;
+
+            e.preventDefault();
+
+            var reader = new FileReader();
+            var file = e.target.files[0];
+            reader.onloadend = function () {
+                switch (number) {
+                    case "one":
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        break;
+                    case "two":
+                        _this5.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
+                        break;
+                    case "three":
+                        _this5.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
+                        break;
+                    case "four":
+                        _this5.setState({ audioFourFile: file, audioFourUrl: reader.result });
+                        break;
+                    case "five":
+                        _this5.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
+                        break;
+                    case "six":
+                        _this5.setState({ audioSixFile: file, audioSixUrl: reader.result });
+                        break;
+                    default:
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                }
+                document.getElementById('audio-' + number + '-icon').innerHTML = "play_arrow";
+            };
+            reader.readAsDataURL(file);
         }
 
         //API Calls
 
     }, {
+        key: '_fetchRegion',
+        value: function _fetchRegion() {
+            var _this6 = this;
+
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'http://testing.lingohop.com/api/assets/region/' + this.props.language + '-' + this.props.country + '/',
+                success: function success(res) {
+                    console.log(res);
+                    _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
+                }
+
+            });
+        }
+    }, {
         key: '_fetchSearch',
         value: function _fetchSearch(searchTerm) {
-            var _this3 = this;
+            var _this7 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
@@ -75937,13 +76540,13 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 success: function success(res) {
 
                     searchResults.length = 0;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
 
                     try {
                         var _loop = function _loop() {
-                            var item = _step2.value;
+                            var item = _step3.value;
 
 
                             var male = item.audio.files[0].files[0].file != '';
@@ -75960,34 +76563,34 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
                             var imgArray = [];
 
-                            var _iteratorNormalCompletion3 = true;
-                            var _didIteratorError3 = false;
-                            var _iteratorError3 = undefined;
+                            var _iteratorNormalCompletion4 = true;
+                            var _didIteratorError4 = false;
+                            var _iteratorError4 = undefined;
 
                             try {
                                 var _loop2 = function _loop2() {
-                                    var img = _step3.value;
+                                    var img = _step4.value;
 
                                     var imgFile = _react2.default.createElement('img', { className: '' + extraClass, src: 'http://testing.lingohop.com' + img.file, onClick: function onClick() {
-                                            return _this3.createChip('http://testing.lingohop.com' + img.file, item.word, extraClass);
+                                            return _this7.createChip('http://testing.lingohop.com' + img.file, item.word, extraClass);
                                         } });
                                     imgArray.push(imgFile);
                                 };
 
-                                for (var _iterator3 = item.images[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                for (var _iterator4 = item.images[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                                     _loop2();
                                 }
                             } catch (err) {
-                                _didIteratorError3 = true;
-                                _iteratorError3 = err;
+                                _didIteratorError4 = true;
+                                _iteratorError4 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                        _iterator3.return();
+                                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                        _iterator4.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError3) {
-                                        throw _iteratorError3;
+                                    if (_didIteratorError4) {
+                                        throw _iteratorError4;
                                     }
                                 }
                             }
@@ -76006,31 +76609,71 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             searchResults.push(holder);
                         };
 
-                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        for (var _iterator3 = res[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                             _loop();
                         }
                     } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
+                        _didIteratorError3 = true;
+                        _iteratorError3 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
+                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                _iterator3.return();
                             }
                         } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
+                            if (_didIteratorError3) {
+                                throw _iteratorError3;
                             }
                         }
                     }
 
-                    _this3.forceUpdate();
+                    _this7.forceUpdate();
                 }
             });
         }
     }, {
         key: '_buildLesson',
         value: function _buildLesson() {
+            var part1 = "";
+            var part2 = "";
+
+            if (this.props.part === "one") {
+                part1 = {
+                    "question_text": this.state.question.split(" "),
+                    "answer_text": this.state.answer.split(" "),
+                    "variables": ["beach", "park"],
+                    "images": {
+                        "Default ": "default_beach",
+                        "The": " ",
+                        "beach": "imageOfBeach"
+                    },
+                    "audio": {},
+                    "rules": {
+                        "legos_before_question": this.state.search.split(" "),
+                        "legos_before_answer": this.state.answersearch.split(" ")
+                    },
+                    "problem_question": "",
+                    "problem_image": ""
+                };
+            } else {
+                part2 = {
+                    "question_text": this.state.question.split(" "),
+                    "answer_text": this.state.answer.split(" "),
+                    "variables": ["beach", "park"],
+                    "images": {
+                        "Default ": "default_beach",
+                        "The": " ",
+                        "beach": "imageOfBeach"
+                    },
+                    "audio": {},
+                    "rules": {
+                        "legos_before_question": this.state.search.split(" "),
+                        "legos_before_answer": this.state.answersearch.split(" ")
+                    },
+                    "problem_question": "",
+                    "problem_image": ""
+                };
+            }
 
             _jquery2.default.ajax({
                 method: "PUT",
@@ -76046,23 +76689,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                     "lessons": [{
                                         "name": '' + this.props.lesson,
                                         "parts": {
-                                            "part1": {
-                                                "question_text": this.state.question.split(" "),
-                                                "answer_text": this.state.answer.split(" "),
-                                                "variables": ["beach", "park"],
-                                                "images": {
-                                                    "Default ": "default_beach",
-                                                    "The": " ",
-                                                    "beach": "imageOfBeach"
-                                                },
-                                                "audio": {},
-                                                "rules": {
-                                                    "tbd": "test"
-                                                },
-                                                "problem_question": "",
-                                                "problem_image": ""
-                                            },
-                                            "part2": ""
+                                            "part1": part1,
+                                            "part2": part2
                                         }
                                     }]
                                 }]
@@ -76083,6 +76711,127 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 }
             });
         }
+    }, {
+        key: '_uploadContent',
+        value: function _uploadContent() {
+            var _this8 = this;
+
+            _jquery2.default.ajax({
+                method: "PUT",
+                data: JSON.stringify({
+                    "country": this.props.country,
+                    "language": this.props.language,
+                    "words": [{
+                        "word": this.state.legoText,
+                        "images": [{
+                            "file": this.state.imgOneUrl
+                        }, {
+                            "file": this.state.imgTwoUrl
+                        }, {
+                            "file": this.state.imgThreeUrl
+                        }],
+                        "audio": {
+                            "files": [{
+                                "gender": "male",
+                                "files": [{
+                                    "region": this.state.regionOne,
+                                    "file": this.state.audioOneUrl
+                                }, {
+                                    "region": this.state.regionTwo,
+                                    "file": this.state.audioTwoUrl
+                                }, {
+                                    "region": this.state.regionThree,
+                                    "file": this.state.audioThreeUrl
+                                }]
+
+                            }, {
+                                "gender": "female",
+                                "files": [{
+                                    "region": this.state.regionOne,
+                                    "file": this.state.audioFourUrl
+                                }, {
+                                    "region": this.state.regionTwo,
+                                    "file": this.state.audioFiveUrl
+                                }, {
+                                    "region": this.state.regionThree,
+                                    "file": this.state.audioSixUrl
+                                }]
+
+                            }]
+                        }
+                    }]
+                }),
+                dataType: "json",
+                contentType: "application/json",
+                url: 'http://testing.lingohop.com/api/assets/' + this.props.country + '/' + this.props.language + '/',
+                success: function success(res) {
+                    console.log('Uploaded successfully');
+                    _this8.setState({
+                        imgOneFile: '',
+                        imgTwoFile: '',
+                        imgThreeFile: '',
+                        imgOneUrl: '',
+                        imgTwoUrl: '',
+                        imgThreeUrl: '',
+                        audioOneFile: '',
+                        audioTwoFile: '',
+                        audioThreeFile: '',
+                        audioFourFile: '',
+                        audioFiveFile: '',
+                        audioSixFile: '',
+                        audioOneUrl: '',
+                        audioTwoUrl: '',
+                        audioThreeUrl: '',
+                        audioFourUrl: '',
+                        audioFiveUrl: '',
+                        audioSixUrl: '',
+                        audioOnePlaying: false,
+                        audioTwoPlaying: false,
+                        audioThreePlaying: false,
+                        audioFourPlaying: false,
+                        audioFivePlaying: false,
+                        audioSixPlaying: false,
+                        regionOne: '',
+                        regionTwo: '',
+                        regionThree: '',
+                        gender: 'male',
+                        legoText: ''
+                    });
+                }
+            });
+        }
+
+        //Helper Functions
+
+    }, {
+        key: 'capitalizeFirstLetter',
+        value: function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    }, {
+        key: 'getBase64',
+        value: function getBase64(file, number) {
+            var _this9 = this;
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                switch (number) {
+                    case 1:
+                        _this9.setState({ imgOneUrl: reader.result });
+                        break;
+                    case 2:
+                        _this9.setState({ imgTwoUrl: reader.result });
+                        break;
+                    case 3:
+                        _this9.setState({ imgThreeUrl: reader.result });
+                        break;
+                }
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
     }]);
 
     return ContentPortalBuildSearchPage;
@@ -76100,9 +76849,10 @@ ContentPortalBuildSearchPage.propTypes = (_ContentPortalBuildSe = {
     track: _react2.default.PropTypes.string.isRequired,
     category: _react2.default.PropTypes.string.isRequired,
     lesson: _react2.default.PropTypes.string.isRequired,
+    part: _react2.default.PropTypes.string.isRequired,
     setUser: _react2.default.PropTypes.func.isRequired,
     setLanguage: _react2.default.PropTypes.func.isRequired
-}, _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildSe);
+}, _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setPart', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildSe);
 
 },{"jquery":209,"material-ui/Avatar":308,"material-ui/Chip":318,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],754:[function(require,module,exports){
 'use strict';
@@ -76333,7 +77083,7 @@ var ContentPortalLoginPage = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'text-center welcome col-md-6 col-md-offset-3' },
-                    _react2.default.createElement('img', { src: 'assets/img/logo/logo.svg' }),
+                    _react2.default.createElement('img', { src: 'assets/img/logo/1024X1024.png' }),
                     _react2.default.createElement(
                         'p',
                         { className: 'welcome-text' },
@@ -76560,8 +77310,6 @@ var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -76585,20 +77333,45 @@ var ContentPortalUploadPage = function (_React$Component) {
     _inherits(ContentPortalUploadPage, _React$Component);
 
     function ContentPortalUploadPage() {
-        var _this$state;
-
         _classCallCheck(this, ContentPortalUploadPage);
 
         var _this = _possibleConstructorReturn(this, (ContentPortalUploadPage.__proto__ || Object.getPrototypeOf(ContentPortalUploadPage)).call(this));
 
-        _this.state = (_this$state = {
+        _this.state = {
             imgOneFile: '',
             imgTwoFile: '',
             imgThreeFile: '',
             imgOneUrl: '',
             imgTwoUrl: '',
-            imgThreeUrl: ''
-        }, _defineProperty(_this$state, 'imgOneFile', ''), _defineProperty(_this$state, 'imgTwoFile', ''), _defineProperty(_this$state, 'imgThreeFile', ''), _defineProperty(_this$state, 'audioOneFile', ''), _defineProperty(_this$state, 'audioTwoFile', ''), _defineProperty(_this$state, 'audioThreeFile', ''), _defineProperty(_this$state, 'audioFourFile', ''), _defineProperty(_this$state, 'audioFiveFile', ''), _defineProperty(_this$state, 'audioSixFile', ''), _defineProperty(_this$state, 'audioOneUrl', ''), _defineProperty(_this$state, 'audioTwoUrl', ''), _defineProperty(_this$state, 'audioThreeUrl', ''), _defineProperty(_this$state, 'audioFourUrl', ''), _defineProperty(_this$state, 'audioFiveUrl', ''), _defineProperty(_this$state, 'audioSixUrl', ''), _defineProperty(_this$state, 'audioOnePlaying', false), _defineProperty(_this$state, 'audioTwoPlaying', false), _defineProperty(_this$state, 'audioThreePlaying', false), _defineProperty(_this$state, 'audioFourPlaying', false), _defineProperty(_this$state, 'audioFivePlaying', false), _defineProperty(_this$state, 'audioSixPlaying', false), _defineProperty(_this$state, 'language_country', ''), _defineProperty(_this$state, 'legoText', ''), _defineProperty(_this$state, 'gender', 'male'), _defineProperty(_this$state, 'regionOne', ''), _defineProperty(_this$state, 'regionTwo', ''), _defineProperty(_this$state, 'regionThree', ''), _defineProperty(_this$state, 'showModal', false), _defineProperty(_this$state, 'showValidateModal', false), _defineProperty(_this$state, 'isUploading', false), _this$state);
+            imgThreeUrl: '',
+            audioOneFile: '',
+            audioTwoFile: '',
+            audioThreeFile: '',
+            audioFourFile: '',
+            audioFiveFile: '',
+            audioSixFile: '',
+            audioOneUrl: '',
+            audioTwoUrl: '',
+            audioThreeUrl: '',
+            audioFourUrl: '',
+            audioFiveUrl: '',
+            audioSixUrl: '',
+            audioOnePlaying: false,
+            audioTwoPlaying: false,
+            audioThreePlaying: false,
+            audioFourPlaying: false,
+            audioFivePlaying: false,
+            audioSixPlaying: false,
+            language_country: '',
+            legoText: '',
+            gender: 'male',
+            regionOne: '',
+            regionTwo: '',
+            regionThree: '',
+            showModal: false,
+            showValidateModal: false,
+            isUploading: false
+        };
 
         _this._handleImageUpload = _this._handleImageUpload.bind(_this);
         _this._handleImageDelete = _this._handleImageDelete.bind(_this);
@@ -77282,26 +78055,26 @@ var ContentPortalUploadPage = function (_React$Component) {
                                 "files": [{
                                     "gender": "male",
                                     "files": [{
-                                        "region": "region1",
+                                        "region": this.state.regionOne,
                                         "file": this.state.audioOneUrl
                                     }, {
-                                        "region": "region2",
+                                        "region": this.state.regionTwo,
                                         "file": this.state.audioTwoUrl
                                     }, {
-                                        "region": "region3",
+                                        "region": this.state.regionThree,
                                         "file": this.state.audioThreeUrl
                                     }]
 
                                 }, {
                                     "gender": "female",
                                     "files": [{
-                                        "region": "region1",
+                                        "region": this.state.regionOne,
                                         "file": this.state.audioFourUrl
                                     }, {
-                                        "region": "region2",
+                                        "region": this.state.regionTwo,
                                         "file": this.state.audioFiveUrl
                                     }, {
-                                        "region": "region3",
+                                        "region": this.state.regionThree,
                                         "file": this.state.audioSixUrl
                                     }]
 
@@ -77659,7 +78432,7 @@ var MainHomePage = function (_React$Component) {
 exports.default = MainHomePage;
 
 },{"../components/BottomCardsPanelComponent":745,"../components/DiscoverPanel":747,"../components/ExperiencePanel":748,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716}],759:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -77667,9 +78440,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -77689,50 +78464,65 @@ var TestPage = function (_React$Component) {
     }
 
     _createClass(TestPage, [{
-        key: "render",
+        key: 'render',
         value: function render() {
 
             return _react2.default.createElement(
-                "div",
+                _reactBootstrap.Navbar,
                 null,
-                _react2.default.createElement("canvas", { id: "can", width: "37", height: "37" })
+                _react2.default.createElement(
+                    _reactBootstrap.Navbar.Header,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.Navbar.Brand,
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#' },
+                            'React-Bootstrap'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Nav,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.NavItem,
+                        { eventKey: 1, href: 'http://www.google.com' },
+                        'Link'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.NavItem,
+                        { eventKey: 2, href: '#' },
+                        'Link'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.NavDropdown,
+                        { eventKey: 3, title: 'Dropdown', id: 'basic-nav-dropdown' },
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.1 },
+                            'Action'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.2 },
+                            'Another action'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.3 },
+                            'Something else here'
+                        ),
+                        _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.3 },
+                            'Separated link'
+                        )
+                    )
+                )
             );
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            var canvas = document.getElementById("can");
-            var ctx = canvas.getContext("2d");
-            var lastend = 0;
-            var data = [1, 1, 2, 1];
-            var myTotal = 0;
-            var myColor = ['#4e4e4e', '#d5d5d5', '#EAC66B', '#ed8f2a'];
-
-            for (var e = 0; e < data.length; e++) {
-                myTotal += data[e];
-            }
-
-            for (var i = 0; i < data.length; i++) {
-                ctx.fillStyle = myColor[i];
-                ctx.beginPath();
-                ctx.moveTo(canvas.width / 2, canvas.height / 2);
-                ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + Math.PI * 2 * (data[i] / myTotal), false);
-                ctx.lineTo(canvas.width / 2, canvas.height / 2);
-                ctx.fill();
-                lastend += Math.PI * 2 * (data[i] / myTotal);
-            }
-
-            ctx.fillStyle = 'rgba(255,255,255,0.80)';
-            ctx.beginPath();
-            //ctx.moveTo(canvas.width/2, canvas.height/2);
-            ctx.arc(canvas.width / 2, canvas.height / 2, 15, 0, 360, false);
-            ctx.fill();
-            ctx.stroke();
-            ctx.fillStyle = '#333';
-            ctx.font = "20px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(myTotal, canvas.width / 2, canvas.height / 2 + 2, canvas.width - 11);
         }
     }]);
 
@@ -77741,7 +78531,7 @@ var TestPage = function (_React$Component) {
 
 exports.default = TestPage;
 
-},{"react":716}],760:[function(require,module,exports){
+},{"react":716,"react-bootstrap":488}],760:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77767,7 +78557,8 @@ var mapStateToProps = function mapStateToProps(state) {
         region: state.region,
         track: state.track,
         category: state.category,
-        lesson: state.lesson
+        lesson: state.lesson,
+        part: state.part
     };
 };
 
@@ -77796,6 +78587,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         },
         setLesson: function setLesson(a) {
             dispatch((0, _index.setLesson)(a));
+        },
+        setPart: function setPart(a) {
+            dispatch((0, _index.setPart)(a));
         }
     };
 };
@@ -77830,7 +78624,8 @@ var mapStateToProps = function mapStateToProps(state) {
         region: state.region,
         track: state.track,
         category: state.category,
-        lesson: state.lesson
+        lesson: state.lesson,
+        part: state.part
     };
 };
 
@@ -77859,6 +78654,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         },
         setLesson: function setLesson(a) {
             dispatch((0, _index.setLesson)(a));
+        },
+        setPart: function setPart(a) {
+            dispatch((0, _index.setPart)(a));
         }
     };
 };
@@ -77871,62 +78669,42 @@ exports.default = ReduxContentPortalBuildSearchPage;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 var setUser = exports.setUser = function setUser(loggedInUser) {
-  return {
-    type: 'SET_USER',
-    loggedInUser: loggedInUser
-  };
+    return { type: 'SET_USER', loggedInUser: loggedInUser };
 };
 
 var setLanguage = exports.setLanguage = function setLanguage(language) {
-  return {
-    type: 'SET_LANGUAGE',
-    language: language
-  };
+    return { type: 'SET_LANGUAGE', language: language };
 };
 
 var setCountry = exports.setCountry = function setCountry(country) {
-  return {
-    type: 'SET_COUNTRY',
-    country: country
-  };
+    return { type: 'SET_COUNTRY', country: country };
 };
 
 var setJourney = exports.setJourney = function setJourney(journey) {
-  return {
-    type: 'SET_JOURNEY',
-    journey: journey
-  };
+    return { type: 'SET_JOURNEY', journey: journey };
 };
 
 var setRegion = exports.setRegion = function setRegion(region) {
-  return {
-    type: 'SET_REGION',
-    region: region
-  };
+    return { type: 'SET_REGION', region: region };
 };
 
 var setTrack = exports.setTrack = function setTrack(track) {
-  return {
-    type: 'SET_TRACK',
-    track: track
-  };
+    return { type: 'SET_TRACK', track: track };
 };
 
 var setCategory = exports.setCategory = function setCategory(category) {
-  return {
-    type: 'SET_CATEGORY',
-    category: category
-  };
+    return { type: 'SET_CATEGORY', category: category };
 };
 
 var setLesson = exports.setLesson = function setLesson(lesson) {
-  return {
-    type: 'SET_LESSON',
-    lesson: lesson
-  };
+    return { type: 'SET_LESSON', lesson: lesson };
+};
+
+var setPart = exports.setPart = function setPart(part) {
+    return { type: 'SET_PART', part: part };
 };
 
 },{}],763:[function(require,module,exports){
@@ -77937,13 +78715,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 var initialState = {
     loggedInUser: '',
-    language: 'English',
-    country: 'USA',
+    language: 'Hindi',
+    country: 'India',
     journey: '',
     region: '',
     track: '',
     category: '',
-    lesson: ''
+    lesson: '',
+    part: 'one'
 };
 
 var contentportalreducer = function contentportalreducer(state, action) {
@@ -77968,6 +78747,8 @@ var contentportalreducer = function contentportalreducer(state, action) {
             return Object.assign({}, state, { category: action.category });
         case 'SET_LESSON':
             return Object.assign({}, state, { lesson: action.lesson });
+        case 'SET_PART':
+            return Object.assign({}, state, { part: action.part });
         default:
             return state;
     }

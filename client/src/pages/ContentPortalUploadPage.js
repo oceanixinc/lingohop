@@ -38,9 +38,6 @@ export default class ContentPortalUploadPage extends React.Component {
             imgOneUrl: '',
             imgTwoUrl: '',
             imgThreeUrl: '',
-            imgOneFile: '',
-            imgTwoFile: '',
-            imgThreeFile: '',
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
@@ -576,13 +573,13 @@ export default class ContentPortalUploadPage extends React.Component {
                                         "gender": "male",
                                         "files": [
                                             {
-                                                "region": "region1",
+                                                "region": this.state.regionOne,
                                                 "file": this.state.audioOneUrl
                                             }, {
-                                                "region": "region2",
+                                                "region": this.state.regionTwo,
                                                 "file": this.state.audioTwoUrl
                                             }, {
-                                                "region": "region3",
+                                                "region": this.state.regionThree,
                                                 "file": this.state.audioThreeUrl
                                             }
                                         ]
@@ -591,13 +588,13 @@ export default class ContentPortalUploadPage extends React.Component {
                                         "gender": "female",
                                         "files": [
                                             {
-                                                "region": "region1",
+                                                "region": this.state.regionOne,
                                                 "file": this.state.audioFourUrl
                                             }, {
-                                                "region": "region2",
+                                                "region": this.state.regionTwo,
                                                 "file": this.state.audioFiveUrl
                                             }, {
-                                                "region": "region3",
+                                                "region": this.state.regionThree,
                                                 "file": this.state.audioSixUrl
                                             }
                                         ]
