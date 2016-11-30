@@ -44,6 +44,7 @@ export default class ContentPortalBuildPage extends React.Component {
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
+        this.handlePartChange = this.handlePartChange.bind(this);
         this.handleLessonChange = this.handleLessonChange.bind(this);
         this.handleNewJourneyChange = this.handleNewJourneyChange.bind(this);
         this.handleNewTrackChange = this.handleNewTrackChange.bind(this);
@@ -137,7 +138,7 @@ export default class ContentPortalBuildPage extends React.Component {
                     </div>
                     <div className="big-text text-left col-md-8 col-md-offset-2">
                         Which part is this?
-                        <RadioButtonGroup name="gender" defaultSelected="one">
+                        <RadioButtonGroup name="parts" defaultSelected="one" onChange={this.handlePartChange}>
                             <RadioButton value="one" label="Part 1"/>
                             <RadioButton value="two" label="Part 2"/>
                         </RadioButtonGroup>
@@ -400,6 +401,11 @@ export default class ContentPortalBuildPage extends React.Component {
     }
 
     /************Other*******************************************/
+    handlePartChange(event) {
+        this.setState({part: event.target.value});
+        this.props.setPart(event.target.value);
+    }
+
     handleLessonChange(event) {
         this.setState({lesson: event.target.value});
         this.props.setLesson(event.target.value);
@@ -501,6 +507,7 @@ ContentPortalBuildPage.propTypes = {
     track: React.PropTypes.string.isRequired,
     category: React.PropTypes.string.isRequired,
     lesson: React.PropTypes.string.isRequired,
+    part: React.PropTypes.string.isRequired,
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
@@ -508,5 +515,6 @@ ContentPortalBuildPage.propTypes = {
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
-    setLanguage: React.PropTypes.func.isRequired
+    setLanguage: React.PropTypes.func.isRequired,
+    setPart: React.PropTypes.func.isRequired
 }

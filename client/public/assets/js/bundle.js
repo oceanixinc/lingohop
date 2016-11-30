@@ -74785,6 +74785,7 @@ var ContentPortalBuildPage = function (_React$Component) {
         };
 
         _this.handleValueChange = _this.handleValueChange.bind(_this);
+        _this.handlePartChange = _this.handlePartChange.bind(_this);
         _this.handleLessonChange = _this.handleLessonChange.bind(_this);
         _this.handleNewJourneyChange = _this.handleNewJourneyChange.bind(_this);
         _this.handleNewTrackChange = _this.handleNewTrackChange.bind(_this);
@@ -74930,7 +74931,7 @@ var ContentPortalBuildPage = function (_React$Component) {
                         'Which part is this?',
                         _react2.default.createElement(
                             _RadioButton.RadioButtonGroup,
-                            { name: 'gender', defaultSelected: 'one' },
+                            { name: 'parts', defaultSelected: 'one', onChange: this.handlePartChange },
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'one', label: 'Part 1' }),
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'two', label: 'Part 2' })
                         )
@@ -75381,6 +75382,12 @@ var ContentPortalBuildPage = function (_React$Component) {
         /************Other*******************************************/
 
     }, {
+        key: 'handlePartChange',
+        value: function handlePartChange(event) {
+            this.setState({ part: event.target.value });
+            this.props.setPart(event.target.value);
+        }
+    }, {
         key: 'handleLessonChange',
         value: function handleLessonChange(event) {
             this.setState({ lesson: event.target.value });
@@ -75502,9 +75509,10 @@ ContentPortalBuildPage.propTypes = (_ContentPortalBuildPa = {
     track: _react2.default.PropTypes.string.isRequired,
     category: _react2.default.PropTypes.string.isRequired,
     lesson: _react2.default.PropTypes.string.isRequired,
+    part: _react2.default.PropTypes.string.isRequired,
     setUser: _react2.default.PropTypes.func.isRequired,
     setLanguage: _react2.default.PropTypes.func.isRequired
-}, _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildPa);
+}, _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildPa, 'setPart', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildPa);
 
 },{"jquery":209,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],753:[function(require,module,exports){
 'use strict';
@@ -75770,7 +75778,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { className: this.state.activesearch != 'question' || this.state.search === '' ? 'inactive' : 'text-center' },
-                            'Existing legos for ',
+                            'Existing legos for',
                             _react2.default.createElement(
                                 'green',
                                 null,
@@ -75780,7 +75788,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { className: this.state.activesearch != 'answer' || this.state.answersearch === '' ? 'inactive' : 'text-center' },
-                            'Existing legos for ',
+                            'Existing legos for',
                             _react2.default.createElement(
                                 'green',
                                 null,
@@ -75790,7 +75798,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { className: this.state.activesearch != 'q' || this.state.question === '' ? 'inactive' : 'text-center' },
-                            'Existing legos for ',
+                            'Existing legos for',
                             _react2.default.createElement(
                                 'green',
                                 null,
@@ -75800,7 +75808,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'p',
                             { className: this.state.activesearch != 'a' || this.state.answer === '' ? 'inactive' : 'text-center' },
-                            'Existing legos for ',
+                            'Existing legos for',
                             _react2.default.createElement(
                                 'green',
                                 null,
@@ -76056,6 +76064,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             searchResults.length = 0;
             chips.length = 0;
             answerchips.length = 0;
+            qchips.length = 0;
+            achips.length = 0;
             this._fetchRegion();
         }
     }, {
@@ -76129,37 +76139,101 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'handleChipDelete',
         value: function handleChipDelete(deleteId) {
-            var _arr = [chips, answerchips, achips, qchips];
+            var _this3 = this;
 
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-            for (var _i = 0; _i < _arr.length; _i++) {
-                var iterableArray = _arr[_i];var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+            try {
 
-                try {
-                    for (var _iterator = iterableArray.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var _step$value = _slicedToArray(_step.value, 2);
+                for (var _iterator = [chips, answerchips, qchips, achips].entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _step$value = _slicedToArray(_step.value, 2);
 
-                        var index = _step$value[0];
-                        var i = _step$value[1];
+                    var arrayIndex = _step$value[0];
+                    var iterableArray = _step$value[1];
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
 
-                        if (i.props.deleteId === deleteId) {
-                            iterableArray = iterableArray.splice(index, 1);
+                    try {
+                        for (var _iterator2 = iterableArray.entries()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var _step2$value = _slicedToArray(_step2.value, 2);
+
+                            var index = _step2$value[0];
+                            var i = _step2$value[1];
+
+                            if (i.props.deleteId === deleteId) {
+                                (function () {
+                                    var textToRemove = iterableArray[index].props.children[2];
+                                    switch (arrayIndex) {
+                                        case 0:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    search: prevState.search.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 1:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    answersearch: prevState.answersearch.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 2:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    question: prevState.question.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        case 3:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    answer: prevState.answer.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                        default:
+                                            _this3.setState(function (prevState) {
+                                                return {
+                                                    search: prevState.search.replace(textToRemove, '')
+                                                };
+                                            });
+                                            break;
+                                    }
+                                    iterableArray = iterableArray.splice(index, 1);
+                                    searchResults.length = 0;
+                                })();
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
                         }
                     }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
                 } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
+                    if (_didIteratorError) {
+                        throw _iteratorError;
                     }
                 }
             }
@@ -76169,20 +76243,48 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'createChip',
         value: function createChip(url, text, extraClass) {
-            var _this3 = this;
+            var _this4 = this;
 
             var deleteId = Math.random();
 
             var chip = _react2.default.createElement(
                 _Chip2.default,
                 { style: styles.chip, deleteId: '' + deleteId, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
-                        return _this3.handleChipDelete('' + deleteId);
+                        return _this4.handleChipDelete('' + deleteId);
                     } },
                 _react2.default.createElement(_Avatar2.default, { src: url }),
                 ' ',
                 text
             );
-            if (this.state.activesearch === 'question') chips.push(chip);else if (this.state.activesearch === 'answer') answerchips.push(chip);else if (this.state.activesearch === 'q') qchips.push(chip);else if (this.state.activesearch === 'a') achips.push(chip);
+            if (this.state.activesearch === 'question') {
+                chips.push(chip);
+                var currentTextArray = this.state.search.split(" ");
+                currentTextArray[currentTextArray.length - 1] = text;
+                this.setState({
+                    search: currentTextArray.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'answer') {
+                answerchips.push(chip);
+                var _currentTextArray = this.state.answersearch.split(" ");
+                _currentTextArray[_currentTextArray.length - 1] = text;
+                this.setState({
+                    answersearch: _currentTextArray.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'q') {
+                qchips.push(chip);
+                var _currentTextArray2 = this.state.question.split(" ");
+                _currentTextArray2[_currentTextArray2.length - 1] = text;
+                this.setState({
+                    question: _currentTextArray2.toString().replace(/,/g, " ")
+                });
+            } else if (this.state.activesearch === 'a') {
+                achips.push(chip);
+                var _currentTextArray3 = this.state.answer.split(" ");
+                _currentTextArray3[_currentTextArray3.length - 1] = text;
+                this.setState({
+                    answer: _currentTextArray3.toString().replace(/,/g, " ")
+                });
+            }
 
             this.forceUpdate();
         }
@@ -76374,7 +76476,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_handleAudioUpload',
         value: function _handleAudioUpload(number, e) {
-            var _this4 = this;
+            var _this5 = this;
 
             e.preventDefault();
 
@@ -76383,25 +76485,25 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             reader.onloadend = function () {
                 switch (number) {
                     case "one":
-                        _this4.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
                         break;
                     case "two":
-                        _this4.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
+                        _this5.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
                         break;
                     case "three":
-                        _this4.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
+                        _this5.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
                         break;
                     case "four":
-                        _this4.setState({ audioFourFile: file, audioFourUrl: reader.result });
+                        _this5.setState({ audioFourFile: file, audioFourUrl: reader.result });
                         break;
                     case "five":
-                        _this4.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
+                        _this5.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
                         break;
                     case "six":
-                        _this4.setState({ audioSixFile: file, audioSixUrl: reader.result });
+                        _this5.setState({ audioSixFile: file, audioSixUrl: reader.result });
                         break;
                     default:
-                        _this4.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
                 }
                 document.getElementById('audio-' + number + '-icon').innerHTML = "play_arrow";
             };
@@ -76413,7 +76515,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_fetchRegion',
         value: function _fetchRegion() {
-            var _this5 = this;
+            var _this6 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
@@ -76421,7 +76523,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 url: 'http://testing.lingohop.com/api/assets/region/' + this.props.language + '-' + this.props.country + '/',
                 success: function success(res) {
                     console.log(res);
-                    _this5.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
+                    _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
                 }
 
             });
@@ -76429,7 +76531,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_fetchSearch',
         value: function _fetchSearch(searchTerm) {
-            var _this6 = this;
+            var _this7 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
@@ -76438,13 +76540,13 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 success: function success(res) {
 
                     searchResults.length = 0;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
 
                     try {
                         var _loop = function _loop() {
-                            var item = _step2.value;
+                            var item = _step3.value;
 
 
                             var male = item.audio.files[0].files[0].file != '';
@@ -76461,34 +76563,34 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
                             var imgArray = [];
 
-                            var _iteratorNormalCompletion3 = true;
-                            var _didIteratorError3 = false;
-                            var _iteratorError3 = undefined;
+                            var _iteratorNormalCompletion4 = true;
+                            var _didIteratorError4 = false;
+                            var _iteratorError4 = undefined;
 
                             try {
                                 var _loop2 = function _loop2() {
-                                    var img = _step3.value;
+                                    var img = _step4.value;
 
                                     var imgFile = _react2.default.createElement('img', { className: '' + extraClass, src: 'http://testing.lingohop.com' + img.file, onClick: function onClick() {
-                                            return _this6.createChip('http://testing.lingohop.com' + img.file, item.word, extraClass);
+                                            return _this7.createChip('http://testing.lingohop.com' + img.file, item.word, extraClass);
                                         } });
                                     imgArray.push(imgFile);
                                 };
 
-                                for (var _iterator3 = item.images[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                for (var _iterator4 = item.images[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                                     _loop2();
                                 }
                             } catch (err) {
-                                _didIteratorError3 = true;
-                                _iteratorError3 = err;
+                                _didIteratorError4 = true;
+                                _iteratorError4 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                        _iterator3.return();
+                                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                        _iterator4.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError3) {
-                                        throw _iteratorError3;
+                                    if (_didIteratorError4) {
+                                        throw _iteratorError4;
                                     }
                                 }
                             }
@@ -76507,31 +76609,71 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             searchResults.push(holder);
                         };
 
-                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        for (var _iterator3 = res[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                             _loop();
                         }
                     } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
+                        _didIteratorError3 = true;
+                        _iteratorError3 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
+                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                _iterator3.return();
                             }
                         } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
+                            if (_didIteratorError3) {
+                                throw _iteratorError3;
                             }
                         }
                     }
 
-                    _this6.forceUpdate();
+                    _this7.forceUpdate();
                 }
             });
         }
     }, {
         key: '_buildLesson',
         value: function _buildLesson() {
+            var part1 = "";
+            var part2 = "";
+
+            if (this.props.part === "one") {
+                part1 = {
+                    "question_text": this.state.question.split(" "),
+                    "answer_text": this.state.answer.split(" "),
+                    "variables": ["beach", "park"],
+                    "images": {
+                        "Default ": "default_beach",
+                        "The": " ",
+                        "beach": "imageOfBeach"
+                    },
+                    "audio": {},
+                    "rules": {
+                        "legos_before_question": this.state.search.split(" "),
+                        "legos_before_answer": this.state.answersearch.split(" ")
+                    },
+                    "problem_question": "",
+                    "problem_image": ""
+                };
+            } else {
+                part2 = {
+                    "question_text": this.state.question.split(" "),
+                    "answer_text": this.state.answer.split(" "),
+                    "variables": ["beach", "park"],
+                    "images": {
+                        "Default ": "default_beach",
+                        "The": " ",
+                        "beach": "imageOfBeach"
+                    },
+                    "audio": {},
+                    "rules": {
+                        "legos_before_question": this.state.search.split(" "),
+                        "legos_before_answer": this.state.answersearch.split(" ")
+                    },
+                    "problem_question": "",
+                    "problem_image": ""
+                };
+            }
 
             _jquery2.default.ajax({
                 method: "PUT",
@@ -76547,24 +76689,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                     "lessons": [{
                                         "name": '' + this.props.lesson,
                                         "parts": {
-                                            "part1": {
-                                                "question_text": this.state.question.split(" "),
-                                                "answer_text": this.state.answer.split(" "),
-                                                "variables": ["beach", "park"],
-                                                "images": {
-                                                    "Default ": "default_beach",
-                                                    "The": " ",
-                                                    "beach": "imageOfBeach"
-                                                },
-                                                "audio": {},
-                                                "rules": {
-                                                    "legos_before_question": this.state.search.split(" "),
-                                                    "legos_before_answer": this.state.answersearch.split(" ")
-                                                },
-                                                "problem_question": "",
-                                                "problem_image": ""
-                                            },
-                                            "part2": ""
+                                            "part1": part1,
+                                            "part2": part2
                                         }
                                     }]
                                 }]
@@ -76588,7 +76714,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_uploadContent',
         value: function _uploadContent() {
-            var _this7 = this;
+            var _this8 = this;
 
             _jquery2.default.ajax({
                 method: "PUT",
@@ -76640,7 +76766,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 url: 'http://testing.lingohop.com/api/assets/' + this.props.country + '/' + this.props.language + '/',
                 success: function success(res) {
                     console.log('Uploaded successfully');
-                    _this7.setState({
+                    _this8.setState({
                         imgOneFile: '',
                         imgTwoFile: '',
                         imgThreeFile: '',
@@ -76685,20 +76811,20 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'getBase64',
         value: function getBase64(file, number) {
-            var _this8 = this;
+            var _this9 = this;
 
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
                 switch (number) {
                     case 1:
-                        _this8.setState({ imgOneUrl: reader.result });
+                        _this9.setState({ imgOneUrl: reader.result });
                         break;
                     case 2:
-                        _this8.setState({ imgTwoUrl: reader.result });
+                        _this9.setState({ imgTwoUrl: reader.result });
                         break;
                     case 3:
-                        _this8.setState({ imgThreeUrl: reader.result });
+                        _this9.setState({ imgThreeUrl: reader.result });
                         break;
                 }
             };
@@ -76723,9 +76849,10 @@ ContentPortalBuildSearchPage.propTypes = (_ContentPortalBuildSe = {
     track: _react2.default.PropTypes.string.isRequired,
     category: _react2.default.PropTypes.string.isRequired,
     lesson: _react2.default.PropTypes.string.isRequired,
+    part: _react2.default.PropTypes.string.isRequired,
     setUser: _react2.default.PropTypes.func.isRequired,
     setLanguage: _react2.default.PropTypes.func.isRequired
-}, _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildSe);
+}, _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setUser', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setLanguage', _react2.default.PropTypes.func.isRequired), _defineProperty(_ContentPortalBuildSe, 'setPart', _react2.default.PropTypes.func.isRequired), _ContentPortalBuildSe);
 
 },{"jquery":209,"material-ui/Avatar":308,"material-ui/Chip":318,"material-ui/FlatButton":325,"material-ui/MenuItem":334,"material-ui/RadioButton":344,"material-ui/RaisedButton":346,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716,"react-bootstrap":488,"react-router":556}],754:[function(require,module,exports){
 'use strict';
@@ -76956,7 +77083,7 @@ var ContentPortalLoginPage = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'text-center welcome col-md-6 col-md-offset-3' },
-                    _react2.default.createElement('img', { src: 'assets/img/logo/logo.svg' }),
+                    _react2.default.createElement('img', { src: 'assets/img/logo/1024X1024.png' }),
                     _react2.default.createElement(
                         'p',
                         { className: 'welcome-text' },
@@ -78305,7 +78432,7 @@ var MainHomePage = function (_React$Component) {
 exports.default = MainHomePage;
 
 },{"../components/BottomCardsPanelComponent":745,"../components/DiscoverPanel":747,"../components/ExperiencePanel":748,"material-ui/SelectField":348,"material-ui/TextField":358,"react":716}],759:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -78313,9 +78440,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78335,50 +78464,65 @@ var TestPage = function (_React$Component) {
     }
 
     _createClass(TestPage, [{
-        key: "render",
+        key: 'render',
         value: function render() {
 
             return _react2.default.createElement(
-                "div",
+                _reactBootstrap.Navbar,
                 null,
-                _react2.default.createElement("canvas", { id: "can", width: "37", height: "37" })
+                _react2.default.createElement(
+                    _reactBootstrap.Navbar.Header,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.Navbar.Brand,
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#' },
+                            'React-Bootstrap'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Nav,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.NavItem,
+                        { eventKey: 1, href: 'http://www.google.com' },
+                        'Link'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.NavItem,
+                        { eventKey: 2, href: '#' },
+                        'Link'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.NavDropdown,
+                        { eventKey: 3, title: 'Dropdown', id: 'basic-nav-dropdown' },
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.1 },
+                            'Action'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.2 },
+                            'Another action'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.3 },
+                            'Something else here'
+                        ),
+                        _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
+                        _react2.default.createElement(
+                            _reactBootstrap.MenuItem,
+                            { eventKey: 3.3 },
+                            'Separated link'
+                        )
+                    )
+                )
             );
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            var canvas = document.getElementById("can");
-            var ctx = canvas.getContext("2d");
-            var lastend = 0;
-            var data = [1, 1, 2, 1];
-            var myTotal = 0;
-            var myColor = ['#4e4e4e', '#d5d5d5', '#EAC66B', '#ed8f2a'];
-
-            for (var e = 0; e < data.length; e++) {
-                myTotal += data[e];
-            }
-
-            for (var i = 0; i < data.length; i++) {
-                ctx.fillStyle = myColor[i];
-                ctx.beginPath();
-                ctx.moveTo(canvas.width / 2, canvas.height / 2);
-                ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + Math.PI * 2 * (data[i] / myTotal), false);
-                ctx.lineTo(canvas.width / 2, canvas.height / 2);
-                ctx.fill();
-                lastend += Math.PI * 2 * (data[i] / myTotal);
-            }
-
-            ctx.fillStyle = 'rgba(255,255,255,0.80)';
-            ctx.beginPath();
-            //ctx.moveTo(canvas.width/2, canvas.height/2);
-            ctx.arc(canvas.width / 2, canvas.height / 2, 15, 0, 360, false);
-            ctx.fill();
-            ctx.stroke();
-            ctx.fillStyle = '#333';
-            ctx.font = "20px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(myTotal, canvas.width / 2, canvas.height / 2 + 2, canvas.width - 11);
         }
     }]);
 
@@ -78387,7 +78531,7 @@ var TestPage = function (_React$Component) {
 
 exports.default = TestPage;
 
-},{"react":716}],760:[function(require,module,exports){
+},{"react":716,"react-bootstrap":488}],760:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -78413,7 +78557,8 @@ var mapStateToProps = function mapStateToProps(state) {
         region: state.region,
         track: state.track,
         category: state.category,
-        lesson: state.lesson
+        lesson: state.lesson,
+        part: state.part
     };
 };
 
@@ -78442,6 +78587,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         },
         setLesson: function setLesson(a) {
             dispatch((0, _index.setLesson)(a));
+        },
+        setPart: function setPart(a) {
+            dispatch((0, _index.setPart)(a));
         }
     };
 };
@@ -78476,7 +78624,8 @@ var mapStateToProps = function mapStateToProps(state) {
         region: state.region,
         track: state.track,
         category: state.category,
-        lesson: state.lesson
+        lesson: state.lesson,
+        part: state.part
     };
 };
 
@@ -78505,6 +78654,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         },
         setLesson: function setLesson(a) {
             dispatch((0, _index.setLesson)(a));
+        },
+        setPart: function setPart(a) {
+            dispatch((0, _index.setPart)(a));
         }
     };
 };
@@ -78517,62 +78669,42 @@ exports.default = ReduxContentPortalBuildSearchPage;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 var setUser = exports.setUser = function setUser(loggedInUser) {
-  return {
-    type: 'SET_USER',
-    loggedInUser: loggedInUser
-  };
+    return { type: 'SET_USER', loggedInUser: loggedInUser };
 };
 
 var setLanguage = exports.setLanguage = function setLanguage(language) {
-  return {
-    type: 'SET_LANGUAGE',
-    language: language
-  };
+    return { type: 'SET_LANGUAGE', language: language };
 };
 
 var setCountry = exports.setCountry = function setCountry(country) {
-  return {
-    type: 'SET_COUNTRY',
-    country: country
-  };
+    return { type: 'SET_COUNTRY', country: country };
 };
 
 var setJourney = exports.setJourney = function setJourney(journey) {
-  return {
-    type: 'SET_JOURNEY',
-    journey: journey
-  };
+    return { type: 'SET_JOURNEY', journey: journey };
 };
 
 var setRegion = exports.setRegion = function setRegion(region) {
-  return {
-    type: 'SET_REGION',
-    region: region
-  };
+    return { type: 'SET_REGION', region: region };
 };
 
 var setTrack = exports.setTrack = function setTrack(track) {
-  return {
-    type: 'SET_TRACK',
-    track: track
-  };
+    return { type: 'SET_TRACK', track: track };
 };
 
 var setCategory = exports.setCategory = function setCategory(category) {
-  return {
-    type: 'SET_CATEGORY',
-    category: category
-  };
+    return { type: 'SET_CATEGORY', category: category };
 };
 
 var setLesson = exports.setLesson = function setLesson(lesson) {
-  return {
-    type: 'SET_LESSON',
-    lesson: lesson
-  };
+    return { type: 'SET_LESSON', lesson: lesson };
+};
+
+var setPart = exports.setPart = function setPart(part) {
+    return { type: 'SET_PART', part: part };
 };
 
 },{}],763:[function(require,module,exports){
@@ -78583,13 +78715,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 var initialState = {
     loggedInUser: '',
-    language: 'English',
-    country: 'USA',
+    language: 'Hindi',
+    country: 'India',
     journey: '',
     region: '',
     track: '',
     category: '',
-    lesson: ''
+    lesson: '',
+    part: 'one'
 };
 
 var contentportalreducer = function contentportalreducer(state, action) {
@@ -78614,6 +78747,8 @@ var contentportalreducer = function contentportalreducer(state, action) {
             return Object.assign({}, state, { category: action.category });
         case 'SET_LESSON':
             return Object.assign({}, state, { lesson: action.lesson });
+        case 'SET_PART':
+            return Object.assign({}, state, { part: action.part });
         default:
             return state;
     }

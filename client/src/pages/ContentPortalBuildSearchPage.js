@@ -157,16 +157,24 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                             : 'text-center'}>Search for legos to view options</i>
                         <p className={(this.state.activesearch != 'question' || this.state.search === '')
                             ? 'inactive'
-                            : 'text-center'}>Existing legos for <green>{this.state.search}</green></p>
+                            : 'text-center'}>Existing legos for
+                            <green>{this.state.search}</green>
+                        </p>
                         <p className={(this.state.activesearch != 'answer' || this.state.answersearch === '')
                             ? 'inactive'
-                            : 'text-center'}>Existing legos for <green>{this.state.answersearch}</green></p>
+                            : 'text-center'}>Existing legos for
+                            <green>{this.state.answersearch}</green>
+                        </p>
                         <p className={(this.state.activesearch != 'q' || this.state.question === '')
                             ? 'inactive'
-                            : 'text-center'}>Existing legos for <green>{this.state.question}</green></p>
+                            : 'text-center'}>Existing legos for
+                            <green>{this.state.question}</green>
+                        </p>
                         <p className={(this.state.activesearch != 'a' || this.state.answer === '')
                             ? 'inactive'
-                            : 'text-center'}>Existing legos for <green>{this.state.answer}</green></p>
+                            : 'text-center'}>Existing legos for
+                            <green>{this.state.answer}</green>
+                        </p>
                         {searchResults}
                         <div id="lego-footer">
                             <p>Dont see what you were looking for?</p>
@@ -314,6 +322,8 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         searchResults.length = 0
         chips.length = 0
         answerchips.length = 0
+        qchips.length = 0
+        achips.length = 0
         this._fetchRegion()
     }
 
@@ -382,14 +392,45 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
     handleChipDelete(deleteId) {
 
-        for (let iterableArray of[chips,
+        for (let [arrayIndex,
+            iterableArray]of[chips,
             answerchips,
-            achips,
-            qchips]) {
+            qchips,
+            achips].entries()) {
             for (let [index,
                 i]of iterableArray.entries()) {
                 if (i.props.deleteId === deleteId) {
+                    let textToRemove = iterableArray[index].props.children[2]
+                    switch (arrayIndex) {
+                        case 0:
+                            this.setState((prevState) => ({
+                                search: prevState.search.replace(textToRemove, '')
+                            }));
+                            break;
+                        case 1:
+                            this.setState((prevState) => ({
+                                answersearch: prevState.answersearch.replace(textToRemove, '')
+                            }));
+                            break;
+                        case 2:
+                            this.setState((prevState) => ({
+                                question: prevState.question.replace(textToRemove, '')
+                            }));
+                            break;
+                        case 3:
+                            this.setState((prevState) => ({
+                                answer: prevState.answer.replace(textToRemove, '')
+                            }));
+                            break;
+                        default:
+                            this.setState((prevState) => ({
+                                search: prevState.search.replace(textToRemove, '')
+                            }));
+                            break;
+                    }
                     iterableArray = iterableArray.splice(index, 1)
+                    searchResults.length = 0
+
                 }
             }
         }
@@ -407,14 +448,35 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 <Avatar src={url}/> {text}
             </Chip>
         )
-        if (this.state.activesearch === 'question')
+        if (this.state.activesearch === 'question') {
             chips.push(chip)
-        else if (this.state.activesearch === 'answer')
+            let currentTextArray = this.state.search.split(" ")
+            currentTextArray[currentTextArray.length - 1] = text
+            this.setState({
+                search: currentTextArray.toString().replace(/,/g, " ")
+            })
+        } else if (this.state.activesearch === 'answer') {
             answerchips.push(chip)
-        else if (this.state.activesearch === 'q')
+            let currentTextArray = this.state.answersearch.split(" ")
+            currentTextArray[currentTextArray.length - 1] = text
+            this.setState({
+                answersearch: currentTextArray.toString().replace(/,/g, " ")
+            })
+        } else if (this.state.activesearch === 'q') {
             qchips.push(chip)
-        else if (this.state.activesearch === 'a')
+            let currentTextArray = this.state.question.split(" ")
+            currentTextArray[currentTextArray.length - 1] = text
+            this.setState({
+                question: currentTextArray.toString().replace(/,/g, " ")
+            })
+        } else if (this.state.activesearch === 'a') {
             achips.push(chip)
+            let currentTextArray = this.state.answer.split(" ")
+            currentTextArray[currentTextArray.length - 1] = text
+            this.setState({
+                answer: currentTextArray.toString().replace(/,/g, " ")
+            })
+        }
 
         this.forceUpdate()
     }
@@ -709,6 +771,50 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     }
 
     _buildLesson() {
+        let part1 = ""
+        let part2 = ""
+
+        if (this.props.part === "one") {
+            part1 = {
+                "question_text": this.state.question.split(" "),
+                "answer_text": this.state.answer.split(" "),
+                "variables": [
+                    "beach", "park"
+                ],
+                "images": {
+                    "Default ": "default_beach",
+                    "The": " ",
+                    "beach": "imageOfBeach"
+                },
+                "audio": {},
+                "rules": {
+                    "legos_before_question": this.state.search.split(" "),
+                    "legos_before_answer": this.state.answersearch.split(" ")
+                },
+                "problem_question": "",
+                "problem_image": ""
+            }
+        } else {
+            part2 = {
+                "question_text": this.state.question.split(" "),
+                "answer_text": this.state.answer.split(" "),
+                "variables": [
+                    "beach", "park"
+                ],
+                "images": {
+                    "Default ": "default_beach",
+                    "The": " ",
+                    "beach": "imageOfBeach"
+                },
+                "audio": {},
+                "rules": {
+                    "legos_before_question": this.state.search.split(" "),
+                    "legos_before_answer": this.state.answersearch.split(" ")
+                },
+                "problem_question": "",
+                "problem_image": ""
+            }
+        }
 
         jQuery.ajax({
             method: "PUT",
@@ -726,26 +832,8 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                                         {
                                             "name": `${this.props.lesson}`,
                                             "parts": {
-                                                "part1": {
-                                                    "question_text": this.state.question.split(" "),
-                                                    "answer_text": this.state.answer.split(" "),
-                                                    "variables": [
-                                                        "beach", "park"
-                                                    ],
-                                                    "images": {
-                                                        "Default ": "default_beach",
-                                                        "The": " ",
-                                                        "beach": "imageOfBeach"
-                                                    },
-                                                    "audio": {},
-                                                    "rules": {
-                                                        "legos_before_question": this.state.search.split(" "),
-                                                        "legos_before_answer": this.state.answersearch.split(" ")
-                                                    },
-                                                    "problem_question": "",
-                                                    "problem_image": ""
-                                                },
-                                                "part2": ""
+                                                "part1": part1,
+                                                "part2": part2
                                             }
                                         }
                                     ]
@@ -866,6 +954,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 })
             }
         })
+
     }
 
     //Helper Functions
@@ -905,6 +994,7 @@ ContentPortalBuildSearchPage.propTypes = {
     track: React.PropTypes.string.isRequired,
     category: React.PropTypes.string.isRequired,
     lesson: React.PropTypes.string.isRequired,
+    part: React.PropTypes.string.isRequired,
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
@@ -912,5 +1002,6 @@ ContentPortalBuildSearchPage.propTypes = {
     setUser: React.PropTypes.func.isRequired,
     setLanguage: React.PropTypes.func.isRequired,
     setUser: React.PropTypes.func.isRequired,
-    setLanguage: React.PropTypes.func.isRequired
+    setLanguage: React.PropTypes.func.isRequired,
+    setPart: React.PropTypes.func.isRequired
 }
