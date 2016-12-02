@@ -68,7 +68,9 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             regionTwo: '',
             regionThree: '',
             gender: 'male',
-            legoText: ''
+            legoText: '',
+            height: '700px',
+            variables: []
         };
 
         this.handleSearch = this.handleSearch.bind(this);
@@ -78,6 +80,8 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         this.handleChipDelete = this.handleChipDelete.bind(this);
         this.createChip = this.createChip.bind(this);
         this.setChipVariable = this.setChipVariable.bind(this);
+
+        this.updateDimensions = this.updateDimensions.bind(this)
 
         this._buildLesson = this._buildLesson.bind(this);
 
@@ -97,7 +101,10 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         return (
             <div className="build-search-page">
                 <div className="col-md-7">
-                    <div className="text-center build-search col-md-12 build-search-left">
+                    <div className="text-center build-search col-md-12 build-search-left" style={{
+                        height: this.state.height,
+                        minHeight: '769px'
+                    }}>
                         <Link to="/contentportal/build">
                             <i className="material-icons pull-left">arrow_back</i>
                         </Link>
@@ -151,7 +158,10 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     </div>
                 </div>
                 <div className="col-md-5">
-                    <div className="text-left build-search col-md-12 build-search-right">
+                    <div className="text-left build-search col-md-12 build-search-right" style={{
+                        height: this.state.height,
+                        minHeight: '769px'
+                    }}>
                         <i className={(this.state.search != '' || this.state.answersearch != '' || this.state.question != '' || this.state.answer != '')
                             ? 'inactive'
                             : 'text-center'}>Search for legos to view options</i>
@@ -318,6 +328,19 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         )
     }
 
+    /******For dynamic sizes***************************/
+    updateDimensions() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+        if (width > 992) {
+            const calculatedHeight = `${height - 200}px`;
+            this.setState({height: calculatedHeight})
+        } else {
+            this.setState({height: 'auto'})
+        }
+    }
+
     componentWillMount() {
         searchResults.length = 0
         chips.length = 0
@@ -325,10 +348,16 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         qchips.length = 0
         achips.length = 0
         this._fetchRegion()
+        this.updateDimensions();
     }
 
     componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions);
         document.body.style.backgroundColor = "rgb(244,244,244)" // Set the style
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
     }
 
     _openModal() {
@@ -378,15 +407,20 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     }
 
     setChipVariable(e) {
+        let variableText = jQuery(e.target.parentNode).find("span").text()
         let chipClass = jQuery(e.target.parentNode).attr('class')
 
         let chipParentClass = jQuery(e.target.parentNode.parentNode).attr('class')
 
         if (chipParentClass.includes('variable-chips')) {
-            if (chipClass.includes('variable'))
+            if (chipClass.includes('variable')) {
                 jQuery(e.target.parentNode).removeClass('variable')
-            else
+            } else {
                 jQuery(e.target.parentNode).addClass('variable')
+                let variablesArray = this.state.variables
+                variablesArray.push(variableText)
+                this.setState({variables:variablesArray})
+            }
         }
     }
 
@@ -773,14 +807,14 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     _buildLesson() {
         let part1 = ""
         let part2 = ""
+        console.log(this.props.part)
+        console.log(this.state.variables)
 
         if (this.props.part === "one") {
             part1 = {
                 "question_text": this.state.question.split(" "),
                 "answer_text": this.state.answer.split(" "),
-                "variables": [
-                    "beach", "park"
-                ],
+                "variables": this.state.variables,
                 "images": {
                     "Default ": "default_beach",
                     "The": " ",
@@ -798,9 +832,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             part2 = {
                 "question_text": this.state.question.split(" "),
                 "answer_text": this.state.answer.split(" "),
-                "variables": [
-                    "beach", "park"
-                ],
+                "variables": this.state.variables,
                 "images": {
                     "Default ": "default_beach",
                     "The": " ",

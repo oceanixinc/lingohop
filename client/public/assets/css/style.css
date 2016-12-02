@@ -306,51 +306,57 @@
   -webkit-box-shadow: 1px 1px 2px 2px #F06292;
   box-shadow: 1px 1px 2px 2px #F06292; }
 
-.build-search-page .build-search-right {
-  height: 600px; }
-  .build-search-page .build-search-right i {
-    display: block;
-    position: absolute;
-    left: 50%;
-    margin-left: -50%;
-    width: 100%;
-    font-size: 16px;
-    top: 50%;
-    line-height: 2;
-    margin-top: -16px;
+.build-search-page .build-search-right i {
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -50%;
+  width: 100%;
+  font-size: 16px;
+  top: 50%;
+  line-height: 2;
+  margin-top: -16px;
+  color: gray; }
+
+.build-search-page .build-search-right > p {
+  margin-top: 25px;
+  font-size: 16px; }
+
+.build-search-page .build-search-right green {
+  color: green;
+  font-weight: 600; }
+
+.build-search-page .build-search-right .search-holder {
+  display: inline-block;
+  width: 100%; }
+
+.build-search-page .build-search-right img {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  padding: 2px;
+  margin: 1px; }
+
+.build-search-page .build-search-right .male {
+  border-bottom: 1px solid #0D47A1; }
+
+.build-search-page .build-search-right .female {
+  border-bottom: 1px solid #F06292; }
+
+.build-search-page .build-search-right .neutral {
+  border-bottom: 1px solid green; }
+
+.build-search-page .build-search-right #lego-footer {
+  position: absolute;
+  bottom: 0; }
+  .build-search-page .build-search-right #lego-footer p {
+    margin: 0 0 0 5px;
+    font-size: 12px;
     color: gray; }
-  .build-search-page .build-search-right > p {
-    margin-top: 25px;
-    font-size: 16px; }
-  .build-search-page .build-search-right green {
-    color: green;
-    font-weight: 600; }
-  .build-search-page .build-search-right .search-holder {
-    display: inline-block;
-    width: 100%; }
-  .build-search-page .build-search-right img {
-    height: 50px;
-    width: 50px;
-    object-fit: cover;
-    padding: 2px;
-    margin: 1px; }
-  .build-search-page .build-search-right .male {
-    border-bottom: 1px solid #0D47A1; }
-  .build-search-page .build-search-right .female {
-    border-bottom: 1px solid #F06292; }
-  .build-search-page .build-search-right .neutral {
-    border-bottom: 1px solid green; }
-  .build-search-page .build-search-right #lego-footer {
-    position: absolute;
-    bottom: 0; }
-    .build-search-page .build-search-right #lego-footer p {
-      margin: 0 0 0 5px;
-      font-size: 12px;
-      color: gray; }
-    .build-search-page .build-search-right #lego-footer #add-lego {
-      cursor: pointer;
-      color: #02B3E4;
-      margin-bottom: 10px; }
+  .build-search-page .build-search-right #lego-footer #add-lego {
+    cursor: pointer;
+    color: #02B3E4;
+    margin-bottom: 10px; }
 
 .inactive {
   display: none !important; }
