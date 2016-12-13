@@ -25,11 +25,9 @@ export default class ContentPortalLoginPage extends React.Component {
     render() {
         return (
             <div className="content-portal">
-                <div className="text-center welcome col-md-6 col-md-offset-3">
+                <div className="text-center welcome col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <img src="assets/img/logo/1024X1024.png"/>
-                    <p className="welcome-text">Welcome to the Lingohop
-                        <b>Content Portal</b>
-                    </p>
+                    <p className="welcome-text">Welcome to the Lingohop <b>Content Portal</b></p>
                     <div className="col-md-8 col-md-offset-2">
                         <TextField hintText="Username" className="text-field" value={this.state.username} onChange={this.handleUsernameChange} style={{
                             width: '100%',

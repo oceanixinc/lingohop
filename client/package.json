@@ -7,21 +7,17 @@
     "test": "jest",
     "start": "gulp watch"
   },
-  "author": "Carlos Souza <carloshrsouza@gmail.com> (http://csouza.me/)",
+  "author": "Mrinal Mech <mrinalmech@gmail.com>",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/codeschool/babel-with-gulp.git"
+    "url": ""
   },
   "keywords": [
     "babel",
     "gulp",
     "es2015"
   ],
-  "bugs": {
-    "url": "https://github.com/codeschool/babel-with-gulp/issues"
-  },
-  "homepage": "https://github.com/codeschool/babel-with-gulp#readme",
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-jest": "^15.0.0",
