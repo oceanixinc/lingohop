@@ -419,7 +419,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 jQuery(e.target.parentNode).addClass('variable')
                 let variablesArray = this.state.variables
                 variablesArray.push(variableText)
-                this.setState({variables:variablesArray})
+                this.setState({variables: variablesArray})
             }
         }
     }
@@ -743,7 +743,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/assets/region/${this.props.language}-${this.props.country}/`,
+            url: `https://testing.lingohop.com/api/assets/region/${this.props.language}-${this.props.country}/`,
             success: (res) => {
                 console.log(res)
                 this.setState({regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2]})
@@ -758,7 +758,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${searchTerm}`,
+            url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${searchTerm}`,
             success: (res) => {
 
                 searchResults.length = 0
@@ -782,7 +782,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     let imgArray = []
 
                     for (let img of item.images) {
-                        let imgFile = (<img className={`${extraClass}`} src={`http://testing.lingohop.com${img.file}`} onClick={() => this.createChip(`http://testing.lingohop.com${img.file}`, item.word, extraClass)}/>)
+                        let imgFile = (<img className={`${extraClass}`} src={`https://testing.lingohop.com${img.file}`} onClick={() => this.createChip(`https://testing.lingohop.com${img.file}`, item.word, extraClass)}/>)
                         imgArray.push(imgFile)
                     }
 
@@ -877,7 +877,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             }),
             dataType: "json",
             contentType: "application/json",
-            url: `http://testing.lingohop.com/api/contents/${this.props.country}/${this.props.language}/`,
+            url: `https://testing.lingohop.com/api/contents/${this.props.country}/${this.props.language}/`,
             success: (res) => {
                 console.log('Uploaded successfully')
             },
@@ -950,40 +950,10 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             }),
             dataType: "json",
             contentType: "application/json",
-            url: `http://testing.lingohop.com/api/assets/${this.props.country}/${this.props.language}/`,
+            url: `https://testing.lingohop.com/api/assets/${this.props.country}/${this.props.language}/`,
             success: (res) => {
                 console.log('Uploaded successfully')
-                this.setState({
-                    imgOneFile: '',
-                    imgTwoFile: '',
-                    imgThreeFile: '',
-                    imgOneUrl: '',
-                    imgTwoUrl: '',
-                    imgThreeUrl: '',
-                    audioOneFile: '',
-                    audioTwoFile: '',
-                    audioThreeFile: '',
-                    audioFourFile: '',
-                    audioFiveFile: '',
-                    audioSixFile: '',
-                    audioOneUrl: '',
-                    audioTwoUrl: '',
-                    audioThreeUrl: '',
-                    audioFourUrl: '',
-                    audioFiveUrl: '',
-                    audioSixUrl: '',
-                    audioOnePlaying: false,
-                    audioTwoPlaying: false,
-                    audioThreePlaying: false,
-                    audioFourPlaying: false,
-                    audioFivePlaying: false,
-                    audioSixPlaying: false,
-                    regionOne: '',
-                    regionTwo: '',
-                    regionThree: '',
-                    gender: 'male',
-                    legoText: ''
-                })
+                hashHistory.push('/contentportal/buildfinish')
             }
         })
 

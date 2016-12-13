@@ -40,11 +40,50 @@
 
         .buttons {
             > a {
-                 > div,
-                > button {
+                 > button,
+                > div {
                     margin: 5px;
                 }
             }
+        }
+    }
+}
+/*****Media Queries****************/
+@media only screen and (max-width: 1520px) {
+    .upload-finish-page .upload-finish {
+        margin-top: 0;
+        box-shadow: none;
+
+        #main-text {
+            font-size: 20px;
+        }
+
+        .img-holder > img {
+            width: 80%;
+            margin-bottom: 10px;
+        }
+
+        .upload-btn{
+          margin-top:30px!important;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .upload-finish-page .upload-finish {
+        margin-top: 0;
+        box-shadow: none;
+
+        #main-text {
+            font-size: 16px;
+        }
+
+        .img-holder > img {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .upload-btn{
+          margin-top:10px!important;
         }
     }
 }

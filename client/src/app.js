@@ -40,6 +40,7 @@ import ContentPortalUploadPage from './pages/ContentPortalUploadPage'
 import ContentPortalUploadFinishPage from './pages/ContentPortalUploadFinishPage'
 import ContentPortalLoginPage from './pages/ContentPortalLoginPage'
 import ContentPortalLandingPage from './pages/ContentPortalLandingPage'
+import ContentPortalBuildFinishPage from './pages/ContentPortalBuildFinishPage'
 import ReduxContentPortalBuildPage from './redux-pages/ReduxContentPortalBuildPage'
 import ReduxContentPortalBuildSearchPage from './redux-pages/ReduxContentPortalBuildSearchPage'
 
@@ -59,6 +60,7 @@ const app = (
                     <Route path="uploadfinish" component={ContentPortalUploadFinishPage}/>
                     <Route path="build" component={ReduxContentPortalBuildPage}/>
                     <Route path="buildsearch" component={ReduxContentPortalBuildSearchPage}/>
+                    <Route path="buildfinish" component={ContentPortalBuildFinishPage}/>
                 </Route>
                 <Route path="mainpage" component={MainPageLayout}>
                     <IndexRoute component={MainHomePage}/>

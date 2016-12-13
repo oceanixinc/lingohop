@@ -55,6 +55,11 @@
             }
         }
     }
-
-  
+}
+/*****Media Queries****************/
+@media only screen and (max-width: 768px) {
+    .build-page .build {
+        margin-top: 0;
+        box-shadow: none;
+    }
 }

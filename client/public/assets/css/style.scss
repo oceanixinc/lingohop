@@ -7,6 +7,10 @@
 @import "partials/buildpage";
 @import "partials/buildsearchpage";
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 .inactive {
     display: none !important;
 }
@@ -49,6 +53,7 @@
     }
 }
 //Modal Images
+
 #add-picture {
     height: 120px;
     width: 120px;

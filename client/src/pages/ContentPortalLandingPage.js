@@ -6,11 +6,11 @@ export default class ContentPortalLandingPage extends React.Component {
         return (
             <div className="landing-page">
 
-                <div className="text-center landing col-md-8 col-md-offset-2">
+                <div className="text-center landing col-sm-8 col-sm-offset-2">
                     <p className="welcome-text">Do you want to <b>upload</b>, <b>build</b> or <b>edit</b>?</p>
-                    <div className="col-md-12 mega-holder">
+                    <div className="col-sm-12 mega-holder">
                       <Link to="/contentportal/upload">
-                        <div className="col-md-4">
+                        <div className="col-sm-4">
                             <div className="img-holder">
                                 <img src='assets/img/upload.png'/>
                                 <div className="after">
@@ -22,7 +22,7 @@ export default class ContentPortalLandingPage extends React.Component {
                       </Link>
 
                       <Link to="/contentportal/build">
-                        <div className="col-md-4">
+                        <div className="col-sm-4">
                             <div className="img-holder">
                                 <img src='assets/img/build.png'/>
                                 <div className="after">
@@ -33,7 +33,7 @@ export default class ContentPortalLandingPage extends React.Component {
                         </div>
                       </Link>
 
-                        <div className="col-md-4">
+                        <div className="col-sm-4">
                             <div className="img-holder">
                                 <img src='assets/img/edit.png'/>
                                 <div className="after">

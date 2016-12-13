@@ -72,22 +72,24 @@ export default class ContentPortalBuildPage extends React.Component {
         this._fetchLanguageCountry();
         this._fetchJourney();
         this._fetchTrack();
+        this.props.setPart('one');
+
     }
 
     render() {
         return (
             <div className="build-page">
-                <div className="text-center build col-md-6 col-md-offset-3">
+                <div className="text-center build col-sm-6 col-sm-offset-3">
                     <Link to="/contentportal">
                         <i className="material-icons pull-left">arrow_back</i>
                     </Link>
-                    <div className="col-md-12">
+                    <div className="col-sm-12">
                         <p id="main-text">Hello,
                             <b>John</b>
                         </p>
                         <p id="desc-text">Tell us a little more about the new lesson.</p>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What language is being taught?
                         <SelectField value={this.state.language_country} onChange={this.handleValueChange.bind(this, 'language_country')} hintText="Language" style={{
                             width: '100%'
@@ -95,7 +97,7 @@ export default class ContentPortalBuildPage extends React.Component {
                             {language_items}
                         </SelectField>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What is the user journey?
                         <SelectField value={this.state.journey} onChange={this.handleValueChange.bind(this, 'journey')} hintText="User Journey" style={{
                             width: '100%'
@@ -104,7 +106,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         </SelectField>
                         <FlatButton label="+ Add New Journey" onClick={this._openSecondModal}/>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What is the region?
                         <SelectField value={this.state.region} onChange={this.handleValueChange.bind(this, 'region')} hintText="Region" style={{
                             width: '100%'
@@ -112,7 +114,7 @@ export default class ContentPortalBuildPage extends React.Component {
                             {region_items}
                         </SelectField>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What track is it for?
                         <SelectField value={this.state.track} onChange={this.handleValueChange.bind(this, 'track')} hintText="Track" style={{
                             width: '100%'
@@ -121,7 +123,7 @@ export default class ContentPortalBuildPage extends React.Component {
                         </SelectField>
                         <FlatButton label="+ Add New Track" onClick={this._openThirdModal}/>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         Please select a category
                         <SelectField value={this.state.category} onChange={this.handleValueChange.bind(this, 'category')} hintText="Category" style={{
                             width: '100%'
@@ -130,20 +132,20 @@ export default class ContentPortalBuildPage extends React.Component {
                         </SelectField>
                         <FlatButton label="+ Add New Category" onClick={this._openModal}/>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What would you like to name the lesson?
                         <TextField value={this.state.lesson} onChange={this.handleLessonChange} hintText="Lesson Name" style={{
                             width: '100%'
                         }}></TextField>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         Which part is this?
                         <RadioButtonGroup name="parts" defaultSelected="one" onChange={this.handlePartChange}>
                             <RadioButton value="one" label="Part 1"/>
                             <RadioButton value="two" label="Part 2"/>
                         </RadioButtonGroup>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-sm-12">
                         <RaisedButton label="NEXT" className={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')
                             ? "upload-btn"
                             : "upload-btn active-btn"} disabled={(this.state.language_country === '' || this.state.region === '' || this.state.category === '' || this.state.journey === '' || this.state.track === '' || this.state.lesson === '')} onClick={this._nextPage}/>
@@ -155,8 +157,8 @@ export default class ContentPortalBuildPage extends React.Component {
                             <b>category</b>
                         </h4>
                     </Modal.Header>
-                    <Modal.Body className="col-md-12">
-                        <div className="col-md-6 text-center">
+                    <Modal.Body className="col-sm-12">
+                        <div className="col-sm-6 text-center">
                             <input id="category-photo" className="fileInput" type="file" onChange={this._handleImageUpload}/>
                             <div id="add-photo" className={this.state.categoryImgUrl != '' && 'inactive'} onClick={this._clickImageUpload}>
                                 + Add Category Photo
@@ -164,7 +166,7 @@ export default class ContentPortalBuildPage extends React.Component {
                             <img id="category-preview" className={this.state.categoryImgUrl === '' && 'inactive'} src={this.state.categoryImgUrl} onClick={this._clickImageUpload}/>
                             <i>Max size of 2 mb</i>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-sm-6">
                             <SelectField hintText="Position" style={{
                                 width: '100%'
                             }}></SelectField>
@@ -183,8 +185,8 @@ export default class ContentPortalBuildPage extends React.Component {
                             <b>journey</b>
                         </h4>
                     </Modal.Header>
-                    <Modal.Body className="col-md-12">
-                        <div className="col-md-12 text-center">
+                    <Modal.Body className="col-sm-12">
+                        <div className="col-sm-12 text-center">
                             <TextField value={this.state.newJourney} onChange={this.handleNewJourneyChange} hintText="New Journey" style={{
                                 width: '100%'
                             }}></TextField>
@@ -200,8 +202,8 @@ export default class ContentPortalBuildPage extends React.Component {
                             <b>track</b>
                         </h4>
                     </Modal.Header>
-                    <Modal.Body className="col-md-12">
-                        <div className="col-md-12 text-center">
+                    <Modal.Body className="col-sm-12">
+                        <div className="col-sm-12 text-center">
                             <TextField value={this.state.newTrack} onChange={this.handleNewTrackChange} hintText="New Track" style={{
                                 width: '100%'
                             }}></TextField>
@@ -226,7 +228,7 @@ export default class ContentPortalBuildPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: 'http://testing.lingohop.com/api/language-country/',
+            url: 'https://testing.lingohop.com/api/language-country/',
             success: (res) => {
                 let i = 1;
                 for (let language of res) {
@@ -251,7 +253,7 @@ export default class ContentPortalBuildPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/assets/region/${language}-${country}/`,
+            url: `https://testing.lingohop.com/api/assets/region/${language}-${country}/`,
             success: (res) => {
                 region_items.length = 0
                 let i = 1
@@ -277,7 +279,7 @@ export default class ContentPortalBuildPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
+            url: `https://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
             success: (res) => {
                 category_items.length = 0
                 let i = 1
@@ -300,7 +302,7 @@ export default class ContentPortalBuildPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/contents/journey/`,
+            url: `https://testing.lingohop.com/api/contents/journey/`,
             success: (res) => {
                 journey_items.length = 0;
                 let i = 1
@@ -322,7 +324,7 @@ export default class ContentPortalBuildPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/contents/track/`,
+            url: `https://testing.lingohop.com/api/contents/track/`,
             success: (res) => {
                 track_items.length = 0
                 let i = 1
@@ -345,7 +347,7 @@ export default class ContentPortalBuildPage extends React.Component {
             dataType: "json",
             data: JSON.stringify({"ID": 1, "name": this.state.newTrack}),
             contentType: "application/json",
-            url: `http://testing.lingohop.com/api/contents/track/`,
+            url: `https://testing.lingohop.com/api/contents/track/`,
             success: (res) => {
                 this.setState({
                     newTrack: ''
@@ -362,7 +364,7 @@ export default class ContentPortalBuildPage extends React.Component {
             dataType: "json",
             data: JSON.stringify({"ID": 1, "name": this.state.newJourney}),
             contentType: "application/json",
-            url: `http://testing.lingohop.com/api/contents/journey/`,
+            url: `https://testing.lingohop.com/api/contents/journey/`,
             success: (res) => {
                 this.setState({
                     newJourney: ''
@@ -388,7 +390,7 @@ export default class ContentPortalBuildPage extends React.Component {
                 }
             }),
             contentType: "application/json",
-            url: `http://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
+            url: `https://testing.lingohop.com/api/contents/category/?country=${country}&language=${language}`,
             success: (res) => {
                 this.setState({
                     newCategory: '',

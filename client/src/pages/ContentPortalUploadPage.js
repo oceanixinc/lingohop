@@ -114,17 +114,17 @@ export default class ContentPortalUploadPage extends React.Component {
                     </Modal.Footer>
 
                 </Modal>
-                <div className="text-center upload col-md-6 col-md-offset-3">
+                <div className="text-center upload col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <Link to="/contentportal">
                         <i className="material-icons pull-left">arrow_back</i>
                     </Link>
-                    <div className="col-md-12">
+                    <div className="col-sm-12">
                         <p id="main-text">Hello,
                             <b>John</b>
                         </p>
                         <p id="desc-text">Please tell us about the content upload.</p>
                     </div>
-                    <div className="big-text text-left col-md-8 col-md-offset-2">
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
                         What Language-Country pair does the lego belong to?
                         <SelectField value={this.state.language_country} onChange={this.handleValueChange.bind(this, 'language_country')} hintText="Language-Country" style={{
                             width: '100%'
@@ -132,7 +132,7 @@ export default class ContentPortalUploadPage extends React.Component {
                             {language_items}
                         </SelectField>
                     </div>
-                    <div id="lego-text" className="big-text text-left col-md-8 col-md-offset-2">
+                    <div id="lego-text" className="big-text text-left col-sm-8 col-sm-offset-2">
                         What is the lego text?
                         <TextField value={this.state.legoText} hintText={this.state.legoText != ''
                             ? ''
@@ -140,14 +140,16 @@ export default class ContentPortalUploadPage extends React.Component {
                             width: '100%'
                         }}></TextField>
                     </div>
-                    <div className="big-text text-left col-md-3 col-md-offset-2">
+                    <div className="big-text text-left col-sm-3 col-sm-offset-2">
                         <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange}>
                             <RadioButton value="male" label="Male" style={styles.radioButton}/>
                             <RadioButton value="female" label="Female" style={styles.radioButton}/>
                             <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                         </RadioButtonGroup>
                     </div>
-                    <div className="big-text text-left col-md-7">
+                    <div className="big-text text-left col-sm-7" style={{
+                        overflow: 'auto'
+                    }}>
                         <div id="add-picture" className={this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive'}>+ Add Picture
                             <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
                         </div>
@@ -166,12 +168,12 @@ export default class ContentPortalUploadPage extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div id="audio" className="big-text text-left col-md-10 col-md-offset-2">
+                    <div id="audio" className="big-text text-left col-sm-10 col-sm-offset-2">
                         Audio Files
                     </div>
                     <div id="chips" className={(this.state.gender === 'female' || this.state.regionOne === '')
                         ? 'inactive'
-                        : 'big-text text-left col-md-8 col-md-offset-2'}>
+                        : 'big-text text-left col-sm-8 col-sm-offset-2'}>
                         <input className="fileInput" id="audio-upload-one" type="file" onChange={this._handleAudioUpload.bind(this, "one")}/>
                         <input className="fileInput" id="audio-upload-two" type="file" onChange={this._handleAudioUpload.bind(this, "two")}/>
                         <input className="fileInput" id="audio-upload-three" type="file" onChange={this._handleAudioUpload.bind(this, "three")}/>
@@ -212,7 +214,7 @@ export default class ContentPortalUploadPage extends React.Component {
                     </div>
                     <div id="chips" className={(this.state.gender === 'male' || this.state.regionOne === '')
                         ? 'inactive'
-                        : 'big-text text-left col-md-8 col-md-offset-2'}>
+                        : 'big-text text-left col-sm-8 col-sm-offset-2'}>
                         <input className="fileInput" id="audio-upload-four" type="file" onChange={this._handleAudioUpload.bind(this, "four")}/>
                         <input className="fileInput" id="audio-upload-five" type="file" onChange={this._handleAudioUpload.bind(this, "five")}/>
                         <input className="fileInput" id="audio-upload-six" type="file" onChange={this._handleAudioUpload.bind(this, "six")}/>
@@ -251,7 +253,7 @@ export default class ContentPortalUploadPage extends React.Component {
                             (F)
                         </Chip>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-sm-12">
                         <RaisedButton label="UPLOAD" className={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''))
                             ? 'upload-btn'
                             : 'upload-btn active-btn'} disabled={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''))} onClick={this._uploadContent}/>
@@ -504,7 +506,7 @@ export default class ContentPortalUploadPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: 'http://testing.lingohop.com/api/language-country/',
+            url: 'https://testing.lingohop.com/api/language-country/',
             success: (res) => {
                 let i = 1;
                 for (let language of res) {
@@ -528,7 +530,7 @@ export default class ContentPortalUploadPage extends React.Component {
         jQuery.ajax({
             method: 'GET',
             dataType: "json",
-            url: `http://testing.lingohop.com/api/assets/region/${language}-${country}/`,
+            url: `https://testing.lingohop.com/api/assets/region/${language}-${country}/`,
             success: (res) => {
                 this.setState({regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2]})
             }
@@ -607,7 +609,7 @@ export default class ContentPortalUploadPage extends React.Component {
                 }),
                 dataType: "json",
                 contentType: "application/json",
-                url: `http://testing.lingohop.com/api/assets/${country}/${language}/`,
+                url: `https://testing.lingohop.com/api/assets/${country}/${language}/`,
                 success: (res) => {
                     console.log('Uploaded successfully')
                     hashHistory.push('/contentportal/uploadfinish')
