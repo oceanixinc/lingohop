@@ -75637,7 +75637,9 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             regionTwo: '',
             regionThree: '',
             gender: 'male',
-            legoText: ''
+            legoText: '',
+            height: '700px',
+            variables: []
         };
 
         _this.handleSearch = _this.handleSearch.bind(_this);
@@ -75647,6 +75649,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         _this.handleChipDelete = _this.handleChipDelete.bind(_this);
         _this.createChip = _this.createChip.bind(_this);
         _this.setChipVariable = _this.setChipVariable.bind(_this);
+
+        _this.updateDimensions = _this.updateDimensions.bind(_this);
 
         _this._buildLesson = _this._buildLesson.bind(_this);
 
@@ -75676,7 +75680,10 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     { className: 'col-md-7' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'text-center build-search col-md-12 build-search-left' },
+                        { className: 'text-center build-search col-md-12 build-search-left', style: {
+                                height: this.state.height,
+                                minHeight: '769px'
+                            } },
                         _react2.default.createElement(
                             _reactRouter.Link,
                             { to: '/contentportal/build' },
@@ -75769,7 +75776,10 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     { className: 'col-md-5' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'text-left build-search col-md-12 build-search-right' },
+                        { className: 'text-left build-search col-md-12 build-search-right', style: {
+                                height: this.state.height,
+                                minHeight: '769px'
+                            } },
                         _react2.default.createElement(
                             'i',
                             { className: this.state.search != '' || this.state.answersearch != '' || this.state.question != '' || this.state.answer != '' ? 'inactive' : 'text-center' },
@@ -76058,6 +76068,22 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 )
             );
         }
+
+        /******For dynamic sizes***************************/
+
+    }, {
+        key: 'updateDimensions',
+        value: function updateDimensions() {
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+            if (width > 992) {
+                var calculatedHeight = height - 200 + 'px';
+                this.setState({ height: calculatedHeight });
+            } else {
+                this.setState({ height: 'auto' });
+            }
+        }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
@@ -76067,11 +76093,18 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             qchips.length = 0;
             achips.length = 0;
             this._fetchRegion();
+            this.updateDimensions();
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
+            window.addEventListener("resize", this.updateDimensions);
             document.body.style.backgroundColor = "rgb(244,244,244)"; // Set the style
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener("resize", this.updateDimensions);
         }
     }, {
         key: '_openModal',
@@ -76128,12 +76161,20 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'setChipVariable',
         value: function setChipVariable(e) {
+            var variableText = (0, _jquery2.default)(e.target.parentNode).find("span").text();
             var chipClass = (0, _jquery2.default)(e.target.parentNode).attr('class');
 
             var chipParentClass = (0, _jquery2.default)(e.target.parentNode.parentNode).attr('class');
 
             if (chipParentClass.includes('variable-chips')) {
-                if (chipClass.includes('variable')) (0, _jquery2.default)(e.target.parentNode).removeClass('variable');else (0, _jquery2.default)(e.target.parentNode).addClass('variable');
+                if (chipClass.includes('variable')) {
+                    (0, _jquery2.default)(e.target.parentNode).removeClass('variable');
+                } else {
+                    (0, _jquery2.default)(e.target.parentNode).addClass('variable');
+                    var variablesArray = this.state.variables;
+                    variablesArray.push(variableText);
+                    this.setState({ variables: variablesArray });
+                }
             }
         }
     }, {
@@ -76636,12 +76677,14 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         value: function _buildLesson() {
             var part1 = "";
             var part2 = "";
+            console.log(this.props.part);
+            console.log(this.state.variables);
 
             if (this.props.part === "one") {
                 part1 = {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
-                    "variables": ["beach", "park"],
+                    "variables": this.state.variables,
                     "images": {
                         "Default ": "default_beach",
                         "The": " ",
@@ -76659,7 +76702,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 part2 = {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
-                    "variables": ["beach", "park"],
+                    "variables": this.state.variables,
                     "images": {
                         "Default ": "default_beach",
                         "The": " ",
