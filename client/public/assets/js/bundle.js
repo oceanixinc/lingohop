@@ -77199,7 +77199,7 @@ var ContentPortalLoginPage = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'text-center welcome col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2' },
-                    _react2.default.createElement('img', { src: 'assets/img/logo/1024X1024.png' }),
+                    _react2.default.createElement('img', { src: 'assets/img/logo/logo.png' }),
                     _react2.default.createElement(
                         'p',
                         { className: 'welcome-text' },
