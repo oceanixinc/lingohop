@@ -41,21 +41,6 @@ class Trip(models.Model):
     name = models.CharField(max_length=200)
 
 
-class UserTrip(models.Model):
-    """
-    Model to create Trip information.
-
-    :trip: Trip foreign Key.
-    :departure_date: Departure date for particular date
-
-    """
-    trip = models.ForeignKey(
-        Trip,
-        related_name='usertrip')
-    departure_date = models.DateTimeField(
-        null=True, blank=True)
-
-
 class Language(models.Model):
     """
     Model to create languages.
@@ -95,6 +80,33 @@ class LanguageCountry(models.Model):
     #     return self.language.name
 
 
+class UserTrip(models.Model):
+    """
+    Model to create Trip information.
+
+    :trip: Trip foreign Key.
+    :departure_date: Departure date for particular date
+
+    """
+    trip = models.ForeignKey(
+        Trip,
+        related_name='usertrip')
+    trip_type = models.CharField(
+        max_length=200,
+        null=True, blank=True)
+    departure_date = models.DateTimeField(
+        null=True, blank=True)
+    language_country = models.ManyToManyField(
+        LanguageCountry,
+        null=True, blank=True,
+        related_name='usertrip',
+        verbose_name=_("Language Country Information")
+    )
+    region = models.CharField(
+        max_length=200,
+        null=True, blank=True)
+
+
 class User(AbstractUser):
     """
     Model to create user profile.
@@ -109,12 +121,6 @@ class User(AbstractUser):
         # validators=[validate_file_extension],
         blank=True, null=True,
         help_text='Maximum file size allowed is 2Mb'
-    )
-    language_country = models.ManyToManyField(
-        LanguageCountry,
-        null=True, blank=True,
-        related_name='userprofile',
-        verbose_name=_("Language Country Information")
     )
     trip = models.ManyToManyField(
         UserTrip,
