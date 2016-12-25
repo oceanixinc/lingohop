@@ -102,13 +102,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'password', 'email',
             'first_name', 'last_name',
             'profile_picture',
-            'language_country', 'trip',
+            # 'language_country',
+            'trip',
             'subscription_type',
             'full_name',
         )
 
     def create(self, validated_data):
-        language_country = validated_data.get('language_country')
+        # language_country = validated_data.get('language_country')
 
         trip = validated_data.get('trip')
         # print ('trip is', trip)
@@ -129,8 +130,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.profile_picture = validated_data.get('profile_picture')
         user.subscription_type = validated_data.get('subscription_type')
         user.save()
-        user.language_country.add(*language_country)
-        user.save()
+        # user.language_country.add(*language_country)
+        # user.save()
         user.trip.add(*trip)
         user.save()
 

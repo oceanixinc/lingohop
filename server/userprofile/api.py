@@ -81,9 +81,16 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
 
         trip = request.data.get('trip', None)
         departure_date = request.data.get('departure_date', None)
+        trip_type = request.data.get('trip_type', None)
+        region = request.data.get('region', None)
         user_trip = UserTrip.objects.create(
             trip_id=int(trip),
-            departure_date=departure_date)
+            departure_date=departure_date,
+            trip_type=trip_type,
+            region=region)
+        language_country = list(map(int, request.data.get('language_country')))
+        user_trip.language_country.add(*language_country)
+        # user.save()
         try:
             exist_user = User.objects.get(
                 email=request.data.get('email', None))
@@ -103,14 +110,13 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
         # with open(fname, 'wb') as f:
         #     f.write(imgdata)
         print ('picuture', request.data.get('profile_picture', None))
-        language_country = list(map(int, request.data.get('language_country')))
         data = {
             'profile_picture': request.data.get('profile_picture', None),
             'password': request.data.get('password', None),
             'email': request.data.get('email', None),
             'first_name': request.data.get('first_name', None),
             'last_name': request.data.get('last_name', None),
-            'language_country': language_country,
+            # 'language_country': language_country,
             'trip': [user_trip.id],
             # 'subscription_type': request.data.get('password', None),
             # 'departure_date': request.data.get('departure_date', None),
