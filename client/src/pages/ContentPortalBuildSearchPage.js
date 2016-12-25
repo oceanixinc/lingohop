@@ -151,9 +151,9 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                             {answerchips}
                         </div>
                         <div className="col-md-12">
-                            <RaisedButton label="BUILD" className={(this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '')
+                            <RaisedButton label="BUILD" className={(this.state.question === '' || this.state.answer === '')
                                 ? "upload-btn"
-                                : "upload-btn active-btn"} disabled={(this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '')} onClick={this._buildLesson}/>
+                                : "upload-btn active-btn"} disabled={(this.state.question === '' || this.state.answer === '')} onClick={this._buildLesson}/>
                         </div>
                     </div>
                 </div>
@@ -854,9 +854,9 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 "country": `${this.props.country}`,
                 "language": `${this.props.language}`,
                 "journeys": {
-                    "journey1": {
-                        "region1": {
-                            "track1": [
+                    [this.props.journey]: {
+                        [this.props.region]: {
+                            [this.props.track]: [
                                 {
                                     "category_name": `${this.props.category}`,
                                     "Video": "URL of video",

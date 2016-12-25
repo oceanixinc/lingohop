@@ -107,7 +107,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         <h4>Audio Validation Error</h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12 text-center">
-                        <h4>The audio files for each particular region have to be in the "word_region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good_Catalonia". Please check the naming of your audio files</h4>
+                        <h4>The audio files for each particular region have to be in the "word-region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good-Catalonia". Please check the naming of your audio files</h4>
                     </Modal.Body>
                     <Modal.Footer>
                         <RaisedButton label="CLOSE" primary={true} onClick={this._closeValidateModal}/>
@@ -552,6 +552,15 @@ export default class ContentPortalUploadPage extends React.Component {
             let language = languages[this.state.language_country - 1]
             let country = countries[this.state.language_country - 1]
 
+            let imgUrls = []
+            for (let imgUrl of[this.state.imgOneUrl,
+                this.state.imgTwoUrl,
+                this.state.imgThreeUrl]) {
+
+                if (imgUrl != '')
+                    imgUrls.push({"file": imgUrl})
+            }
+
             jQuery.ajax({
                 method: "PUT",
                 data: JSON.stringify({
@@ -560,15 +569,7 @@ export default class ContentPortalUploadPage extends React.Component {
                     "words": [
                         {
                             "word": this.state.legoText,
-                            "images": [
-                                {
-                                    "file": this.state.imgOneUrl
-                                }, {
-                                    "file": this.state.imgTwoUrl
-                                }, {
-                                    "file": this.state.imgThreeUrl
-                                }
-                            ],
+                            "images": imgUrls,
                             "audio": {
                                 "files": [
                                     {
@@ -622,6 +623,7 @@ export default class ContentPortalUploadPage extends React.Component {
 
                 }
             })
+
         } else {
             this._openValidateModal()
         }
@@ -642,6 +644,10 @@ export default class ContentPortalUploadPage extends React.Component {
             nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'))
             nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'))
             nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'))
+
+            console.log(nameOne)
+            console.log(nameTwo)
+            console.log(nameThree)
 
             let validOne = (nameOne === `${this.state.legoText}-${this.state.regionOne}`)
             let validTwo = (nameTwo === `${this.state.legoText}-${this.state.regionTwo}`)
