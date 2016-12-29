@@ -478,7 +478,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         let deleteId = Math.random()
 
         let chip = (
-            <Chip style={styles.chip} deleteId={`${deleteId}`} className={`pull-left ${extraClass}`} onTouchTap={this.setChipVariable} onRequestDelete={() => this.handleChipDelete(`${deleteId}`)}>
+            <Chip style={styles.chip} deleteId={`${deleteId}`} text={`${text}`} url={`${url}`} className={`pull-left ${extraClass}`} onTouchTap={this.setChipVariable} onRequestDelete={() => this.handleChipDelete(`${deleteId}`)}>
                 <Avatar src={url}/> {text}
             </Chip>
         )
@@ -745,7 +745,6 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             dataType: "json",
             url: `https://testing.lingohop.com/api/assets/region/${this.props.language}-${this.props.country}/`,
             success: (res) => {
-                console.log(res)
                 this.setState({regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2]})
             }
 
@@ -807,19 +806,23 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     _buildLesson() {
         let part1 = ""
         let part2 = ""
-        console.log(this.props.part)
-        console.log(this.state.variables)
+
+        let imgUrls = {}
+        for (let chipsArray of[chips,
+            answerchips,
+            qchips,
+            achips]) {
+            for (let chip of chipsArray) {
+                imgUrls[chip.props.text] = chip.props.url
+            }
+        }
 
         if (this.props.part === "one") {
             part1 = {
                 "question_text": this.state.question.split(" "),
                 "answer_text": this.state.answer.split(" "),
                 "variables": this.state.variables,
-                "images": {
-                    "Default ": "default_beach",
-                    "The": " ",
-                    "beach": "imageOfBeach"
-                },
+                "images": imgUrls,
                 "audio": {},
                 "rules": {
                     "legos_before_question": this.state.search.split(" "),
@@ -833,11 +836,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 "question_text": this.state.question.split(" "),
                 "answer_text": this.state.answer.split(" "),
                 "variables": this.state.variables,
-                "images": {
-                    "Default ": "default_beach",
-                    "The": " ",
-                    "beach": "imageOfBeach"
-                },
+                "images": imgUrls,
                 "audio": {},
                 "rules": {
                     "legos_before_question": this.state.search.split(" "),
@@ -893,6 +892,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
     _uploadContent() {
 
+        let imgUrls = []
+        for (let imgUrl of[this.state.imgOneUrl,
+            this.state.imgTwoUrl,
+            this.state.imgThreeUrl]) {
+
+            if (imgUrl != '')
+                imgUrls.push({"file": imgUrl})
+        }
+
         jQuery.ajax({
             method: "PUT",
             data: JSON.stringify({
@@ -901,15 +909,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 "words": [
                     {
                         "word": this.state.legoText,
-                        "images": [
-                            {
-                                "file": this.state.imgOneUrl
-                            }, {
-                                "file": this.state.imgTwoUrl
-                            }, {
-                                "file": this.state.imgThreeUrl
-                            }
-                        ],
+                        "images": imgUrls,
                         "audio": {
                             "files": [
                                 {

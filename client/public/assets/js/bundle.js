@@ -76394,7 +76394,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
             var chip = _react2.default.createElement(
                 _Chip2.default,
-                { style: styles.chip, deleteId: '' + deleteId, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
+                { style: styles.chip, deleteId: '' + deleteId, text: '' + text, url: '' + url, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
                         return _this4.handleChipDelete('' + deleteId);
                     } },
                 _react2.default.createElement(_Avatar2.default, { src: url }),
@@ -76667,7 +76667,6 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 dataType: "json",
                 url: 'https://testing.lingohop.com/api/assets/region/' + this.props.language + '-' + this.props.country + '/',
                 success: function success(res) {
-                    console.log(res);
                     _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
                 }
 
@@ -76781,19 +76780,42 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         value: function _buildLesson() {
             var part1 = "";
             var part2 = "";
-            console.log(this.props.part);
-            console.log(this.state.variables);
+
+            var imgUrls = {};
+            var _arr = [chips, answerchips, qchips, achips];
+            for (var _i = 0; _i < _arr.length; _i++) {
+                var chipsArray = _arr[_i];var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
+
+                try {
+                    for (var _iterator5 = chipsArray[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                        var chip = _step5.value;
+
+                        imgUrls[chip.props.text] = chip.props.url;
+                    }
+                } catch (err) {
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                            _iterator5.return();
+                        }
+                    } finally {
+                        if (_didIteratorError5) {
+                            throw _iteratorError5;
+                        }
+                    }
+                }
+            }
 
             if (this.props.part === "one") {
                 part1 = {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
                     "variables": this.state.variables,
-                    "images": {
-                        "Default ": "default_beach",
-                        "The": " ",
-                        "beach": "imageOfBeach"
-                    },
+                    "images": imgUrls,
                     "audio": {},
                     "rules": {
                         "legos_before_question": this.state.search.split(" "),
@@ -76807,11 +76829,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
                     "variables": this.state.variables,
-                    "images": {
-                        "Default ": "default_beach",
-                        "The": " ",
-                        "beach": "imageOfBeach"
-                    },
+                    "images": imgUrls,
                     "audio": {},
                     "rules": {
                         "legos_before_question": this.state.search.split(" "),
@@ -76856,6 +76874,14 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: '_uploadContent',
         value: function _uploadContent() {
 
+            var imgUrls = [];
+            var _arr2 = [this.state.imgOneUrl, this.state.imgTwoUrl, this.state.imgThreeUrl];
+            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+                var imgUrl = _arr2[_i2];
+
+                if (imgUrl != '') imgUrls.push({ "file": imgUrl });
+            }
+
             _jquery2.default.ajax({
                 method: "PUT",
                 data: JSON.stringify({
@@ -76863,13 +76889,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     "language": this.props.language,
                     "words": [{
                         "word": this.state.legoText,
-                        "images": [{
-                            "file": this.state.imgOneUrl
-                        }, {
-                            "file": this.state.imgTwoUrl
-                        }, {
-                            "file": this.state.imgThreeUrl
-                        }],
+                        "images": imgUrls,
                         "audio": {
                             "files": [{
                                 "gender": "male",
@@ -78833,8 +78853,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var initialState = {
     loggedInUser: '',
-    language: 'Hindi',
-    country: 'India',
+    language: 'Spanish',
+    country: 'Spain',
     journey: '',
     region: '',
     track: '',
