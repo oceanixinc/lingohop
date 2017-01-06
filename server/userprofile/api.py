@@ -8,8 +8,10 @@ from rest_framework.response import Response
 
 from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
-    LanguageCountrySerializer)
-from userprofile.models import User, UserTrip, Trip, LanguageCountry
+    LanguageCountrySerializer, UserTripSerializer)
+from userprofile.models import (
+    User, UserTrip,
+    Trip, LanguageCountry)
 from content.models import Asset
 
 
@@ -135,8 +137,32 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class UserProfileDetail(UserProfileMixin, RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
 
     lookup_field = 'username'
+
+
+class UserTripUpdate(RetrieveUpdateDestroyAPIView):
+    """
+    Return a specific user_trip, update it, or delete it.
+    """
+    model = UserTrip
+    serializer_class = UserTripSerializer
+    queryset = UserTrip.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        user_trip = UserTrip.objects.get(id=int(request.data.get('id', None)))
+        xp = int(request.data.get('xp', None))
+        data = {
+            'id': user_trip.id,
+            'xp': xp
+        }
+        serializer = UserTripSerializer(user_trip, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)

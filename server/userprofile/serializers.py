@@ -5,7 +5,7 @@ from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
 
 from userprofile.models import (
-    Trip, LanguageCountry, Language)
+    Trip, LanguageCountry, Language, UserTrip)
 
 
 # class ChoicesField(serializers.Field):
@@ -136,3 +136,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class UserTripSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserTrip
+        fields = ('id', 'xp', )
