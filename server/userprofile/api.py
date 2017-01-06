@@ -1,5 +1,6 @@
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,
+    RetrieveAPIView,
 )
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,7 +9,8 @@ from rest_framework.response import Response
 
 from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
-    LanguageCountrySerializer, UserTripSerializer)
+    LanguageCountrySerializer, UserTripSerializer,
+    UserProfileDetailSerializer)
 from userprofile.models import (
     User, UserTrip,
     Trip, LanguageCountry)
@@ -137,9 +139,10 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileDetail(UserProfileMixin, RetrieveUpdateDestroyAPIView):
+class UserProfileDetail(RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
-
+    serializer_class = UserProfileDetailSerializer
+    queryset = User.objects.all()
     lookup_field = 'username'
 
 

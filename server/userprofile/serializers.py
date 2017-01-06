@@ -143,3 +143,37 @@ class UserTripSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTrip
         fields = ('id', 'xp', )
+
+
+class UserTripDetailSerializer(serializers.ModelSerializer):
+    language_country = LanguageCountrySerializer(many=True)
+
+    class Meta:
+        model = UserTrip
+        fields = (
+            'id', 'xp', 'trip_type',
+            'departure_date', 'language_country',
+            'region')
+
+
+class UserProfileDetailSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
+    trip = UserTripDetailSerializer(many=True)
+    full_name = serializers.CharField(
+        source='get_full_name',
+        required=False, read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            # 'username',
+            'email',
+            'first_name', 'last_name',
+            'profile_picture',
+            # 'language_country',
+            'trip',
+            'subscription_type',
+            'full_name',
+
+        )
