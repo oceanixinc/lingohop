@@ -17,4 +17,5 @@ urlpatterns = [
         UserProfileDetail.as_view(),
         name='userprofile-detail'
     ),
+
 ]

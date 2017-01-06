@@ -105,6 +105,7 @@ class UserTrip(models.Model):
     region = models.CharField(
         max_length=200,
         null=True, blank=True)
+    xp = models.PositiveSmallIntegerField(default=0)
 
 
 class User(AbstractUser):
