@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 # from django.conf.global_settings import LANGUAGES
@@ -158,3 +158,23 @@ class User(AbstractUser):
 
             ("create_new_user", "Can create new user"),
         )
+
+
+class UserTrack(models.Model):
+    """
+    Model to create user profile.
+
+    :user: User model.
+    :trip: particular trip id.
+    :status: user in particular trip will have current learning status.
+
+    """
+    user = models.ForeignKey(
+        User,
+        null=True, blank=True, related_name='usertrack',
+    )
+    trip = models.ForeignKey(
+        UserTrip,
+        null=True, blank=True, related_name='tracktrip',
+    )
+    status = JSONField(blank=True, null=True)

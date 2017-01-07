@@ -1,4 +1,5 @@
-from userprofile.models import User
+from django.db import IntegrityError, transaction
+from userprofile.models import User, UserTrack
 from content.models import *
 
 from rest_framework import serializers
@@ -125,6 +126,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'last_name': validated_data.get('last_name'),
         }
         user = User.objects.create_user(**user_data)
+
         # user, created = User.objects.get_or_create(**user_data)
 
         user.profile_picture = validated_data.get('profile_picture')
@@ -134,7 +136,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         # user.save()
         user.trip.add(*trip)
         user.save()
-
         return user
 
 
@@ -175,5 +176,19 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
             'trip',
             'subscription_type',
             'full_name',
+
+        )
+
+
+class UserTrackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserTrack
+        fields = (
+            'id',
+            # 'username',
+            'user',
+            'trip',
+            'status',
 
         )
