@@ -1,7 +1,7 @@
 const initialState = {
     loggedInUser: '',
-    language: 'Hindi',
-    country: 'India',
+    language: 'Spanish',
+    country: 'Spain',
     journey: '',
     region: '',
     track: '',

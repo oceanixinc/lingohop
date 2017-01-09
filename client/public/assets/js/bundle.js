@@ -75871,7 +75871,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.search === '' || this.state.answersearch === '' || this.state.question === '' || this.state.answer === '', onClick: this._buildLesson })
+                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: this.state.question === '' || this.state.answer === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.question === '' || this.state.answer === '', onClick: this._buildLesson })
                         )
                     )
                 ),
@@ -76394,7 +76394,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
             var chip = _react2.default.createElement(
                 _Chip2.default,
-                { style: styles.chip, deleteId: '' + deleteId, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
+                { style: styles.chip, deleteId: '' + deleteId, text: '' + text, url: '' + url, className: 'pull-left ' + extraClass, onTouchTap: this.setChipVariable, onRequestDelete: function onRequestDelete() {
                         return _this4.handleChipDelete('' + deleteId);
                     } },
                 _react2.default.createElement(_Avatar2.default, { src: url }),
@@ -76667,7 +76667,6 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 dataType: "json",
                 url: 'https://testing.lingohop.com/api/assets/region/' + this.props.language + '-' + this.props.country + '/',
                 success: function success(res) {
-                    console.log(res);
                     _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
                 }
 
@@ -76781,19 +76780,42 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         value: function _buildLesson() {
             var part1 = "";
             var part2 = "";
-            console.log(this.props.part);
-            console.log(this.state.variables);
+
+            var imgUrls = {};
+            var _arr = [chips, answerchips, qchips, achips];
+            for (var _i = 0; _i < _arr.length; _i++) {
+                var chipsArray = _arr[_i];var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
+
+                try {
+                    for (var _iterator5 = chipsArray[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                        var chip = _step5.value;
+
+                        imgUrls[chip.props.text] = chip.props.url;
+                    }
+                } catch (err) {
+                    _didIteratorError5 = true;
+                    _iteratorError5 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                            _iterator5.return();
+                        }
+                    } finally {
+                        if (_didIteratorError5) {
+                            throw _iteratorError5;
+                        }
+                    }
+                }
+            }
 
             if (this.props.part === "one") {
                 part1 = {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
                     "variables": this.state.variables,
-                    "images": {
-                        "Default ": "default_beach",
-                        "The": " ",
-                        "beach": "imageOfBeach"
-                    },
+                    "images": imgUrls,
                     "audio": {},
                     "rules": {
                         "legos_before_question": this.state.search.split(" "),
@@ -76807,11 +76829,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     "question_text": this.state.question.split(" "),
                     "answer_text": this.state.answer.split(" "),
                     "variables": this.state.variables,
-                    "images": {
-                        "Default ": "default_beach",
-                        "The": " ",
-                        "beach": "imageOfBeach"
-                    },
+                    "images": imgUrls,
                     "audio": {},
                     "rules": {
                         "legos_before_question": this.state.search.split(" "),
@@ -76827,23 +76845,17 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 data: JSON.stringify({
                     "country": '' + this.props.country,
                     "language": '' + this.props.language,
-                    "journeys": {
-                        "journey1": {
-                            "region1": {
-                                "track1": [{
-                                    "category_name": '' + this.props.category,
-                                    "Video": "URL of video",
-                                    "lessons": [{
-                                        "name": '' + this.props.lesson,
-                                        "parts": {
-                                            "part1": part1,
-                                            "part2": part2
-                                        }
-                                    }]
-                                }]
+                    "journeys": _defineProperty({}, this.props.journey, _defineProperty({}, this.props.region, _defineProperty({}, this.props.track, [{
+                        "category_name": '' + this.props.category,
+                        "Video": "URL of video",
+                        "lessons": [{
+                            "name": '' + this.props.lesson,
+                            "parts": {
+                                "part1": part1,
+                                "part2": part2
                             }
-                        }
-                    }
+                        }]
+                    }])))
                 }),
                 dataType: "json",
                 contentType: "application/json",
@@ -76862,6 +76874,14 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: '_uploadContent',
         value: function _uploadContent() {
 
+            var imgUrls = [];
+            var _arr2 = [this.state.imgOneUrl, this.state.imgTwoUrl, this.state.imgThreeUrl];
+            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+                var imgUrl = _arr2[_i2];
+
+                if (imgUrl != '') imgUrls.push({ "file": imgUrl });
+            }
+
             _jquery2.default.ajax({
                 method: "PUT",
                 data: JSON.stringify({
@@ -76869,13 +76889,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     "language": this.props.language,
                     "words": [{
                         "word": this.state.legoText,
-                        "images": [{
-                            "file": this.state.imgOneUrl
-                        }, {
-                            "file": this.state.imgTwoUrl
-                        }, {
-                            "file": this.state.imgThreeUrl
-                        }],
+                        "images": imgUrls,
                         "audio": {
                             "files": [{
                                 "gender": "male",
@@ -77568,7 +77582,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'The audio files for each particular region have to be in the "word_region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good_Catalonia". Please check the naming of your audio files'
+                            'The audio files for each particular region have to be in the "word-region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good-Catalonia". Please check the naming of your audio files'
                         )
                     ),
                     _react2.default.createElement(
@@ -78155,6 +78169,14 @@ var ContentPortalUploadPage = function (_React$Component) {
                 var language = languages[this.state.language_country - 1];
                 var country = countries[this.state.language_country - 1];
 
+                var imgUrls = [];
+                var _arr = [this.state.imgOneUrl, this.state.imgTwoUrl, this.state.imgThreeUrl];
+                for (var _i = 0; _i < _arr.length; _i++) {
+                    var imgUrl = _arr[_i];
+
+                    if (imgUrl != '') imgUrls.push({ "file": imgUrl });
+                }
+
                 _jquery2.default.ajax({
                     method: "PUT",
                     data: JSON.stringify({
@@ -78162,13 +78184,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         "language": language,
                         "words": [{
                             "word": this.state.legoText,
-                            "images": [{
-                                "file": this.state.imgOneUrl
-                            }, {
-                                "file": this.state.imgTwoUrl
-                            }, {
-                                "file": this.state.imgThreeUrl
-                            }],
+                            "images": imgUrls,
                             "audio": {
                                 "files": [{
                                     "gender": "male",
@@ -78236,6 +78252,10 @@ var ContentPortalUploadPage = function (_React$Component) {
                 nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
                 nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
                 nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
+
+                console.log(nameOne);
+                console.log(nameTwo);
+                console.log(nameThree);
 
                 var validOne = nameOne === this.state.legoText + '-' + this.state.regionOne;
                 var validTwo = nameTwo === this.state.legoText + '-' + this.state.regionTwo;
@@ -78833,8 +78853,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var initialState = {
     loggedInUser: '',
-    language: 'Hindi',
-    country: 'India',
+    language: 'Spanish',
+    country: 'Spain',
     journey: '',
     region: '',
     track: '',
