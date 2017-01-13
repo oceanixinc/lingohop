@@ -83,7 +83,6 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
     """Return a list of userprofiles or create new ones."""
 
     def post(self, request, *args, **kwargs):
-
         trip = request.data.get('trip', None)
         departure_date = request.data.get('departure_date', None)
         trip_type = request.data.get('trip_type', None)
