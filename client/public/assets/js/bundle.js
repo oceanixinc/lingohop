@@ -75707,6 +75707,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (ContentPortalBuildSearchPage.__proto__ || Object.getPrototypeOf(ContentPortalBuildSearchPage)).call(this));
 
         _this.state = {
+            showSecondModal: false,
             showModal: false,
             search: '',
             answersearch: '',
@@ -75757,9 +75758,12 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         _this.updateDimensions = _this.updateDimensions.bind(_this);
 
         _this._buildLesson = _this._buildLesson.bind(_this);
+        _this._checkWholeWord = _this._checkWholeWord.bind(_this);
 
         _this._openModal = _this._openModal.bind(_this);
         _this._closeModal = _this._closeModal.bind(_this);
+
+        _this._closeSecondModal = _this._closeSecondModal.bind(_this);
 
         _this._handleImageUpload = _this._handleImageUpload.bind(_this);
         _this._handleImageDelete = _this._handleImageDelete.bind(_this);
@@ -75871,7 +75875,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: this.state.question === '' || this.state.answer === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.question === '' || this.state.answer === '', onClick: this._buildLesson })
+                            _react2.default.createElement(_RaisedButton2.default, { label: 'BUILD', className: this.state.question === '' || this.state.answer === '' ? "upload-btn" : "upload-btn active-btn", disabled: this.state.question === '' || this.state.answer === '', onClick: this._checkWholeWord })
                         )
                     )
                 ),
@@ -75944,6 +75948,24 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                 'Add Lego +'
                             )
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showSecondModal, onHide: this._closeSecondModal },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Lego does not exist for question/answer'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'CLOSE', primary: true, onClick: this._closeSecondModal })
                     )
                 ),
                 _react2.default.createElement(
@@ -76219,6 +76241,11 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: '_closeModal',
         value: function _closeModal() {
             this.setState({ showModal: false });
+        }
+    }, {
+        key: '_closeSecondModal',
+        value: function _closeSecondModal() {
+            this.setState({ showSecondModal: false });
         }
     }, {
         key: 'handleQuestion',
@@ -76682,7 +76709,6 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 dataType: "json",
                 url: 'https://testing.lingohop.com/api/assets/word/?country=' + this.props.country + '&language=' + this.props.language + '&q=' + searchTerm,
                 success: function success(res) {
-
                     searchResults.length = 0;
                     var _iteratorNormalCompletion3 = true;
                     var _didIteratorError3 = false;
@@ -76772,6 +76798,32 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     }
 
                     _this7.forceUpdate();
+                }
+            });
+        }
+    }, {
+        key: '_checkWholeWord',
+        value: function _checkWholeWord() {
+            var _this8 = this;
+
+            _jquery2.default.ajax({
+                method: 'GET',
+                dataType: "json",
+                url: 'https://testing.lingohop.com/api/assets/word/?country=' + this.props.country + '&language=' + this.props.language + '&q=' + this.state.question,
+                success: function success(res) {
+                    if (res.length != 0) {
+
+                        _jquery2.default.ajax({
+                            method: 'GET',
+                            dataType: "json",
+                            url: 'https://testing.lingohop.com/api/assets/word/?country=' + _this8.props.country + '&language=' + _this8.props.language + '&q=' + _this8.state.answer,
+                            success: function success(response) {
+                                if (response.length != 0) {
+                                    _this8._buildLesson();
+                                } else _this8.setState({ showSecondModal: true });
+                            }
+                        });
+                    } else _this8.setState({ showSecondModal: true });
                 }
             });
         }
@@ -76941,20 +76993,20 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'getBase64',
         value: function getBase64(file, number) {
-            var _this8 = this;
+            var _this9 = this;
 
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
                 switch (number) {
                     case 1:
-                        _this8.setState({ imgOneUrl: reader.result });
+                        _this9.setState({ imgOneUrl: reader.result });
                         break;
                     case 2:
-                        _this8.setState({ imgTwoUrl: reader.result });
+                        _this9.setState({ imgTwoUrl: reader.result });
                         break;
                     case 3:
-                        _this8.setState({ imgThreeUrl: reader.result });
+                        _this9.setState({ imgThreeUrl: reader.result });
                         break;
                 }
             };
