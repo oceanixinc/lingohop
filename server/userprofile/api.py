@@ -1,5 +1,7 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,
+    RetrieveAPIView,
 )
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,8 +10,12 @@ from rest_framework.response import Response
 
 from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
-    LanguageCountrySerializer)
-from userprofile.models import User, UserTrip, Trip, LanguageCountry
+    LanguageCountrySerializer, UserTripSerializer,
+    UserProfileDetailSerializer,
+    UserTrackSerializer)
+from userprofile.models import (
+    User, UserTrip,
+    Trip, LanguageCountry, UserTrack)
 from content.models import Asset
 
 
@@ -77,8 +83,6 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
     """Return a list of userprofiles or create new ones."""
 
     def post(self, request, *args, **kwargs):
-        print (request.data)
-
         trip = request.data.get('trip', None)
         departure_date = request.data.get('departure_date', None)
         trip_type = request.data.get('trip_type', None)
@@ -101,15 +105,6 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
                 status=status.HTTP_400_BAD_REQUEST)
         except ObjectDoesNotExist:
             pass
-        # imgstr64 = request.data.get('profile_picture', None)
-        # my_image = imgstr64.split('base64,')
-        # img_ext = my_image[0].split('/')
-        # imgdata = base64.b64decode(my_image[1])
-        # file_name = str(uuid.uuid4())
-        # fname = './media/profiles/%s.%s' % (file_name, img_ext[1])
-        # with open(fname, 'wb') as f:
-        #     f.write(imgdata)
-        print ('picuture', request.data.get('profile_picture', None))
         data = {
             'profile_picture': request.data.get('profile_picture', None),
             'password': request.data.get('password', None),
@@ -126,6 +121,12 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
         if serializer.is_valid():
             print ('valid')
             serializer.save()
+            new_user = User.objects.get(
+                email=request.data.get('email', None))
+            user_track = UserTrack()
+            user_track.user = new_user
+            user_track.trip = user_trip
+            user_track.save()
             return Response(
                 serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -135,8 +136,66 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-class UserProfileDetail(UserProfileMixin, RetrieveUpdateDestroyAPIView):
+class UserProfileDetail(RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
-
+    serializer_class = UserProfileDetailSerializer
+    queryset = User.objects.all()
     lookup_field = 'username'
+
+
+class UserTripUpdate(RetrieveUpdateDestroyAPIView):
+    """
+    Return a specific user_trip, update it, or delete it.
+    """
+    model = UserTrip
+    serializer_class = UserTripSerializer
+    queryset = UserTrip.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        user_trip = UserTrip.objects.get(id=int(request.data.get('id', None)))
+        xp = int(request.data.get('xp', None))
+        data = {
+            'id': user_trip.id,
+            'xp': user_trip.xp + xp
+        }
+
+        serializer = UserTripSerializer(user_trip, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MultipleFieldLookupMixin(object):
+    def get_object(self):
+        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        filter = {}
+        for field in self.lookup_fields:
+            filter[field] = self.kwargs[field]
+        return get_object_or_404(queryset, **filter)  # Lookup the object
+
+
+class UserTrackView(MultipleFieldLookupMixin, RetrieveUpdateDestroyAPIView):
+    serializer_class = UserTrackSerializer
+    queryset = UserTrack.objects.all()
+    lookup_fields = ('user__id', 'trip__id')
+
+    def put(self, request, *args, **kwargs):
+        user_track = self.get_object()
+        user_track.status = request.data.get('status', None)
+        user_track.save()
+        serializer = UserTrackSerializer(
+            user_track,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            # serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST)

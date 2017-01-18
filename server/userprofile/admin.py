@@ -10,7 +10,8 @@ from userprofile.models import (
     SubscriptionType, Trip, UserTrip,
     Language,
     LanguageCountry,
-    User,)
+    User,
+    UserTrack,)
 
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
@@ -129,3 +130,8 @@ try:
 except:
     pass
 admin.site.register(User, UserAdmin)
+
+
+@admin.register(UserTrack)
+class UserTrackAdmin(admin.ModelAdmin):
+    pass
