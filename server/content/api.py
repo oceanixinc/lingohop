@@ -180,6 +180,10 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         question.images = data['images']
         question.audio = self.get_audio_files(
             data['question_text'] + data['answer_text'])
+        question.question_audio = data['question_audio']
+        question.answer_audio = data['answer_audio']
+        question.problem_question = data['problem_question']
+        question.problem_image = data['problem_image']
 
         # return question
         if default:
