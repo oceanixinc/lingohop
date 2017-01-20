@@ -12,7 +12,7 @@ from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
     LanguageCountrySerializer, UserTripSerializer,
     UserProfileDetailSerializer,
-    UserTrackSerializer)
+    UserTrackSerializer, UserDataSerializer)
 from userprofile.models import (
     User, UserTrip, Language,
     Trip, LanguageCountry, UserTrack)
@@ -136,6 +136,13 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserDetail(RetrieveUpdateDestroyAPIView):
+    """Return a specific userprofile, update it, or delete it."""
+    serializer_class = UserDataSerializer
+    queryset = User.objects.all()
+    lookup_field = 'pk'
+
+
 class UserProfileDetail(RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
     serializer_class = UserProfileDetailSerializer
@@ -192,8 +199,9 @@ class UserProfileDetail(RetrieveUpdateDestroyAPIView):
         # user.email = email
         user.save()
         # user, created = User.objects.get_or_create(**user_data)
-
-        user.profile_picture = profile_picture
+        print ('user_trip_obj', type(profile_picture))
+        # if isinstance(profile_picture, str) :
+        user.profile_picture = user.profile_picture
         user.subscription_type = subscription_type
         user.save()
         # user.language_country.add(*language_country)

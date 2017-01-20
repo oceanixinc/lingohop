@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 from userprofile.api import (
     UserProfileList, UserProfileDetail,
-    UserTrackView,
+    UserTrackView, UserDetail
 )
 
 urlpatterns = [
@@ -18,6 +18,11 @@ urlpatterns = [
         r'track/(?P<user__id>\w+)/(?P<trip__id>\w+)/$',
         UserTrackView.as_view(),
         name='usertrack-update'
+    ),
+    url(
+        r'^(?P<pk>\d+)/$',
+        UserDetail.as_view(),
+        name='userprofile-detail'
     ),
 
     url(

@@ -181,6 +181,19 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
         )
 
 
+class UserDataSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            # 'username',
+            'first_name', 'last_name',
+
+        )
+
+
 class UserTrackSerializer(serializers.ModelSerializer):
 
     class Meta:
