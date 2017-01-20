@@ -15,6 +15,8 @@ class Question(EmbeddedDocument):
     variables = fields.ListField()
     images = fields.DictField()
     audio = fields.DictField()
+    question_audio = fields.DictField(required=False, blank=True, null=True)
+    answer_audio = fields.DictField(required=False, blank=True, null=True)
     rules = fields.DictField()
     problem_question = fields.StringField(
         required=False, blank=True, null=True)
