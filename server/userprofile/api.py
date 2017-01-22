@@ -1,18 +1,20 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,
-    RetrieveAPIView,
-)
+    RetrieveAPIView)
 
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import generics, status, views
+from rest_framework import generics, status, views, permissions
 from rest_framework.response import Response
 
 from userprofile.serializers import (
     UserProfileSerializer, TripSerializer,
     LanguageCountrySerializer, UserTripSerializer,
     UserProfileDetailSerializer,
-    UserTrackSerializer, UserDataSerializer)
+    UserTrackSerializer, UserDataSerializer,
+    ChangePasswordSerializer,
+    UserProfileUpdateSerializer,
+)
 from userprofile.models import (
     User, UserTrip, Language,
     Trip, LanguageCountry, UserTrack)
@@ -143,9 +145,45 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
 
+class ChangePasswordView(RetrieveUpdateDestroyAPIView):
+    """
+    An endpoint for changing password.
+    """
+    serializer_class = ChangePasswordSerializer
+    queryset = User.objects.all()
+    # permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = 'pk'
+
+    # def get_object(self, queryset=None):
+    #     obj = self.request.user
+    #     return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response("Success.", status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserProfileDetail(RetrieveUpdateDestroyAPIView):
     """Return a specific userprofile, update it, or delete it."""
     serializer_class = UserProfileDetailSerializer
+    queryset = User.objects.all()
+    lookup_field = 'username'
+
+
+class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
+    """Return a specific userprofile, update it, or delete it."""
+    serializer_class = UserProfileUpdateSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
 
@@ -156,61 +194,66 @@ class UserProfileDetail(RetrieveUpdateDestroyAPIView):
         email = request.data.get('email', None)
         first_name = request.data.get('first_name', None)
         last_name = request.data.get('last_name', None)
-        profile_picture = request.data.get('profile_picture', None)
-        trip = request.data.get('trip', None)
+        trips_data = request.data.get('trip', None)
         subscription_type = request.data.get('subscription_type', None)
 
-        trip_list = []
-        for each_trip in trip:
-            journey = each_trip.get('trip', None)
-            journey_name = journey.get('name', None)
-            journey_obj = Trip.objects.get(id=journey['id'])
-            journey_obj.name = journey_name
-            journey_obj.save()
-            xp = each_trip.get('xp', None)
-            trip_type = each_trip.get('trip_type', None)
-            departure_date = each_trip.get('departure_date', None)
-            language_country = each_trip.get('language_country', None)
-            language_country_list = []
-            for each_lan in language_country:
-                country = each_lan.get('country', None)
-                language = each_lan.get('language', None)
-                language_obj, lan_create = Language.objects.get_or_create(
-                    name=language)
-                language_country_obj = LanguageCountry.objects.get(id=each_lan['id'])
-                language_country_obj.language = language_obj
-                language_country_obj.country = country
-                language_country_obj.save()
-                language_country_list.append(language_country_obj.id)
-            region = each_trip.get('region', None)
-            user_trip_obj = UserTrip.objects.get(id=each_trip['id'])
-            user_trip_obj.trip = journey_obj
-            user_trip_obj.departure_date = departure_date
-            user_trip_obj.trip_type = trip_type
-            user_trip_obj.region = region
-            user_trip_obj.xp = xp
-            user_trip_obj.save()
-            user_trip_obj.language_country.add(*language_country_list)
-            trip_list.append(user_trip_obj.id)
+        # user = User.objects.get(id=request.data.get('id'))
+        user_profile.first_name = first_name
+        user_profile.last_name = last_name
+        user_profile.save()
+        user_profile.subscription_type = subscription_type
+        user_profile.save()
+        for trip_data in trips_data:
+            journey_obj = Trip.objects.get(
+                name=trip_data['trip']['name'])
+            language_country_obj = LanguageCountry.objects.filter(
+                language__name=trip_data['language_country'][0]['language'],
+                country=trip_data['language_country'][0]['country']
+            )
+            # user_trip.language_country.add(*language_country)
+            if language_country_obj:
+                language_country_obj = language_country_obj[0]
+                trip_qs = UserTrip.objects.filter(
+                    userprofile__id=user_profile.id,
+                    trip=journey_obj,
+                    language_country=language_country_obj)
 
-        user = User.objects.get(id=request.data.get('id'))
-        user.first_name = first_name
-        user.last_name = last_name
-        # user.email = email
-        user.save()
-        # user, created = User.objects.get_or_create(**user_data)
-        print ('user_trip_obj', type(profile_picture))
-        # if isinstance(profile_picture, str) :
-        user.profile_picture = user.profile_picture
-        user.subscription_type = subscription_type
-        user.save()
-        # user.language_country.add(*language_country)
-        # user.save()
-        user.trip.add(*trip_list)
-        user.save()
+                user_trip_data = {
+                    'trip': journey_obj,
+                    'trip_type': trip_data['trip_type'],
+                    'departure_date': trip_data['departure_date'],
+                    'region': trip_data['region'],
+                    'xp': trip_data['xp']
+                }
+                trip_obj = None
+                if trip_qs.exists():
+                    trip = trip_qs.first()
+                    if trip.trip_type:
+                        if trip.trip_type != trip_data['trip_type']:
+                            trip_obj = UserTrip.objects.create(**user_trip_data)
+                            trip_obj.language_country.add(language_country_obj)
+                        else:
+                            if trip.region:
+                                if trip.region != trip_data['region']:
+                                    trip_obj = UserTrip.objects.create(
+                                        **user_trip_data)
+                                    trip_obj.language_country.add(language_country_obj)
+                                else:
+                                    if trip.departure_date:
+                                        if trip.departure_date\
+                                                != trip_data['departure_date']:
+                                            trip_obj = UserTrip.objects.create(
+                                                **user_trip_data)
+                                            trip_obj.language_country.add(language_country_obj)
+
+                else:
+                    trip_obj = UserTrip.objects.create(**user_trip_data)
+                    trip_obj.language_country.add(language_country_obj)
+                if trip_obj:
+                    user_profile.trip.add(trip_obj)
 
         serializer = UserProfileDetailSerializer(
-            user,
+            user_profile,
             data=request.data,
             partial=True
         )
