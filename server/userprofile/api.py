@@ -204,6 +204,9 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
         user_profile.subscription_type = subscription_type
         user_profile.save()
         for trip_data in trips_data:
+            departure_date = trip_data.get('departure_date', None)
+            region = trip_data.get('region', None)
+            trip_type = trip_data.get('trip_type', None)
             journey_obj = Trip.objects.get(
                 name=trip_data['trip']['name'])
             language_country_obj = LanguageCountry.objects.filter(
@@ -211,46 +214,62 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
                 country=trip_data['language_country'][0]['country']
             )
             # user_trip.language_country.add(*language_country)
+            trip_id = trip_data.get('id', None)
             if language_country_obj:
                 language_country_obj = language_country_obj[0]
-                trip_qs = UserTrip.objects.filter(
-                    userprofile__id=user_profile.id,
-                    trip=journey_obj,
-                    language_country=language_country_obj)
 
-                user_trip_data = {
-                    'trip': journey_obj,
-                    'trip_type': trip_data['trip_type'],
-                    'departure_date': trip_data['departure_date'],
-                    'region': trip_data['region'],
-                    'xp': trip_data['xp']
-                }
-                trip_obj = None
-                if trip_qs.exists():
-                    trip = trip_qs.first()
-                    if trip.trip_type:
-                        if trip.trip_type != trip_data['trip_type']:
-                            trip_obj = UserTrip.objects.create(**user_trip_data)
-                            trip_obj.language_country.add(language_country_obj)
-                        else:
-                            if trip.region:
-                                if trip.region != trip_data['region']:
-                                    trip_obj = UserTrip.objects.create(
-                                        **user_trip_data)
-                                    trip_obj.language_country.add(language_country_obj)
-                                else:
-                                    if trip.departure_date:
-                                        if trip.departure_date\
-                                                != trip_data['departure_date']:
-                                            trip_obj = UserTrip.objects.create(
-                                                **user_trip_data)
-                                            trip_obj.language_country.add(language_country_obj)
-
+                if trip_id:
+                    existing_trip = UserTrip.objects.get(
+                        id=trip_id)
+                    existing_trip.trip = journey_obj
+                    existing_trip.departure_date = departure_date
+                    existing_trip.region = region
+                    existing_trip.trip_type = trip_type
+                    existing_trip.save()
+                    existing_trip.language_country.clear()
+                    existing_trip.language_country.add(
+                        language_country_obj)
                 else:
-                    trip_obj = UserTrip.objects.create(**user_trip_data)
-                    trip_obj.language_country.add(language_country_obj)
-                if trip_obj:
-                    user_profile.trip.add(trip_obj)
+
+                    trip_qs = UserTrip.objects.filter(
+                        userprofile__id=user_profile.id,
+                        # trip=journey_obj,
+                        language_country=language_country_obj)
+
+                    user_trip_data = {
+                        'trip': journey_obj,
+                        'trip_type': trip_data['trip_type'],
+                        'departure_date': trip_data['departure_date'],
+                        'region': trip_data['region'],
+                        'xp': trip_data['xp']
+                    }
+                    trip_obj = None
+                    if trip_qs.exists():
+                        pass
+                        # trip = trip_qs.first()
+                        # if trip.trip_type:
+                        #     if trip.trip_type != trip_data['trip_type']:
+                        #         trip_obj = UserTrip.objects.create(**user_trip_data)
+                        #         trip_obj.language_country.add(language_country_obj)
+                        #     else:
+                        #         if trip.region:
+                        #             if trip.region != trip_data['region']:
+                        #                 trip_obj = UserTrip.objects.create(
+                        #                     **user_trip_data)
+                        #                 trip_obj.language_country.add(language_country_obj)
+                        #             else:
+                        #                 if trip.departure_date:
+                        #                     if trip.departure_date\
+                        #                             != trip_data['departure_date']:
+                        #                         trip_obj = UserTrip.objects.create(
+                        #                             **user_trip_data)
+                        #                         trip_obj.language_country.add(language_country_obj)
+
+                    else:
+                        trip_obj = UserTrip.objects.create(**user_trip_data)
+                        trip_obj.language_country.add(language_country_obj)
+                    if trip_obj:
+                        user_profile.trip.add(trip_obj)
 
         serializer = UserProfileDetailSerializer(
             user_profile,
@@ -263,7 +282,6 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
                 serializer.data, status=status.HTTP_201_CREATED)
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class UserTripUpdate(RetrieveUpdateDestroyAPIView):
