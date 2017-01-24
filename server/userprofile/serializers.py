@@ -1,4 +1,5 @@
 from django.db import IntegrityError, transaction
+from django.db.models import fields
 from userprofile.models import User, UserTrack
 from content.models import *
 
@@ -143,7 +144,7 @@ class UserTripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserTrip
-        fields = ('id', 'xp', )
+        fields = ('id', 'xp', 'xp_possible', 'xp_daily',)
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):
@@ -160,6 +161,9 @@ class UserTripDetailSerializer(serializers.ModelSerializer):
 
 class UserProfileDetailSerializer(serializers.ModelSerializer):
     # trip = TripSerializer()
+    profile_picture = fields.ImageField(
+        required=False, max_length=None, allow_null=True,
+        allow_empty_file=True, use_url=True)
     trip = UserTripDetailSerializer(many=True)
     full_name = serializers.CharField(
         source='get_full_name',
@@ -181,6 +185,63 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
         )
 
 
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
+    trip = UserTripDetailSerializer(many=True)
+    full_name = serializers.CharField(
+        source='get_full_name',
+        required=False, read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            # 'username',
+            'email',
+            'first_name', 'last_name',
+            # 'language_country',
+            'trip',
+            'subscription_type',
+            'full_name',
+
+        )
+
+    # def update(self, instance, validated_data):
+    #     print('validated_data is', validated_data)
+    #     trips_data = validated_data.pop('trip')
+    #     print ('trips_data', trips_data)
+    #     instance = super(
+    #         UserProfileUpdateSerializer, self).update(instance, validated_data)
+
+    #     for trip_data in trips_data:
+    #         trip_qs = UserTrip.objects.filter(
+    #             trip__name=trip_data['trip']['name'],
+    #             language_country__language__name=trip_data['language_country'][0]['language'],
+    #             Language_country__country=trip_data['language_country'][0]['country'])
+
+    #         if trip_qs.exists():
+    #             trip = trip_qs.first()
+    #             if trip.trip_type:
+    #                 if trip.trip_type != trip_data['trip_type']:
+    #                     trip = UserTrip.objects.create(**trip_data)
+    #                 else:
+    #                     if trip.region:
+    #                         if trip.region != trip_data['region']:
+    #                             trip = UserTrip.objects.create(**trip_data)
+    #                         else:
+    #                             if trip.departure_date:
+    #                                 if trip.departure_date\
+    #                                         != trip_data['departure_date']:
+    #                                     trip = UserTrip.objects.create(
+    #                                         **trip_data)
+
+    #         else:
+    #             trip = UserTrip.objects.create(**trip_data)
+
+    #         instance.trip.add(trip)
+
+    #     return instance
+
 class UserDataSerializer(serializers.ModelSerializer):
     # trip = TripSerializer()
 
@@ -192,6 +253,14 @@ class UserDataSerializer(serializers.ModelSerializer):
             'first_name', 'last_name',
 
         )
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
 
 class UserTrackSerializer(serializers.ModelSerializer):
