@@ -1,10 +1,10 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,
-    RetrieveAPIView)
-
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView,)
+from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import generics, status, views, permissions
+from rest_framework import status
 from rest_framework.response import Response
 
 from userprofile.serializers import (
@@ -16,7 +16,7 @@ from userprofile.serializers import (
     UserProfileUpdateSerializer,
 )
 from userprofile.models import (
-    User, UserTrip, Language,
+    User, UserTrip,
     Trip, LanguageCountry, UserTrack)
 from content.models import Asset
 
@@ -59,7 +59,6 @@ class LanguageCountryMixin(object):
             language.append(each_asset.language)
         my_kwargs['language__name__in'] = language
         my_kwargs['country__in'] = country
-        print (my_kwargs)
         data = LanguageCountry.objects.filter(
             **my_kwargs).select_related(
             'language__name').order_by('country')
@@ -121,7 +120,6 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
         }
         serializer = UserProfileSerializer(data=data)
         if serializer.is_valid():
-            print ('valid')
             serializer.save()
             new_user = User.objects.get(
                 email=request.data.get('email', None))
@@ -132,8 +130,6 @@ class UserProfileList(UserProfileMixin, ListCreateAPIView):
             return Response(
                 serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print ('invalid')
-            print (serializer.errors)
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -189,7 +185,6 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
         user_profile = self.get_object()
-        print('user_profile is', user_profile, type(user_profile))
 
         email = request.data.get('email', None)
         first_name = request.data.get('first_name', None)
@@ -270,6 +265,10 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
                         trip_obj.language_country.add(language_country_obj)
                     if trip_obj:
                         user_profile.trip.add(trip_obj)
+                        user_track = UserTrack()
+                        user_track.user = user_profile
+                        user_track.trip = trip_obj
+                        user_track.save()
 
         serializer = UserProfileDetailSerializer(
             user_profile,
@@ -295,11 +294,29 @@ class UserTripUpdate(RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         user_trip = UserTrip.objects.get(id=int(request.data.get('id', None)))
         xp = int(request.data.get('xp', None))
+        xp_possible = int(request.data.get('xp_possible', 0))
+        d = user_trip.xp_daily
+        key = datetime.now().strftime("%Y-%m-%d")
+        # key2 = datetime.now() + timedelta(days=1)
+        # key2 = key2.strftime("%Y-%m-%d")
+        # d['ip'] = ip_address
+        data = {}
+        if d:
+            if key in d:
+                d[key] += xp
+            else:
+                d[key] = xp
+        else:
+            d = {}
+            d[key] = xp
+            # user_trip.xp_daily = data
+        user_trip.xp_daily = d
+        user_trip.save()
         data = {
             'id': user_trip.id,
-            'xp': user_trip.xp + xp
+            'xp': user_trip.xp + xp,
+            'xp_possible': xp_possible
         }
-
         serializer = UserTripSerializer(user_trip, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -317,13 +334,35 @@ class MultipleFieldLookupMixin(object):
         filter = {}
         for field in self.lookup_fields:
             filter[field] = self.kwargs[field]
-        return get_object_or_404(queryset, **filter)  # Lookup the object
+        obj = get_object_or_404(queryset, **filter)  # Lookup the object
+        return obj
 
 
 class UserTrackView(MultipleFieldLookupMixin, RetrieveUpdateDestroyAPIView):
     serializer_class = UserTrackSerializer
     queryset = UserTrack.objects.all()
     lookup_fields = ('user__id', 'trip__id')
+
+    def get_object(self, queryset=None):
+        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        filter = {}
+        for field in self.lookup_fields:
+            filter[field] = self.kwargs[field]
+        try:
+            obj = UserTrack.objects.get(**filter)
+        except:
+            try:
+                obj = UserTrack()
+                user = User.objects.get(id=filter['user__id'])
+                user_trip = UserTrip.objects.get(id=filter['trip__id'])
+                obj.user = user
+                obj.trip = user_trip
+                obj.save()
+            except:
+                raise Http404("Object Not Found")
+        # obj = get_object_or_404(queryset, **filter)  # Lookup the object
+        return obj
 
     def put(self, request, *args, **kwargs):
         user_track = self.get_object()

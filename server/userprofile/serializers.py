@@ -144,7 +144,7 @@ class UserTripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserTrip
-        fields = ('id', 'xp', )
+        fields = ('id', 'xp', 'xp_possible', 'xp_daily',)
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):

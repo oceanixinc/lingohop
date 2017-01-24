@@ -106,6 +106,10 @@ class UserTrip(models.Model):
         max_length=200,
         null=True, blank=True)
     xp = models.PositiveSmallIntegerField(default=0)
+    xp_possible = models.PositiveSmallIntegerField(default=0)
+    # xp_track = JSONField(blank=True, null=True)
+    xp_daily = JSONField(blank=True, null=True)
+    # total_xp = models.PositiveSmallIntegerField(default=0)
 
 
 class User(AbstractUser):
