@@ -6,6 +6,7 @@ from userprofile.api import (
     UserTrackView, UserDetail,
     ChangePasswordView,
     UserProfileUpdate,
+    CheckAuthToken,
 )
 
 urlpatterns = [
@@ -14,6 +15,12 @@ urlpatterns = [
         r'^$',
         UserProfileList.as_view(),
         name='userprofile'
+    ),
+
+    url(
+        r'^check-token/$',
+        CheckAuthToken.as_view(),
+        name='check-token'
     ),
 
     url(
