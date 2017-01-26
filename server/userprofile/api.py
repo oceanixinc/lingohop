@@ -379,7 +379,8 @@ class UserProfileUpdate(RetrieveUpdateDestroyAPIView):
                         user_track.trip = trip_obj
                         user_track.save()
 
-        serializer = UserProfileDetailSerializer(
+        # serializer = UserProfileDetailSerializer(
+        serializer = UserProfileUpdateSerializer(
             user_profile,
             data=request.data,
             partial=True
