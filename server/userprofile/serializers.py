@@ -3,6 +3,8 @@ from django.db.models import fields
 from userprofile.models import User, UserTrack
 from content.models import *
 
+import datetime
+
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
 
@@ -141,10 +143,24 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UserTripSerializer(serializers.ModelSerializer):
+    xp_weekly = serializers.SerializerMethodField('get_weekly_stat')
 
     class Meta:
         model = UserTrip
-        fields = ('id', 'xp', 'xp_possible', 'xp_daily',)
+        fields = ('id', 'xp', 'xp_possible', 'xp_weekly', 'xp_daily', )
+
+    def get_weekly_stat(self, obj):
+        base = datetime.datetime.now()
+        date_list = [base - datetime.timedelta(days=x) for x in range(0, 7)]
+        date_list = [x.strftime("%Y-%m-%d") for x in date_list]
+        d = obj.xp_daily
+        data = {}
+        for date in date_list:
+            try:
+                data[date] = d[date]
+            except:
+                data[date] = 0
+        return data
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):

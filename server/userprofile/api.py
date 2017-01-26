@@ -425,7 +425,7 @@ class UserTripUpdate(RetrieveUpdateDestroyAPIView):
         data = {
             'id': user_trip.id,
             'xp': user_trip.xp + xp,
-            'xp_possible': xp_possible
+            'xp_possible': user_trip.xp_possible + xp_possible
         }
         serializer = UserTripSerializer(user_trip, data=data, partial=True)
         if serializer.is_valid():
