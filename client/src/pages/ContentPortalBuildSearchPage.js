@@ -825,14 +825,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${this.state.question}`,
             success: (res) => {
                 if (res.length != 0) {
-
+                    let qaudio = res[0].audio.files[0].files[0].file
                     jQuery.ajax({
                         method: 'GET',
                         dataType: "json",
                         url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${this.state.answer}`,
                         success: (response) => {
                             if (response.length != 0) {
-                                this._buildLesson()
+                                let aaudio = response[0].audio.files[0].files[0].file
+                                this._buildLesson(qaudio, aaudio)
                             } else
                                 this.setState({showSecondModal: true})
                         }
@@ -843,7 +844,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         })
     }
 
-    _buildLesson() {
+    _buildLesson(qaudio, aaudio) {
         let part1 = ""
         let part2 = ""
 
@@ -869,7 +870,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     "legos_before_answer": this.state.answersearch.split(" ")
                 },
                 "problem_question": "",
-                "problem_image": ""
+                "problem_image": "",
+                "question_audio": {
+                    "question v1": qaudio,
+                    "question v2": qaudio
+                },
+                "answer_audio": {
+                    "answer v1": aaudio,
+                    "answer v2": aaudio
+                }
             }
         } else {
             part2 = {
@@ -883,7 +892,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     "legos_before_answer": this.state.answersearch.split(" ")
                 },
                 "problem_question": "",
-                "problem_image": ""
+                "problem_image": "",
+                "question_audio": {
+                    "question v1": qaudio,
+                    "question v2": qaudio
+                },
+                "answer_audio": {
+                    "answer v1": aaudio,
+                    "answer v2": aaudio
+                }
             }
         }
 

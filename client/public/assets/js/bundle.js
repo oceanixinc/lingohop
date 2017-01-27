@@ -76812,24 +76812,27 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 url: 'https://testing.lingohop.com/api/assets/word/?country=' + this.props.country + '&language=' + this.props.language + '&q=' + this.state.question,
                 success: function success(res) {
                     if (res.length != 0) {
-
-                        _jquery2.default.ajax({
-                            method: 'GET',
-                            dataType: "json",
-                            url: 'https://testing.lingohop.com/api/assets/word/?country=' + _this8.props.country + '&language=' + _this8.props.language + '&q=' + _this8.state.answer,
-                            success: function success(response) {
-                                if (response.length != 0) {
-                                    _this8._buildLesson();
-                                } else _this8.setState({ showSecondModal: true });
-                            }
-                        });
+                        (function () {
+                            var qaudio = res[0].audio.files[0].files[0].file;
+                            _jquery2.default.ajax({
+                                method: 'GET',
+                                dataType: "json",
+                                url: 'https://testing.lingohop.com/api/assets/word/?country=' + _this8.props.country + '&language=' + _this8.props.language + '&q=' + _this8.state.answer,
+                                success: function success(response) {
+                                    if (response.length != 0) {
+                                        var aaudio = response[0].audio.files[0].files[0].file;
+                                        _this8._buildLesson(qaudio, aaudio);
+                                    } else _this8.setState({ showSecondModal: true });
+                                }
+                            });
+                        })();
                     } else _this8.setState({ showSecondModal: true });
                 }
             });
         }
     }, {
         key: '_buildLesson',
-        value: function _buildLesson() {
+        value: function _buildLesson(qaudio, aaudio) {
             var part1 = "";
             var part2 = "";
 
@@ -76874,7 +76877,15 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         "legos_before_answer": this.state.answersearch.split(" ")
                     },
                     "problem_question": "",
-                    "problem_image": ""
+                    "problem_image": "",
+                    "question_audio": {
+                        "question v1": qaudio,
+                        "question v2": qaudio
+                    },
+                    "answer_audio": {
+                        "answer v1": aaudio,
+                        "answer v2": aaudio
+                    }
                 };
             } else {
                 part2 = {
@@ -76888,7 +76899,15 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         "legos_before_answer": this.state.answersearch.split(" ")
                     },
                     "problem_question": "",
-                    "problem_image": ""
+                    "problem_image": "",
+                    "question_audio": {
+                        "question v1": qaudio,
+                        "question v2": qaudio
+                    },
+                    "answer_audio": {
+                        "answer v1": aaudio,
+                        "answer v2": aaudio
+                    }
                 };
             }
 
