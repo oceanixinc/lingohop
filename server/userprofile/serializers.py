@@ -1,6 +1,9 @@
 from django.db import IntegrityError, transaction
+from django.db.models import fields
 from userprofile.models import User, UserTrack
 from content.models import *
+
+import datetime
 
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
@@ -140,10 +143,24 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UserTripSerializer(serializers.ModelSerializer):
+    xp_weekly = serializers.SerializerMethodField('get_weekly_stat')
 
     class Meta:
         model = UserTrip
-        fields = ('id', 'xp', )
+        fields = ('id', 'xp', 'xp_possible', 'xp_weekly', 'xp_daily', )
+
+    def get_weekly_stat(self, obj):
+        base = datetime.datetime.now()
+        date_list = [base - datetime.timedelta(days=x) for x in range(0, 7)]
+        date_list = [x.strftime("%Y-%m-%d") for x in date_list]
+        d = obj.xp_daily
+        data = {}
+        for date in date_list:
+            try:
+                data[date] = d[date]
+            except:
+                data[date] = 0
+        return data
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):
@@ -153,13 +170,16 @@ class UserTripDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTrip
         fields = (
-            'id', 'trip', 'xp', 'trip_type',
+            'id', 'trip', 'xp', 'xp_possible', 'trip_type',
             'departure_date', 'language_country',
             'region')
 
 
 class UserProfileDetailSerializer(serializers.ModelSerializer):
     # trip = TripSerializer()
+    profile_picture = fields.ImageField(
+        required=False, max_length=None, allow_null=True,
+        allow_empty_file=True, use_url=True)
     trip = UserTripDetailSerializer(many=True)
     full_name = serializers.CharField(
         source='get_full_name',
@@ -179,6 +199,84 @@ class UserProfileDetailSerializer(serializers.ModelSerializer):
             'full_name',
 
         )
+
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
+    trip = UserTripDetailSerializer(many=True)
+    full_name = serializers.CharField(
+        source='get_full_name',
+        required=False, read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            # 'username',
+            'email',
+            'first_name', 'last_name',
+            # 'language_country',
+            'trip',
+            'subscription_type',
+            'full_name',
+
+        )
+
+    # def update(self, instance, validated_data):
+    #     print('validated_data is', validated_data)
+    #     trips_data = validated_data.pop('trip')
+    #     print ('trips_data', trips_data)
+    #     instance = super(
+    #         UserProfileUpdateSerializer, self).update(instance, validated_data)
+
+    #     for trip_data in trips_data:
+    #         trip_qs = UserTrip.objects.filter(
+    #             trip__name=trip_data['trip']['name'],
+    #             language_country__language__name=trip_data['language_country'][0]['language'],
+    #             Language_country__country=trip_data['language_country'][0]['country'])
+
+    #         if trip_qs.exists():
+    #             trip = trip_qs.first()
+    #             if trip.trip_type:
+    #                 if trip.trip_type != trip_data['trip_type']:
+    #                     trip = UserTrip.objects.create(**trip_data)
+    #                 else:
+    #                     if trip.region:
+    #                         if trip.region != trip_data['region']:
+    #                             trip = UserTrip.objects.create(**trip_data)
+    #                         else:
+    #                             if trip.departure_date:
+    #                                 if trip.departure_date\
+    #                                         != trip_data['departure_date']:
+    #                                     trip = UserTrip.objects.create(
+    #                                         **trip_data)
+
+    #         else:
+    #             trip = UserTrip.objects.create(**trip_data)
+
+    #         instance.trip.add(trip)
+
+    #     return instance
+
+class UserDataSerializer(serializers.ModelSerializer):
+    # trip = TripSerializer()
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            # 'username',
+            'first_name', 'last_name',
+
+        )
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
 
 class UserTrackSerializer(serializers.ModelSerializer):
