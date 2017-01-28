@@ -4,6 +4,7 @@ from userprofile.models import User, UserTrack
 from content.models import *
 
 import datetime
+from collections import OrderedDict
 
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
@@ -160,7 +161,8 @@ class UserTripSerializer(serializers.ModelSerializer):
                 data[date] = d[date]
             except:
                 data[date] = 0
-        return data
+        # return data
+        return OrderedDict(sorted(data.items()))
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):
