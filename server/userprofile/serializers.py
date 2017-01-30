@@ -3,8 +3,6 @@ from django.db.models import fields
 from userprofile.models import User, UserTrack
 from content.models import *
 
-import datetime
-from collections import OrderedDict
 
 from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
@@ -151,18 +149,7 @@ class UserTripSerializer(serializers.ModelSerializer):
         fields = ('id', 'xp', 'xp_possible', 'xp_weekly', 'xp_daily', )
 
     def get_weekly_stat(self, obj):
-        base = datetime.datetime.now()
-        date_list = [base - datetime.timedelta(days=x) for x in range(0, 7)]
-        date_list = [x.strftime("%Y-%m-%d") for x in date_list]
-        d = obj.xp_daily
-        data = {}
-        for date in date_list:
-            try:
-                data[date] = d[date]
-            except:
-                data[date] = 0
-        # return data
-        return OrderedDict(sorted(data.items()))
+        return obj.get_weekly_xp()
 
 
 class UserTripDetailSerializer(serializers.ModelSerializer):
@@ -292,4 +279,13 @@ class UserTrackSerializer(serializers.ModelSerializer):
             'trip',
             'status',
 
+        )
+
+
+class ProfilePictureSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'profile_picture',
         )

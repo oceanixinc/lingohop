@@ -14,6 +14,7 @@ from userprofile.serializers import (
     UserTrackSerializer, UserDataSerializer,
     ChangePasswordSerializer,
     UserProfileUpdateSerializer,
+    ProfilePictureSerializer
 )
 from userprofile.models import (
     User, UserTrip,
@@ -405,23 +406,10 @@ class UserTripUpdate(RetrieveUpdateDestroyAPIView):
         user_trip = UserTrip.objects.get(id=int(request.data.get('id', None)))
         xp = int(request.data.get('xp', None))
         xp_possible = int(request.data.get('xp_possible', 0))
-        d = user_trip.xp_daily
-        key = datetime.now().strftime("%Y-%m-%d")
-        # key2 = datetime.now() + timedelta(days=1)
-        # key2 = key2.strftime("%Y-%m-%d")
-        # d['ip'] = ip_address
+        d = user_trip.update_xp_daily(xp)
+        # user_trip.xp_daily = d
+        # user_trip.save()
         data = {}
-        if d:
-            if key in d:
-                d[key] += xp
-            else:
-                d[key] = xp
-        else:
-            d = {}
-            d[key] = xp
-            # user_trip.xp_daily = data
-        user_trip.xp_daily = d
-        user_trip.save()
         data = {
             'id': user_trip.id,
             'xp': user_trip.xp + xp,
@@ -489,3 +477,10 @@ class UserTrackView(MultipleFieldLookupMixin, RetrieveUpdateDestroyAPIView):
                 serializer.data, status=status.HTTP_201_CREATED)
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfilePictureUpdate(RetrieveUpdateDestroyAPIView):
+    """Return a specific user photo, update it, or delete it."""
+    serializer_class = ProfilePictureSerializer
+    queryset = User.objects.all()
+    lookup_field = 'username'

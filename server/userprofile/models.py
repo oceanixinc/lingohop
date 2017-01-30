@@ -1,3 +1,6 @@
+import datetime
+from collections import OrderedDict
+
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import AbstractUser
@@ -5,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 # from django.conf.global_settings import LANGUAGES
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
+
 
 
 from .managers import UserProfileManager
@@ -110,6 +114,39 @@ class UserTrip(models.Model):
     # xp_track = JSONField(blank=True, null=True)
     xp_daily = JSONField(blank=True, null=True)
     # total_xp = models.PositiveSmallIntegerField(default=0)
+
+    def get_weekly_xp(self):
+        base = datetime.datetime.now()
+        date_list = [base - datetime.timedelta(days=x) for x in range(0, 7)]
+        date_list = [x.strftime("%Y-%m-%d") for x in date_list]
+        d = self.xp_daily
+        data = {}
+        for date in date_list:
+            try:
+                data[date] = d[date]
+            except:
+                data[date] = 0
+        # return data
+        return OrderedDict(sorted(data.items()))
+
+    def update_xp_daily(self, xp):
+        d = self.xp_daily
+        key = datetime.datetime.now().strftime("%Y-%m-%d")
+        # key2 = datetime.now() + timedelta(days=1)
+        # key2 = key2.strftime("%Y-%m-%d")
+        # d['ip'] = ip_address
+        print('xp is update called', xp)
+        if d:
+            if key in d:
+                d[key] += xp
+            else:
+                d[key] = xp
+        else:
+            d = {}
+            d[key] = xp
+            # user_trip.xp_daily = data
+        self.xp_daily = d
+        self.save()
 
 
 class User(AbstractUser):

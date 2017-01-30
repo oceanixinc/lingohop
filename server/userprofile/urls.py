@@ -7,6 +7,7 @@ from userprofile.api import (
     ChangePasswordView,
     UserProfileUpdate,
     CheckAuthToken,
+    ProfilePictureUpdate,
 )
 
 urlpatterns = [
@@ -32,6 +33,12 @@ urlpatterns = [
         r'^(?P<pk>\d+)/$',
         UserDetail.as_view(),
         name='user-detail'
+    ),
+
+    url(
+        r'^update/photo/(?P<username>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})$',
+        ProfilePictureUpdate.as_view(),
+        name='photo-update'
     ),
 
     url(
