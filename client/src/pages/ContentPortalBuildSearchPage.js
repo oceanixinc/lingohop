@@ -34,6 +34,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         super();
 
         this.state = {
+            showSecondModal: false,
             showModal: false,
             search: '',
             answersearch: '',
@@ -84,9 +85,12 @@ export default class ContentPortalBuildSearchPage extends React.Component {
         this.updateDimensions = this.updateDimensions.bind(this)
 
         this._buildLesson = this._buildLesson.bind(this);
+        this._checkWholeWord = this._checkWholeWord.bind(this);
 
         this._openModal = this._openModal.bind(this);
         this._closeModal = this._closeModal.bind(this);
+
+        this._closeSecondModal = this._closeSecondModal.bind(this)
 
         this._handleImageUpload = this._handleImageUpload.bind(this);
         this._handleImageDelete = this._handleImageDelete.bind(this);
@@ -153,7 +157,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                         <div className="col-md-12">
                             <RaisedButton label="BUILD" className={(this.state.question === '' || this.state.answer === '')
                                 ? "upload-btn"
-                                : "upload-btn active-btn"} disabled={(this.state.question === '' || this.state.answer === '')} onClick={this._buildLesson}/>
+                                : "upload-btn active-btn"} disabled={(this.state.question === '' || this.state.answer === '')} onClick={this._checkWholeWord}/>
                         </div>
                     </div>
                 </div>
@@ -194,6 +198,14 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Modal show={this.state.showSecondModal} onHide={this._closeSecondModal}>
+                    <Modal.Header closeButton>
+                        <h4>Lego does not exist for question/answer</h4>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <RaisedButton label="CLOSE" primary={true} onClick={this._closeSecondModal}/>
+                    </Modal.Footer>
+                </Modal>
                 <Modal show={this.state.showModal} onHide={this._closeModal}>
                     <Modal.Header closeButton>
                         <h4>New Lego</h4>
@@ -366,6 +378,10 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
     _closeModal() {
         this.setState({showModal: false});
+    }
+
+    _closeSecondModal() {
+        this.setState({showSecondModal: false});
     }
 
     handleQuestion(event) {
@@ -759,7 +775,6 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             dataType: "json",
             url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${searchTerm}`,
             success: (res) => {
-
                 searchResults.length = 0
                 for (let item of res) {
 
@@ -803,7 +818,33 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
     }
 
-    _buildLesson() {
+    _checkWholeWord() {
+        jQuery.ajax({
+            method: 'GET',
+            dataType: "json",
+            url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${this.state.question}`,
+            success: (res) => {
+                if (res.length != 0) {
+                    let qaudio = res[0].audio.files[0].files[0].file
+                    jQuery.ajax({
+                        method: 'GET',
+                        dataType: "json",
+                        url: `https://testing.lingohop.com/api/assets/word/?country=${this.props.country}&language=${this.props.language}&q=${this.state.answer}`,
+                        success: (response) => {
+                            if (response.length != 0) {
+                                let aaudio = response[0].audio.files[0].files[0].file
+                                this._buildLesson(qaudio, aaudio)
+                            } else
+                                this.setState({showSecondModal: true})
+                        }
+                    })
+                } else
+                    this.setState({showSecondModal: true})
+            }
+        })
+    }
+
+    _buildLesson(qaudio, aaudio) {
         let part1 = ""
         let part2 = ""
 
@@ -829,7 +870,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     "legos_before_answer": this.state.answersearch.split(" ")
                 },
                 "problem_question": "",
-                "problem_image": ""
+                "problem_image": "",
+                "question_audio": {
+                    "question v1": qaudio,
+                    "question v2": qaudio
+                },
+                "answer_audio": {
+                    "answer v1": aaudio,
+                    "answer v2": aaudio
+                }
             }
         } else {
             part2 = {
@@ -843,7 +892,15 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                     "legos_before_answer": this.state.answersearch.split(" ")
                 },
                 "problem_question": "",
-                "problem_image": ""
+                "problem_image": "",
+                "question_audio": {
+                    "question v1": qaudio,
+                    "question v2": qaudio
+                },
+                "answer_audio": {
+                    "answer v1": aaudio,
+                    "answer v2": aaudio
+                }
             }
         }
 
