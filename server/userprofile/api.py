@@ -406,6 +406,7 @@ class UserTripUpdate(RetrieveUpdateDestroyAPIView):
         user_trip = UserTrip.objects.get(id=int(request.data.get('id', None)))
         xp = int(request.data.get('xp', None))
         xp_possible = int(request.data.get('xp_possible', 0))
+        xp_earned = int(request.data.get('xp_earned', 0))
         d = user_trip.update_xp_daily(xp)
         # user_trip.xp_daily = d
         # user_trip.save()
@@ -413,7 +414,8 @@ class UserTripUpdate(RetrieveUpdateDestroyAPIView):
         data = {
             'id': user_trip.id,
             'xp': user_trip.xp + xp,
-            'xp_possible': user_trip.xp_possible + xp_possible
+            'xp_possible': user_trip.xp_possible + xp_possible,
+            'xp_earned': user_trip.xp_earned + xp_earned,
         }
         serializer = UserTripSerializer(user_trip, data=data, partial=True)
         if serializer.is_valid():
