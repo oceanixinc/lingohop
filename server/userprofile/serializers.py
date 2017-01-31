@@ -146,7 +146,9 @@ class UserTripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserTrip
-        fields = ('id', 'xp', 'xp_possible', 'xp_weekly', 'xp_daily', )
+        fields = ('id', 'xp',
+            'xp_possible', 'xp_weekly', 'xp_daily',
+            'xp_earned',)
 
     def get_weekly_stat(self, obj):
         return obj.get_weekly_xp()
