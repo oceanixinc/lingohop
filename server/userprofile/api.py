@@ -19,7 +19,8 @@ from userprofile.serializers import (
 from userprofile.models import (
     User, UserTrip,
     Trip, LanguageCountry, UserTrack)
-from content.models import Asset
+from content.models import Asset, Journey
+
 
 user_Auth_Tokens = [
         "FF69FDA8",
@@ -116,6 +117,101 @@ user_Auth_Tokens = [
         "3659A9A8"
 ]
 
+user_Auth_Tokens = [
+       "FF69FDA8",
+       "A7F761B4",
+       "221845A2",
+       "61EF2481",
+       "BEC2C044",
+       "AAC5CCC5",
+       "2257147D",
+       "88060766",
+       "185C7FBA",
+       "9C62BFFB",
+       "FEA69AE7",
+       "7672EDB0",
+       "151CD1DB",
+       "25E8DDCF",
+       "ADA8BA1B",
+       "C38CD5ED",
+       "FA72D58E",
+       "D47191A8",
+       "04C97BBD",
+       "8B332040",
+       "68147207",
+       "AEA5A1A4",
+       "24355ED4",
+       "66A01B85",
+       "D603F701",
+       "649975CD",
+       "3FFA1D6A",
+       "10FA7F0B",
+       "13C2789D",
+       "96CABDC5",
+       "34912A00",
+       "5A7BF073",
+       "DE856FDD",
+       "CF782498",
+       "7F4D1451",
+       "4D7A2F30",
+       "E9BD7472",
+       "4E4DF056",
+       "9B086AC7",
+       "4F0FDAEB",
+       "AAD7A1F0",
+       "CF79FFBB",
+       "ADAA5362",
+       "6C08E4CA",
+       "21B6A88E",
+       "48D0C87D",
+       "83BC3216",
+       "96F1703B",
+       "D6200F71",
+       "15ED5AD2",
+       "6901E869",
+       "B9FAAAB1",
+       "2BAEBA9A",
+       "7AC2AF48",
+       "1EFEB088",
+       "DE260AFA",
+       "358461A6",
+       "00AF551F",
+       "41903217",
+       "9CA9BE8A",
+       "956AD722",
+       "FD11608C",
+       "CCA89F36",
+       "AD80A2F2",
+       "BFF70433",
+       "80D99897",
+       "1291AFDF",
+       "E5DF117A",
+       "32392FDF",
+       "80A00C5B",
+       "D9798B3E",
+       "20A3B681",
+       "DA089635",
+       "74D7E874",
+       "E52AC1EB",
+       "C1ED8511",
+       "03AEA573",
+       "8A12420C",
+       "8A0858D7",
+       "E4569F57",
+       "D7F513EC",
+       "E10E9BD9",
+       "CE0240C1",
+       "9D16690D",
+       "D2FFE6C5",
+       "522F03B0",
+       "0B61E74E",
+       "2A77E5A0",
+       "CB464639",
+       "1FA0C227",
+       "5A74FBA5",
+       "3659A9A8"
+]
+
 
 class CheckAuthToken(views.APIView):
 
@@ -137,13 +233,36 @@ class TripMixin(object):
     Here we're setting the query set and the serializer
     """
 
-    serializer_class = TripSerializer
-    queryset = Trip.objects.all()
+    # queryset = Trip.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list .
+        """
+        print('all list')
+        return Trip.objects.all()
 
 
-class TripList(TripMixin, ListCreateAPIView):
+class TripList(ListCreateAPIView):
     """Return a list of trips or create new ones."""
-    pass
+    serializer_class = TripSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list .
+        """
+        journeys = Journey.objects.all()
+        trip_list = Trip.objects.values_list('name', flat=True).distinct()
+        data = []
+        for each_journey in journeys:
+          if each_journey.name is not trip_list:
+            trip, created = Trip.objects.get_or_create(name=each_journey.name)
+        final_list = Journey.objects.values_list('name').distinct('name')
+        trips = Trip.objects.all()
+        for each_trip in trips:
+          if each_trip.name in final_list:
+            data.append(each_trip)
+        return data
 
 
 class LanguageCountryMixin(object):
@@ -157,7 +276,7 @@ class LanguageCountryMixin(object):
 
     def get_queryset(self):
         """
-        This view should return a list of sections.
+        This return language country pair.
         """
         # print
         my_kwargs = {}
@@ -171,7 +290,8 @@ class LanguageCountryMixin(object):
         my_kwargs['country__in'] = country
         data = LanguageCountry.objects.filter(
             **my_kwargs).select_related(
-            'language__name').order_by('country')
+            'language__name').order_by(
+            'country').distinct('language__name', 'country')
         return data
 
 

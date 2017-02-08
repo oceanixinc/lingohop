@@ -3,8 +3,8 @@ from django.db.models import fields
 from userprofile.models import User, UserTrack
 from content.models import *
 
-
-from rest_framework import serializers
+from rest_framework import serializers, status
+from rest_framework.response import Response
 from django_countries.serializer_fields import CountryField
 
 from userprofile.models import (
@@ -80,8 +80,14 @@ class LanguageCountrySerializer(serializers.ModelSerializer):
         language, created = Language.objects.get_or_create(
             name=validated_data['language']['name'])
 
+        language_country_obj = LanguageCountry.objects.filter(
+            language__name=validated_data['language']['name'],
+            country=validated_data['country'],
+        )
         validated_data['language'] = language
-
+        print('data is', language_country_obj)
+        if language_country_obj:
+            return language_country_obj[0]
         return LanguageCountry.objects.create(**validated_data)
 
 
