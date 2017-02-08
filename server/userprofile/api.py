@@ -19,7 +19,8 @@ from userprofile.serializers import (
 from userprofile.models import (
     User, UserTrip,
     Trip, LanguageCountry, UserTrack)
-from content.models import Asset
+from content.models import Asset, Journey
+
 
 user_Auth_Tokens = [
         "FF69FDA8",
@@ -232,13 +233,36 @@ class TripMixin(object):
     Here we're setting the query set and the serializer
     """
 
-    serializer_class = TripSerializer
-    queryset = Trip.objects.all()
+    # queryset = Trip.objects.all()
+
+    def get_queryset(self):
+        """
+        This view should return a list .
+        """
+        print('all list')
+        return Trip.objects.all()
 
 
-class TripList(TripMixin, ListCreateAPIView):
+class TripList(ListCreateAPIView):
     """Return a list of trips or create new ones."""
-    pass
+    serializer_class = TripSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list .
+        """
+        journeys = Journey.objects.all()
+        trip_list = Trip.objects.values_list('name', flat=True).distinct()
+        data = []
+        for each_journey in journeys:
+          if each_journey.name is not trip_list:
+            trip, created = Trip.objects.get_or_create(name=each_journey.name)
+        final_list = Journey.objects.values_list('name').distinct('name')
+        trips = Trip.objects.all()
+        for each_trip in trips:
+          if each_trip.name in final_list:
+            data.append(each_trip)
+        return data
 
 
 class LanguageCountryMixin(object):
