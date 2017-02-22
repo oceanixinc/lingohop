@@ -107,7 +107,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         <h4>Audio Validation Error</h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12 text-center">
-                        <h4>The audio files for each particular region have to be in the "word-region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good-Catalonia". Please check the naming of your audio files</h4>
+                        <h4>The audio files for each particular region have to be in the "gender-region" format. For example if the gender is "male" and region is "Catalonia" the audio file has to be named "male-Catalonia". Please check the naming of your audio files</h4>
                     </Modal.Body>
                     <Modal.Footer>
                         <RaisedButton label="CLOSE" primary={true} onClick={this._closeValidateModal}/>
@@ -649,9 +649,9 @@ export default class ContentPortalUploadPage extends React.Component {
             console.log(nameTwo)
             console.log(nameThree)
 
-            let validOne = (nameOne === `${this.state.legoText}-${this.state.regionOne}`)
-            let validTwo = (nameTwo === `${this.state.legoText}-${this.state.regionTwo}`)
-            let validThree = (nameThree === `${this.state.legoText}-${this.state.regionThree}`)
+            let validOne = (nameOne === `male-${this.state.regionOne}`)
+            let validTwo = (nameTwo === `male-${this.state.regionTwo}`)
+            let validThree = (nameThree === `male-${this.state.regionThree}`)
 
             maleValidation = validOne && validTwo && validThree
         }
@@ -665,9 +665,9 @@ export default class ContentPortalUploadPage extends React.Component {
             nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'))
             nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'))
 
-            let validFour = (nameFour === `${this.state.legoText}-${this.state.regionOne}`)
-            let validFive = (nameFive === `${this.state.legoText}-${this.state.regionTwo}`)
-            let validSix = (nameSix === `${this.state.legoText}-${this.state.regionThree}`)
+            let validFour = (nameFour === `female-${this.state.regionOne}`)
+            let validFive = (nameFive === `female-${this.state.regionTwo}`)
+            let validSix = (nameSix === `female-${this.state.regionThree}`)
 
             femaleValidation = validFour && validFive && validSix
         }
