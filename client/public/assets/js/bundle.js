@@ -77653,7 +77653,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'The audio files for each particular region have to be in the "word-region" format. For example if the word is "Good" and region is "Catalonia" the audio file has to be named "Good-Catalonia". Please check the naming of your audio files'
+                            'The audio files for each particular region have to be in the "gender-region" format. For example if the gender is "male" and region is "Catalonia" the audio file has to be named "male-Catalonia". Please check the naming of your audio files'
                         )
                     ),
                     _react2.default.createElement(
@@ -78328,9 +78328,9 @@ var ContentPortalUploadPage = function (_React$Component) {
                 console.log(nameTwo);
                 console.log(nameThree);
 
-                var validOne = nameOne === this.state.legoText + '-' + this.state.regionOne;
-                var validTwo = nameTwo === this.state.legoText + '-' + this.state.regionTwo;
-                var validThree = nameThree === this.state.legoText + '-' + this.state.regionThree;
+                var validOne = nameOne === 'male-' + this.state.regionOne;
+                var validTwo = nameTwo === 'male-' + this.state.regionTwo;
+                var validThree = nameThree === 'male-' + this.state.regionThree;
 
                 maleValidation = validOne && validTwo && validThree;
             }
@@ -78344,9 +78344,9 @@ var ContentPortalUploadPage = function (_React$Component) {
                 nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
                 nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
 
-                var validFour = nameFour === this.state.legoText + '-' + this.state.regionOne;
-                var validFive = nameFive === this.state.legoText + '-' + this.state.regionTwo;
-                var validSix = nameSix === this.state.legoText + '-' + this.state.regionThree;
+                var validFour = nameFour === 'female-' + this.state.regionOne;
+                var validFive = nameFive === 'female-' + this.state.regionTwo;
+                var validSix = nameSix === 'female-' + this.state.regionThree;
 
                 femaleValidation = validFour && validFive && validSix;
             }
