@@ -78304,7 +78304,6 @@ var ContentPortalUploadPage = function (_React$Component) {
                                 }, {
                                     "gender": "female",
                                     "files": femaleAudioFiles
-
                                 }]
                             }
                         }]
@@ -78348,17 +78347,17 @@ var ContentPortalUploadPage = function (_React$Component) {
 
                 if (typeof nameOne != 'undefined') {
                     nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
-                    validOne = nameOne.includes('' + this.state.regionOne) && (nameOne.includes('male') || nameOne.includes('Male'));
+                    validOne = (nameOne.includes(this.state.regionOne) || nameOne.includes(this.state.regionOne.toLowerCase())) && (nameOne.includes('male') || nameOne.includes('Male'));
                 }
 
                 if (typeof nameTwo != 'undefined') {
                     nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
-                    validTwo = nameTwo.includes('' + this.state.regionTwo) && (nameTwo.includes('male') || nameTwo.includes('Male'));
+                    validTwo = (nameTwo.includes(this.state.regionTwo) || nameTwo.includes(this.state.regionTwo.toLowerCase())) && (nameTwo.includes('male') || nameTwo.includes('Male'));
                 }
 
                 if (typeof nameThree != 'undefined') {
                     nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
-                    validThree = nameThree.includes('' + this.state.regionThree) && (nameThree.includes('male') || nameThree.includes('Male'));
+                    validThree = (nameThree.includes(this.state.regionThree) || nameThree.includes(this.state.regionThree.toLowerCase())) && (nameThree.includes('male') || nameThree.includes('Male'));
                 }
 
                 maleValidation = validOne && validTwo && validThree;
@@ -78375,17 +78374,17 @@ var ContentPortalUploadPage = function (_React$Component) {
 
                 if (typeof nameFour != 'undefined') {
                     nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'));
-                    validFour = nameFour.includes('' + this.state.regionFour) && (nameFour.includes('female') || nameFour.includes('Female'));
+                    validFour = (nameFour.includes(this.state.regionFour) || nameFour.includes(this.state.regionFour.toLowerCase())) && (nameFour.includes('female') || nameFour.includes('Female'));
                 }
 
                 if (typeof nameFive != 'undefined') {
                     nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
-                    validFive = nameFive.includes('' + this.state.regionFive) && (nameFive.includes('female') || nameFive.includes('Female'));
+                    validFive = (nameFive.includes(this.state.regionFive) || nameFive.includes(this.state.regionFive.toLowerCase())) && (nameFive.includes('female') || nameFive.includes('Female'));
                 }
 
                 if (typeof nameSix != 'undefined') {
                     nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
-                    validSix = nameSix.includes('' + this.state.regionSix) && (nameSix.includes('female') || nameSix.includes('Female'));
+                    validSix = (nameSix.includes(this.state.regionSix) || nameSix.includes(this.state.regionSix.toLowerCase())) && (nameSix.includes('female') || nameSix.includes('Female'));
                 }
 
                 femaleValidation = validFour && validFive && validSix;
