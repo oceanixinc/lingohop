@@ -77599,6 +77599,7 @@ var ContentPortalUploadPage = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.state);
             return _react2.default.createElement(
                 'div',
                 { className: 'upload-page' },
@@ -77803,46 +77804,58 @@ var ContentPortalUploadPage = function (_React$Component) {
                             _react2.default.createElement('source', { src: this.state.audioThreeUrl, type: 'audio/mp3' })
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-one', className: this.state.audioOneUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("one");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-one-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "one") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionOne,
-                            '(M)'
+                            'div',
+                            { className: typeof this.state.regionOne === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-one', className: this.state.audioOneUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("one");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-one-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "one") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionOne,
+                                '(M)'
+                            )
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-two', className: this.state.audioTwoUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("two");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-two-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "two") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionTwo,
-                            '(M)'
+                            'div',
+                            { className: typeof this.state.regionTwo === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-two', className: this.state.audioTwoUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("two");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-two-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "two") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionTwo,
+                                '(M)'
+                            )
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-three', className: this.state.audioThreeUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("three");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-three-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "three") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionThree,
-                            '(M)'
+                            'div',
+                            { className: typeof this.state.regionThree === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-three', className: this.state.audioThreeUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("three");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-three-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "three") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionThree,
+                                '(M)'
+                            )
                         )
                     ),
                     _react2.default.createElement(
@@ -77867,46 +77880,58 @@ var ContentPortalUploadPage = function (_React$Component) {
                             _react2.default.createElement('source', { src: this.state.audioSixUrl, type: 'audio/mp3' })
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-four', className: this.state.audioFourUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("four");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-four-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "four") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionOne,
-                            '(F)'
+                            'div',
+                            { className: typeof this.state.regionOne === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-four', className: this.state.audioFourUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("four");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-four-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "four") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionOne,
+                                '(F)'
+                            )
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-five', className: this.state.audioFiveUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("five");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-five-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "five") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionTwo,
-                            '(F)'
+                            'div',
+                            { className: typeof this.state.regionTwo === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-five', className: this.state.audioFiveUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("five");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-five-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "five") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionTwo,
+                                '(F)'
+                            )
                         ),
                         _react2.default.createElement(
-                            _Chip2.default,
-                            { id: 'chip-six', className: this.state.audioSixUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                    return _this2._clickAudio("six");
-                                } },
-                            _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                    'i',
-                                    { id: 'audio-six-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "six") },
-                                    ' add '
-                                ) }),
-                            ' ',
-                            this.state.regionThree,
-                            '(F)'
+                            'div',
+                            { className: typeof this.state.regionThree === 'undefined' ? 'inactive' : '' },
+                            _react2.default.createElement(
+                                _Chip2.default,
+                                { id: 'chip-six', className: this.state.audioSixUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                        return _this2._clickAudio("six");
+                                    } },
+                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                        'i',
+                                        { id: 'audio-six-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "six") },
+                                        ' add '
+                                    ) }),
+                                ' ',
+                                this.state.regionThree,
+                                '(F)'
+                            )
                         )
                     ),
                     _react2.default.createElement(
