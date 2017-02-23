@@ -77654,7 +77654,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'The audio files for each particular region have to be in the "gender-region" format. For example if the gender is "male" and region is "Catalonia" the audio file has to be named "male-Catalonia". Please check the naming of your audio files'
+                            'The audio files for each particular region have to include the gender and region name.'
                         )
                     ),
                     _react2.default.createElement(
@@ -77937,7 +77937,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-12' },
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'UPLOAD', className: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '') ? 'upload-btn' : 'upload-btn active-btn', disabled: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''), onClick: this._uploadContent })
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'UPLOAD', className: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') ? 'upload-btn' : 'upload-btn active-btn', disabled: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === ''), onClick: this._uploadContent })
                     )
                 )
             );
@@ -78273,6 +78273,21 @@ var ContentPortalUploadPage = function (_React$Component) {
                     if (imgUrl != '') imgUrls.push({ "file": imgUrl });
                 }
 
+                var maleAudioFiles = [];
+                var femaleAudioFiles = [];
+
+                if (typeof this.state.regionOne != 'undefined') maleAudioFiles.push({ "region": this.state.regionOne, "file": this.state.audioOneUrl });
+
+                if (typeof this.state.regionTwo != 'undefined') maleAudioFiles.push({ "region": this.state.regionTwo, "file": this.state.audioTwoUrl });
+
+                if (typeof this.state.regionThree != 'undefined') maleAudioFiles.push({ "region": this.state.regionThree, "file": this.state.audioThreeUrl });
+
+                if (typeof this.state.regionOne != 'undefined') femaleAudioFiles.push({ "region": this.state.regionOne, "file": this.state.audioFourUrl });
+
+                if (typeof this.state.regionTwo != 'undefined') femaleAudioFiles.push({ "region": this.state.regionTwo, "file": this.state.audioFiveUrl });
+
+                if (typeof this.state.regionThree != 'undefined') femaleAudioFiles.push({ "region": this.state.regionThree, "file": this.state.audioSixUrl });
+
                 _jquery2.default.ajax({
                     method: "PUT",
                     data: JSON.stringify({
@@ -78284,29 +78299,11 @@ var ContentPortalUploadPage = function (_React$Component) {
                             "audio": {
                                 "files": [{
                                     "gender": "male",
-                                    "files": [{
-                                        "region": this.state.regionOne,
-                                        "file": this.state.audioOneUrl
-                                    }, {
-                                        "region": this.state.regionTwo,
-                                        "file": this.state.audioTwoUrl
-                                    }, {
-                                        "region": this.state.regionThree,
-                                        "file": this.state.audioThreeUrl
-                                    }]
+                                    "files": maleAudioFiles
 
                                 }, {
                                     "gender": "female",
-                                    "files": [{
-                                        "region": this.state.regionOne,
-                                        "file": this.state.audioFourUrl
-                                    }, {
-                                        "region": this.state.regionTwo,
-                                        "file": this.state.audioFiveUrl
-                                    }, {
-                                        "region": this.state.regionThree,
-                                        "file": this.state.audioSixUrl
-                                    }]
+                                    "files": femaleAudioFiles
 
                                 }]
                             }
@@ -78345,17 +78342,24 @@ var ContentPortalUploadPage = function (_React$Component) {
                 var nameTwo = this.state.audioTwoFile.name;
                 var nameThree = this.state.audioThreeFile.name;
 
-                nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
-                nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
-                nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
+                var validOne = true;
+                var validTwo = true;
+                var validThree = true;
 
-                console.log(nameOne);
-                console.log(nameTwo);
-                console.log(nameThree);
+                if (typeof nameOne != 'undefined') {
+                    nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
+                    validOne = nameOne.includes('' + this.state.regionOne) && (nameOne.includes('male') || nameOne.includes('Male'));
+                }
 
-                var validOne = nameOne === 'male-' + this.state.regionOne;
-                var validTwo = nameTwo === 'male-' + this.state.regionTwo;
-                var validThree = nameThree === 'male-' + this.state.regionThree;
+                if (typeof nameTwo != 'undefined') {
+                    nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
+                    validTwo = nameTwo.includes('' + this.state.regionTwo) && (nameTwo.includes('male') || nameTwo.includes('Male'));
+                }
+
+                if (typeof nameThree != 'undefined') {
+                    nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
+                    validThree = nameThree.includes('' + this.state.regionThree) && (nameThree.includes('male') || nameThree.includes('Male'));
+                }
 
                 maleValidation = validOne && validTwo && validThree;
             }
@@ -78365,13 +78369,24 @@ var ContentPortalUploadPage = function (_React$Component) {
                 var nameFive = this.state.audioFiveFile.name;
                 var nameSix = this.state.audioSixFile.name;
 
-                nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'));
-                nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
-                nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
+                var validFour = true;
+                var validFive = true;
+                var validSix = true;
 
-                var validFour = nameFour === 'female-' + this.state.regionOne;
-                var validFive = nameFive === 'female-' + this.state.regionTwo;
-                var validSix = nameSix === 'female-' + this.state.regionThree;
+                if (typeof nameFour != 'undefined') {
+                    nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'));
+                    validFour = nameFour.includes('' + this.state.regionFour) && (nameFour.includes('female') || nameFour.includes('Female'));
+                }
+
+                if (typeof nameFive != 'undefined') {
+                    nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
+                    validFive = nameFive.includes('' + this.state.regionFive) && (nameFive.includes('female') || nameFive.includes('Female'));
+                }
+
+                if (typeof nameSix != 'undefined') {
+                    nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
+                    validSix = nameSix.includes('' + this.state.regionSix) && (nameSix.includes('female') || nameSix.includes('Female'));
+                }
 
                 femaleValidation = validFour && validFive && validSix;
             }
