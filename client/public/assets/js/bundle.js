@@ -77654,7 +77654,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _react2.default.createElement(
                             'h4',
                             null,
-                            'The audio files for each particular region have to be in the "gender-region" format. For example if the gender is "male" and region is "Catalonia" the audio file has to be named "male-Catalonia". Please check the naming of your audio files'
+                            'The audio files for each particular region have to include the gender and region name.'
                         )
                     ),
                     _react2.default.createElement(
@@ -78353,9 +78353,9 @@ var ContentPortalUploadPage = function (_React$Component) {
                 console.log(nameTwo);
                 console.log(nameThree);
 
-                var validOne = nameOne === 'male-' + this.state.regionOne;
-                var validTwo = nameTwo === 'male-' + this.state.regionTwo;
-                var validThree = nameThree === 'male-' + this.state.regionThree;
+                var validOne = nameOne.includes('' + this.state.regionOne) && (nameOne.includes('male') || nameOne.includes('Male'));
+                var validTwo = nameTwo.includes('' + this.state.regionTwo) && (nameTwo.includes('male') || nameTwo.includes('Male'));
+                var validThree = nameThree.includes('' + this.state.regionThree) && (nameThree.includes('male') || nameThree.includes('Male'));
 
                 maleValidation = validOne && validTwo && validThree;
             }
@@ -78369,9 +78369,9 @@ var ContentPortalUploadPage = function (_React$Component) {
                 nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
                 nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
 
-                var validFour = nameFour === 'female-' + this.state.regionOne;
-                var validFive = nameFive === 'female-' + this.state.regionTwo;
-                var validSix = nameSix === 'female-' + this.state.regionThree;
+                var validFour = nameFour.includes('' + this.state.regionFour) && (nameFour.includes('female') || nameFour.includes('Female'));
+                var validFive = nameFive.includes('' + this.state.regionFive) && (nameFive.includes('female') || nameFive.includes('Female'));
+                var validSix = nameSix.includes('' + this.state.regionSix) && (nameSix.includes('female') || nameSix.includes('Female'));
 
                 femaleValidation = validFour && validFive && validSix;
             }

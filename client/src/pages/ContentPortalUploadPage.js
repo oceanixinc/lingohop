@@ -86,7 +86,7 @@ export default class ContentPortalUploadPage extends React.Component {
     }
 
     render() {
-      console.log(this.state)
+        console.log(this.state)
         return (
             <div className="upload-page">
                 <Modal show={this.state.showModal} onHide={this._closeModal} backdrop='static'>
@@ -108,7 +108,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         <h4>Audio Validation Error</h4>
                     </Modal.Header>
                     <Modal.Body className="col-md-12 text-center">
-                        <h4>The audio files for each particular region have to be in the "gender-region" format. For example if the gender is "male" and region is "Catalonia" the audio file has to be named "male-Catalonia". Please check the naming of your audio files</h4>
+                        <h4>The audio files for each particular region have to include the gender and region name.</h4>
                     </Modal.Body>
                     <Modal.Footer>
                         <RaisedButton label="CLOSE" primary={true} onClick={this._closeValidateModal}/>
@@ -672,9 +672,9 @@ export default class ContentPortalUploadPage extends React.Component {
             console.log(nameTwo)
             console.log(nameThree)
 
-            let validOne = (nameOne === `male-${this.state.regionOne}`)
-            let validTwo = (nameTwo === `male-${this.state.regionTwo}`)
-            let validThree = (nameThree === `male-${this.state.regionThree}`)
+            let validOne = (nameOne.includes(`${this.state.regionOne}`) && (nameOne.includes('male') || nameOne.includes('Male')))
+            let validTwo = (nameTwo.includes(`${this.state.regionTwo}`) && (nameTwo.includes('male') || nameTwo.includes('Male')))
+            let validThree = (nameThree.includes(`${this.state.regionThree}`) && (nameThree.includes('male') || nameThree.includes('Male')))
 
             maleValidation = validOne && validTwo && validThree
         }
@@ -688,9 +688,9 @@ export default class ContentPortalUploadPage extends React.Component {
             nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'))
             nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'))
 
-            let validFour = (nameFour === `female-${this.state.regionOne}`)
-            let validFive = (nameFive === `female-${this.state.regionTwo}`)
-            let validSix = (nameSix === `female-${this.state.regionThree}`)
+            let validFour = (nameFour.includes(`${this.state.regionFour}`) && (nameFour.includes('female') || nameFour.includes('Female')))
+            let validFive = (nameFive.includes(`${this.state.regionFive}`) && (nameFive.includes('female') || nameFive.includes('Female')))
+            let validSix = (nameSix.includes(`${this.state.regionSix}`) && (nameSix.includes('female') || nameSix.includes('Female')))
 
             femaleValidation = validFour && validFive && validSix
         }
