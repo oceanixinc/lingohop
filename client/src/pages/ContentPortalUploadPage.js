@@ -86,6 +86,7 @@ export default class ContentPortalUploadPage extends React.Component {
     }
 
     render() {
+      console.log(this.state)
         return (
             <div className="upload-page">
                 <Modal show={this.state.showModal} onHide={this._closeModal} backdrop='static'>
@@ -186,31 +187,42 @@ export default class ContentPortalUploadPage extends React.Component {
                         <audio controls id="audio-three">
                             <source src={this.state.audioThreeUrl} type="audio/mp3"/>
                         </audio>
-
-                        <Chip id="chip-one" className={this.state.audioOneUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("one")}>
-                            <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "one")
-                            } > add < /i>}/> {this.state.regionOne}
-                            (M)
-                        </Chip>
-                        <Chip id="chip-two" className={this.state.audioTwoUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("two")}>
-                            <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "two")
-                            } > add < /i>}/> {this.state.regionTwo}
-                            (M)
-                        </Chip>
-                        <Chip id="chip-three" className={this.state.audioThreeUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("three")}>
-                            <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "three")
-                            } > add < /i>}/> {this.state.regionThree}
-                            (M)
-                        </Chip>
+                        <div className={typeof this.state.regionOne === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-one" className={this.state.audioOneUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("one")}>
+                                <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "one")
+                                } > add < /i>}/> {this.state.regionOne}
+                                (M)
+                            </Chip>
+                        </div>
+                        <div className={typeof this.state.regionTwo === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-two" className={this.state.audioTwoUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("two")}>
+                                <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "two")
+                                } > add < /i>}/> {this.state.regionTwo}
+                                (M)
+                            </Chip>
+                        </div>
+                        <div className={typeof this.state.regionThree === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-three" className={this.state.audioThreeUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("three")}>
+                                <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "three")
+                                } > add < /i>}/> {this.state.regionThree}
+                                (M)
+                            </Chip>
+                        </div>
                     </div>
                     <div id="chips" className={(this.state.gender === 'male' || this.state.regionOne === '')
                         ? 'inactive'
@@ -227,31 +239,42 @@ export default class ContentPortalUploadPage extends React.Component {
                         <audio controls id="audio-six">
                             <source src={this.state.audioSixUrl} type="audio/mp3"/>
                         </audio>
-
-                        <Chip id="chip-four" className={this.state.audioFourUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("four")}>
-                            <Avatar icon={< i id = "audio-four-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "four")
-                            } > add < /i>}/> {this.state.regionOne}
-                            (F)
-                        </Chip>
-                        <Chip id="chip-five" className={this.state.audioFiveUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("five")}>
-                            <Avatar icon={< i id = "audio-five-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "five")
-                            } > add < /i>}/> {this.state.regionTwo}
-                            (F)
-                        </Chip>
-                        <Chip id="chip-six" className={this.state.audioSixUrl != ''
-                            ? 'audiochip pull-left'
-                            : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("six")}>
-                            <Avatar icon={< i id = "audio-six-icon" className = "material-icons pull-left" onTouchTap = {
-                                this._clickPlay.bind(this, "six")
-                            } > add < /i>}/> {this.state.regionThree}
-                            (F)
-                        </Chip>
+                        <div className={typeof this.state.regionOne === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-four" className={this.state.audioFourUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("four")}>
+                                <Avatar icon={< i id = "audio-four-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "four")
+                                } > add < /i>}/> {this.state.regionOne}
+                                (F)
+                            </Chip>
+                        </div>
+                        <div className={typeof this.state.regionTwo === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-five" className={this.state.audioFiveUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("five")}>
+                                <Avatar icon={< i id = "audio-five-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "five")
+                                } > add < /i>}/> {this.state.regionTwo}
+                                (F)
+                            </Chip>
+                        </div>
+                        <div className={typeof this.state.regionThree === 'undefined'
+                            ? 'inactive'
+                            : ''}>
+                            <Chip id="chip-six" className={this.state.audioSixUrl != ''
+                                ? 'audiochip pull-left'
+                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("six")}>
+                                <Avatar icon={< i id = "audio-six-icon" className = "material-icons pull-left" onTouchTap = {
+                                    this._clickPlay.bind(this, "six")
+                                } > add < /i>}/> {this.state.regionThree}
+                                (F)
+                            </Chip>
+                        </div>
                     </div>
                     <div className="col-sm-12">
                         <RaisedButton label="UPLOAD" className={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || this.state.audioOneUrl === '' || this.state.audioTwoUrl === '' || this.state.audioThreeUrl === '' || this.state.audioFourUrl === '' || this.state.audioFiveUrl === '' || this.state.audioSixUrl === '' || this.state.language_country === '' || this.state.legoText === ''))
