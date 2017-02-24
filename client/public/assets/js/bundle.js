@@ -78345,17 +78345,17 @@ var ContentPortalUploadPage = function (_React$Component) {
                 var validTwo = true;
                 var validThree = true;
 
-                if (typeof nameOne != 'undefined') {
+                if (typeof nameOne != 'undefined' && typeof this.state.regionOne != 'undefined') {
                     nameOne = nameOne.substr(0, nameOne.lastIndexOf('.'));
                     validOne = (nameOne.includes(this.state.regionOne) || nameOne.includes(this.state.regionOne.toLowerCase())) && (nameOne.includes('male') || nameOne.includes('Male'));
                 }
 
-                if (typeof nameTwo != 'undefined') {
+                if (typeof nameTwo != 'undefined' && typeof this.state.regionTwo != 'undefined') {
                     nameTwo = nameTwo.substr(0, nameTwo.lastIndexOf('.'));
                     validTwo = (nameTwo.includes(this.state.regionTwo) || nameTwo.includes(this.state.regionTwo.toLowerCase())) && (nameTwo.includes('male') || nameTwo.includes('Male'));
                 }
 
-                if (typeof nameThree != 'undefined') {
+                if (typeof nameThree != 'undefined' && typeof this.state.regionThree != 'undefined') {
                     nameThree = nameThree.substr(0, nameThree.lastIndexOf('.'));
                     validThree = (nameThree.includes(this.state.regionThree) || nameThree.includes(this.state.regionThree.toLowerCase())) && (nameThree.includes('male') || nameThree.includes('Male'));
                 }
@@ -78372,19 +78372,19 @@ var ContentPortalUploadPage = function (_React$Component) {
                 var validFive = true;
                 var validSix = true;
 
-                if (typeof nameFour != 'undefined') {
+                if (typeof nameFour != 'undefined' && typeof this.state.regionOne != 'undefined') {
                     nameFour = nameFour.substr(0, nameFour.lastIndexOf('.'));
-                    validFour = (nameFour.includes(this.state.regionFour) || nameFour.includes(this.state.regionFour.toLowerCase())) && (nameFour.includes('female') || nameFour.includes('Female'));
+                    validFour = (nameFour.includes(this.state.regionOne) || nameFour.includes(this.state.regionOne.toLowerCase())) && (nameFour.includes('female') || nameFour.includes('Female'));
                 }
 
-                if (typeof nameFive != 'undefined') {
+                if (typeof nameFive != 'undefined' && typeof this.state.regionTwo != 'undefined') {
                     nameFive = nameFive.substr(0, nameFive.lastIndexOf('.'));
-                    validFive = (nameFive.includes(this.state.regionFive) || nameFive.includes(this.state.regionFive.toLowerCase())) && (nameFive.includes('female') || nameFive.includes('Female'));
+                    validFive = (nameFive.includes(this.state.regionTwo) || nameFive.includes(this.state.regionTwo.toLowerCase())) && (nameFive.includes('female') || nameFive.includes('Female'));
                 }
 
-                if (typeof nameSix != 'undefined') {
+                if (typeof nameSix != 'undefined' && typeof this.state.regionThree != 'undefined') {
                     nameSix = nameSix.substr(0, nameSix.lastIndexOf('.'));
-                    validSix = (nameSix.includes(this.state.regionSix) || nameSix.includes(this.state.regionSix.toLowerCase())) && (nameSix.includes('female') || nameSix.includes('Female'));
+                    validSix = (nameSix.includes(this.state.regionThree) || nameSix.includes(this.state.regionThree.toLowerCase())) && (nameSix.includes('female') || nameSix.includes('Female'));
                 }
 
                 femaleValidation = validFour && validFive && validSix;
