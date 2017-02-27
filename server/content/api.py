@@ -571,11 +571,11 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                                     img_ext = my_audio[0].split('/')
                                     imgdata = base64.b64decode(
                                         my_audio[1])
-
                                     file_name = gender + '_ ' + region + '_' + b
                                     fname = '../media/audios/%s.%s' % (file_name, 'mp3')
-
                                     real_file = fname.split('../')
+                                    fname = fname.encode('utf-8')
+
                                     # d64i = bytes(img, 'utf-8')
                                     # d64i = bytes(imgdata, 'utf-8')
                                     with open(fname, "wb") as fh:
