@@ -1,3 +1,4 @@
+import io
 from functools import reduce
 import operator
 from rest_framework.response import Response
@@ -568,16 +569,20 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                                 if 'base64' in region_file:
                                     my_audio = region_file.split('base64,')
                                     img_ext = my_audio[0].split('/')
-                                    imgdata = base64.b64decode(my_audio[1])
+                                    imgdata = base64.b64decode(
+                                        my_audio[1])
                                     file_name = gender + '_ ' + region + '_' + b
                                     fname = '../media/audios/%s.%s' % (file_name, 'mp3')
-
                                     real_file = fname.split('../')
+                                    fname = fname.encode('utf-8')
+
                                     # d64i = bytes(img, 'utf-8')
                                     # d64i = bytes(imgdata, 'utf-8')
-                                    with open(fname, "wb", encoding="utf-8") as fh:
+                                    with open(fname, "wb") as fh:
                                         # fh.write(base64.decodestring(d64i))
                                         fh.write(imgdata)
+                                        # fh.write(imgdata.decode('utf-8'))
+                                        # fh.write(my_audio[1])
                                     request.data['words'][word_index]['audio']['files'][index]['files'][region_index]['file'] = "/" + real_file[1]
                             else:
                                 return Response(
