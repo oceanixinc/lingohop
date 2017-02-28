@@ -574,7 +574,7 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                                     file_name = gender + '_' + region + '_' + b
                                     fname = u'../media/audios/%s.%s' % (file_name, u'mp3')
                                     real_file = fname.split('../')
-                                    # fname = fname.encode('utf-8')
+                                    fname = fname.encode('utf-8')
 
                                     with open(fname, "wb") as fh:
                                         fh.write(imgdata)
