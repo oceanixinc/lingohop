@@ -576,13 +576,8 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                                     real_file = fname.split('../')
                                     fname = fname.encode('utf-8')
 
-                                    # d64i = bytes(img, 'utf-8')
-                                    # d64i = bytes(imgdata, 'utf-8')
                                     with open(fname, "wb") as fh:
-                                        # fh.write(base64.decodestring(d64i))
                                         fh.write(imgdata)
-                                        # fh.write(imgdata.decode('utf-8'))
-                                        # fh.write(my_audio[1])
                                     request.data['words'][word_index]['audio']['files'][index]['files'][region_index]['file'] = "/" + real_file[1]
                             else:
                                 return Response(
