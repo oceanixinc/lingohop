@@ -54,6 +54,7 @@ class Image(EmbeddedDocument):
     """
     ID = fields.UUIDField(binary=False, default=uuid.uuid4)
     file = fields.StringField(required=False, blank=True, null=True)
+    gender = fields.StringField(required=False, blank=True, null=True)
 
 
 class Category(EmbeddedDocument):
@@ -192,6 +193,7 @@ class AudioImage(EmbeddedDocument):
     images = fields.ListField(
         fields.EmbeddedDocumentField(Image),
         required=False, blank=True, null=True)
+    # images = fields.DictField()
     audio = fields.EmbeddedDocumentField(
         Audio,
         required=False, blank=True, null=True)

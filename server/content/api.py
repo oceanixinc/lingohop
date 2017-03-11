@@ -1,6 +1,10 @@
 import io
 from functools import reduce
 import operator
+
+from django.forms.models import model_to_dict
+
+
 from rest_framework.response import Response
 from rest_framework import status, views
 from rest_framework_mongoengine import generics
@@ -479,6 +483,29 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
     lookup_fields = ('country', 'language')
     # parser_classes = (FileUploadParser,)
 
+    def get(self, request, *args, **kwargs):
+        country = kwargs.get('country', None)
+        language = kwargs.get('language', None)
+        if country is not None and language is not None:
+            try:
+                queryset = Asset.objects.get(
+                    country=country,
+                    language=language)
+            except:
+                pass
+            try:
+                queryset = Asset.objects.create(
+                    country=country)
+                queryset.language = language
+                queryset.save()
+            except:
+                queryset = Asset()
+                queryset.country = country
+                queryset.language = language
+                queryset.save()
+        serializer = AssetSerializer(queryset)
+        return Response(serializer.data)
+
     def get_audio_image(self, data):
         word = data['word']
         images = data['images']
@@ -488,6 +515,7 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
             file = each_image['file']
             image = Image()
             image.file = file
+            image.gender = each_image['gender']
             image_list.append(image)
         audio_file_list = []
         for index, each_row in enumerate(audio):
@@ -533,6 +561,7 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
 
                 for index, each in enumerate(c):
                     img = each['file']
+                    image_gender = each['gender']
                     if len(img) > 0:
                         if 'base64' in img:
                             my_image = img.split(';base64,')
@@ -553,6 +582,7 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                                 # fh.write(d64i)
                             # fh.write(img.decode('base64'))
                             request.data['words'][word_index]['images'][index]['file'] = "/" + real_file[1]
+                            request.data['words'][word_index]['images'][index]['gender'] = image_gender
                         else:
                             return Response(
                                 {'detail': 'binary image not provided'},
