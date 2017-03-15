@@ -41,12 +41,7 @@ export default class ContentPortalBuildSearchPage extends React.Component {
             activesearch: 'question',
             question: '',
             answer: '',
-            imgOneFile: '',
-            imgTwoFile: '',
-            imgThreeFile: '',
-            imgOneUrl: '',
-            imgTwoUrl: '',
-            imgThreeUrl: '',
+            imgs: [],
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
@@ -92,8 +87,11 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
         this._closeSecondModal = this._closeSecondModal.bind(this)
 
-        this._handleImageUpload = this._handleImageUpload.bind(this);
-        this._handleImageDelete = this._handleImageDelete.bind(this);
+        //Images
+        this.handleImageUpload = this.handleImageUpload.bind(this);
+        this.handleImageDelete = this.handleImageDelete.bind(this);
+        this.handleImageGenderChange = this.handleImageGenderChange.bind(this);
+
         this._clickAudio = this._clickAudio.bind(this);
         this.handleGenderChange = this.handleGenderChange.bind(this);
         this.handleLegoTextChange = this.handleLegoTextChange.bind(this);
@@ -102,6 +100,8 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     }
 
     render() {
+        const imgs = this.getImagePreviews()
+
         return (
             <div className="build-search-page">
                 <div className="col-md-7">
@@ -217,34 +217,26 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                                 width: '100%'
                             }}></TextField>
                         </div>
-                        <div className="big-text text-left col-md-2">
+                        <div className="big-text text-left col-md-12">
+                            What is the lego gender?
                             <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange}>
                                 <RadioButton value="male" label="Male" style={styles.radioButton}/>
                                 <RadioButton value="female" label="Female" style={styles.radioButton}/>
                                 <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                             </RadioButtonGroup>
                         </div>
-                        <div className="big-text text-left col-md-9 col-md-offset-1">
-                            <div id="add-picture" className={this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive'}>+ Add Picture
-                                <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
-                            </div>
-                            <div id="img-gallery" className="pull-left">
-                                <div className={this.state.imgOneUrl === '' && 'inactive'}>
-                                    <div className="close-icon" onClick={() => this._handleImageDelete(1)}>x</div>
-                                    <img src={this.state.imgOneUrl}/>
-                                </div>
-                                <div className={this.state.imgTwoUrl === '' && 'inactive'}>
-                                    <div className="close-icon" onClick={() => this._handleImageDelete(2)}>x</div>
-                                    <img src={this.state.imgTwoUrl}/>
-                                </div>
-                                <div className={this.state.imgThreeUrl === '' && 'inactive'}>
-                                    <div className="close-icon" onClick={() => this._handleImageDelete(3)}>x</div>
-                                    <img src={this.state.imgThreeUrl}/>
-                                </div>
-                            </div>
-
+                        <div className="big-text text-left col-sm-12">
+                            <RaisedButton label="+ ADD PHOTOS" primary={true} disabled={((this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1) || (this.state.imgs.length >= 2)} onClick={() => {
+                                document.getElementById('img-input').click();
+                            }}/>
+                            <input id="img-input" className="fileInput inactive" type="file" multiple onChange={this.handleImageUpload}/>
                         </div>
-                        <div id="audio" className="big-text text-left col-md-12">
+                        <div className="big-text text-left col-sm-12 img-preview-holder">
+                            {imgs}
+                        </div>
+                        <div id="audio" className="big-text text-left col-md-12" style={{
+                            marginTop: '10px'
+                        }}>
                             Audio Files
                         </div>
                         <div id="chips" className={(this.state.gender === 'female' || this.state.regionOne === '')
@@ -262,31 +254,42 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                             <audio controls id="audio-three">
                                 <source src={this.state.audioThreeUrl} type="audio/mp3"/>
                             </audio>
-
-                            <Chip id="chip-one" className={this.state.audioOneUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("one")}>
-                                <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "one")
-                                } > add < /i>}/> {this.state.regionOne}
-                                (M)
-                            </Chip>
-                            <Chip id="chip-two" className={this.state.audioTwoUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("two")}>
-                                <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "two")
-                                } > add < /i>}/> {this.state.regionTwo}
-                                (M)
-                            </Chip>
-                            <Chip id="chip-three" className={this.state.audioThreeUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("three")}>
-                                <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "three")
-                                } > add < /i>}/> {this.state.regionThree}
-                                (M)
-                            </Chip>
+                            <div className={typeof this.state.regionOne === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-one" className={this.state.audioOneUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("one")}>
+                                    <Avatar icon={< i id = "audio-one-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "one")
+                                    } > add < /i>}/> {this.state.regionOne}
+                                    (M)
+                                </Chip>
+                            </div>
+                            <div className={typeof this.state.regionTwo === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-two" className={this.state.audioTwoUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("two")}>
+                                    <Avatar icon={< i id = "audio-two-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "two")
+                                    } > add < /i>}/> {this.state.regionTwo}
+                                    (M)
+                                </Chip>
+                            </div>
+                            <div className={typeof this.state.regionThree === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-three" className={this.state.audioThreeUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("three")}>
+                                    <Avatar icon={< i id = "audio-three-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "three")
+                                    } > add < /i>}/> {this.state.regionThree}
+                                    (M)
+                                </Chip>
+                            </div>
                         </div>
 
                         <div id="chips" className={(this.state.gender === 'male' || this.state.regionOne === '')
@@ -304,30 +307,42 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                             <audio controls id="audio-six">
                                 <source src={this.state.audioSixUrl} type="audio/mp3"/>
                             </audio>
-                            <Chip id="chip-four" className={this.state.audioFourUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("four")}>
-                                <Avatar icon={< i id = "audio-four-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "four")
-                                } > add < /i>}/> {this.state.regionOne}
-                                (F)
-                            </Chip>
-                            <Chip id="chip-five" className={this.state.audioFiveUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("five")}>
-                                <Avatar icon={< i id = "audio-five-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "five")
-                                } > add < /i>}/> {this.state.regionTwo}
-                                (F)
-                            </Chip>
-                            <Chip id="chip-six" className={this.state.audioSixUrl != ''
-                                ? 'audiochip pull-left'
-                                : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("six")}>
-                                <Avatar icon={< i id = "audio-six-icon" className = "material-icons pull-left" onTouchTap = {
-                                    this._clickPlay.bind(this, "six")
-                                } > add < /i>}/> {this.state.regionThree}
-                                (F)
-                            </Chip>
+                            <div className={typeof this.state.regionOne === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-four" className={this.state.audioFourUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("four")}>
+                                    <Avatar icon={< i id = "audio-four-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "four")
+                                    } > add < /i>}/> {this.state.regionOne}
+                                    (F)
+                                </Chip>
+                            </div>
+                            <div className={typeof this.state.regionTwo === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-five" className={this.state.audioFiveUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("five")}>
+                                    <Avatar icon={< i id = "audio-five-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "five")
+                                    } > add < /i>}/> {this.state.regionTwo}
+                                    (F)
+                                </Chip>
+                            </div>
+                            <div className={typeof this.state.regionThree === 'undefined'
+                                ? 'inactive'
+                                : ''}>
+                                <Chip id="chip-six" className={this.state.audioSixUrl != ''
+                                    ? 'audiochip pull-left'
+                                    : 'pull-left'} style={styles.chip} onTouchTap={() => this._clickAudio("six")}>
+                                    <Avatar icon={< i id = "audio-six-icon" className = "material-icons pull-left" onTouchTap = {
+                                        this._clickPlay.bind(this, "six")
+                                    } > add < /i>}/> {this.state.regionThree}
+                                    (F)
+                                </Chip>
+                            </div>
                         </div>
 
                     </Modal.Body>
@@ -532,120 +547,103 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     }
     //New Lego
     handleGenderChange(event) {
+        event.persist()
         this.setState({gender: event.target.value});
+
+        if ((event.target.value === 'male' || event.target.value === 'female') && this.state.imgs.length >= 1) {
+            this.setState((prevState) => ({
+                imgs: [Object.assign({}, prevState.imgs[0], {'gender': event.target.value})]
+            }));
+
+        }
     }
 
     handleLegoTextChange(event) {
         this.setState({legoText: event.target.value});
     }
 
-    _handleImageUpload(e) {
+    //Images--------------------------------------------
+    handleImageUpload(e) {
         e.preventDefault();
 
         let files = Array.prototype.slice.call(e.target.files);
 
-        if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+        if (this.state.gender === 'neutral')
+            files = files.slice(0, Math.max(0, 2 - this.state.imgs.length))
+        else if (this.state.gender === 'male' || this.state.gender === 'female')
+            files = files.slice(0, Math.max(0, 1 - this.state.imgs.length))
 
-            if (files.length >= 3) {
-                let newImgFiles = files.slice(0, 3)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
-                this.getBase64(newImgFiles[2], 3)
+        for (let file of files) {
 
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1], imgThreeFile: newImgFiles[2]})
-            } else if (files.length === 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
 
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1]})
-            } else if (files.length === 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
+            let gender = 'male'
 
-                this.setState({imgOneFile: newImgFiles[0]})
+            if (this.state.gender === 'female')
+                gender = 'female'
+
+            reader.onload = () => {
+                this.setState((prevState) => ({
+                    imgs: prevState.imgs.concat([
+                        {
+                            'file': file,
+                            'url': reader.result,
+                            'gender': gender
+                        }
+                    ])
+                }))
             }
 
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 3)
-
-                this.setState({imgOneFile: newImgFiles[0], imgThreeFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
-
-                this.setState({imgOneFile: newImgFiles[0]})
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
             }
-
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
-
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
-
-                this.setState({imgOneFile: newImgFiles[0]})
-            }
-
-        } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 2)
-                this.getBase64(newImgFiles[1], 3)
-
-                this.setState({imgTwoFile: newImgFiles[0], imgThreeFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 2)
-
-                this.setState({imgTwoFile: newImgFiles[0]})
-            }
-
-        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 3)
-
-            this.setState({imgThreeFile: newImgFiles[0]})
-
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 1)
-
-            this.setState({imgOneFile: newImgFiles[0]})
-
-        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 2)
-
-            this.setState({imgTwoFile: newImgFiles[0]})
 
         }
 
     }
 
-    _handleImageDelete(number) {
-        switch (number) {
-            case 1:
-                this.setState({imgOneUrl: '', imgOneFile: ''});
-                break;
-            case 2:
-                this.setState({imgTwoUrl: '', imgTwoFile: ''});
-                break;
-            case 3:
-                this.setState({imgThreeUrl: '', imgThreeFile: ''});
-                break;
-            default:
-                this.setState({imgOneUrl: '', imgOneFile: ''});
-        }
+    handleImageDelete(index) {
+        this.setState((prevState) => ({
+            imgs: [
+                ...prevState.imgs.slice(0, index),
+                ...prevState.imgs.slice(index + 1)
+            ]
+        }))
     }
 
+    handleImageGenderChange(index, event) {
+        event.persist()
+
+        this.setState((prevState) => ({
+            imgs: [
+                ...prevState.imgs.slice(0, index),
+                Object.assign({}, prevState.imgs[index], {'gender': event.target.value}),
+                ...prevState.imgs.slice(index + 1)
+            ]
+        }))
+    }
+
+    getImagePreviews() {
+        return this.state.imgs.map((img, index) => {
+            return (
+                <div className="img-preview" key={index}>
+                    <i className="fa fa-close" onClick={() => this.handleImageDelete(index)}/>
+                    <img src={img.url}/>
+                    <RadioButtonGroup name="img-gender" valueSelected={img.gender} onChange={this.handleImageGenderChange.bind(this, index)} style={{
+                        marginTop: '10px'
+                    }} className={this.state.gender != 'neutral'
+                        ? 'inactive'
+                        : ''}>
+                        <RadioButton value="male" label="Male" style={styles.radioButton}/>
+                        <RadioButton value="female" label="Female" style={styles.radioButton}/>
+                    </RadioButtonGroup>
+                </div>
+            )
+        })
+    }
+
+    //-----------------------------------------------
     _clickPlay(number, event) {
         event.stopPropagation()
         let capitalNumber = this.capitalizeFirstLetter(number)
@@ -949,14 +947,32 @@ export default class ContentPortalBuildSearchPage extends React.Component {
 
     _uploadContent() {
 
-        let imgUrls = []
-        for (let imgUrl of[this.state.imgOneUrl,
-            this.state.imgTwoUrl,
-            this.state.imgThreeUrl]) {
+        let imgs = []
+        for (let img of this.state.imgs) {
 
-            if (imgUrl != '')
-                imgUrls.push({"file": imgUrl})
+            imgs.push({"file": img.url, "gender": img.gender})
         }
+
+        let maleAudioFiles = []
+        let femaleAudioFiles = []
+
+        if (typeof this.state.regionOne != 'undefined')
+            maleAudioFiles.push({"region": this.state.regionOne, "file": this.state.audioOneUrl})
+
+        if (typeof this.state.regionTwo != 'undefined')
+            maleAudioFiles.push({"region": this.state.regionTwo, "file": this.state.audioTwoUrl})
+
+        if (typeof this.state.regionThree != 'undefined')
+            maleAudioFiles.push({"region": this.state.regionThree, "file": this.state.audioThreeUrl})
+
+        if (typeof this.state.regionOne != 'undefined')
+            femaleAudioFiles.push({"region": this.state.regionOne, "file": this.state.audioFourUrl})
+
+        if (typeof this.state.regionTwo != 'undefined')
+            femaleAudioFiles.push({"region": this.state.regionTwo, "file": this.state.audioFiveUrl})
+
+        if (typeof this.state.regionThree != 'undefined')
+            femaleAudioFiles.push({"region": this.state.regionThree, "file": this.state.audioSixUrl})
 
         jQuery.ajax({
             method: "PUT",
@@ -966,39 +982,16 @@ export default class ContentPortalBuildSearchPage extends React.Component {
                 "words": [
                     {
                         "word": this.state.legoText,
-                        "images": imgUrls,
+                        "images": imgs,
                         "audio": {
                             "files": [
                                 {
                                     "gender": "male",
-                                    "files": [
-                                        {
-                                            "region": this.state.regionOne,
-                                            "file": this.state.audioOneUrl
-                                        }, {
-                                            "region": this.state.regionTwo,
-                                            "file": this.state.audioTwoUrl
-                                        }, {
-                                            "region": this.state.regionThree,
-                                            "file": this.state.audioThreeUrl
-                                        }
-                                    ]
+                                    "files": maleAudioFiles
 
                                 }, {
                                     "gender": "female",
-                                    "files": [
-                                        {
-                                            "region": this.state.regionOne,
-                                            "file": this.state.audioFourUrl
-                                        }, {
-                                            "region": this.state.regionTwo,
-                                            "file": this.state.audioFiveUrl
-                                        }, {
-                                            "region": this.state.regionThree,
-                                            "file": this.state.audioSixUrl
-                                        }
-                                    ]
-
+                                    "files": femaleAudioFiles
                                 }
                             ]
                         }
@@ -1019,27 +1012,6 @@ export default class ContentPortalBuildSearchPage extends React.Component {
     //Helper Functions
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    getBase64(file, number) {
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            switch (number) {
-                case 1:
-                    this.setState({imgOneUrl: reader.result});
-                    break;
-                case 2:
-                    this.setState({imgTwoUrl: reader.result});
-                    break;
-                case 3:
-                    this.setState({imgThreeUrl: reader.result});
-                    break;
-            }
-        };
-        reader.onerror = function(error) {
-            console.log('Error: ', error);
-        };
     }
 
 }

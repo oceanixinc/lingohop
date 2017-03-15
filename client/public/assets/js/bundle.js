@@ -75677,6 +75677,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -75714,12 +75716,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             activesearch: 'question',
             question: '',
             answer: '',
-            imgOneFile: '',
-            imgTwoFile: '',
-            imgThreeFile: '',
-            imgOneUrl: '',
-            imgTwoUrl: '',
-            imgThreeUrl: '',
+            imgs: [],
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
@@ -75765,8 +75762,11 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
         _this._closeSecondModal = _this._closeSecondModal.bind(_this);
 
-        _this._handleImageUpload = _this._handleImageUpload.bind(_this);
-        _this._handleImageDelete = _this._handleImageDelete.bind(_this);
+        //Images
+        _this.handleImageUpload = _this.handleImageUpload.bind(_this);
+        _this.handleImageDelete = _this.handleImageDelete.bind(_this);
+        _this.handleImageGenderChange = _this.handleImageGenderChange.bind(_this);
+
         _this._clickAudio = _this._clickAudio.bind(_this);
         _this.handleGenderChange = _this.handleGenderChange.bind(_this);
         _this.handleLegoTextChange = _this.handleLegoTextChange.bind(_this);
@@ -75779,6 +75779,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: 'render',
         value: function render() {
             var _this2 = this;
+
+            var imgs = this.getImagePreviews();
 
             return _react2.default.createElement(
                 'div',
@@ -75993,7 +75995,8 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'big-text text-left col-md-2' },
+                            { className: 'big-text text-left col-md-12' },
+                            'What is the lego gender?',
                             _react2.default.createElement(
                                 _RadioButton.RadioButtonGroup,
                                 { name: 'gender', defaultSelected: 'male', onChange: this.handleGenderChange },
@@ -76004,57 +76007,22 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'big-text text-left col-md-9 col-md-offset-1' },
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'add-picture', className: this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive' },
-                                '+ Add Picture',
-                                _react2.default.createElement('input', { className: 'fileInput', type: 'file', multiple: true, onChange: this._handleImageUpload })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'img-gallery', className: 'pull-left' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: this.state.imgOneUrl === '' && 'inactive' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'close-icon', onClick: function onClick() {
-                                                return _this2._handleImageDelete(1);
-                                            } },
-                                        'x'
-                                    ),
-                                    _react2.default.createElement('img', { src: this.state.imgOneUrl })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: this.state.imgTwoUrl === '' && 'inactive' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'close-icon', onClick: function onClick() {
-                                                return _this2._handleImageDelete(2);
-                                            } },
-                                        'x'
-                                    ),
-                                    _react2.default.createElement('img', { src: this.state.imgTwoUrl })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: this.state.imgThreeUrl === '' && 'inactive' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'close-icon', onClick: function onClick() {
-                                                return _this2._handleImageDelete(3);
-                                            } },
-                                        'x'
-                                    ),
-                                    _react2.default.createElement('img', { src: this.state.imgThreeUrl })
-                                )
-                            )
+                            { className: 'big-text text-left col-sm-12' },
+                            _react2.default.createElement(_RaisedButton2.default, { label: '+ ADD PHOTOS', primary: true, disabled: (this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1 || this.state.imgs.length >= 2, onClick: function onClick() {
+                                    document.getElementById('img-input').click();
+                                } }),
+                            _react2.default.createElement('input', { id: 'img-input', className: 'fileInput inactive', type: 'file', multiple: true, onChange: this.handleImageUpload })
                         ),
                         _react2.default.createElement(
                             'div',
-                            { id: 'audio', className: 'big-text text-left col-md-12' },
+                            { className: 'big-text text-left col-sm-12 img-preview-holder' },
+                            imgs
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'audio', className: 'big-text text-left col-md-12', style: {
+                                    marginTop: '10px'
+                                } },
                             'Audio Files'
                         ),
                         _react2.default.createElement(
@@ -76079,46 +76047,58 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                 _react2.default.createElement('source', { src: this.state.audioThreeUrl, type: 'audio/mp3' })
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-one', className: this.state.audioOneUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("one");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-one-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "one") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionOne,
-                                '(M)'
+                                'div',
+                                { className: typeof this.state.regionOne === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-one', className: this.state.audioOneUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("one");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-one-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "one") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionOne,
+                                    '(M)'
+                                )
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-two', className: this.state.audioTwoUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("two");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-two-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "two") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionTwo,
-                                '(M)'
+                                'div',
+                                { className: typeof this.state.regionTwo === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-two', className: this.state.audioTwoUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("two");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-two-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "two") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionTwo,
+                                    '(M)'
+                                )
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-three', className: this.state.audioThreeUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("three");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-three-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "three") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionThree,
-                                '(M)'
+                                'div',
+                                { className: typeof this.state.regionThree === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-three', className: this.state.audioThreeUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("three");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-three-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "three") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionThree,
+                                    '(M)'
+                                )
                             )
                         ),
                         _react2.default.createElement(
@@ -76143,46 +76123,58 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                                 _react2.default.createElement('source', { src: this.state.audioSixUrl, type: 'audio/mp3' })
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-four', className: this.state.audioFourUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("four");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-four-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "four") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionOne,
-                                '(F)'
+                                'div',
+                                { className: typeof this.state.regionOne === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-four', className: this.state.audioFourUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("four");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-four-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "four") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionOne,
+                                    '(F)'
+                                )
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-five', className: this.state.audioFiveUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("five");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-five-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "five") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionTwo,
-                                '(F)'
+                                'div',
+                                { className: typeof this.state.regionTwo === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-five', className: this.state.audioFiveUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("five");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-five-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "five") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionTwo,
+                                    '(F)'
+                                )
                             ),
                             _react2.default.createElement(
-                                _Chip2.default,
-                                { id: 'chip-six', className: this.state.audioSixUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
-                                        return _this2._clickAudio("six");
-                                    } },
-                                _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
-                                        'i',
-                                        { id: 'audio-six-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "six") },
-                                        ' add '
-                                    ) }),
-                                ' ',
-                                this.state.regionThree,
-                                '(F)'
+                                'div',
+                                { className: typeof this.state.regionThree === 'undefined' ? 'inactive' : '' },
+                                _react2.default.createElement(
+                                    _Chip2.default,
+                                    { id: 'chip-six', className: this.state.audioSixUrl != '' ? 'audiochip pull-left' : 'pull-left', style: styles.chip, onTouchTap: function onTouchTap() {
+                                            return _this2._clickAudio("six");
+                                        } },
+                                    _react2.default.createElement(_Avatar2.default, { icon: _react2.default.createElement(
+                                            'i',
+                                            { id: 'audio-six-icon', className: 'material-icons pull-left', onTouchTap: this._clickPlay.bind(this, "six") },
+                                            ' add '
+                                        ) }),
+                                    ' ',
+                                    this.state.regionThree,
+                                    '(F)'
+                                )
                             )
                         )
                     ),
@@ -76465,114 +76457,134 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: 'handleGenderChange',
         value: function handleGenderChange(event) {
+            event.persist();
             this.setState({ gender: event.target.value });
+
+            if ((event.target.value === 'male' || event.target.value === 'female') && this.state.imgs.length >= 1) {
+                this.setState(function (prevState) {
+                    return {
+                        imgs: [Object.assign({}, prevState.imgs[0], { 'gender': event.target.value })]
+                    };
+                });
+            }
         }
     }, {
         key: 'handleLegoTextChange',
         value: function handleLegoTextChange(event) {
             this.setState({ legoText: event.target.value });
         }
+
+        //Images--------------------------------------------
+
     }, {
-        key: '_handleImageUpload',
-        value: function _handleImageUpload(e) {
+        key: 'handleImageUpload',
+        value: function handleImageUpload(e) {
+            var _this5 = this;
+
             e.preventDefault();
 
             var files = Array.prototype.slice.call(e.target.files);
 
-            if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+            if (this.state.gender === 'neutral') files = files.slice(0, Math.max(0, 2 - this.state.imgs.length));else if (this.state.gender === 'male' || this.state.gender === 'female') files = files.slice(0, Math.max(0, 1 - this.state.imgs.length));
 
-                if (files.length >= 3) {
-                    var newImgFiles = files.slice(0, 3);
-                    this.getBase64(newImgFiles[0], 1);
-                    this.getBase64(newImgFiles[1], 2);
-                    this.getBase64(newImgFiles[2], 3);
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
 
-                    this.setState({ imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1], imgThreeFile: newImgFiles[2] });
-                } else if (files.length === 2) {
-                    var _newImgFiles = files.slice(0, 2);
-                    this.getBase64(_newImgFiles[0], 1);
-                    this.getBase64(_newImgFiles[1], 2);
+            try {
+                var _loop = function _loop() {
+                    var file = _step3.value;
 
-                    this.setState({ imgOneFile: _newImgFiles[0], imgTwoFile: _newImgFiles[1] });
-                } else if (files.length === 1) {
-                    var _newImgFiles2 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles2[0], 1);
 
-                    this.setState({ imgOneFile: _newImgFiles2[0] });
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    var gender = 'male';
+
+                    if (_this5.state.gender === 'female') gender = 'female';
+
+                    reader.onload = function () {
+                        _this5.setState(function (prevState) {
+                            return {
+                                imgs: prevState.imgs.concat([{
+                                    'file': file,
+                                    'url': reader.result,
+                                    'gender': gender
+                                }])
+                            };
+                        });
+                    };
+
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                };
+
+                for (var _iterator3 = files[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    _loop();
                 }
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-                if (files.length >= 2) {
-                    var _newImgFiles3 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles3[0], 1);
-                    this.getBase64(_newImgFiles3[1], 3);
-
-                    this.setState({ imgOneFile: _newImgFiles3[0], imgThreeFile: _newImgFiles3[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles4 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles4[0], 1);
-
-                    this.setState({ imgOneFile: _newImgFiles4[0] });
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
                 }
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-                if (files.length >= 2) {
-                    var _newImgFiles5 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles5[0], 1);
-                    this.getBase64(_newImgFiles5[1], 2);
-
-                    this.setState({ imgOneFile: _newImgFiles5[0], imgTwoFile: _newImgFiles5[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles6 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles6[0], 1);
-
-                    this.setState({ imgOneFile: _newImgFiles6[0] });
-                }
-            } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
-                if (files.length >= 2) {
-                    var _newImgFiles7 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles7[0], 2);
-                    this.getBase64(_newImgFiles7[1], 3);
-
-                    this.setState({ imgTwoFile: _newImgFiles7[0], imgThreeFile: _newImgFiles7[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles8 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles8[0], 2);
-
-                    this.setState({ imgTwoFile: _newImgFiles8[0] });
-                }
-            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-                var _newImgFiles9 = files.slice(0, 1);
-                this.getBase64(_newImgFiles9[0], 3);
-
-                this.setState({ imgThreeFile: _newImgFiles9[0] });
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
-                var _newImgFiles10 = files.slice(0, 1);
-                this.getBase64(_newImgFiles10[0], 1);
-
-                this.setState({ imgOneFile: _newImgFiles10[0] });
-            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-                var _newImgFiles11 = files.slice(0, 1);
-                this.getBase64(_newImgFiles11[0], 2);
-
-                this.setState({ imgTwoFile: _newImgFiles11[0] });
             }
         }
     }, {
-        key: '_handleImageDelete',
-        value: function _handleImageDelete(number) {
-            switch (number) {
-                case 1:
-                    this.setState({ imgOneUrl: '', imgOneFile: '' });
-                    break;
-                case 2:
-                    this.setState({ imgTwoUrl: '', imgTwoFile: '' });
-                    break;
-                case 3:
-                    this.setState({ imgThreeUrl: '', imgThreeFile: '' });
-                    break;
-                default:
-                    this.setState({ imgOneUrl: '', imgOneFile: '' });
-            }
+        key: 'handleImageDelete',
+        value: function handleImageDelete(index) {
+            this.setState(function (prevState) {
+                return {
+                    imgs: [].concat(_toConsumableArray(prevState.imgs.slice(0, index)), _toConsumableArray(prevState.imgs.slice(index + 1)))
+                };
+            });
         }
+    }, {
+        key: 'handleImageGenderChange',
+        value: function handleImageGenderChange(index, event) {
+            event.persist();
+
+            this.setState(function (prevState) {
+                return {
+                    imgs: [].concat(_toConsumableArray(prevState.imgs.slice(0, index)), [Object.assign({}, prevState.imgs[index], { 'gender': event.target.value })], _toConsumableArray(prevState.imgs.slice(index + 1)))
+                };
+            });
+        }
+    }, {
+        key: 'getImagePreviews',
+        value: function getImagePreviews() {
+            var _this6 = this;
+
+            return this.state.imgs.map(function (img, index) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'img-preview', key: index },
+                    _react2.default.createElement('i', { className: 'fa fa-close', onClick: function onClick() {
+                            return _this6.handleImageDelete(index);
+                        } }),
+                    _react2.default.createElement('img', { src: img.url }),
+                    _react2.default.createElement(
+                        _RadioButton.RadioButtonGroup,
+                        { name: 'img-gender', valueSelected: img.gender, onChange: _this6.handleImageGenderChange.bind(_this6, index), style: {
+                                marginTop: '10px'
+                            }, className: _this6.state.gender != 'neutral' ? 'inactive' : '' },
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'male', label: 'Male', style: styles.radioButton }),
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton })
+                    )
+                );
+            });
+        }
+
+        //-----------------------------------------------
+
     }, {
         key: '_clickPlay',
         value: function _clickPlay(number, event) {
@@ -76648,7 +76660,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_handleAudioUpload',
         value: function _handleAudioUpload(number, e) {
-            var _this5 = this;
+            var _this7 = this;
 
             e.preventDefault();
 
@@ -76657,25 +76669,25 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             reader.onloadend = function () {
                 switch (number) {
                     case "one":
-                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this7.setState({ audioOneFile: file, audioOneUrl: reader.result });
                         break;
                     case "two":
-                        _this5.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
+                        _this7.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
                         break;
                     case "three":
-                        _this5.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
+                        _this7.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
                         break;
                     case "four":
-                        _this5.setState({ audioFourFile: file, audioFourUrl: reader.result });
+                        _this7.setState({ audioFourFile: file, audioFourUrl: reader.result });
                         break;
                     case "five":
-                        _this5.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
+                        _this7.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
                         break;
                     case "six":
-                        _this5.setState({ audioSixFile: file, audioSixUrl: reader.result });
+                        _this7.setState({ audioSixFile: file, audioSixUrl: reader.result });
                         break;
                     default:
-                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this7.setState({ audioOneFile: file, audioOneUrl: reader.result });
                 }
                 document.getElementById('audio-' + number + '-icon').innerHTML = "play_arrow";
             };
@@ -76687,14 +76699,14 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_fetchRegion',
         value: function _fetchRegion() {
-            var _this6 = this;
+            var _this8 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
                 dataType: "json",
                 url: 'https://testing.lingohop.com/api/assets/region/' + this.props.language + '-' + this.props.country + '/',
                 success: function success(res) {
-                    _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
+                    _this8.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
                 }
 
             });
@@ -76702,7 +76714,7 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
     }, {
         key: '_fetchSearch',
         value: function _fetchSearch(searchTerm) {
-            var _this7 = this;
+            var _this9 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
@@ -76710,13 +76722,13 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                 url: 'https://testing.lingohop.com/api/assets/word/?country=' + this.props.country + '&language=' + this.props.language + '&q=' + searchTerm,
                 success: function success(res) {
                     searchResults.length = 0;
-                    var _iteratorNormalCompletion3 = true;
-                    var _didIteratorError3 = false;
-                    var _iteratorError3 = undefined;
+                    var _iteratorNormalCompletion4 = true;
+                    var _didIteratorError4 = false;
+                    var _iteratorError4 = undefined;
 
                     try {
-                        var _loop = function _loop() {
-                            var item = _step3.value;
+                        var _loop2 = function _loop2() {
+                            var item = _step4.value;
 
 
                             var male = item.audio.files[0].files[0].file != '';
@@ -76733,34 +76745,34 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
 
                             var imgArray = [];
 
-                            var _iteratorNormalCompletion4 = true;
-                            var _didIteratorError4 = false;
-                            var _iteratorError4 = undefined;
+                            var _iteratorNormalCompletion5 = true;
+                            var _didIteratorError5 = false;
+                            var _iteratorError5 = undefined;
 
                             try {
-                                var _loop2 = function _loop2() {
-                                    var img = _step4.value;
+                                var _loop3 = function _loop3() {
+                                    var img = _step5.value;
 
                                     var imgFile = _react2.default.createElement('img', { className: '' + extraClass, src: 'https://testing.lingohop.com' + img.file, onClick: function onClick() {
-                                            return _this7.createChip('https://testing.lingohop.com' + img.file, item.word, extraClass);
+                                            return _this9.createChip('https://testing.lingohop.com' + img.file, item.word, extraClass);
                                         } });
                                     imgArray.push(imgFile);
                                 };
 
-                                for (var _iterator4 = item.images[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                                    _loop2();
+                                for (var _iterator5 = item.images[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                                    _loop3();
                                 }
                             } catch (err) {
-                                _didIteratorError4 = true;
-                                _iteratorError4 = err;
+                                _didIteratorError5 = true;
+                                _iteratorError5 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                                        _iterator4.return();
+                                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                                        _iterator5.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError4) {
-                                        throw _iteratorError4;
+                                    if (_didIteratorError5) {
+                                        throw _iteratorError5;
                                     }
                                 }
                             }
@@ -76779,32 +76791,32 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             searchResults.push(holder);
                         };
 
-                        for (var _iterator3 = res[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                            _loop();
+                        for (var _iterator4 = res[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                            _loop2();
                         }
                     } catch (err) {
-                        _didIteratorError3 = true;
-                        _iteratorError3 = err;
+                        _didIteratorError4 = true;
+                        _iteratorError4 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                _iterator3.return();
+                            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                                _iterator4.return();
                             }
                         } finally {
-                            if (_didIteratorError3) {
-                                throw _iteratorError3;
+                            if (_didIteratorError4) {
+                                throw _iteratorError4;
                             }
                         }
                     }
 
-                    _this7.forceUpdate();
+                    _this9.forceUpdate();
                 }
             });
         }
     }, {
         key: '_checkWholeWord',
         value: function _checkWholeWord() {
-            var _this8 = this;
+            var _this10 = this;
 
             _jquery2.default.ajax({
                 method: 'GET',
@@ -76817,16 +76829,16 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                             _jquery2.default.ajax({
                                 method: 'GET',
                                 dataType: "json",
-                                url: 'https://testing.lingohop.com/api/assets/word/?country=' + _this8.props.country + '&language=' + _this8.props.language + '&q=' + _this8.state.answer,
+                                url: 'https://testing.lingohop.com/api/assets/word/?country=' + _this10.props.country + '&language=' + _this10.props.language + '&q=' + _this10.state.answer,
                                 success: function success(response) {
                                     if (response.length != 0) {
                                         var aaudio = response[0].audio.files[0].files[0].file;
-                                        _this8._buildLesson(qaudio, aaudio);
-                                    } else _this8.setState({ showSecondModal: true });
+                                        _this10._buildLesson(qaudio, aaudio);
+                                    } else _this10.setState({ showSecondModal: true });
                                 }
                             });
                         })();
-                    } else _this8.setState({ showSecondModal: true });
+                    } else _this10.setState({ showSecondModal: true });
                 }
             });
         }
@@ -76839,27 +76851,27 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
             var imgUrls = {};
             var _arr = [chips, answerchips, qchips, achips];
             for (var _i = 0; _i < _arr.length; _i++) {
-                var chipsArray = _arr[_i];var _iteratorNormalCompletion5 = true;
-                var _didIteratorError5 = false;
-                var _iteratorError5 = undefined;
+                var chipsArray = _arr[_i];var _iteratorNormalCompletion6 = true;
+                var _didIteratorError6 = false;
+                var _iteratorError6 = undefined;
 
                 try {
-                    for (var _iterator5 = chipsArray[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                        var chip = _step5.value;
+                    for (var _iterator6 = chipsArray[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                        var chip = _step6.value;
 
                         imgUrls[chip.props.text] = chip.props.url;
                     }
                 } catch (err) {
-                    _didIteratorError5 = true;
-                    _iteratorError5 = err;
+                    _didIteratorError6 = true;
+                    _iteratorError6 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                            _iterator5.return();
+                        if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                            _iterator6.return();
                         }
                     } finally {
-                        if (_didIteratorError5) {
-                            throw _iteratorError5;
+                        if (_didIteratorError6) {
+                            throw _iteratorError6;
                         }
                     }
                 }
@@ -76945,13 +76957,47 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: '_uploadContent',
         value: function _uploadContent() {
 
-            var imgUrls = [];
-            var _arr2 = [this.state.imgOneUrl, this.state.imgTwoUrl, this.state.imgThreeUrl];
-            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-                var imgUrl = _arr2[_i2];
+            var imgs = [];
+            var _iteratorNormalCompletion7 = true;
+            var _didIteratorError7 = false;
+            var _iteratorError7 = undefined;
 
-                if (imgUrl != '') imgUrls.push({ "file": imgUrl });
+            try {
+                for (var _iterator7 = this.state.imgs[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                    var _img = _step7.value;
+
+
+                    imgs.push({ "file": _img.url, "gender": _img.gender });
+                }
+            } catch (err) {
+                _didIteratorError7 = true;
+                _iteratorError7 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                        _iterator7.return();
+                    }
+                } finally {
+                    if (_didIteratorError7) {
+                        throw _iteratorError7;
+                    }
+                }
             }
+
+            var maleAudioFiles = [];
+            var femaleAudioFiles = [];
+
+            if (typeof this.state.regionOne != 'undefined') maleAudioFiles.push({ "region": this.state.regionOne, "file": this.state.audioOneUrl });
+
+            if (typeof this.state.regionTwo != 'undefined') maleAudioFiles.push({ "region": this.state.regionTwo, "file": this.state.audioTwoUrl });
+
+            if (typeof this.state.regionThree != 'undefined') maleAudioFiles.push({ "region": this.state.regionThree, "file": this.state.audioThreeUrl });
+
+            if (typeof this.state.regionOne != 'undefined') femaleAudioFiles.push({ "region": this.state.regionOne, "file": this.state.audioFourUrl });
+
+            if (typeof this.state.regionTwo != 'undefined') femaleAudioFiles.push({ "region": this.state.regionTwo, "file": this.state.audioFiveUrl });
+
+            if (typeof this.state.regionThree != 'undefined') femaleAudioFiles.push({ "region": this.state.regionThree, "file": this.state.audioSixUrl });
 
             _jquery2.default.ajax({
                 method: "PUT",
@@ -76960,34 +77006,15 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
                     "language": this.props.language,
                     "words": [{
                         "word": this.state.legoText,
-                        "images": imgUrls,
+                        "images": imgs,
                         "audio": {
                             "files": [{
                                 "gender": "male",
-                                "files": [{
-                                    "region": this.state.regionOne,
-                                    "file": this.state.audioOneUrl
-                                }, {
-                                    "region": this.state.regionTwo,
-                                    "file": this.state.audioTwoUrl
-                                }, {
-                                    "region": this.state.regionThree,
-                                    "file": this.state.audioThreeUrl
-                                }]
+                                "files": maleAudioFiles
 
                             }, {
                                 "gender": "female",
-                                "files": [{
-                                    "region": this.state.regionOne,
-                                    "file": this.state.audioFourUrl
-                                }, {
-                                    "region": this.state.regionTwo,
-                                    "file": this.state.audioFiveUrl
-                                }, {
-                                    "region": this.state.regionThree,
-                                    "file": this.state.audioSixUrl
-                                }]
-
+                                "files": femaleAudioFiles
                             }]
                         }
                     }]
@@ -77008,30 +77035,6 @@ var ContentPortalBuildSearchPage = function (_React$Component) {
         key: 'capitalizeFirstLetter',
         value: function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-    }, {
-        key: 'getBase64',
-        value: function getBase64(file, number) {
-            var _this9 = this;
-
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                switch (number) {
-                    case 1:
-                        _this9.setState({ imgOneUrl: reader.result });
-                        break;
-                    case 2:
-                        _this9.setState({ imgTwoUrl: reader.result });
-                        break;
-                    case 3:
-                        _this9.setState({ imgThreeUrl: reader.result });
-                        break;
-                }
-            };
-            reader.onerror = function (error) {
-                console.log('Error: ', error);
-            };
         }
     }]);
 
@@ -77575,6 +77578,7 @@ var ContentPortalUploadPage = function (_React$Component) {
         _this.handleImageUpload = _this.handleImageUpload.bind(_this);
         _this.handleImageDelete = _this.handleImageDelete.bind(_this);
         _this.handleImageGenderChange = _this.handleImageGenderChange.bind(_this);
+
         _this._clickAudio = _this._clickAudio.bind(_this);
         _this._uploadContent = _this._uploadContent.bind(_this);
         _this.handleValueChange = _this.handleValueChange.bind(_this);
@@ -77733,7 +77737,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         _react2.default.createElement(_RaisedButton2.default, { label: '+ ADD PHOTOS', primary: true, disabled: (this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1 || this.state.imgs.length >= 2, onClick: function onClick() {
                                 document.getElementById('img-input').click();
                             } }),
-                        _react2.default.createElement('input', { id: 'img-input', className: 'fileInput', type: 'file', multiple: true, onChange: this.handleImageUpload })
+                        _react2.default.createElement('input', { id: 'img-input', className: 'fileInput inactive', type: 'file', multiple: true, onChange: this.handleImageUpload })
                     ),
                     _react2.default.createElement(
                         'div',

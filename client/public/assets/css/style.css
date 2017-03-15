@@ -191,8 +191,6 @@
     font-size: 20px; }
   .upload-page .upload label {
     font-weight: 400 !important; }
-  .upload-page .upload #img-input {
-    display: none; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;

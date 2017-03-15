@@ -66,6 +66,8 @@ export default class ContentPortalUploadPage extends React.Component {
         this.handleImageUpload = this.handleImageUpload.bind(this);
         this.handleImageDelete = this.handleImageDelete.bind(this);
         this.handleImageGenderChange = this.handleImageGenderChange.bind(this);
+
+
         this._clickAudio = this._clickAudio.bind(this);
         this._uploadContent = this._uploadContent.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
@@ -152,7 +154,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         <RaisedButton label="+ ADD PHOTOS" primary={true} disabled={((this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1) || (this.state.imgs.length >= 2)} onClick={() => {
                             document.getElementById('img-input').click();
                         }}/>
-                        <input id="img-input" className="fileInput" type="file" multiple onChange={this.handleImageUpload}/>
+                      <input id="img-input" className="fileInput inactive" type="file" multiple onChange={this.handleImageUpload}/>
                     </div>
                     <div className="big-text text-left col-sm-8 col-sm-offset-2 img-preview-holder">
                         {imgs}
