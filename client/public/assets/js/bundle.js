@@ -77730,7 +77730,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'big-text text-left col-sm-8 col-sm-offset-2' },
-                        _react2.default.createElement(_RaisedButton2.default, { label: '+ ADD PHOTOS', primary: true, onClick: function onClick() {
+                        _react2.default.createElement(_RaisedButton2.default, { label: '+ ADD PHOTOS', primary: true, disabled: (this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1 || this.state.imgs.length >= 2, onClick: function onClick() {
                                 document.getElementById('img-input').click();
                             } }),
                         _react2.default.createElement('input', { id: 'img-input', className: 'fileInput', type: 'file', multiple: true, onChange: this.handleImageUpload })
@@ -77945,6 +77945,8 @@ var ContentPortalUploadPage = function (_React$Component) {
 
             var files = Array.prototype.slice.call(e.target.files);
 
+            if (this.state.gender === 'neutral') files = files.slice(0, Math.max(0, 2 - this.state.imgs.length));else if (this.state.gender === 'male' || this.state.gender === 'female') files = files.slice(0, Math.max(0, 1 - this.state.imgs.length));
+
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -77957,13 +77959,17 @@ var ContentPortalUploadPage = function (_React$Component) {
                     var reader = new FileReader();
                     reader.readAsDataURL(file);
 
+                    var gender = 'male';
+
+                    if (_this3.state.gender === 'female') gender = 'female';
+
                     reader.onload = function () {
                         _this3.setState(function (prevState) {
                             return {
                                 imgs: prevState.imgs.concat([{
                                     'file': file,
                                     'url': reader.result,
-                                    'gender': 'male'
+                                    'gender': gender
                                 }])
                             };
                         });
@@ -78027,12 +78033,11 @@ var ContentPortalUploadPage = function (_React$Component) {
                     _react2.default.createElement('img', { src: img.url }),
                     _react2.default.createElement(
                         _RadioButton.RadioButtonGroup,
-                        { name: 'img-gender', defaultSelected: 'male', onChange: _this4.handleImageGenderChange.bind(_this4, index), style: {
+                        { name: 'img-gender', valueSelected: img.gender, onChange: _this4.handleImageGenderChange.bind(_this4, index), style: {
                                 marginTop: '10px'
-                            } },
+                            }, className: _this4.state.gender != 'neutral' ? 'inactive' : '' },
                         _react2.default.createElement(_RadioButton.RadioButton, { value: 'male', label: 'Male', style: styles.radioButton }),
-                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton }),
-                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'neutral', label: 'Neutral', style: styles.radioButton })
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton })
                     )
                 );
             });
@@ -78393,7 +78398,16 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: 'handleGenderChange',
         value: function handleGenderChange(event) {
+            event.persist();
             this.setState({ gender: event.target.value });
+
+            if ((event.target.value === 'male' || event.target.value === 'female') && this.state.imgs.length >= 1) {
+                this.setState(function (prevState) {
+                    return {
+                        imgs: [Object.assign({}, prevState.imgs[0], { 'gender': event.target.value })]
+                    };
+                });
+            }
         }
     }, {
         key: 'capitalizeFirstLetter',
