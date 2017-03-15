@@ -191,26 +191,8 @@
     font-size: 20px; }
   .upload-page .upload label {
     font-weight: 400 !important; }
-  .upload-page .upload #add-picture {
-    height: 120px;
-    width: 120px;
-    border: 1px solid #333;
-    font-size: 16px;
-    line-height: 110px;
-    position: relative;
-    float: left;
-    text-align: center; }
-    .upload-page .upload #add-picture > input,
-    .upload-page .upload #add-picture > img {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      left: 0;
-      opacity: 0; }
-    .upload-page .upload #add-picture > img {
-      opacity: 1;
-      object-fit: cover; }
+  .upload-page .upload #img-input {
+    display: none; }
   .upload-page .upload .upload-btn {
     min-width: 180px !important;
     margin-top: 60px !important;
@@ -543,6 +525,32 @@ body {
     background-color: #12a159 !important; }
   .audiochip > span {
     color: white !important; }
+
+.img-preview-holder {
+  display: flex;
+  overflow: auto; }
+  .img-preview-holder .img-preview {
+    display: flex;
+    align-items: center;
+    padding-right: 30px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    margin: 10px 10px 10px 0;
+    position: relative; }
+    .img-preview-holder .img-preview .fa {
+      position: absolute;
+      top: -2px;
+      right: 5px;
+      font-size: 18px;
+      cursor: pointer; }
+      .img-preview-holder .img-preview .fa:hover {
+        color: red; }
+    .img-preview-holder .img-preview > img {
+      height: 170px;
+      width: 170px;
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      margin-right: 30px;
+      object-fit: cover; }
 
 .close-icon {
   width: 22px;

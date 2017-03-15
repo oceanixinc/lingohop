@@ -32,12 +32,7 @@ export default class ContentPortalUploadPage extends React.Component {
         super();
 
         this.state = {
-            imgOneFile: '',
-            imgTwoFile: '',
-            imgThreeFile: '',
-            imgOneUrl: '',
-            imgTwoUrl: '',
-            imgThreeUrl: '',
+            imgs: [],
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
@@ -67,8 +62,10 @@ export default class ContentPortalUploadPage extends React.Component {
             isUploading: false
         };
 
-        this._handleImageUpload = this._handleImageUpload.bind(this);
-        this._handleImageDelete = this._handleImageDelete.bind(this);
+        //Images
+        this.handleImageUpload = this.handleImageUpload.bind(this);
+        this.handleImageDelete = this.handleImageDelete.bind(this);
+        this.handleImageGenderChange = this.handleImageGenderChange.bind(this);
         this._clickAudio = this._clickAudio.bind(this);
         this._uploadContent = this._uploadContent.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
@@ -86,7 +83,7 @@ export default class ContentPortalUploadPage extends React.Component {
     }
 
     render() {
-        console.log(this.state)
+        const imgs = this.getImagePreviews()
         return (
             <div className="upload-page">
                 <Modal show={this.state.showModal} onHide={this._closeModal} backdrop='static'>
@@ -141,33 +138,25 @@ export default class ContentPortalUploadPage extends React.Component {
                             width: '100%'
                         }}></TextField>
                     </div>
-                    <div className="big-text text-left col-sm-3 col-sm-offset-2">
-                        <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange}>
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
+                        What is the lego gender?
+                        <RadioButtonGroup name="gender" defaultSelected="male" onChange={this.handleGenderChange} style={{
+                            marginTop: '10px'
+                        }}>
                             <RadioButton value="male" label="Male" style={styles.radioButton}/>
                             <RadioButton value="female" label="Female" style={styles.radioButton}/>
                             <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                         </RadioButtonGroup>
                     </div>
-                    <div className="big-text text-left col-sm-7" style={{
-                        overflow: 'auto'
-                    }}>
-                        <div id="add-picture" className={this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive'}>+ Add Picture
-                            <input className="fileInput" type="file" multiple onChange={this._handleImageUpload}/>
-                        </div>
-                        <div id="img-gallery" className="pull-left">
-                            <div className={this.state.imgOneUrl === '' && 'inactive'}>
-                                <div className="close-icon" onClick={() => this._handleImageDelete(1)}>x</div>
-                                <img src={this.state.imgOneUrl}/>
-                            </div>
-                            <div className={this.state.imgTwoUrl === '' && 'inactive'}>
-                                <div className="close-icon" onClick={() => this._handleImageDelete(2)}>x</div>
-                                <img src={this.state.imgTwoUrl}/>
-                            </div>
-                            <div className={this.state.imgThreeUrl === '' && 'inactive'}>
-                                <div className="close-icon" onClick={() => this._handleImageDelete(3)}>x</div>
-                                <img src={this.state.imgThreeUrl}/>
-                            </div>
-                        </div>
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2">
+                        <RaisedButton label="+ ADD PHOTOS" primary={true} onClick={() => {
+                            document.getElementById('img-input').click();
+                        }}/>
+                        <input id="img-input" className="fileInput" type="file" multiple onChange={this.handleImageUpload}/>
+                    </div>
+                    <div className="big-text text-left col-sm-8 col-sm-offset-2 img-preview-holder">
+                        {imgs}
+
                     </div>
                     <div id="audio" className="big-text text-left col-sm-10 col-sm-offset-2">
                         Audio Files
@@ -277,9 +266,9 @@ export default class ContentPortalUploadPage extends React.Component {
                         </div>
                     </div>
                     <div className="col-sm-12">
-                        <RaisedButton label="UPLOAD" className={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === ''))
+                        <RaisedButton label="UPLOAD" className={(this.state.gender === 'male' && ((this.state.imgs.length === 0) || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgs.length === 0) || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgs.length === 0) || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === ''))
                             ? 'upload-btn'
-                            : 'upload-btn active-btn'} disabled={(this.state.gender === 'male' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '') || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === ''))} onClick={this._uploadContent}/>
+                            : 'upload-btn active-btn'} disabled={(this.state.gender === 'male' && ((this.state.imgs.length === 0) || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'female' && ((this.state.imgs.length === 0) || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === '')) || (this.state.gender === 'neutral' && ((this.state.imgs.length === 0) || (this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined') || (this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined') || (this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined') || (this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined') || this.state.language_country === '' || this.state.legoText === ''))} onClick={this._uploadContent}/>
                     </div>
 
                 </div>
@@ -308,113 +297,78 @@ export default class ContentPortalUploadPage extends React.Component {
         this.setState({showValidateModal: false});
     };
 
-    //Uploads
-    _handleImageUpload(e) {
+    //Images------------------------------------------------------------------
+    handleImageUpload(e) {
         e.preventDefault();
 
-        let files = Array.prototype.slice.call(e.target.files);
+        const files = Array.prototype.slice.call(e.target.files);
 
-        if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+        for (let file of files) {
 
-            if (files.length >= 3) {
-                let newImgFiles = files.slice(0, 3)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
-                this.getBase64(newImgFiles[2], 3)
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
 
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1], imgThreeFile: newImgFiles[2]})
-            } else if (files.length === 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
-
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1]})
-            } else if (files.length === 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
-
-                this.setState({imgOneFile: newImgFiles[0]})
+            reader.onload = () => {
+                this.setState((prevState) => ({
+                    imgs: prevState.imgs.concat([
+                        {
+                            'file': file,
+                            'url': reader.result,
+                            'gender': 'male'
+                        }
+                    ])
+                }))
             }
 
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 3)
-
-                this.setState({imgOneFile: newImgFiles[0], imgThreeFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
-
-                this.setState({imgOneFile: newImgFiles[0]})
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
             }
-
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 1)
-                this.getBase64(newImgFiles[1], 2)
-
-                this.setState({imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 1)
-
-                this.setState({imgOneFile: newImgFiles[0]})
-            }
-
-        } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
-            if (files.length >= 2) {
-                let newImgFiles = files.slice(0, 2)
-                this.getBase64(newImgFiles[0], 2)
-                this.getBase64(newImgFiles[1], 3)
-
-                this.setState({imgTwoFile: newImgFiles[0], imgThreeFile: newImgFiles[1]})
-            } else if (files.length == 1) {
-                let newImgFiles = files.slice(0, 1)
-                this.getBase64(newImgFiles[0], 2)
-
-                this.setState({imgTwoFile: newImgFiles[0]})
-            }
-
-        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 3)
-
-            this.setState({imgThreeFile: newImgFiles[0]})
-
-        } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 1)
-
-            this.setState({imgOneFile: newImgFiles[0]})
-
-        } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-            let newImgFiles = files.slice(0, 1)
-            this.getBase64(newImgFiles[0], 2)
-
-            this.setState({imgTwoFile: newImgFiles[0]})
 
         }
 
     }
 
-    _handleImageDelete(number) {
-        switch (number) {
-            case 1:
-                this.setState({imgOneUrl: '', imgOneFile: ''});
-                break;
-            case 2:
-                this.setState({imgTwoUrl: '', imgTwoFile: ''});
-                break;
-            case 3:
-                this.setState({imgThreeUrl: '', imgThreeFile: ''});
-                break;
-            default:
-                this.setState({imgOneUrl: '', imgOneFile: ''});
-        }
+    handleImageDelete(index) {
+        this.setState((prevState) => ({
+            imgs: [
+                ...prevState.imgs.slice(0, index),
+                ...prevState.imgs.slice(index + 1)
+            ]
+        }))
     }
+
+    handleImageGenderChange(index, event) {
+        event.persist()
+
+        this.setState((prevState) => ({
+            imgs: [
+                ...prevState.imgs.slice(0, index),
+                Object.assign({}, prevState.imgs[index], {'gender': event.target.value}),
+                ...prevState.imgs.slice(index + 1)
+            ]
+        }))
+    }
+
+    getImagePreviews() {
+        return this.state.imgs.map((img, index) => {
+            return (
+                <div className="img-preview" key={index}>
+                    <i className="fa fa-close" onClick={() => this.handleImageDelete(index)}/>
+                    <img src={img.url}/>
+                    <RadioButtonGroup name="img-gender" defaultSelected='male' onChange={this.handleImageGenderChange.bind(this, index)} style={{
+                        marginTop: '10px'
+                    }}>
+                        <RadioButton value="male" label="Male" style={styles.radioButton}/>
+                        <RadioButton value="female" label="Female" style={styles.radioButton}/>
+                        <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
+                    </RadioButtonGroup>
+                </div>
+            )
+        })
+    }
+
+    //-------------------------------------------------------------
+
     _handleAudioUpload(number, e) {
         e.preventDefault();
 
@@ -575,13 +529,10 @@ export default class ContentPortalUploadPage extends React.Component {
             let language = languages[this.state.language_country - 1]
             let country = countries[this.state.language_country - 1]
 
-            let imgUrls = []
-            for (let imgUrl of[this.state.imgOneUrl,
-                this.state.imgTwoUrl,
-                this.state.imgThreeUrl]) {
+            let imgs = []
+            for (let img of this.state.imgs) {
 
-                if (imgUrl != '')
-                    imgUrls.push({"file": imgUrl})
+                imgs.push({"file": img.url, "gender": img.gender})
             }
 
             let maleAudioFiles = []
@@ -613,7 +564,7 @@ export default class ContentPortalUploadPage extends React.Component {
                     "words": [
                         {
                             "word": this.state.legoText,
-                            "images": imgUrls,
+                            "images": imgs,
                             "audio": {
                                 "files": [
                                     {
@@ -636,12 +587,8 @@ export default class ContentPortalUploadPage extends React.Component {
                     console.log('Uploaded successfully')
                     hashHistory.push('/contentportal/uploadfinish')
                 },
-                error: (a, b, c) => {
+                error: () => {
                     this.setState({isUploading: false})
-                    console.log(a)
-                    console.log(b)
-                    console.log(c)
-
                 }
             })
 
@@ -735,24 +682,4 @@ export default class ContentPortalUploadPage extends React.Component {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    getBase64(file, number) {
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            switch (number) {
-                case 1:
-                    this.setState({imgOneUrl: reader.result});
-                    break;
-                case 2:
-                    this.setState({imgTwoUrl: reader.result});
-                    break;
-                case 3:
-                    this.setState({imgThreeUrl: reader.result});
-                    break;
-            }
-        };
-        reader.onerror = function(error) {
-            console.log('Error: ', error);
-        };
-    }
 }
