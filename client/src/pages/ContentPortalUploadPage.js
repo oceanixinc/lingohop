@@ -149,7 +149,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         </RadioButtonGroup>
                     </div>
                     <div className="big-text text-left col-sm-8 col-sm-offset-2">
-                        <RaisedButton label="+ ADD PHOTOS" primary={true} onClick={() => {
+                        <RaisedButton label="+ ADD PHOTOS" primary={true} disabled={((this.state.gender === 'male' || this.state.gender === 'female') && this.state.imgs.length >= 1) || (this.state.imgs.length >= 2)} onClick={() => {
                             document.getElementById('img-input').click();
                         }}/>
                         <input id="img-input" className="fileInput" type="file" multiple onChange={this.handleImageUpload}/>
@@ -301,12 +301,22 @@ export default class ContentPortalUploadPage extends React.Component {
     handleImageUpload(e) {
         e.preventDefault();
 
-        const files = Array.prototype.slice.call(e.target.files);
+        let files = Array.prototype.slice.call(e.target.files);
+
+        if (this.state.gender === 'neutral')
+            files = files.slice(0, Math.max(0, 2 - this.state.imgs.length))
+        else if (this.state.gender === 'male' || this.state.gender === 'female')
+            files = files.slice(0, Math.max(0, 1 - this.state.imgs.length))
 
         for (let file of files) {
 
             const reader = new FileReader()
             reader.readAsDataURL(file)
+
+            let gender = 'male'
+
+            if (this.state.gender === 'female')
+                gender = 'female'
 
             reader.onload = () => {
                 this.setState((prevState) => ({
@@ -314,7 +324,7 @@ export default class ContentPortalUploadPage extends React.Component {
                         {
                             'file': file,
                             'url': reader.result,
-                            'gender': 'male'
+                            'gender': gender
                         }
                     ])
                 }))
@@ -355,12 +365,13 @@ export default class ContentPortalUploadPage extends React.Component {
                 <div className="img-preview" key={index}>
                     <i className="fa fa-close" onClick={() => this.handleImageDelete(index)}/>
                     <img src={img.url}/>
-                    <RadioButtonGroup name="img-gender" defaultSelected='male' onChange={this.handleImageGenderChange.bind(this, index)} style={{
+                    <RadioButtonGroup name="img-gender" valueSelected={img.gender} onChange={this.handleImageGenderChange.bind(this, index)} style={{
                         marginTop: '10px'
-                    }}>
+                    }} className={this.state.gender != 'neutral'
+                        ? 'inactive'
+                        : ''}>
                         <RadioButton value="male" label="Male" style={styles.radioButton}/>
                         <RadioButton value="female" label="Female" style={styles.radioButton}/>
-                        <RadioButton value="neutral" label="Neutral" style={styles.radioButton}/>
                     </RadioButtonGroup>
                 </div>
             )
@@ -675,7 +686,15 @@ export default class ContentPortalUploadPage extends React.Component {
     }
 
     handleGenderChange(event) {
+        event.persist()
         this.setState({gender: event.target.value});
+
+        if ((event.target.value === 'male' || event.target.value === 'female') && this.state.imgs.length >= 1) {
+            this.setState((prevState) => ({
+                imgs: [Object.assign({}, prevState.imgs[0], {'gender': event.target.value})]
+            }));
+
+        }
     }
 
     capitalizeFirstLetter(string) {
