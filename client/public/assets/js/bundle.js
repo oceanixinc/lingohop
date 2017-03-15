@@ -77511,6 +77511,8 @@ var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -77539,12 +77541,7 @@ var ContentPortalUploadPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (ContentPortalUploadPage.__proto__ || Object.getPrototypeOf(ContentPortalUploadPage)).call(this));
 
         _this.state = {
-            imgOneFile: '',
-            imgTwoFile: '',
-            imgThreeFile: '',
-            imgOneUrl: '',
-            imgTwoUrl: '',
-            imgThreeUrl: '',
+            imgs: [],
             audioOneFile: '',
             audioTwoFile: '',
             audioThreeFile: '',
@@ -77574,8 +77571,10 @@ var ContentPortalUploadPage = function (_React$Component) {
             isUploading: false
         };
 
-        _this._handleImageUpload = _this._handleImageUpload.bind(_this);
-        _this._handleImageDelete = _this._handleImageDelete.bind(_this);
+        //Images
+        _this.handleImageUpload = _this.handleImageUpload.bind(_this);
+        _this.handleImageDelete = _this.handleImageDelete.bind(_this);
+        _this.handleImageGenderChange = _this.handleImageGenderChange.bind(_this);
         _this._clickAudio = _this._clickAudio.bind(_this);
         _this._uploadContent = _this._uploadContent.bind(_this);
         _this.handleValueChange = _this.handleValueChange.bind(_this);
@@ -77599,7 +77598,7 @@ var ContentPortalUploadPage = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.state);
+            var imgs = this.getImagePreviews();
             return _react2.default.createElement(
                 'div',
                 { className: 'upload-page' },
@@ -77716,10 +77715,13 @@ var ContentPortalUploadPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'big-text text-left col-sm-3 col-sm-offset-2' },
+                        { className: 'big-text text-left col-sm-8 col-sm-offset-2' },
+                        'What is the lego gender?',
                         _react2.default.createElement(
                             _RadioButton.RadioButtonGroup,
-                            { name: 'gender', defaultSelected: 'male', onChange: this.handleGenderChange },
+                            { name: 'gender', defaultSelected: 'male', onChange: this.handleGenderChange, style: {
+                                    marginTop: '10px'
+                                } },
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'male', label: 'Male', style: styles.radioButton }),
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton }),
                             _react2.default.createElement(_RadioButton.RadioButton, { value: 'neutral', label: 'Neutral', style: styles.radioButton })
@@ -77727,55 +77729,16 @@ var ContentPortalUploadPage = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'big-text text-left col-sm-7', style: {
-                                overflow: 'auto'
-                            } },
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'add-picture', className: this.state.imgOneUrl != '' && this.state.imgTwoUrl != '' && this.state.imgThreeUrl != '' && 'inactive' },
-                            '+ Add Picture',
-                            _react2.default.createElement('input', { className: 'fileInput', type: 'file', multiple: true, onChange: this._handleImageUpload })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'img-gallery', className: 'pull-left' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: this.state.imgOneUrl === '' && 'inactive' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'close-icon', onClick: function onClick() {
-                                            return _this2._handleImageDelete(1);
-                                        } },
-                                    'x'
-                                ),
-                                _react2.default.createElement('img', { src: this.state.imgOneUrl })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: this.state.imgTwoUrl === '' && 'inactive' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'close-icon', onClick: function onClick() {
-                                            return _this2._handleImageDelete(2);
-                                        } },
-                                    'x'
-                                ),
-                                _react2.default.createElement('img', { src: this.state.imgTwoUrl })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: this.state.imgThreeUrl === '' && 'inactive' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'close-icon', onClick: function onClick() {
-                                            return _this2._handleImageDelete(3);
-                                        } },
-                                    'x'
-                                ),
-                                _react2.default.createElement('img', { src: this.state.imgThreeUrl })
-                            )
-                        )
+                        { className: 'big-text text-left col-sm-8 col-sm-offset-2' },
+                        _react2.default.createElement(_RaisedButton2.default, { label: '+ ADD PHOTOS', primary: true, onClick: function onClick() {
+                                document.getElementById('img-input').click();
+                            } }),
+                        _react2.default.createElement('input', { id: 'img-input', className: 'fileInput', type: 'file', multiple: true, onChange: this.handleImageUpload })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'big-text text-left col-sm-8 col-sm-offset-2 img-preview-holder' },
+                        imgs
                     ),
                     _react2.default.createElement(
                         'div',
@@ -77937,7 +77900,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-12' },
-                        _react2.default.createElement(_RaisedButton2.default, { label: 'UPLOAD', className: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') ? 'upload-btn' : 'upload-btn active-btn', disabled: this.state.gender === 'male' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgOneUrl === '' && this.state.imgTwoUrl === '' && this.state.imgThreeUrl === '' || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === ''), onClick: this._uploadContent })
+                        _react2.default.createElement(_RaisedButton2.default, { label: 'UPLOAD', className: this.state.gender === 'male' && (this.state.imgs.length === 0 || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgs.length === 0 || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgs.length === 0 || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') ? 'upload-btn' : 'upload-btn active-btn', disabled: this.state.gender === 'male' && (this.state.imgs.length === 0 || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'female' && (this.state.imgs.length === 0 || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === '') || this.state.gender === 'neutral' && (this.state.imgs.length === 0 || this.state.audioOneUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioTwoUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioThreeUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.audioFourUrl === '' && typeof this.state.regionOne != 'undefined' || this.state.audioFiveUrl === '' && typeof this.state.regionTwo != 'undefined' || this.state.audioSixUrl === '' && typeof this.state.regionThree != 'undefined' || this.state.language_country === '' || this.state.legoText === ''), onClick: this._uploadContent })
                     )
                 )
             );
@@ -77971,113 +77934,116 @@ var ContentPortalUploadPage = function (_React$Component) {
             this.setState({ showValidateModal: false });
         }
     }, {
-        key: '_handleImageUpload',
+        key: 'handleImageUpload',
 
 
-        //Uploads
-        value: function _handleImageUpload(e) {
+        //Images------------------------------------------------------------------
+        value: function handleImageUpload(e) {
+            var _this3 = this;
+
             e.preventDefault();
 
             var files = Array.prototype.slice.call(e.target.files);
 
-            if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-                if (files.length >= 3) {
-                    var newImgFiles = files.slice(0, 3);
-                    this.getBase64(newImgFiles[0], 1);
-                    this.getBase64(newImgFiles[1], 2);
-                    this.getBase64(newImgFiles[2], 3);
+            try {
+                var _loop = function _loop() {
+                    var file = _step.value;
 
-                    this.setState({ imgOneFile: newImgFiles[0], imgTwoFile: newImgFiles[1], imgThreeFile: newImgFiles[2] });
-                } else if (files.length === 2) {
-                    var _newImgFiles = files.slice(0, 2);
-                    this.getBase64(_newImgFiles[0], 1);
-                    this.getBase64(_newImgFiles[1], 2);
 
-                    this.setState({ imgOneFile: _newImgFiles[0], imgTwoFile: _newImgFiles[1] });
-                } else if (files.length === 1) {
-                    var _newImgFiles2 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles2[0], 1);
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
 
-                    this.setState({ imgOneFile: _newImgFiles2[0] });
+                    reader.onload = function () {
+                        _this3.setState(function (prevState) {
+                            return {
+                                imgs: prevState.imgs.concat([{
+                                    'file': file,
+                                    'url': reader.result,
+                                    'gender': 'male'
+                                }])
+                            };
+                        });
+                    };
+
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                };
+
+                for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    _loop();
                 }
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-                if (files.length >= 2) {
-                    var _newImgFiles3 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles3[0], 1);
-                    this.getBase64(_newImgFiles3[1], 3);
-
-                    this.setState({ imgOneFile: _newImgFiles3[0], imgThreeFile: _newImgFiles3[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles4 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles4[0], 1);
-
-                    this.setState({ imgOneFile: _newImgFiles4[0] });
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
                 }
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-                if (files.length >= 2) {
-                    var _newImgFiles5 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles5[0], 1);
-                    this.getBase64(_newImgFiles5[1], 2);
-
-                    this.setState({ imgOneFile: _newImgFiles5[0], imgTwoFile: _newImgFiles5[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles6 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles6[0], 1);
-
-                    this.setState({ imgOneFile: _newImgFiles6[0] });
-                }
-            } else if (this.state.imgOneUrl !== "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl === "") {
-                if (files.length >= 2) {
-                    var _newImgFiles7 = files.slice(0, 2);
-                    this.getBase64(_newImgFiles7[0], 2);
-                    this.getBase64(_newImgFiles7[1], 3);
-
-                    this.setState({ imgTwoFile: _newImgFiles7[0], imgThreeFile: _newImgFiles7[1] });
-                } else if (files.length == 1) {
-                    var _newImgFiles8 = files.slice(0, 1);
-                    this.getBase64(_newImgFiles8[0], 2);
-
-                    this.setState({ imgTwoFile: _newImgFiles8[0] });
-                }
-            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl === "") {
-                var _newImgFiles9 = files.slice(0, 1);
-                this.getBase64(_newImgFiles9[0], 3);
-
-                this.setState({ imgThreeFile: _newImgFiles9[0] });
-            } else if (this.state.imgOneUrl === "" && this.state.imgTwoUrl != "" && this.state.imgThreeUrl != "") {
-                var _newImgFiles10 = files.slice(0, 1);
-                this.getBase64(_newImgFiles10[0], 1);
-
-                this.setState({ imgOneFile: _newImgFiles10[0] });
-            } else if (this.state.imgOneUrl != "" && this.state.imgTwoUrl === "" && this.state.imgThreeUrl != "") {
-                var _newImgFiles11 = files.slice(0, 1);
-                this.getBase64(_newImgFiles11[0], 2);
-
-                this.setState({ imgTwoFile: _newImgFiles11[0] });
             }
         }
     }, {
-        key: '_handleImageDelete',
-        value: function _handleImageDelete(number) {
-            switch (number) {
-                case 1:
-                    this.setState({ imgOneUrl: '', imgOneFile: '' });
-                    break;
-                case 2:
-                    this.setState({ imgTwoUrl: '', imgTwoFile: '' });
-                    break;
-                case 3:
-                    this.setState({ imgThreeUrl: '', imgThreeFile: '' });
-                    break;
-                default:
-                    this.setState({ imgOneUrl: '', imgOneFile: '' });
-            }
+        key: 'handleImageDelete',
+        value: function handleImageDelete(index) {
+            this.setState(function (prevState) {
+                return {
+                    imgs: [].concat(_toConsumableArray(prevState.imgs.slice(0, index)), _toConsumableArray(prevState.imgs.slice(index + 1)))
+                };
+            });
         }
+    }, {
+        key: 'handleImageGenderChange',
+        value: function handleImageGenderChange(index, event) {
+            event.persist();
+
+            this.setState(function (prevState) {
+                return {
+                    imgs: [].concat(_toConsumableArray(prevState.imgs.slice(0, index)), [Object.assign({}, prevState.imgs[index], { 'gender': event.target.value })], _toConsumableArray(prevState.imgs.slice(index + 1)))
+                };
+            });
+        }
+    }, {
+        key: 'getImagePreviews',
+        value: function getImagePreviews() {
+            var _this4 = this;
+
+            return this.state.imgs.map(function (img, index) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'img-preview', key: index },
+                    _react2.default.createElement('i', { className: 'fa fa-close', onClick: function onClick() {
+                            return _this4.handleImageDelete(index);
+                        } }),
+                    _react2.default.createElement('img', { src: img.url }),
+                    _react2.default.createElement(
+                        _RadioButton.RadioButtonGroup,
+                        { name: 'img-gender', defaultSelected: 'male', onChange: _this4.handleImageGenderChange.bind(_this4, index), style: {
+                                marginTop: '10px'
+                            } },
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'male', label: 'Male', style: styles.radioButton }),
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'female', label: 'Female', style: styles.radioButton }),
+                        _react2.default.createElement(_RadioButton.RadioButton, { value: 'neutral', label: 'Neutral', style: styles.radioButton })
+                    )
+                );
+            });
+        }
+
+        //-------------------------------------------------------------
+
     }, {
         key: '_handleAudioUpload',
         value: function _handleAudioUpload(number, e) {
-            var _this3 = this;
+            var _this5 = this;
 
             e.preventDefault();
 
@@ -78086,25 +78052,25 @@ var ContentPortalUploadPage = function (_React$Component) {
             reader.onloadend = function () {
                 switch (number) {
                     case "one":
-                        _this3.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
                         break;
                     case "two":
-                        _this3.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
+                        _this5.setState({ audioTwoFile: file, audioTwoUrl: reader.result });
                         break;
                     case "three":
-                        _this3.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
+                        _this5.setState({ audioThreeFile: file, audioThreeUrl: reader.result });
                         break;
                     case "four":
-                        _this3.setState({ audioFourFile: file, audioFourUrl: reader.result });
+                        _this5.setState({ audioFourFile: file, audioFourUrl: reader.result });
                         break;
                     case "five":
-                        _this3.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
+                        _this5.setState({ audioFiveFile: file, audioFiveUrl: reader.result });
                         break;
                     case "six":
-                        _this3.setState({ audioSixFile: file, audioSixUrl: reader.result });
+                        _this5.setState({ audioSixFile: file, audioSixUrl: reader.result });
                         break;
                     default:
-                        _this3.setState({ audioOneFile: file, audioOneUrl: reader.result });
+                        _this5.setState({ audioOneFile: file, audioOneUrl: reader.result });
                 }
                 document.getElementById('audio-' + number + '-icon').innerHTML = "play_arrow";
             };
@@ -78198,13 +78164,13 @@ var ContentPortalUploadPage = function (_React$Component) {
                 url: 'https://testing.lingohop.com/api/language-country/',
                 success: function success(res) {
                     var i = 1;
-                    var _iteratorNormalCompletion = true;
-                    var _didIteratorError = false;
-                    var _iteratorError = undefined;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
 
                     try {
-                        for (var _iterator = res[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                            var language = _step.value;
+                        for (var _iterator2 = res[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var language = _step2.value;
 
                             var itemIndex = res.indexOf(language);
                             var value = language.language + '-' + language.country;
@@ -78216,16 +78182,16 @@ var ContentPortalUploadPage = function (_React$Component) {
                             countries.push(language.country);
                         }
                     } catch (err) {
-                        _didIteratorError = true;
-                        _iteratorError = err;
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion && _iterator.return) {
-                                _iterator.return();
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
                             }
                         } finally {
-                            if (_didIteratorError) {
-                                throw _iteratorError;
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
                             }
                         }
                     }
@@ -78235,7 +78201,7 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: '_fetchRegion',
         value: function _fetchRegion() {
-            var _this4 = this;
+            var _this6 = this;
 
             var language = languages[this.state.language_country - 1];
             var country = countries[this.state.language_country - 1];
@@ -78244,7 +78210,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                 dataType: "json",
                 url: 'https://testing.lingohop.com/api/assets/region/' + language + '-' + country + '/',
                 success: function success(res) {
-                    _this4.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
+                    _this6.setState({ regionOne: res.regions[0], regionTwo: res.regions[1], regionThree: res.regions[2] });
                 }
 
             });
@@ -78252,25 +78218,44 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: '_uploadContent',
         value: function _uploadContent() {
-            var _this5 = this;
+            var _this7 = this;
 
             if (this.validateAudioFiles()) {
 
                 this.setState({
                     isUploading: true
                 }, function () {
-                    _this5._openModal();
+                    _this7._openModal();
                 });
 
                 var language = languages[this.state.language_country - 1];
                 var country = countries[this.state.language_country - 1];
 
-                var imgUrls = [];
-                var _arr = [this.state.imgOneUrl, this.state.imgTwoUrl, this.state.imgThreeUrl];
-                for (var _i = 0; _i < _arr.length; _i++) {
-                    var imgUrl = _arr[_i];
+                var imgs = [];
+                var _iteratorNormalCompletion3 = true;
+                var _didIteratorError3 = false;
+                var _iteratorError3 = undefined;
 
-                    if (imgUrl != '') imgUrls.push({ "file": imgUrl });
+                try {
+                    for (var _iterator3 = this.state.imgs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        var img = _step3.value;
+
+
+                        imgs.push({ "file": img.url, "gender": img.gender });
+                    }
+                } catch (err) {
+                    _didIteratorError3 = true;
+                    _iteratorError3 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                            _iterator3.return();
+                        }
+                    } finally {
+                        if (_didIteratorError3) {
+                            throw _iteratorError3;
+                        }
+                    }
                 }
 
                 var maleAudioFiles = [];
@@ -78295,7 +78280,7 @@ var ContentPortalUploadPage = function (_React$Component) {
                         "language": language,
                         "words": [{
                             "word": this.state.legoText,
-                            "images": imgUrls,
+                            "images": imgs,
                             "audio": {
                                 "files": [{
                                     "gender": "male",
@@ -78315,11 +78300,8 @@ var ContentPortalUploadPage = function (_React$Component) {
                         console.log('Uploaded successfully');
                         _reactRouter.hashHistory.push('/contentportal/uploadfinish');
                     },
-                    error: function error(a, b, c) {
-                        _this5.setState({ isUploading: false });
-                        console.log(a);
-                        console.log(b);
-                        console.log(c);
+                    error: function error() {
+                        _this7.setState({ isUploading: false });
                     }
                 });
             } else {
@@ -78395,12 +78377,12 @@ var ContentPortalUploadPage = function (_React$Component) {
     }, {
         key: 'handleValueChange',
         value: function handleValueChange(name, event, index, value) {
-            var _this6 = this;
+            var _this8 = this;
 
             var change = {};
             change[name] = value;
             this.setState(change, function () {
-                _this6._fetchRegion();
+                _this8._fetchRegion();
             });
         }
     }, {
@@ -78417,30 +78399,6 @@ var ContentPortalUploadPage = function (_React$Component) {
         key: 'capitalizeFirstLetter',
         value: function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-    }, {
-        key: 'getBase64',
-        value: function getBase64(file, number) {
-            var _this7 = this;
-
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                switch (number) {
-                    case 1:
-                        _this7.setState({ imgOneUrl: reader.result });
-                        break;
-                    case 2:
-                        _this7.setState({ imgTwoUrl: reader.result });
-                        break;
-                    case 3:
-                        _this7.setState({ imgThreeUrl: reader.result });
-                        break;
-                }
-            };
-            reader.onerror = function (error) {
-                console.log('Error: ', error);
-            };
         }
     }]);
 

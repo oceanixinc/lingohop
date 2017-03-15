@@ -37,33 +37,9 @@
             font-weight: 400 !important;
         }
 
-        #add-picture {
-            height: 120px;
-            width: 120px;
-            border: 1px solid #333;
-            font-size: 16px;
-            line-height: 110px;
-            position: relative;
-            float: left;
-            text-align: center;
-
-             > input,
-            > img {
-                position: absolute;
-                top: 0;
-                height: 100%;
-                width: 100%;
-                left: 0;
-                opacity: 0;
-            }
-
-            > img {
-                opacity: 1;
-                object-fit: cover;
-            }
+        #img-input {
+            display: none;
         }
-
-
 
         .upload-btn {
             min-width: 180px !important;
@@ -84,21 +60,13 @@
                 font-size: 17px !important;
             }
         }
-
-
-
     }
 }
-
 /*****Media Queries****************/
-@media only screen and (max-width: 1520px) {
-
-}
+@media only screen and (max-width: 1520px) {}
 @media only screen and (max-width: 768px) {
-
     .upload-page .upload {
         margin-top: 0;
-        box-shadow:none;
-
+        box-shadow: none;
     }
 }
