@@ -214,6 +214,9 @@ class Asset(DynamicDocument):
     words = fields.ListField(
         fields.EmbeddedDocumentField(AudioImage))
 
+    class Meta:
+        unique_together = ('country', 'language',)
+
     def get_words(self):
         words = self.words
         all_words = []

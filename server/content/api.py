@@ -3,7 +3,8 @@ from functools import reduce
 import operator
 
 from django.forms.models import model_to_dict
-
+# from rest_framework import serializers
+from django.core.serializers import serialize
 
 from rest_framework.response import Response
 from rest_framework import status, views
@@ -13,7 +14,8 @@ from .serializers import (
     ContentSerializer,
     RegionSerializer,
     WordSerializer,
-    CategorySerializer, JourneySerializer, TrackSerializer)
+    CategorySerializer, JourneySerializer, TrackSerializer,
+    JsonSerializer)
 from mongoengine import fields
 
 from django.shortcuts import get_object_or_404
@@ -483,6 +485,30 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
     lookup_fields = ('country', 'language')
     # parser_classes = (FileUploadParser,)
 
+    def get_regions(self, audio):
+        files = audio.get('files', None)
+        regions = []
+        if files is not None:
+            for file in files:
+                audio_file = file.get('files', None)
+                if audio_file is not None:
+                    regions.append(audio_file[0]['region'])
+
+        return list(set(regions))
+
+    def get_data(self, images, audio, region, gender):
+        data = {}
+        for image in images:
+            if image['gender'] == gender:
+                data['image'] = image['file']
+
+        for aud in audio['files']:
+            if aud['gender'] == gender:
+                data['audio'] = aud['files'][0]['file']
+
+        return data
+
+
     def get(self, request, *args, **kwargs):
         country = kwargs.get('country', None)
         language = kwargs.get('language', None)
@@ -492,18 +518,42 @@ class AssetCreate(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIVie
                     country=country,
                     language=language)
             except:
-                pass
-            try:
-                queryset = Asset.objects.create(
-                    country=country)
-                queryset.language = language
-                queryset.save()
-            except:
-                queryset = Asset()
-                queryset.country = country
-                queryset.language = language
-                queryset.save()
-        serializer = AssetSerializer(queryset)
+            #     pass
+                try:
+                    queryset = Asset.objects.create(
+                        country=country)
+                    queryset.language = language
+                    queryset.save()
+                except:
+                    queryset = Asset()
+                    queryset.country = country
+                    queryset.language = language
+                    queryset.save()
+        # print('queryset is', queryset.values_list('country','language','words'))
+        # print('queryset is', queryset.to_json())
+        query_json = queryset.to_mongo()
+        data = {}
+        data['id'] = str(query_json['_id'])
+        data['country'] = query_json['country']
+        data['language'] = query_json['language']
+        words = query_json['words']
+        first_dict = {}
+        for word in words:
+            # first_dict[word[word]] = {}
+            first_dict[word["word"]] = {}
+            images = word['images']
+            audio = word['audio']
+            regions = self.get_regions(audio)
+            for region in regions:
+                first_dict[word["word"]][region] = {}
+                first_dict[word["word"]][region]['male'] = self.get_data(
+                    images, audio, region, 'male')
+                first_dict[word["word"]][region]['female'] = self.get_data(
+                    images, audio, region, 'female')
+        data['words'] = first_dict
+        # from django.http import JsonResponse
+        # return JsonResponse(data)
+        serializer = JsonSerializer(data)
         return Response(serializer.data)
 
     def get_audio_image(self, data):
