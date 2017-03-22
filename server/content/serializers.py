@@ -6,6 +6,16 @@ from rest_framework_mongoengine.serializers import (
     DocumentSerializer, EmbeddedDocumentSerializer)
 
 
+class JsonSerializer(serializers.Serializer):
+    id = serializers.CharField(
+        allow_blank=True, required=False)
+    country = serializers.CharField(
+        allow_blank=True, required=False)
+    language = serializers.CharField(
+        allow_blank=True, required=False)
+    words = serializers.JSONField()
+
+
 class WordSerializer(EmbeddedDocumentSerializer):
     # gender = serializers.SerializerMethodField('get_gender_name')
 
