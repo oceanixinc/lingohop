@@ -71,7 +71,7 @@ LOCAL_APPS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-SITE_ID = 1
+SITE_ID = 2
 REST_SESSION_LOGIN = False
 ACCOUNT_LOGOUT_ON_GET = True
 
@@ -201,3 +201,7 @@ try:
     from .common import *
 except ImportError:
     pass
+
+
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_PORT = env('EMAIL_PORT')
