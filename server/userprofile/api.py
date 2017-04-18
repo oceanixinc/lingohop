@@ -377,12 +377,7 @@ class ChangePasswordView(RetrieveUpdateDestroyAPIView):
     """
     serializer_class = ChangePasswordSerializer
     queryset = User.objects.all()
-    # permission_classes = (permissions.IsAuthenticated,)
     lookup_field = 'pk'
-
-    # def get_object(self, queryset=None):
-    #     obj = self.request.user
-    #     return obj
 
     def update(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -606,3 +601,16 @@ class ProfilePictureUpdate(RetrieveUpdateDestroyAPIView):
     serializer_class = ProfilePictureSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
+
+
+# So we have "xp", "xp_total", "xp_daily"
+# 8:56
+# Exactly. "xp_total" is the total possible xp a user could earn in a lesson
+# 8:57
+# So basically we will be doing checks to see what percentage of the xp points a user earned in a lesson
+# 8:57
+# Example: say a user earns 75 xp points, but we need to know how many possible points the user could have earned
+# 8:57
+# We would store that number, let's say 100 xp, in the xp_total objecrt
+# 8:57
+# So then we could tell the user he or she earned 75/100 (75%) of the possible xp points

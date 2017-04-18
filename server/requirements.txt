@@ -5,6 +5,7 @@ django-autoslug==1.9.3
 django-cors-headers==1.2.2
 django-countries==4.0
 django-environ==0.4.0
+django-mailgun==0.9.1
 django-model-utils==2.4
 django-rest-auth==0.8.1
 django-rest-framework-mongoengine==3.3.0

@@ -16,6 +16,7 @@ from .serializers import (
     WordSerializer,
     CategorySerializer, JourneySerializer, TrackSerializer,
     JsonSerializer)
+from userprofile.models import LanguageCountry
 from mongoengine import fields
 
 from django.shortcuts import get_object_or_404
@@ -52,13 +53,37 @@ class MultipleFieldLookupContentMixin(object):
     """
 
     def get_object(self):
-        queryset = self.get_queryset()             # Get the base queryset
-        queryset = self.filter_queryset(queryset)  # Apply any filter backends
-        filter = {}
-        for field in self.lookup_fields:
-            if self.kwargs[field]:  # Ignore empty fields.
-                filter[field] = self.kwargs[field]
-        return get_obj_or_404(Content, **filter)  # Lookup the object
+        # queryset = self.get_queryset()             # Get the base queryset
+        # queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        # filter = {}
+        # for field in self.lookup_fields:
+        #     if self.kwargs[field]:  # Ignore empty fields.
+        #         filter[field] = self.kwargs[field]
+        # print('filter data', filter)
+        # language_country = LanguageCountry.objects.get_or_create(**filter)
+        # print('language_country is', language_country)
+        # return get_obj_or_404(Content, **filter)  # Lookup the object
+
+        country = self.kwargs.get('country', None)
+        language = self.kwargs.get('language', None)
+        if country is not None and language is not None:
+            try:
+                queryset = Content.objects.get(
+                    country=country,
+                    language=language)
+            except:
+            #     pass
+                try:
+                    queryset = Content.objects.create(
+                        country=country)
+                    queryset.language = language
+                    queryset.save()
+                except:
+                    queryset = Content()
+                    queryset.country = country
+                    queryset.language = language
+                    queryset.save()
+        return queryset
 
 
 def list_field_to_dict(list_field):
@@ -267,6 +292,12 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         country = request.data.get('country', None)
         language = request.data.get('language', None)
         categories = request.data.get('categories', None)
+        print('content put request')
+        exit(1)
+
+        # return Response(
+        #                         {'detail': 'binary image not provided'},
+        #                         status=status.HTTP_400_BAD_REQUEST)
 
         content = Content.objects.get(
             country=country,

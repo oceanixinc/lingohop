@@ -25,6 +25,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
     url(
         r'^(?i)api/profiles/',
         include('userprofile.urls', namespace="profile")),
