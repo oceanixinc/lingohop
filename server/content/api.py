@@ -53,37 +53,34 @@ class MultipleFieldLookupContentMixin(object):
     """
 
     def get_object(self):
-        # queryset = self.get_queryset()             # Get the base queryset
-        # queryset = self.filter_queryset(queryset)  # Apply any filter backends
-        # filter = {}
-        # for field in self.lookup_fields:
-        #     if self.kwargs[field]:  # Ignore empty fields.
-        #         filter[field] = self.kwargs[field]
-        # print('filter data', filter)
-        # language_country = LanguageCountry.objects.get_or_create(**filter)
-        # print('language_country is', language_country)
-        # return get_obj_or_404(Content, **filter)  # Lookup the object
+        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        filter = {}
+        for field in self.lookup_fields:
+            if self.kwargs[field]:  # Ignore empty fields.
+                filter[field] = self.kwargs[field]
+        return get_obj_or_404(Content, **filter)  # Lookup the object
 
-        country = self.kwargs.get('country', None)
-        language = self.kwargs.get('language', None)
-        if country is not None and language is not None:
-            try:
-                queryset = Content.objects.get(
-                    country=country,
-                    language=language)
-            except:
-            #     pass
-                try:
-                    queryset = Content.objects.create(
-                        country=country)
-                    queryset.language = language
-                    queryset.save()
-                except:
-                    queryset = Content()
-                    queryset.country = country
-                    queryset.language = language
-                    queryset.save()
-        return queryset
+        # country = self.kwargs.get('country', None)
+        # language = self.kwargs.get('language', None)
+        # if country is not None and language is not None:
+        #     try:
+        #         queryset = Content.objects.get(
+        #             country=country,
+        #             language=language)
+        #     except:
+        #     #     pass
+        #         try:
+        #             queryset = Content.objects.create(
+        #                 country=country)
+        #             queryset.language = language
+        #             queryset.save()
+        #         except:
+        #             queryset = Content()
+        #             queryset.country = country
+        #             queryset.language = language
+        #             queryset.save()
+        # return queryset
 
 
 def list_field_to_dict(list_field):
@@ -157,9 +154,6 @@ def mongo_to_dict(obj, exclude_fields):
     return dict(return_data)
 
 
-
-
-
 class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ContentSerializer
     queryset = Content.objects.all()
@@ -212,10 +206,10 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         question.images = data['images']
         question.audio = self.get_audio_files(
             data['question_text'] + data['answer_text'])
-        question.question_audio = data['question_audio']
-        question.answer_audio = data['answer_audio']
-        question.problem_question = data['problem_question']
-        question.problem_image = data['problem_image']
+        question.question_audio = data.get('question_audio', None)
+        question.answer_audio = data.get('answer_audio', None)
+        question.problem_question = data.get('problem_question', None)
+        question.problem_image = data.get('problem_image', None)
 
         # return question
         if default:
@@ -292,16 +286,20 @@ class ContentCreate(MultipleFieldLookupContentMixin, generics.RetrieveUpdateDest
         country = request.data.get('country', None)
         language = request.data.get('language', None)
         categories = request.data.get('categories', None)
-        print('content put request')
-        exit(1)
-
         # return Response(
         #                         {'detail': 'binary image not provided'},
         #                         status=status.HTTP_400_BAD_REQUEST)
 
-        content = Content.objects.get(
-            country=country,
-            language=language)
+        try:
+            content = Content.objects.get(
+                country=country,
+                language=language)
+        except:
+            return Response(
+                {'detail': 'Content matching query does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        print('content is', content)
         self.current_object = content
 
         # obj_categories = content.get_categories()
